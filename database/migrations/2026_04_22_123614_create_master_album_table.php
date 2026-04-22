@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    // tabel master_album
+    public function up(): void
+    {
+        Schema::create('master_album', function (Blueprint $table) {
+            $table->increments('master_id');
+            $table->string('title', 255);
+            $table->integer('year')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('master_album');
+    }
+};

@@ -14,15 +14,22 @@ return new class extends Migration
         // TABEL cart
         Schema::create('cart', function (Blueprint $table) {
             $table->increments('cart_id');
-            $table->integer('user_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+
+            // relasi tabel
+            $table->foreign('user_id')->references('user_id')->on(user);
         });
 
         // TABEL cart_item
         Schema::create('cart_item', function (Blueprint $table) {
             $table->increments('cart_item_id');
-            $table->integer('cart_id')->nullable()->index();
-            $table->integer('product_id')->nullable()->index(); //->index() dipakai karena ini adalah foreign key gaes // yoan
-            $table->integer('quantity')->nullable()->default(1);
+            $table->unsignedinteger('cart_id')->nullable();
+            $table->unsignedInteger('product_id')->nullable(); 
+            $table->integer('quantity')->default(1);
+
+            // relasi tabel
+            $table->foreign('cart_id')->references('cart_id')->on('cart'); 
+            $table->foreign('product_id')->references('product_id')->on('product'); 
         });
     }
 

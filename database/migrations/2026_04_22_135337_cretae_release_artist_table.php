@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    // tabel release_artist
     public function up(): void
     {
-        Schema::create('image', function (Blueprint $table) {
-            $table->increments('image_id');
+        Schema::create('release_artist', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('release_id');
-            $table->text('url');
-            $table->string('type', 70);
+            $table->unsignedInteger('artist_id');
+            $table->string('role', 100)->nullable();
 
-            // relasi antar tabel
+            //tabel relasi
             $table->foreign('release_id')->references('release_id')->on('release_table');
+            $table->foreign('artist_id')->references('artist_id')->on('artist');
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('release_artist');
     }
 };

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('image', function (Blueprint $table) {
-            $table->increments('image_id');
+        Schema::create('release_label', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('release_id');
-            $table->text('url');
-            $table->string('type', 70);
+            $table->unsignedInteger('label_id');
 
             // relasi antar tabel
             $table->foreign('release_id')->references('release_id')->on('release_table');
+            $table->foreign('label_id')->references('label_id')->on('label');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('release_label');
     }
 };
