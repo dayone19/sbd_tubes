@@ -175,8 +175,8 @@ a {text-decoration: none !important;}
                         <li><a class="dropdown-item" href="/htg">How To Grade</a></li>
                         <li><a class="dropdown-item" href="#">How To Price</a></li>
                         <li><a class="dropdown-item" href="#">How To Pack & Ship</a></li>
-                        <li><a class="dropdown-item" href="#">More Seller Resources</a></li>
-                        <li><a class="dropdown-item" href="#">Seller News & Updates</a></li>
+                        <li><a class="dropdown-item" href="/resources">More Seller Resources</a></li>
+                        <li><a class="dropdown-item" href="/updates">Seller News & Updates</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
