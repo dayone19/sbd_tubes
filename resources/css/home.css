@@ -1,0 +1,208 @@
+/* home */
+.hero-card{
+    position: relative;
+    overflow: hidden;
+}
+.hero-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.overlay{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding:30px;
+    color:white;
+    background:linear-gradient(transparent, rgba(0,0,0,0.7));
+}
+.hero-small{
+    position:relative;
+    overflow:hidden;
+    height:145px;
+}
+.hero-small img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.overlay-small{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    padding-left:20px;
+    color:white;
+    display:flex;
+    align-items:center;  
+    background:linear-gradient(to right, rgba(0,0,0,0.7), transparent);
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    background-color: black;
+}
+.section{
+    padding:40px;
+}
+.title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:20px;
+    background:#191919;
+    color:white;
+    display:inline-block;
+    padding:5px 25px;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+    align-items: start;
+}
+.album-row{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    padding-top:20px;
+}
+.album-card{
+    min-width:220px;
+    background:white;
+    border-radius:6px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.15);
+}
+.album-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+.album-info{
+    padding:12px;
+}
+.album-title{
+    font-weight:bold;
+    margin-bottom:3px;
+}
+.artist{
+    color:#666;
+    font-size:14px;
+}
+.year{
+    font-size:13px;
+    color:#999;
+}
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+.buttons button{
+    flex:1;
+    padding:6px;
+    border:1px solid #ccc;
+    background:white;
+    border-radius:4px;
+    cursor:pointer;
+}
+.buttons button:hover{
+    background:#eee;
+}
+.album-row::-webkit-scrollbar{
+    height:6px;
+}
+.album-row::-webkit-scrollbar-thumb{
+    background:#ccc;
+    border-radius:10px;
+}
+.section {
+    padding: 32px 24px;
+    background: #fff;
+}
+.title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: white;
+}
+/* Wrapper relatif supaya tombol panah bisa di-posisikan */
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+/* Tombol panah */
+.carousel-btn {
+    position: absolute;
+    z-index: 10;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.carousel-btn:hover {
+    background: #f0f0f0;
+}
+.carousel-btn.prev {
+    left: -20px;
+}
+.carousel-btn.next {
+    right: -20px;
+}
+/* Row yang bisa di-scroll horizontal */
+.album-row {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 8px 4px 16px;
+    scrollbar-width: none; /* Firefox: sembunyikan scrollbar */
+}
+.album-row::-webkit-scrollbar {
+    display: none; /* Chrome/Safari: sembunyikan scrollbar */
+}
+/* Card album */
+.album-card {
+    min-width: 200px;
+    max-width: 200px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.album-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+.album-card .album-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 10px;
+    color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.album-card .artist {
+    font-size: 0.85rem;
+    color: #333;
+    margin:10px;
+}
+.album-card .year {
+    font-size: 0.8rem;
+    color: #777;
+    margin:10px;
+}
+.album-card .price {
+    font-size: 0.8rem;
+    color: #555;
+    margin:10px;
+}
