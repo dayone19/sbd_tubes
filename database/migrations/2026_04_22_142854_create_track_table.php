@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('image', function (Blueprint $table) {
-            $table->increments('image_id');
+        Schema::create('track', function (Blueprint $table) {
+            $table->increments('track_id');
             $table->unsignedInteger('release_id');
-            $table->text('url');
-            $table->string('type', 70);
+            $table->string('title', 255);
+            $table->time('duration')->nullable();
+            $table->string('position', 35)->nullable();
 
-            // relasi antar tabel
+            //relasi tabel
             $table->foreign('release_id')->references('release_id')->on('release_table');
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('track');
     }
 };
