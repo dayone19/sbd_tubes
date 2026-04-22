@@ -18,6 +18,10 @@ Route::get('/start', function () {
     return view('start');
 });
 
+route::get('/updates', function () {
+    return view('updates');
+});
+
 Route::get('/htg', function () {
     return view('htg');
 });

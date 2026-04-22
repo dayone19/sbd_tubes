@@ -11,7 +11,7 @@
             <a class="selling-link" href="/selling">Selling</a>
             <a class="selling-link" href="/start">Start</a>
             <a class="selling-link" href="/resources">Resources</a>
-            <a class="selling-link" href="#">Updates</a>
+            <a class="selling-link" href="/updates">Updates</a>
         </div>
     </div>
 </nav>
