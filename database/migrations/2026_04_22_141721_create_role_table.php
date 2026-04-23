@@ -6,9 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel role
+    //sql
+    // CREATE TABLE role (
+    //     role_id INT(11) NOT NULL AUTO_INCREMENT,
+    //     role VARCHAR(50) not null,
+    //     PRIMARY KEY(role_id)
+    // );
     public function up(): void
     {
         Schema::create('role', function (Blueprint $table) {

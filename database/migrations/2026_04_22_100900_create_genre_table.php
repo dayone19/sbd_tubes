@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel genre
+    //SQL
+        // CREATE TABLE genre (
+        //     genre_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     name VARCHAR(100) NOT NULL,
+        //     PRIMARY KEY (genre_id)
+        // );
+
     public function up(): void
     {
         Schema::create('genre', function (Blueprint $table) {
