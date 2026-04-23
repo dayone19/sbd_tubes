@@ -6,20 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // tabel payment
+    // tabel payments
     //SQL
-        // CREATE TABLE payment (
+        // CREATE TABLE payments (
         //     payment_id INT(11) NOT NULL AUTO_INCREMENT,
         //     transaction_id INT(11) DEFAULT NULL,
         //     method VARCHAR(50) DEFAULT NULL,
         //     status VARCHAR(50) DEFAULT NULL,
         //     paid_at DATETIME DEFAULT NULL,
         //     PRIMARY KEY (payment_id),
-        //     FOREIGN KEY (transaction_id) REFERENCES transaction(transaction_id)
+        //     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id)
         // );
     public function up(): void
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('payment_id');
             $table->unsignedInteger('transaction_id');
             $table->string('method', 50)->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->datetime('paid_at')->nullable();
 
             // relasi antar tabel
-            $table->foreign('transaction_id')->references('transaction_id')->on('transaction');
+            $table->foreign('transaction_id')->references('transaction_id')->on('transactions');
         });
     }
 
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('payments');
     }
 };

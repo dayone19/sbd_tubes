@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel style
+    //tabel styles
     //sql
-    // CREATE TABLE style(
+    // CREATE TABLE styles(
     //     style_id INT(11) NOT NULL AUTO_INCREMENT,
     //     name VARCHAR(100) NOT NULL,
     //     PRIMARY KEY(style_id)
     // );
     public function up(): void
     {
-        Schema::create('style', function (Blueprint $table) {
+        Schema::create('styles', function (Blueprint $table) {
             $table->increments('style_id');
             $table->string('name', 100);
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('style');
+        Schema::dropIfExists('styles');
     }
 };

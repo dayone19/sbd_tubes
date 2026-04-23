@@ -6,24 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel seller
+    //tabel sellers
     //sql
-    // CREATE TABLE seller (
+    // CREATE TABLE sellers (
     //     seller_id INT(11) NOT NULL AUTO_INCREMENT,
     //     user_id VARCHAR(50) DEFAULT NULL,
     //     store_name VARCHAR(255) NOT NULL,
     //     PRIMARY KEY(seller_id),
-    //     FOREIGN KEY (user_id) REFERENCES user(user_id)
+    //     FOREIGN KEY (user_id) REFERENCES users(user_id)
     // );
     public function up(): void
     {
-        Schema::create('seller', function (Blueprint $table) {
+        Schema::create('sellers', function (Blueprint $table) {
             $table->increments('seller_id');
             $table->unsignedInteger('user_id')->nullable();
             $table->string('store_name', 255);
 
             // relasi tabel
-            $table->foreign('user_id')->references('user_id')->on('user');
+            $table->foreign('user_id')->references('user_id')->on('users');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seller');
+        Schema::dropIfExists('sellers');
     }
 };

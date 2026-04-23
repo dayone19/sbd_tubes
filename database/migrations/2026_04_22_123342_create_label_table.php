@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //   tabel label
+    //   tabel labels
     //SQL
-        // CREATE TABLE label (
+        // CREATE TABLE labels (
         //     label_id INT(11) NOT NULL AUTO_INCREMENT,
         //     name VARCHAR(255) NOT NULL,
         //     PRIMARY KEY (label_id)
         // );
     public function up(): void
     {
-        Schema::create('label', function (Blueprint $table) {
+        Schema::create('labels', function (Blueprint $table) {
             $table->increments('label_id');
             $table->string('name', 255);
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('label');
+        Schema::dropIfExists('labels');
     }
 };

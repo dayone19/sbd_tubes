@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel role
+    //tabel roles
     //sql
-    // CREATE TABLE role (
+    // CREATE TABLE roles (
     //     role_id INT(11) NOT NULL AUTO_INCREMENT,
     //     role VARCHAR(50) not null,
     //     PRIMARY KEY(role_id)
     // );
     public function up(): void
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->increments('role_id');
             $table->string('role', 50);
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('role');
+        Schema::dropIfExists('roles');
     }
 };

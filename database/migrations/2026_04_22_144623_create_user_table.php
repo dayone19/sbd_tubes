@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel user
+    //tabel users
     //sql
-    // CREATE TABLE user(
+    // CREATE TABLE users(
     //     user_id INT(11) NOT NULL AUTO_INCREMENT,
     //     username VARCHAR(100) NOT NULL,
     //     email VARCHAR(150) NOT NULL,
@@ -19,7 +19,7 @@ return new class extends Migration
     // );
     public function up(): void
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('user_id');
             $table->string('username', 100);
             $table->string('email', 150)->index();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('users');
     }
 };

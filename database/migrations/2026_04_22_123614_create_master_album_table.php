@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // tabel master_album
+    // tabel master_albums
     //SQL
-        // CREATE TABLE master_album (
+        // CREATE TABLE master_albums (
         //     master_id INT(11) NOT NULL AUTO_INCREMENT,
         //     title VARCHAR(255) NOT NULL,
         //     year INT(11) DEFAULT NULL,
@@ -16,7 +16,7 @@ return new class extends Migration
         // );
     public function up(): void
     {
-        Schema::create('master_album', function (Blueprint $table) {
+        Schema::create('master_albums', function (Blueprint $table) {
             $table->increments('master_id');
             $table->string('title', 255);
             $table->integer('year')->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_album');
+        Schema::dropIfExists('master_albums');
     }
 };
