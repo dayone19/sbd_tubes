@@ -13,8 +13,8 @@ return new class extends Migration
         //     release_id INT(11) DEFAULT NULL,
         //     style_id INT(11) DEFAULT NULL,
         //     PRIMARY KEY (id),
-        //     FOREIGN KEY (release_id) REFERENCES release_table(release_id),
-        //     FOREIGN KEY (style_id) REFERENCES  style(style_id)
+        //     FOREIGN KEY (release_id) REFERENCES releases(release_id),
+        //     FOREIGN KEY (style_id) REFERENCES  styles(style_id)
         // );
     public function up(): void
     {
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedInteger('style_id')->nullable();
 
             // relasi tabel
-            $table->foreign('release_id')->references('release_id')->on('release_table');
-            $table->foreign('style_id')->references('style_id')->on('style');
+            $table->foreign('release_id')->references('release_id')->on('releases');
+            $table->foreign('style_id')->references('style_id')->on('styles');
         });
     }
 

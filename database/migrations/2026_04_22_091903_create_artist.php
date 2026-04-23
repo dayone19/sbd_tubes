@@ -15,7 +15,7 @@ return new class extends Migration
     {
         // TABEL artist
         //SQL
-        // CREATE TABLE artist (
+        // CREATE TABLE artists (
         //     artist_id INT(11) NOT NULL AUTO_INCREMENT,
         //     name VARCHAR(255) NOT NULL,
         //     profile TEXT DEFAULT NULL,

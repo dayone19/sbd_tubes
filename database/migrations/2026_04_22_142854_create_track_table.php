@@ -6,20 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel track
+    //tabel tracks
     //sql
-    // CREATE TABLE track(
+    // CREATE TABLE tracks(
     //     track_id INT(11) NOT NULL AUTO_INCREMENT,
     //     release_id INT(11) DEFAULT NULL,
     //     title VARCHAR(255) NOT NULL,
     //     duration TIME DEFAULT NULL,
     //     position VARCHAR(35) DEFAULT NULL
     //     PRIMARY KEY(style_id),
-    //     FOREIGN KEY (release_id) REFERENCES release_table(release_id)
+    //     FOREIGN KEY (release_id) REFERENCES releases(release_id)
     // );
     public function up(): void
     {
-        Schema::create('track', function (Blueprint $table) {
+        Schema::create('tracks', function (Blueprint $table) {
             $table->increments('track_id');
             $table->unsignedInteger('release_id')->nullable();
             $table->string('title', 255);
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('position', 35)->nullable();
 
             //relasi tabel
-            $table->foreign('release_id')->references('release_id')->on('release_table');
+            $table->foreign('release_id')->references('release_id')->on('releases');
         });
     }
 
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('track');
+        Schema::dropIfExists('tracks');
     }
 };

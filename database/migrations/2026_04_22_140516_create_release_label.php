@@ -6,26 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel release_label
+    //tabel label_release
     //sql
-    // CREATE TABLE release_genre (
+    // CREATE TABLE label_release (
         //     id INT(11) NOT NULL AUTO_INCREMENT,
         //     release_id INT(11) DEFAULT NULL,
         //     label_id INT(11) DEFAULT NULL,
         //     PRIMARY KEY (id),
-        //     FOREIGN KEY (release_id) REFERENCES release_table(release_id),
-        //     FOREIGN KEY (label_id) REFERENCES  label(label_id)
+        //     FOREIGN KEY (release_id) REFERENCES releases(release_id),
+        //     FOREIGN KEY (label_id) REFERENCES  labels(label_id)
         // );
     public function up(): void
     {
-        Schema::create('release_label', function (Blueprint $table) {
+        Schema::create('label_release', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('release_id')->nullable();
             $table->unsignedInteger('label_id')->nullable();
 
             // relasi antar tabel
-            $table->foreign('release_id')->references('release_id')->on('release_table');
-            $table->foreign('label_id')->references('label_id')->on('label');
+            $table->foreign('release_id')->references('release_id')->on('releases');
+            $table->foreign('label_id')->references('label_id')->on('labels');
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('release_label');
+        Schema::dropIfExists('label_release');
     }
 };

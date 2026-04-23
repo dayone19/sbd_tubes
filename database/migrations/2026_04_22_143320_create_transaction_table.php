@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //tabel transaction
+    //tabel transactions
     //sql
-    // CREATE TABLE transaction(
+    // CREATE TABLE transactions(
     //     transaction_id INT(11) NOT NULL AUTO_INCREMENT,
     //     user_id INT(11) DEFAULT NULL,
     //     total_price DECIMAL(15, 2) NOT NULL,
@@ -19,7 +19,7 @@ return new class extends Migration
     // );
     public function up(): void
     {
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->increments('transaction_id');
             $table->unsignedInteger('user_id')->nullable();
             $table->decimal('total_price', 15, 2);
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->datetime('created_at')->useCurrent();
 
             // relasi tabel
-            $table->foreign('user_id')->references('user_id')->on('user');
+            $table->foreign('user_id')->references('user_id')->on('users');
         });
     }
 
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction');
+        Schema::dropIfExists('transactions');
     }
 };

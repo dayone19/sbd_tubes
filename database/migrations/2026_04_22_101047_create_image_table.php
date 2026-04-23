@@ -6,27 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    //TABEL image 
+    //TABEL images 
     //SQL
-        // CREATE TABLE image (
+        // CREATE TABLE images (
         //     image_id INT(11) NOT NULL AUTO_INCREMENT,
         //     release_id INT(11) UNSIGNED,
         //     url TEXT NOT NULL,
         //     type VARCHAR(70) DEFAULT NULL,
         //     PRIMARY KEY (image_id),
-        //     FOREIGN KEY(release_id) REFERENCES release_table(release_id)
+        //     FOREIGN KEY(release_id) REFERENCES releases(release_id)
         // );
 
     public function up(): void
     {
-        Schema::create('image', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->increments('image_id');
             $table->unsignedInteger('release_id');
             $table->text('url');
             $table->string('type', 70);
 
             // relasi antar tabel
-            $table->foreign('release_id')->references('release_id')->on('release_table');
+            $table->foreign('release_id')->references('release_id')->on('releases');
         });
     }
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('images');
     }
 };

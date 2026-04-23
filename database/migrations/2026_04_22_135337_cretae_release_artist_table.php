@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // tabel release_artist
+    // tabel artist_release
     //sql
-    // CREATE TABLE release_artist (
+    // CREATE TABLE artist_release (
         //     id INT(11) NOT NULL AUTO_INCREMENT,
         //     master_id INT(11) DEFAULT NULL,
         //     release_id INT(11) DEFAULT NULL,
         //     artist_id INT(11) DEFAULT NULL,
         //     role VARCHAR(100) DEFAULT NULL,
         //     PRIMARY KEY (id),
-        //     FOREIGN KEY (release_id) REFERENCES release_table(release_id),
-        //     FOREIGN KEY (artist_id) REFERENCES  artist(artist_id)
+        //     FOREIGN KEY (release_id) REFERENCES releases(release_id),
+        //     FOREIGN KEY (artist_id) REFERENCES  artists(artist_id)
         // );
     public function up(): void
     {
-        Schema::create('release_artist', function (Blueprint $table) {
+        Schema::create('artist_release', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('release_id')->nullable();
             $table->unsignedInteger('artist_id')->nullable();
             $table->string('role', 100)->nullable();
 
             //tabel relasi
-            $table->foreign('release_id')->references('release_id')->on('release_table');
-            $table->foreign('artist_id')->references('artist_id')->on('artist');
+            $table->foreign('release_id')->references('release_id')->on('releases');
+            $table->foreign('artist_id')->references('artist_id')->on('artists');
         });
     }
 
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('release_artist');
+        Schema::dropIfExists('artist_release');
     }
 };

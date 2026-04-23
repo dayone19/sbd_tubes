@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // tabel release_tabel
+    // tabel releases
     //sql
-    // CREATE TABLE release_table (
+    // CREATE TABLE releases (
         //     release_id INT(11) NOT NULL AUTO_INCREMENT,
         //     master_id INT(11) DEFAULT NULL,
         //     title VARCHAR(255) NOT NULL,
@@ -17,11 +17,11 @@ return new class extends Migration
         //     notes TEXT DEFAULT NULL,
         //     catalog_number VARCHAR(100) DEFAULT NULL
         //     PRIMARY KEY (release_id),
-        //     FOREIGN KEY (master_id) REFERENCES master_album(master_id)
+        //     FOREIGN KEY (master_id) REFERENCES master_albums(master_id)
         // );
     public function up(): void
     {
-        Schema::create('release_table', function (Blueprint $table) {
+        Schema::create('releases', function (Blueprint $table) {
             $table->increments('release_id');
             $table->unsignedInteger('master_id')->nullable();
             $table->string('title', 255);
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('catalog_number', 100)->nullable();
 
             // relasi tabel
-            $table->foreign('master_id')->references('master_id')->on('master_album');
+            $table->foreign('master_id')->references('master_id')->on('master_albums');
         });
     }
 
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('release_table');
+        Schema::dropIfExists('releases');
     }
 };

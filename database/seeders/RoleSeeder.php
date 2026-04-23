@@ -12,9 +12,9 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         // SQL
-        // INSERT INTO role (role) VALUES
+        // INSERT INTO roles (role) VALUES
         // ('admin'), ('seller'), ('buyer');
-        DB::table('role')->insert([
+        DB::table('roles')->insert([
             ['role' => 'admin'],
             ['role' => 'seller'],
             ['role' => 'buyer'],
