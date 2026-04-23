@@ -1,4 +1,4 @@
-@extends('layouts.sell')
+@extends('layouts.selling')
 
 @section('content')
 
@@ -13,7 +13,7 @@
                 <p>See recent news about seller tools, trends, and improvements to the Discogs <br> Marketplaces. Filter updates by topic to find the most relevant information.</p>
             </div>
 
-            <div class="flex justify-center" style="margin-top:2%">
+            <div class="flex justify-center" style="margin-top:2%">~
                 <h4 style="font-weight:bold;">TOPIC FILTER</h4>
             </div>
 
