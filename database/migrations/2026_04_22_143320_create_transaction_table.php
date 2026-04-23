@@ -6,14 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel transaction
+    //sql
+    // CREATE TABLE transaction(
+    //     transaction_id INT(11) NOT NULL AUTO_INCREMENT,
+    //     user_id INT(11) DEFAULT NULL,
+    //     total_price DECIMAL(15, 2) NOT NULL,
+    //     status VARCHAR(50) DEFAULT NULL,
+    //     created_at DATETIME CURRENT_TIMESTAMP,
+    //     PRIMARY KEY(transaction_id),
+    //     FOREIGN KEY (user_id) REFERENCES user(user_id)
+    // );
     public function up(): void
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->increments('transaction_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->decimal('total_price', 15, 2);
             $table->string('status', 50)->nullable();
             $table->datetime('created_at')->useCurrent();

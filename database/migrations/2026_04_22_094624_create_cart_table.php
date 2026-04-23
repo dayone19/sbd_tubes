@@ -12,6 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         // TABEL cart
+        //SQL
+        // CREATE TABLE cart (
+        //     cart_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     user_id INT(11) UNSIGNED,
+        //     PRIMARY KEY (cart_id),
+        //     FOREIGN KEY (user_id) REFERENCES user(user_id)
+        // );
+        
         Schema::create('cart', function (Blueprint $table) {
             $table->increments('cart_id');
             $table->unsignedInteger('user_id')->nullable();
@@ -21,9 +29,20 @@ return new class extends Migration
         });
 
         // TABEL cart_item
+        //SQL
+        // CREATE TABLE cart_item (
+        //     cart_item_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     cart_id INT(11) UNSIGNED,
+        //     product_id INT(11) UNSIGNED,
+        //     quantity INT(11) DEFAULT 1,
+        //     PRIMARY KEY (cart_item_id),
+        //     FOREIGN KEY (cart_id) REFERENCES cart(cart_id),
+        //     FOREIGN KEY (product_id) REFERENCES product(product_id)
+        // );
+
         Schema::create('cart_item', function (Blueprint $table) {
             $table->increments('cart_item_id');
-            $table->unsignedinteger('cart_id')->nullable();
+            $table->unsignedInteger('cart_id')->nullable();
             $table->unsignedInteger('product_id')->nullable(); 
             $table->integer('quantity')->default(1);
 
@@ -38,7 +57,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cart');
         Schema::dropIfExists('cart_item');
+        Schema::dropIfExists('cart'); 
     }
 };

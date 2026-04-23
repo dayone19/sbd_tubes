@@ -6,9 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //TABEL image 
+    //SQL
+        // CREATE TABLE image (
+        //     image_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     release_id INT(11) UNSIGNED,
+        //     url TEXT NOT NULL,
+        //     type VARCHAR(70) DEFAULT NULL,
+        //     PRIMARY KEY (image_id),
+        //     FOREIGN KEY(release_id) REFERENCES release_table(release_id)
+        // );
+
     public function up(): void
     {
         Schema::create('image', function (Blueprint $table) {

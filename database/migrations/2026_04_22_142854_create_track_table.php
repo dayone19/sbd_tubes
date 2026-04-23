@@ -6,14 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel track
+    //sql
+    // CREATE TABLE track(
+    //     track_id INT(11) NOT NULL AUTO_INCREMENT,
+    //     release_id INT(11) DEFAULT NULL,
+    //     title VARCHAR(255) NOT NULL,
+    //     duration TIME DEFAULT NULL,
+    //     position VARCHAR(35) DEFAULT NULL
+    //     PRIMARY KEY(style_id),
+    //     FOREIGN KEY (release_id) REFERENCES release_table(release_id)
+    // );
     public function up(): void
     {
         Schema::create('track', function (Blueprint $table) {
             $table->increments('track_id');
-            $table->unsignedInteger('release_id');
+            $table->unsignedInteger('release_id')->nullable();
             $table->string('title', 255);
             $table->time('duration')->nullable();
             $table->string('position', 35)->nullable();

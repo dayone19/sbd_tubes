@@ -6,15 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel release_label
+    //sql
+    // CREATE TABLE release_genre (
+        //     id INT(11) NOT NULL AUTO_INCREMENT,
+        //     release_id INT(11) DEFAULT NULL,
+        //     label_id INT(11) DEFAULT NULL,
+        //     PRIMARY KEY (id),
+        //     FOREIGN KEY (release_id) REFERENCES release_table(release_id),
+        //     FOREIGN KEY (label_id) REFERENCES  label(label_id)
+        // );
     public function up(): void
     {
         Schema::create('release_label', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('release_id');
-            $table->unsignedInteger('label_id');
+            $table->unsignedInteger('release_id')->nullable();
+            $table->unsignedInteger('label_id')->nullable();
 
             // relasi antar tabel
             $table->foreign('release_id')->references('release_id')->on('release_table');

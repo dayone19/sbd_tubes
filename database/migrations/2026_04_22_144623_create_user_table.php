@@ -6,20 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel user
+    //sql
+    // CREATE TABLE user(
+    //     user_id INT(11) NOT NULL AUTO_INCREMENT,
+    //     username VARCHAR(100) NOT NULL,
+    //     email VARCHAR(150) NOT NULL,
+    //     password VARCHAR(150) NOT NULL,
+    //     created_at DATETIME CURRENT_TIMESTAMP,
+    //     PRIMARY KEY(user_id),
+    //     KEY email(email)
+    // );
     public function up(): void
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('user_id');
             $table->string('username', 100);
-            $table->string('email', 150);
+            $table->string('email', 150)->index();
             $table->string('password', 250);
             $table->datetime('created_at')->useCurrent();
 
-            // relasi tabel
-            // $table->foreign('email')->references('email')->on()
         });
     }
 

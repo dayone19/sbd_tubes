@@ -6,9 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    //tabel style
+    //sql
+    // CREATE TABLE style(
+    //     style_id INT(11) NOT NULL AUTO_INCREMENT,
+    //     name VARCHAR(100) NOT NULL,
+    //     PRIMARY KEY(style_id)
+    // );
     public function up(): void
     {
         Schema::create('style', function (Blueprint $table) {
