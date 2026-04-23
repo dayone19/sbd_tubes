@@ -6,23 +6,47 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
-        // TABEL cart
-        Schema::create('cart', function (Blueprint $table) {
+        // TABEL carts
+        //SQL
+        // CREATE TABLE carts (
+        //     cart_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     user_id INT(11) UNSIGNED,
+        //     PRIMARY KEY (cart_id),
+        //     FOREIGN KEY (user_id) REFERENCES users(user_id)
+        // );
+        
+        Schema::create('carts', function (Blueprint $table) {
             $table->increments('cart_id');
-            $table->integer('user_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+
+            // relasi tabel
+            $table->foreign('user_id')->references('user_id')->on('users');
         });
 
-        // TABEL cart_item
-        Schema::create('cart_item', function (Blueprint $table) {
+        // TABEL cart_items
+        //SQL
+        // CREATE TABLE cart_items (
+        //     cart_item_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     cart_id INT(11) UNSIGNED,
+        //     product_id INT(11) UNSIGNED,
+        //     quantity INT(11) DEFAULT 1,
+        //     PRIMARY KEY (cart_item_id),
+        //     FOREIGN KEY (cart_id) REFERENCES carts(cart_id),
+        //     FOREIGN KEY (product_id) REFERENCES products(product_id)
+        // );
+
+        Schema::create('cart_items', function (Blueprint $table) {
             $table->increments('cart_item_id');
-            $table->integer('cart_id')->nullable()->index();
-            $table->integer('product_id')->nullable()->index(); //->index() dipakai karena ini adalah foreign key gaes // yoan
-            $table->integer('quantity')->nullable()->default(1);
+            $table->unsignedInteger('cart_id')->nullable();
+            $table->unsignedInteger('product_id')->nullable(); 
+            $table->integer('quantity')->default(1);
+
+            // relasi tabel
+            $table->foreign('cart_id')->references('cart_id')->on('carts'); 
+            $table->foreign('product_id')->references('product_id')->on('products'); 
         });
     }
 
@@ -31,7 +55,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cart');
-        Schema::dropIfExists('cart_item');
+        Schema::dropIfExists('cart_items');
+        Schema::dropIfExists('carts'); 
     }
 };

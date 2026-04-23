@@ -3,6 +3,7 @@
 @section('content')
 
     <!-- tes bray -->
+    <!-- tes kedua bray -->
     <div style="width:100%;">
         <!-- 1st content -->
         <div style="display:flex; align-items:center; min-height:500px">

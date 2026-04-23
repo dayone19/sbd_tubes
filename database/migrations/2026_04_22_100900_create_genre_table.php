@@ -6,12 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+        //tabel genres
+        //SQL
+        // CREATE TABLE genres (
+        //     genre_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     name VARCHAR(100) NOT NULL,
+        //     PRIMARY KEY (genre_id)
+        // );
+
     public function up(): void
     {
-        Schema::create('genre', function (Blueprint $table) {
+        Schema::create('genres', function (Blueprint $table) {
             $table->increments('genre_id');
             $table->string('name' , 100);
         });
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genre');
+        Schema::dropIfExists('genres');
     }
 };

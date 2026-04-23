@@ -14,9 +14,18 @@ return new class extends Migration
     public function up(): void
     {
         // TABEL artist
+        //SQL
+        // CREATE TABLE artists (
+        //     artist_id INT(11) NOT NULL AUTO_INCREMENT,
+        //     name VARCHAR(255) NOT NULL,
+        //     profile TEXT DEFAULT NULL,
+        //     country VARCHAR(100) DEFAULT NULL,
+        //     PRIMARY KEY (artist_id)
+        // );
+
         Schema::create('artits', function (Blueprint $table) {
             $table->increments('artist_id');
-            $table->string('name', 225);
+            $table->string('name', 255);
             $table->text('profile')->nullable();
             $table->string('country', 100)->nullable();
         });
