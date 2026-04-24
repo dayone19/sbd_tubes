@@ -13,7 +13,7 @@
 
 <body class="bg-gray-100 font-[Inter]">
 
-    @include('components.navbarUser')
+    @include('components.navbar')
 
     <main>
         @yield('content')
