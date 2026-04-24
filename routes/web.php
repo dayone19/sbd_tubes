@@ -42,6 +42,10 @@ Route::get('/resources', function () {
     return view('resources');
 });
 
+Route::get('/showArtist', function () {
+    return view('showArtist');
+});
+
 
 Route::prefix('sell')->group(function () {
 
