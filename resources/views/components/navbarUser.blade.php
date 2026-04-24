@@ -18,7 +18,7 @@ a {text-decoration: none !important;}
 .search-sub {font-size: 13px;color: #666;}
 .hidden {display: none;}
 /* sidebar */
-#sidebar {position: fixed;top: 0;right: -420px;width: 420px;height: 100%;background: #111;color: white;padding: 20px;transition: 0.3s ease;z-index: 9999;overflow-y: auto;}
+#sidebar {position: fixed;top: 0;right: -420px;width: 360px;height: 100%;background: #111;color: white;padding: 20px;transition: 0.3s ease;z-index: 9999;overflow-y: auto;}
 .sidebar-header h3 {font-size: 18px;font-weight: bold;}
 .sidebar-header a {font-size: 14px;color: #ccc;}
 .sidebar-content {display: flex;justify-content: space-between;margin-top: 20px;}
@@ -280,7 +280,7 @@ function openSidebar() {
 }
 
 function closeSidebar() {
-    document.getElementById("sidebar").style.right = "-320px";
+    document.getElementById("sidebar").style.right = "-420px";
     document.getElementById("overlay").style.display = "none";
 }
 </script>
