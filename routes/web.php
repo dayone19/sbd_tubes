@@ -54,3 +54,16 @@ Route::prefix('sell')->group(function () {
     })->name('sell.cart');
     
 });
+
+Route::get('/showArtist', function () {
+    return view('showArtist');
+});
+
+Route::get('/showAlbum', function () {
+    return view('showAlbum');
+});
+
+Route::get('/showAlbum/{id}', function ($id) {
+    $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
+    return view('showAlbum', compact('album'));
+});
