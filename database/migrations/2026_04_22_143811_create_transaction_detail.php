@@ -22,8 +22,8 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->increments('detail_id');
-            $table->unsignedInteger('transaction_id')->nullable();
-            $table->unsignedInteger('product_id')->nullable(); 
+            $table->integer('transaction_id')->nullable();
+            $table->integer('product_id')->nullable(); 
             $table->integer('quantity')->nullable(); 
             $table->decimal('price', 15, 2)->nullable(); 
 

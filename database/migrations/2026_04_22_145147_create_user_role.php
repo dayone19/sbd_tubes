@@ -20,8 +20,8 @@ return new class extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id')->nullable();
-            $table->unsignedInteger('role_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('role_id')->nullable();
 
             // relasi tabel
             $table->foreign('user_id')->references('user_id')->on('users');

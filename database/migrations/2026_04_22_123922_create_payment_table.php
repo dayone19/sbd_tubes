@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('payment_id');
-            $table->unsignedInteger('transaction_id');
+            $table->integer('transaction_id');
             $table->string('method', 50)->nullable();
             $table->string('status', 50)->nullable();
             $table->datetime('paid_at')->nullable();

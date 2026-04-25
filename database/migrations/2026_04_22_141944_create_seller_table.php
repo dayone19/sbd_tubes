@@ -19,7 +19,7 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->increments('seller_id');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->string('store_name', 255);
 
             // relasi tabel

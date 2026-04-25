@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->increments('track_id');
-            $table->unsignedInteger('release_id')->nullable();
+            $table->integer('release_id')->nullable();
             $table->string('title', 255);
             $table->time('duration')->nullable();
             $table->string('position', 35)->nullable();

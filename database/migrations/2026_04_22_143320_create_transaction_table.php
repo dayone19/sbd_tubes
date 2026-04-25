@@ -21,7 +21,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('transaction_id');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->decimal('total_price', 15, 2);
             $table->string('status', 50)->nullable();
             $table->datetime('created_at')->useCurrent();
