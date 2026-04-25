@@ -22,8 +22,8 @@ return new class extends Migration
     {
         Schema::create('artist_release', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('release_id')->nullable();
-            $table->unsignedInteger('artist_id')->nullable();
+            $table->integer('release_id')->nullable();
+            $table->integer('artist_id')->nullable();
             $table->string('role', 100)->nullable();
 
             //tabel relasi

@@ -20,8 +20,8 @@ return new class extends Migration
     {
         Schema::create('release_style', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('release_id')->nullable();
-            $table->unsignedInteger('style_id')->nullable();
+            $table->integer('release_id')->nullable();
+            $table->integer('style_id')->nullable();
 
             // relasi tabel
             $table->foreign('release_id')->references('release_id')->on('releases');

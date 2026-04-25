@@ -23,7 +23,7 @@ return new class extends Migration
     {
         Schema::create('releases', function (Blueprint $table) {
             $table->increments('release_id');
-            $table->unsignedInteger('master_id')->nullable();
+            $table->integer('master_id')->nullable();
             $table->string('title', 255);
             $table->string('country', 100)->nullable();
             $table->date('release_date')->nullable();

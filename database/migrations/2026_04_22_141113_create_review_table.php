@@ -22,8 +22,8 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('review_id');
-            $table->unsignedInteger('user_id')->nullable();
-            $table->unsignedInteger('product_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('product_id')->nullable();
             $table->integer('rating')->nullable();
             $table->datetime('created_at')->useCurrent();
 
