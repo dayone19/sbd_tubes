@@ -42,10 +42,18 @@ Route::get('/resources', function () {
     return view('resources');
 });
 
-Route::get('/showArtist', function () {
-    return view('showArtist');
+
+Route::get('/mywantlist', function () {
+    return view('mywantlist');
 });
 
+Route::prefix('user')->group(function () {
+
+    Route::get('/collection', function () {
+        return view('user.collection');
+    })->name('user.collection');
+    
+});
 
 Route::prefix('sell')->group(function () {
 
