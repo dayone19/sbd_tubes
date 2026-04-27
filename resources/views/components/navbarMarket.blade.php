@@ -1,59 +1,99 @@
 <style>
-/* SUBNAV */
-.market-subnav {
-    display: flex;
-    align-items: center;
-    padding: 8px 20px;
-    border-bottom: 1px solid #ccc;
-    background: white;
-    gap: 20px; 
+.subnav-wrapper{
+    width:100%;
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    margin-top:5px;
+    padding:0 25px;
 }
 
-.market-subnav b {
-    font-size: 20px;
+.subnav-row{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
 }
 
-.market-subnav .menu {
-    display: flex;
-    gap: 18px;
-    margin-left: 10px;
+/* kiri: title + menu sejajar */
+.subnav-left{
+    display:flex;
+    align-items:flex-end;
+    gap:30px;
 }
 
-.market-subnav a {
-    color: #0b5ed7;
-    font-size: 13px;
+.market-title{
+    font-size:18px;
+    font-weight:bold;
+    color:#111;
+    padding-bottom:14px;
 }
 
-.market-subnav a.active {
-    font-weight: bold;
-    color: black;
+.subnav-content{
+    display:flex;
+    gap:25px;
+    align-items:flex-end;
 }
 
-.market-subnav input {
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    width: 220px;
-    margin-left:auto;
+.subnav-content a{
+    color:#2d5bd1;
+    font-size:15px;
+    padding:14px 0;
+    text-decoration:none;
+}
+
+.subnav-content a.active{
+    color:#000;
+    font-weight:bold;
+    border:1px solid #ddd;
+    border-bottom:0;
+    background:#fff;
+    padding:14px 18px;
+    margin-bottom:-1px;
+}
+
+/* kanan search */
+.market-search input{
+    padding:10px 15px;
+    border:1px solid #000;
+    width:230px; margin-bottom:10px;
 }
 </style>
-<div class="market-subnav">
-    <b>Marketplace</b>
 
-    <div class="menu">
-        <a href="{{ route('sell.list') }}" class="{{ request()->routeIs('sell.list') ? 'active' : '' }}">
-            All Items
-        </a>
+<div class="subnav-wrapper">
 
-        <a href="#">Items I Want</a>
+    <div class="subnav-row">
 
-        <a href="#">Purchases</a>
+        <!-- kiri -->
+        <div class="subnav-left">
 
-        <a href="{{ route('sell.cart') }}" class="{{ request()->routeIs('sell.cart') ? 'active' : '' }}">
-            Cart
-        </a>
-        
-        <a href="#">Buyer Settings</a>
+            <div class="market-title">Marketplace</div>
+
+            <div class="subnav-content">
+
+                <a href="{{ route('sell.list') }}"
+                   class="{{ request()->routeIs('sell.list') ? 'active' : '' }}">
+                   All Items
+                </a>
+
+                <a href="#">Items I Want</a>
+
+                <a href="#">Purchases</a>
+
+                <a href="{{ route('sell.cart') }}"
+                   class="{{ request()->routeIs('sell.cart') ? 'active' : '' }}">
+                   Cart
+                </a>
+
+                <a href="#">Buyer Settings</a>
+
+            </div>
+
+        </div>
+
+        <!-- kanan -->
+        <div class="market-search">
+            <input type="text" placeholder="Search Marketplace">
+        </div>
+
     </div>
 
-    <input type="text" placeholder="Search Marketplace">
 </div>
