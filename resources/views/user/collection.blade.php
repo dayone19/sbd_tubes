@@ -62,7 +62,6 @@ body{background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;}
 .search-box span{
     position:absolute;
     right:14px;
-    top:7px;
     font-size:24px;
 }
 select{

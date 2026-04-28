@@ -24,7 +24,7 @@ a {text-decoration: none !important;}
 .sidebar-content {display: flex;justify-content: space-between;margin-top: 20px;}
 .sidebar-col {width: 48%;}
 .sidebar-col h4 {margin-top: 20px;font-weight: bold;}
-.sidebar-col a {display: block;color: #aaa;margin: 8px 0; font-size: 14px;}
+.sidebar-col a {display: block;color: #aaa;margin: 20px 0; font-size: 16px;}
 .sidebar-col a:hover {color: white;}
 .close-btn { font-size: 25px;float: right;cursor: pointer;}
 #overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,0.6);display: none;z-index: 9998;}
@@ -135,7 +135,7 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Shop My Wants</a></li>
                         <li><a class="dropdown-item" href="#">New & Upcoming</a></li>
-                        <li><a class="dropdown-item" href="/list">Vinyl</a></li>
+                        <li><a class="dropdown-item" href="sell/list">Vinyl</a></li>
                         <li><a class="dropdown-item" href="#">CD</a></li>
                         <li><a class="dropdown-item" href="#">Cassette</a></li>
                         <li><a class="dropdown-item" href="#">All Formats</a></li>
@@ -175,8 +175,8 @@ a {text-decoration: none !important;}
                         Digs
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Essentials</a></li>
-                        <li><a class="dropdown-item" href="#">Features</a></li>
+                        <li><a class="dropdown-item" href="/showArtist">Essentials</a></li>
+                        <li><a class="dropdown-item" href="/showAlbum">Features</a></li>
                         <li><a class="dropdown-item" href="#">Most Valuable</a></li>
                         <li><a class="dropdown-item" href="#">Collecting</a></li>
                         <li><a class="dropdown-item" href="#">Audio Gear</a></li>

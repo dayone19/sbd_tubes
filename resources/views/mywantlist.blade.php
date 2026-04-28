@@ -11,9 +11,9 @@
     /* SEARCH BAR */
     .toolbar{margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;}
     .search-left{display:flex;align-items:center;gap:18px;}
-    .search-box{width:470px;position:relative;}
-    .search-box input{width:100%;height:46px;padding:0 50px 0 14px;border:1px solid #bbb;font-size:18px;}
-    .search-box span{position:absolute;right:14px;top:10px; font-size:28px; color:#666;}
+    .search-box{width:400px;height:35px;position:relative;}
+    .search-box input{width:100%;height:46px;padding:0 40px 0 10px;border:1px solid #bbb;font-size:18px;}
+    .search-box span{position:absolute;right:14px; font-size:28px; color:#666;}
     .toolbar a{color:#2d5bd1;font-size:16px;}
     .right-btns{display:flex;align-items:center;gap:16px;}
     .btn-link{color:#2d5bd1;font-size:16px;}
