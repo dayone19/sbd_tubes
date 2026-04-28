@@ -10,7 +10,7 @@ return new class extends Migration
     //SQL
         // CREATE TABLE images (
         //     image_id INT(11) NOT NULL AUTO_INCREMENT,
-        //     release_id INT(11) ,
+        //     release_id INT(11) NOT NULL,
         //     url TEXT NOT NULL,
         //     type VARCHAR(70) DEFAULT NULL,
         //     PRIMARY KEY (image_id),

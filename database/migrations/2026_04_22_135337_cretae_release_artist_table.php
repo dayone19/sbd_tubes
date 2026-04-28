@@ -10,10 +10,9 @@ return new class extends Migration
     //sql
     // CREATE TABLE artist_release (
         //     id INT(11) NOT NULL AUTO_INCREMENT,
-        //     master_id INT(11) DEFAULT NULL,
-        //     release_id INT(11) DEFAULT NULL,
-        //     artist_id INT(11) DEFAULT NULL,
-        //     role VARCHAR(100) DEFAULT NULL,
+        //     release_id INT(11) NOT NULL,
+        //     artist_id INT(11) NOT NULL,
+        //     role VARCHAR(100) NOT NULL,
         //     PRIMARY KEY (id),
         //     FOREIGN KEY (release_id) REFERENCES releases(release_id),
         //     FOREIGN KEY (artist_id) REFERENCES  artists(artist_id)
@@ -22,9 +21,9 @@ return new class extends Migration
     {
         Schema::create('artist_release', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('release_id')->nullable();
-            $table->integer('artist_id')->nullable();
-            $table->string('role', 100)->nullable();
+            $table->integer('release_id');
+            $table->integer('artist_id');
+            $table->string('role', 100);
 
             //tabel relasi
             $table->foreign('release_id')->references('release_id')->on('releases');

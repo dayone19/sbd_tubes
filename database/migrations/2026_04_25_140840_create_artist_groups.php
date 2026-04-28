@@ -8,9 +8,10 @@ return new class extends Migration
 {
     //  Artist Group (Pivot)
 //    CREATE TABLE artist_groups (
-//             id INT AUTO_INCREMENT PRIMARY KEY,
+//             id INT NOT NULL AUTO_INCREMENT,
 //             artist_id INT NOT NULL,
 //             group_id INT NOT NULL,
+//             PRIMARY KEY (id),
 //             FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
 //             FOREIGN KEY (group_id) REFERENCES groups(group_id)
 //     );

@@ -10,10 +10,10 @@ return new class extends Migration
     //sql
     // CREATE TABLE transaction_details(
     //     detail_id INT(11) NOT NULL AUTO_INCREMENT,
-    //     transaction_id INT(11) DEFAULT NULL,
-    //     product_id INT(11) DEFAULT NULL,
-    //     quantity INT(11) DEFAULT NULL,
-    //     price DECIMAL(15, 2) DEFAULT NULL,
+    //     transaction_id INT(11) NOT NULL,
+    //     product_id INT(11) NOT NULL,
+    //     quantity INT(11) NOT NULL,
+    //     price DECIMAL(15, 2) NOT NULL,
     //     PRIMARY KEY(detail_id),
     //     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id),
     //     FOREIGN KEY (product_id) REFERENCES products(product_id)
@@ -22,10 +22,10 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->increments('detail_id');
-            $table->integer('transaction_id')->nullable();
-            $table->integer('product_id')->nullable(); 
-            $table->integer('quantity')->nullable(); 
-            $table->decimal('price', 15, 2)->nullable(); 
+            $table->integer('transaction_id');
+            $table->integer('product_id'); 
+            $table->integer('quantity'); 
+            $table->decimal('price', 15, 2); 
 
             // relasi tabel
             $table->foreign('transaction_id')->references('transaction_id')->on('transactions');

@@ -10,10 +10,11 @@ return new class extends Migration
     {
         // Artist Sites
         // CREATE TABLE artist_sites (
-        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     id INT NOT NULL AUTO_INCREMENT,
         //     artist_id INT NOT NULL,
         //     type VARCHAR(100),
         //     url VARCHAR(255) NOT NULL,
+        //     PRIMARY KEY (id),
         //     FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
         // );
         Schema::create('artist_sites', function (Blueprint $table) {

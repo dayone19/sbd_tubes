@@ -10,8 +10,8 @@ return new class extends Migration
     //sql
     // CREATE TABLE products (
         //     product_id INT(11) NOT NULL AUTO_INCREMENT,
-        //     seller_id INT(11) DEFAULT NULL,
-        //     release_id INT(11) DEFAULT NULL,
+        //     seller_id INT(11) NOT NULL,
+        //     release_id INT(11) NOT NULL,
         //     price DECIMAL(15, 2) NOT NULL,
         //     condition VARCHAR(100) DEFAULT NULL,
         //     status VARCHAR(50) DEFAULT NULL,
@@ -24,8 +24,8 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('product_id');
-            $table->integer('seller_id')->nullable();//fk ke tabel seller
-            $table->integer('release_id')->nullable();//fk ke tabel release
+            $table->integer('seller_id');//fk ke tabel seller
+            $table->integer('release_id');//fk ke tabel release
             $table->decimal('price', 15, 2);
             $table->string('condition', 100)->nullable();
             $table->string('status', 50)->nullable();
