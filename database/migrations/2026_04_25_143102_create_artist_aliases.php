@@ -8,9 +8,10 @@ return new class extends Migration
 {
     //  Artist Aliases
     // CREATE TABLE artist_aliases (
-    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     id INT NOT NULL AUTO_INCREMENT,
     //     artist_id INT UNSIGNED NOT NULL,
     //     alias_name VARCHAR(255) NOT NULL,
+    //     PRIMARY KEY (id),
     //     FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
     // );
 

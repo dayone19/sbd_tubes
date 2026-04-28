@@ -10,8 +10,8 @@ return new class extends Migration
     //sql
     // CREATE TABLE label_release (
         //     id INT(11) NOT NULL AUTO_INCREMENT,
-        //     release_id INT(11) DEFAULT NULL,
-        //     label_id INT(11) DEFAULT NULL,
+        //     release_id INT(11) NOT NULL,
+        //     label_id INT(11) NOT NULL,
         //     PRIMARY KEY (id),
         //     FOREIGN KEY (release_id) REFERENCES releases(release_id),
         //     FOREIGN KEY (label_id) REFERENCES  labels(label_id)
@@ -20,8 +20,8 @@ return new class extends Migration
     {
         Schema::create('label_release', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('release_id')->nullable();
-            $table->integer('label_id')->nullable();
+            $table->integer('release_id');
+            $table->integer('label_id');
 
             // relasi antar tabel
             $table->foreign('release_id')->references('release_id')->on('releases');

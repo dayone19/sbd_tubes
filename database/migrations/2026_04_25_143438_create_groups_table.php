@@ -9,8 +9,9 @@ return new class extends Migration
     // tabel Groups
     //sql
     // CREATE TABLE `groups` (
-    //     group_id INT AUTO_INCREMENT PRIMARY KEY,
-    //     name VARCHAR(255) NOT NULL
+    //     group_id INT NOT NULL AUTO_INCREMENT,
+    //     name VARCHAR(255) NOT NULL,
+    //     PRIMARY KEY (group_id)
     // );
     public function up(): void
     {

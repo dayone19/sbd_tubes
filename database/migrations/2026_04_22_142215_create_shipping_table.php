@@ -10,9 +10,9 @@ return new class extends Migration
     //sql
     // CREATE TABLE shippings(
     //     shipping_id INT(11) NOT NULL AUTO_INCREMENT,
-    //     transaction_id INT(11) DEFAULT NULL,
+    //     transaction_id INT(11) NOT NULL,
     //     address TEXT NOT NULL,
-    //     cost DECIMAL (15, 2) DEFAULT NULL,
+    //     cost DECIMAL (15, 2) NOT NULL,
     //     status VARCHAR(100) DEFAULT NULL,
     //     PRIMARY KEY(shipping_id),
     //     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id)
@@ -21,9 +21,9 @@ return new class extends Migration
     {
         Schema::create('shippings', function (Blueprint $table) {
             $table->increments('shipping_id');
-            $table->integer('transaction_id')->nullable();
+            $table->integer('transaction_id');
             $table->text('address');
-            $table->decimal('cost', 15, 2)->nullable();
+            $table->decimal('cost', 15, 2);
             $table->string('status', 100)->nullable();
 
             // relasi tabel

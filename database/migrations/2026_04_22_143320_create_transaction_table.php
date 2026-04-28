@@ -10,9 +10,9 @@ return new class extends Migration
     //sql
     // CREATE TABLE transactions(
     //     transaction_id INT(11) NOT NULL AUTO_INCREMENT,
-    //     user_id INT(11) DEFAULT NULL,
+    //     user_id INT(11) NOT NULL,
     //     total_price DECIMAL(15, 2) NOT NULL,
-    //     status VARCHAR(50) DEFAULT NULL,
+    //     status VARCHAR(50) NOT NULL,
     //     created_at DATETIME CURRENT_TIMESTAMP,
     //     PRIMARY KEY(transaction_id),
     //     FOREIGN KEY (user_id) REFERENCES user(user_id)
@@ -21,9 +21,9 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('transaction_id');
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id');
             $table->decimal('total_price', 15, 2);
-            $table->string('status', 50)->nullable();
+            $table->string('status', 50);
             $table->datetime('created_at')->useCurrent();
 
             // relasi tabel

@@ -10,9 +10,9 @@ return new class extends Migration
     //sql
     // CREATE TABLE riviews (
         //     review_id INT(11) NOT NULL AUTO_INCREMENT,
-        //     user_id INT(11) DEFAULT NULL,
-        //     product_id INT(11) DEFAULT NULL,
-        //     rating INT(11) DEFAULT NULL,
+        //     user_id INT(11) NOT NULL,
+        //     product_id INT(11) NOT NULL,
+        //     rating INT(11) NOT NULLL,
         //     created_at DATETIME CURRENT_TIMESTAMP,
         //     PRIMARY KEY (riview_id),
         //     FOREIGN KEY (user_id) REFERENCES users(user_id),
@@ -22,9 +22,9 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('review_id');
-            $table->integer('user_id')->nullable();
-            $table->integer('product_id')->nullable();
-            $table->integer('rating')->nullable();
+            $table->integer('user_id');
+            $table->integer('product_id');
+            $table->integer('rating');
             $table->datetime('created_at')->useCurrent();
 
             // relasi tabel

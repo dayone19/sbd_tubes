@@ -10,8 +10,8 @@ return new class extends Migration
     //sql
     // CREATE TABLE user_roles(
     //     id INT(11) NOT NULL AUTO_INCREMENT,
-    //     user_id INT(11) DEFAULT NULL,
-    //     role_id INT(11) DEFAULT NULL,
+    //     user_id INT(11) NOT NULL,
+    //     role_id INT(11) NOT NULL,
     //     PRIMARY KEY(id),
     //     FOREIGN KEY (user_id) REFERENCES users(user_id),
     //     FOREIGN KEY (role_id) REFERENCES roles(role_id)
@@ -20,8 +20,8 @@ return new class extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->integer('role_id')->nullable();
+            $table->integer('user_id');
+            $table->integer('role_id');
 
             // relasi tabel
             $table->foreign('user_id')->references('user_id')->on('users');

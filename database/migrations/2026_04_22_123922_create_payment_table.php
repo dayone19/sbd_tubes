@@ -10,9 +10,9 @@ return new class extends Migration
     //SQL
         // CREATE TABLE payments (
         //     payment_id INT(11) NOT NULL AUTO_INCREMENT,
-        //     transaction_id INT(11) DEFAULT NULL,
-        //     method VARCHAR(50) DEFAULT NULL,
-        //     status VARCHAR(50) DEFAULT NULL,
+        //     transaction_id INT(11) NOT NULL,
+        //     method VARCHAR(50) NOT NULL,
+        //     status VARCHAR(50) NOT NULL,
         //     paid_at DATETIME DEFAULT NULL,
         //     PRIMARY KEY (payment_id),
         //     FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id)
@@ -22,8 +22,8 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('payment_id');
             $table->integer('transaction_id');
-            $table->string('method', 50)->nullable();
-            $table->string('status', 50)->nullable();
+            $table->string('method', 50);
+            $table->string('status', 50);
             $table->datetime('paid_at')->nullable();
 
             // relasi antar tabel

@@ -8,9 +8,10 @@ return new class extends Migration
 {
     // SQL
     // CREATE TABLE artist_variations (
-    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     id INT NOT NULL AUTO_INCREMENT,
     //     artist_id INT(11) NOT NULL,
     //     variation_name VARCHAR(255) NOT NULL,
+    //     PRIMARY KEY (id),
     //     FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
     // );
     public function up(): void

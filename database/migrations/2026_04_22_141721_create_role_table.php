@@ -10,7 +10,7 @@ return new class extends Migration
     //sql
     // CREATE TABLE roles (
     //     role_id INT(11) NOT NULL AUTO_INCREMENT,
-    //     role VARCHAR(50) not null,
+    //     role VARCHAR(50) NOT null,
     //     PRIMARY KEY(role_id)
     // );
     public function up(): void
