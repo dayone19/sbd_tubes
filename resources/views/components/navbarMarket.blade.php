@@ -91,7 +91,10 @@
                 Items I Want
                 </a>
 
-                <a href="#">Purchases</a>
+                <a href="{{ route('sell.purchases') }}"
+                   class="{{ request()->routeIs('sell.purchases') ? 'active' : '' }}">
+                   Purchases
+                </a>
 
                 <a href="{{ route('sell.cart') }}"
                    class="{{ request()->routeIs('sell.cart') ? 'active' : '' }}">

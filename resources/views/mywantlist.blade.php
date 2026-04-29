@@ -12,7 +12,7 @@
     .toolbar{margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;}
     .search-left{display:flex;align-items:center;gap:18px;}
     .search-box{width:400px;height:35px;position:relative;}
-    .search-box input{width:100%;height:46px;padding:0 40px 0 10px;border:1px solid #bbb;font-size:18px;}
+    .search-box input{width:100%;height:38px;padding:0 20px 0 8px;border:1px solid #bbb;font-size:18px;}
     .search-box span{position:absolute;right:14px; font-size:28px; color:#666;}
     .toolbar a{color:#2d5bd1;font-size:16px;}
     .right-btns{display:flex;align-items:center;gap:16px;}
@@ -60,7 +60,9 @@
 
             <div class="right-btns">
                 <a href="#" class="btn-link">Export My Wantlist</a>
-                <button class="btn-green">Show Items in Marketplace</button>
+                <a href="/mywants">
+                    <button class="btn-green">Show Items in Marketplace</button>
+                </a>
             </div>
         </div>
 

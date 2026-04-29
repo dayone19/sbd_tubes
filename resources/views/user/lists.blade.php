@@ -46,7 +46,7 @@
 
         <tbody>
             <tr>
-                <td><a href="#">saya</a></td>
+                <td><a href="#">nama listnya</a></td>
                 <td>2 days ago</td>
             </tr>
         </tbody>

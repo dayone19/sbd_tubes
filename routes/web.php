@@ -72,6 +72,9 @@ Route::prefix('sell')->group(function () {
         return view('sell.cart');
     })->name('sell.cart');
     
+    Route::get('/purchases', function () {
+        return view('sell.purchases');
+    })->name('sell.purchases');
 });
 
 Route::get('/showArtist', function () {
