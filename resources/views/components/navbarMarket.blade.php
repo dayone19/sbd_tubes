@@ -56,6 +56,18 @@
     border:1px solid #000;
     width:230px; margin-bottom:10px;
 }
+.view-btn{
+    padding:8px 14px;
+    background:blue;
+    color:#fff;
+    border-radius:4px;
+    cursor:pointer;
+    margin-bottom:10px;
+}
+.view-btn:hover{
+    background:#1f48d8;
+}
+
 </style>
 
 <div class="subnav-wrapper">
@@ -74,7 +86,10 @@
                    All Items
                 </a>
 
-                <a href="#">Items I Want</a>
+                <a href="{{ route('mywants') }}"
+                class="{{ request()->routeIs('mywants') ? 'active' : '' }}">
+                Items I Want
+                </a>
 
                 <a href="#">Purchases</a>
 
@@ -91,8 +106,19 @@
 
         <!-- kanan -->
         <div class="market-search">
-            <input type="text" placeholder="Search Marketplace">
+
+            @if(request()->routeIs('mywants'))
+                <a href="/mywantlist">
+                    <button class="view-btn">View your Wantlist</button>
+                </a>
+            @endif
+
+            @if(request()->routeIs('sell.list'))
+                <input type="text" placeholder="Search Marketplace">
+            @endif
+
         </div>
+
 
     </div>
 

@@ -42,10 +42,13 @@ Route::get('/resources', function () {
     return view('resources');
 });
 
-
 Route::get('/mywantlist', function () {
     return view('mywantlist');
 });
+
+Route::get('/mywants', function () {
+    return view('mywants');
+})->name('mywants');
 
 Route::prefix('user')->group(function () {
 

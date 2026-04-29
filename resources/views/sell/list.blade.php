@@ -51,18 +51,15 @@ body {
     gap: 20px;
     align-items: center;
 }
-
 .top h2 {
     font-size: 20px;
     font-weight: bold;
 }
-
 /* PAGINATION */
 .pagination {
     margin: 8px 0;
     color: #333;
 }
-
 /* HEADER TABLE */
 .list-header {
     display: grid;
@@ -72,7 +69,6 @@ body {
     font-size: 12px;
     border: 1px solid #ddd;
 }
-
 /* ITEM */
 .item {
     display: grid;
@@ -82,12 +78,10 @@ body {
     border-bottom: 1px solid #ddd;
     align-items: flex-start;
 }
-
 .item img {
     width: 60px;
     height: 60px;
 }
-
 /* INFO */
 .title {
     color: #0b5ed7;
@@ -95,55 +89,35 @@ body {
     font-size: 13px;
     text-decoration: none;
 }
-
 .info p {
     margin: 1px 0;
     font-size: 11px;
     color: #555;
 }
-
 /* SELLER */
 .seller {
     font-size: 11px;
 }
-
 .seller a {
     color: #0b5ed7;
     font-weight: bold;
     text-decoration: none;
 }
-
 /* PRICE */
-.price {
-    color: #d0021b;
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.price p {
-    font-size: 11px;
-    color: #555;
-}
-
+.price {color: #d0021b;font-weight: bold;font-size: 13px;}
+.price p {font-size: 11px;color: #555;}
 /* BUTTON */
 .item button {
-    background: #28a745;
+    background: #008000;
     border-radius: 3px;
     font-size: 11px;
     padding: 5px 10px;
+    color: #fff;
 }
-
-.item button:hover {
-    background: #218838;
-}
-
+.item button:hover {background: #218838;}
 /* HOVER */
-.item:hover {
-    background: #f9f9f9;
-}
-.sort-box {
-    font-size: 12px;
-}
+.item:hover {background: #f9f9f9;}
+.sort-box {font-size: 12px;}
 </style>
 
 <div id="all" class="tab-content">
