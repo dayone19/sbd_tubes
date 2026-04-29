@@ -4,6 +4,49 @@
 
 @include('components.navbarMarket')
 
+<style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #fff; color: #333; }
+    .discogs-cart-container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+    .cart-status-text { font-size: 20px; font-weight: bold; margin-bottom: 15px; }
+    /* Alert Styling */
+    .shipping-alert { background-color: #fff4ec; border: 1px solid #f9d6bc; border-left: 5px solid #e67e22; 
+        padding: 15px; display: flex; gap: 15px;margin-bottom: 20px;}
+    .alert-icon { font-size: 20px; }
+    .alert-content a { color: #2d6cdf; text-decoration: none; }
+    /* Layout */
+    .cart-layout { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+    /* Left Side */
+    .seller-section { border: 1px solid #ddd; background: #fff; margin-bottom: 20px; }
+    .seller-header { background: #f6f6f6; padding: 10px 15px; border-bottom: 1px solid #ddd;display: flex; 
+        justify-content: space-between; align-items: center;}
+    .seller-name { color: #2d6cdf; font-weight: bold; font-size: 16px; }
+    .seller-rating { font-size: 12px; color: #666; margin-left: 10px; }
+    .remove-btn, .small-remove { background: none; border: none; cursor: pointer; color: #999; }
+    .cart-item { display: flex; padding: 15px; gap: 15px; border-bottom: 1px solid #eee; }
+    .cart-item img { width: 80px; height: 80px; object-fit: cover; border: 1px solid #ddd; }
+    .item-details { flex: 1; }
+    .item-title { color: #2d6cdf; text-decoration: none; font-weight: bold; font-size: 15px; }
+    .item-condition { font-size: 13px; color: #666; margin-top: 5px; }
+    .item-price { text-align: right; font-weight: bold; font-size: 16px; color: #b12704; }
+    .shipping-info-section { margin-top: 20px; }
+    .shipping-info-section h3 { font-size: 18px; margin-bottom: 10px; }
+    .shipping-info-section p { font-size: 14px; }
+    /* Right Side (Summary) */
+    .payment-summary-box { border: 1px solid #ddd; background: #fff; padding: 20px; }
+    .payment-summary-box h3 { margin-top: 0; font-size: 18px; }
+    .payment-methods { border: 1px solid #2d6cdf; padding: 10px; display: flex; 
+        align-items: center;  gap: 10px;  margin-bottom: 15px; background: #f0f5ff;}
+    .price-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+    .price-val { text-align: right; }
+    .total-row { font-weight: bold; font-size: 16px; }
+    .terms-checkbox { font-size: 13px; margin: 20px 0; display: flex; gap: 10px; }
+    .btn-pay-now { width: 100%; background-color: #28a745; color: white; border: none; padding: 12px; 
+        font-weight: bold; font-size: 16px; border-radius: 4px;cursor: pointer;}
+    .btn-pay-now:hover { background-color: #218838; }
+    .sidebar-tips { margin-top: 20px; background: #fff; border: 1px solid #ddd; padding: 15px; font-size: 13px; }
+    .sidebar-tips h4 { margin-top: 0; }
+</style>
+
 <div class="discogs-cart-container">
     <h2 class="cart-status-text">You have 1 item in your cart from 1 seller.</h2>
 
@@ -99,95 +142,5 @@
 
     </div>
 </div>
-
-<style>
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f9f9f9; color: #333; }
-    .discogs-cart-container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
-    
-    .cart-status-text { font-size: 20px; font-weight: bold; margin-bottom: 15px; }
-
-    /* Alert Styling */
-    .shipping-alert { 
-        background-color: #fff4ec; 
-        border: 1px solid #f9d6bc; 
-        border-left: 5px solid #e67e22; 
-        padding: 15px; 
-        display: flex; 
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-    .alert-icon { font-size: 20px; }
-    .alert-content a { color: #2d6cdf; text-decoration: none; }
-
-    /* Layout */
-    .cart-layout { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
-
-    /* Left Side */
-    .seller-section { border: 1px solid #ddd; background: #fff; margin-bottom: 20px; }
-    .seller-header { 
-        background: #f6f6f6; 
-        padding: 10px 15px; 
-        border-bottom: 1px solid #ddd;
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center;
-    }
-    .seller-name { color: #2d6cdf; font-weight: bold; font-size: 16px; }
-    .seller-rating { font-size: 12px; color: #666; margin-left: 10px; }
-    .remove-btn, .small-remove { background: none; border: none; cursor: pointer; color: #999; }
-
-    .cart-item { display: flex; padding: 15px; gap: 15px; border-bottom: 1px solid #eee; }
-    .cart-item img { width: 80px; height: 80px; object-fit: cover; border: 1px solid #ddd; }
-    .item-details { flex: 1; }
-    .item-title { color: #2d6cdf; text-decoration: none; font-weight: bold; font-size: 15px; }
-    .item-condition { font-size: 13px; color: #666; margin-top: 5px; }
-    .item-price { text-align: right; font-weight: bold; font-size: 16px; color: #b12704; }
-
-    .shipping-info-section { margin-top: 20px; }
-    .shipping-info-section h3 { font-size: 18px; margin-bottom: 10px; }
-    .shipping-info-section p { font-size: 14px; }
-
-    /* Right Side (Summary) */
-    .payment-summary-box { border: 1px solid #ddd; background: #fff; padding: 20px; }
-    .payment-summary-box h3 { margin-top: 0; font-size: 18px; }
-    
-    .payment-methods { 
-        border: 1px solid #2d6cdf; 
-        padding: 10px; 
-        display: flex; 
-        align-items: center; 
-        gap: 10px; 
-        margin-bottom: 15px;
-        background: #f0f5ff;
-    }
-
-    .price-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
-    .price-val { text-align: right; }
-    .total-row { font-weight: bold; font-size: 16px; }
-    
-    .terms-checkbox { font-size: 13px; margin: 20px 0; display: flex; gap: 10px; }
-    
-    .btn-pay-now { 
-        width: 100%; 
-        background-color: #28a745; 
-        color: white; 
-        border: none; 
-        padding: 12px; 
-        font-weight: bold; 
-        font-size: 16px; 
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .btn-pay-now:hover { background-color: #218838; }
-
-    .sidebar-tips { 
-        margin-top: 20px; 
-        background: #fff; 
-        border: 1px solid #ddd; 
-        padding: 15px; 
-        font-size: 13px; 
-    }
-    .sidebar-tips h4 { margin-top: 0; }
-</style>
 
 @endsection
