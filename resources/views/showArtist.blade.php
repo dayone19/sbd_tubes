@@ -4,6 +4,7 @@
 
 @section('content')
 <style>
+.row {margin-right: 0;margin-left: 0;}
 .artist-page {font-size: 14px;color: #222;}
 /* TITLE */
 .artist-name {font-size: 28px;font-weight: 700;margin-top: 15px;}

@@ -80,6 +80,203 @@
 .release-label {color: #2a5bd7;}
 .release-year {text-align: right;}
 .release-more {text-align: center;}
+
+/* ================= FIX GRID BOOTSTRAP ================= */
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+/* ================= INFO (TENGAH) ================= */
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 6px;
+}
+
+.label {
+    width: 100px;
+    flex-shrink: 0; /* 🔥 penting */
+    color: #555;
+}
+
+.content {
+    flex: 1;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    padding-left: 20px;
+}
+
+.sidebar .d-flex {
+    align-items: flex-start;
+}
+
+.sidebar img {
+    width: 100px;
+    height: 90px;
+    object-fit: cover;
+}
+
+/* ================= STATISTICS ================= */
+.stats-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.stats-label {
+    width: 90px;
+    color: #555;
+}
+
+.stats-value {
+    margin-right: 20px;
+}
+.credit-item a,
+.credit-item div div {
+    white-space: nowrap; /* 🔥 biar 1 baris terus */
+}
+
+.credit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap; /* 🔥 penting: cegah turun ke bawah */
+}
+
+.credit-item img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.credit-item > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.credits-container {
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 350px; /* 🔥 jarak kiri-kanan */
+    row-gap: 30px;     /* atas-bawah tetap */
+}
+
+.credits-container button {
+    grid-column: span 2;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 8px;
+    background: white;
+    font-weight: 400;
+}
+
+.img-box {
+    width: 70px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* default */
+.img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 🔥 khusus Steven dibesarin */
+.img-box.steven img {
+    transform: scale(1.5); /* coba 1.2 - 1.5 */
+}
+
+#video-sidebar-section {
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+        padding-top: 15px;
+    }
+    #video-sidebar-section .v-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    #video-sidebar-section h2 { font-size: 16px; font-weight: bold; margin: 0; }
+    
+    .main-player {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-color: #000;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .main-player img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+    .play-btn-overlay {
+        position: absolute;
+        width: 50px;
+        height: 35px;
+        background: rgba(0,0,0,0.7);
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .play-btn-overlay::after {
+        content: '';
+        border-style: solid;
+        border-width: 7px 0 7px 12px;
+        border-color: transparent transparent transparent #fff;
+    }
+
+    .v-list { max-height: 250px; overflow-y: auto; margin-bottom: 15px; }
+    .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+    .v-item:hover { background: #f9f9f9; }
+    .v-thumb { width: 100px; height: 60px; position: relative; flex-shrink: 0; }
+    .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .v-time { position: absolute; bottom: 2px; right: 2px; background: #000; color: #fff; font-size: 10px; padding: 0 3px; }
+    .v-title { font-size: 13px; color: #2a5bd7; line-height: 1.2; }
+
+    /* Custom scrollbar untuk list video */
+    .v-list::-webkit-scrollbar { width: 5px; }
+    .v-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+    .l-section { border-top: none; padding-top: 0px; }
+    .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
+    .filter-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: white;
+    border: 1px solid black; 
+    border-radius: 0;        
+    cursor: pointer;
+    width: 200px;
+}
+
+.filter-item {
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-item:hover {
+    background: #f2f2f2;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+
 </style>
 
 <div class="artist-page">
@@ -120,6 +317,97 @@
             <strong>Credits (57)</strong>
             <hr class="my-0" style="width: 800px;">
         </div>
+
+        <div class="credits-container">
+            <div class="credit-item">
+                <div class="img-box steven">
+                    <img src="https://i.discogs.com/ybMm_0uVnr36tXqpU8rivrlaIuTGe118KVYo0hZtwEM/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ3MjAw/OS0xMjA4NTQ2MjUz/LmpwZWc.jpeg" alt="Steve Tirpak" class="image_RSPxy" width="60px" height="40px">
+                </div>
+                <div>
+                    <a href="#" style="font-weight: bold;">Steven Tirpak*</a>
+                    <div>Arranged By [Strings; Co]</div>
+                </div>
+            </div>
+            
+            <div class="credit-item">
+                <div class="img-box">
+                    <img src="https://i.discogs.com/VohVwMYOWsSIs1sRFOLr6ATRfBRRv1uXHedPr9Pf2bo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIxMzI4/MC0xNTkxNDc3MDc2/LTc3MTEuanBlZw.jpeg" alt="Larry Gold" class="image_RSPxy" width="60px" height="40px">
+                </div>
+                <div>
+                    <a href="#" style="font-weight: bold;">Larry Gold</a>
+                    <div>Arranged By [Strings]</div>
+                </div>
+            </div>
+            
+
+            <div class="credit-item">
+                <div class="img-box">
+                    <img src="https://i.discogs.com/UYK3QABIA2glrBqrn4y_LtiCix9wNPPsQrWgl-x0Vt0/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTcyNDY4/NC0xNDM1OTE0MTg0/LTkzNzAuanBlZw.jpeg" alt="Glenn Fischbach" class="image_RSPxy" width="60px" height="40px">
+                </div>  
+                <div>
+                    <a href="#" style="font-weight: bold;">Glenn Fischbach</a>
+                    <div>Cello</div>
+                </div>
+            </div>
+
+            <div class="credit-item">
+                <div class="img-box">
+                    <img src="https://i.discogs.com/VohVwMYOWsSIs1sRFOLr6ATRfBRRv1uXHedPr9Pf2bo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIxMzI4/MC0xNTkxNDc3MDc2/LTc3MTEuanBlZw.jpeg" alt="Larry Gold" class="image_RSPxy" width="60px" height="40px">
+                </div>
+                <div>
+                    <a href="#" style="font-weight: bold;">Larry Gold</a>
+                    <div>Conductor [Strings]</div>
+                </div>
+            </div>
+            
+
+            <div class="credit-item">
+                <div class="img-box">
+                    <img src="https://i.discogs.com/4wV9jzZ8OX1L0NVY2utfB5uhHhD85DmErfF-IC7Q1OU/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTcwMTMx/OTItMTY0MzE0MTQ4/Ni0xNjIwLmpwZWc.jpeg" alt="Daniel Rodriguez (15)" class="image_RSPxy" width="60px" height="40px">
+                </div>                
+                <div>
+                    <a href="#" style="font-weight: bold;">Daniel Rodriguez</a>
+                    <div>Congas</div>
+                </div>
+            </div>
+
+            <div class="credit-item">
+                <div class="img-box steven">
+                    <img src="https://i.discogs.com/ybMm_0uVnr36tXqpU8rivrlaIuTGe118KVYo0hZtwEM/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ3MjAw/OS0xMjA4NTQ2MjUz/LmpwZWc.jpeg" alt="Steve Tirpak" class="image_RSPxy" width="80px" height="40px">
+                </div>
+                <div>
+                    <a href="#" style="font-weight: bold;">Steven Tirpak*</a>
+                    <div>Copyist</div>
+                </div>
+            </div>
+
+            <button>
+                ▼ Show more credits...
+            </button>
+        </div>
+        <div class="mt-3">
+            <strong>Versions</strong>
+            <hr class="my-0" style="width: 800px;">
+
+            <div class="small" style="color: black; padding-top:10px;">Filter by</div>
+            <div class="small" style="color: black; padding-top:7px;">Format</div>
+
+            <div class="filter-box" onclick="toggleDropdown()">
+                <span style="color: gray; font-weight: 400;">Find a format</span>
+                <span class="arrow right" id="arrow"></span>
+            </div>
+
+        <!-- DROPDOWN -->
+         <div id="formatMenu" class="hidden mt-2">
+            <input type="text" placeholder="Find a format" class="form-control mb-2">
+            <div class="filter-item">Vinyl</div>
+            <div class="filter-item">CD</div>
+            <div class="filter-item">Cassette</div>
+            <div class="filter-item">Digital</div>
+        </div>
+    </div>
+
+
     </div>
 
     <!-- MIDDLE -->
@@ -128,17 +416,20 @@
 
         <div class="info-row">
             <div class="label">Genre:</div>
-            <div class="content"><a href="">Funk / soul, Pop</a></div>
+            <div class="content">
+                <a href="#">Funk / Soul</a>, 
+                <a href="#">Pop</a>
+            </div>
         </div>
-
+        
         <div class="info-row">
-            <div class="label">style:</div>
-            <div class="content profile-text"></div>
+            <div class="label">Style:</div>
+            <div class="content profile-text">-</div>
         </div>
-
+        
         <div class="info-row">
-            <div class="label">year:</div>
-            <div class="content"><a href="">2026</a></div>
+            <div class="label">Year:</div>
+            <div class="content"><a href="#">2026</a></div>
         </div>
     </div>
 
@@ -185,395 +476,94 @@
                         </div>
                         <hr class="my-2">
                             
-                        <div style="display:flex; gap:12px; margin-bottom:6px;">
-                            <div style="min-width:40px; color:#555;">Have:</div>
-                            <div style="margin-right:20px;"><a href="">8548</a></div>
-
-                            <div style="min-width:80px; color:#555;">Avg Rating:</div>
+                        <div class="stats-row">
+                            <div class="stats-label">Have:</div>
+                            <div class="stats-value"><a href="#">8548</a></div>
+                            <div class="stats-label">Avg Rating:</div>
                             <div>4.71 / 5</div>
                         </div>
-
-                        <div style="display:flex; gap:17px; margin-bottom:6px;">
-                            <div style="min-width:20px; color:#555;">Want:</div>
-                            <div style="margin-right:20px;"><a href="">981</a></div>
-
-                            <div style="min-width:78px; color:#555;">Ratings:</div>
-                            <div><a href="">1252</a></div>
+                        <div class="stats-row">
+                            <div class="stats-label">Want:</div>
+                            <div class="stats-value"><a href="#">981</a></div>
+                            <div class="stats-label">Ratings:</div>
+                            <div><a href="#">1252</a></div>
                         </div>
                     </div>
-        </div>
 
+                    <div id="video-sidebar-section">
+                <div class="v-header">
+                    <h2>Videos (6)</h2>
+                    <a href="#" class="small">Edit</a>
+                </div>
 
+                <div class="main-player" id="mainPlayer">
+                    <img src="https://via.placeholder.com/400x225/222/fff?text=BRUNO+MARS+VIDEO" id="currentThumb">
+                    <div class="play-btn-overlay"></div>
+                </div>
+
+                <div class="v-list">
+                    <div class="v-item" onclick="changeVideo('https://via.placeholder.com/400x225/111/fff?text=FULL+ALBUM', 'Full Album')">
+                        <div class="v-thumb">
+                            <img src="https://via.placeholder.com/100x60/333/fff?text=Play">
+                            <span class="v-time">45:10</span>
+                        </div>
+                        <div class="v-title"><b>Bruno Mars - The Romantic (Full Album)</b></div>
+                    </div>
+
+                    <div class="v-item" onclick="changeVideo('https://via.placeholder.com/400x225/444/fff?text=MUSIC+VIDEO', 'Official Video')">
+                        <div class="v-thumb">
+                            <img src="https://via.placeholder.com/100x60/555/fff?text=Play">
+                            <span class="v-time">3:45</span>
+                        </div>
+                        <div class="v-title"><b>Bruno Mars - The Romantic (Official Video)</b></div>
+                    </div>
+                </div>
+
+                <div class="l-section">
+
+    <!-- HEADER -->
+    <div class="d-flex align-items-center mb-2">
+        <h2 class="mb-0 me-2" style="font-size: 15px;">Lists</h2>
+        <a href="#" class="small text-decoration-none" style="position: relative; top: 1px;">
+            Add to List
+        </a>
     </div>
 
+    <hr class="my-2">
+
+    <!-- LIST -->
+    <div>
+        <div><a href="#">listening log</a> by <a href="#">agasa</a></div>
+        <div><a href="#">Albums/EPs I've Listened To</a> by <a href="#">DylanBryl</a></div>
+        <div><a href="#">ren</a> by <a href="#">sirenzz</a></div>
+        <div><a href="#">Albums I Really Want</a> by <a href="#">Britliz1960</a></div>
+        <div><a href="#">.past - present - eternal.</a> by <a href="#">BubbleBuzz</a></div>
+    </div>
+
+    <hr class="my-2">
+
+    <!-- FOOTER -->
+    <a href="#" class="text-decoration-none">View More List -></a>
 </div>
-
-    <!-- TAB NAV -->
-    <div class="mt-5 border-bottom">
-        <div class="d-flex gap-2">
-            <button data-tab="discography" class="tab-btn active">Discography</button>
-            <button data-tab="reviews" class="tab-btn">Reviews</button>
-            <button data-tab="videos" class="tab-btn">Videos</button>
-            <button data-tab="lists" class="tab-btn">Lists</button>
-        </div>
-    </div>
-
-    <!-- RELEASES -->
-    <div id="tab-discography" class="tab-content">
-        <div class="mt-4">
-        <!-- left -->
-        <div class="row">
-            <!-- sidebar -->
-            <div class="col-md-3 filter-sidebar">
-
-                <div class="filter-box" onclick="toggleMenu('releaseMenu', this)">
-                    <span class="arrow down"></span> Releases <span>88</span>
-                </div>
-                <div id="releaseMenu">
-                    <div class="filter-item">Albums <span>12</span></div>
-                    <div class="filter-item">Singles & EPs <span>72</span></div>
-                    <div class="filter-item">Compilations <span>2</span></div>
-                    <div class="filter-item">Miscellaneous <span>2</span></div>
-                </div>
-
-                <!-- APPEARANCES -->
-                <div class="filter-box mt-2" onclick="toggleMenu('appearMenu', this)">
-                    <span class="arrow down"></span> Appearances <span>1422</span>
-                </div>
-                <div id="appearMenu" class="hidden">
-                    <div class="filter-item">Albums <span>64</span></div>
-                    <div class="filter-item">Singles & EPs <span>4</span></div>
-                    <div class="filter-item">Compilations <span>1187</span></div>
-                    <div class="filter-item">Mixes <span>140</span></div>
-                    <div class="filter-item">Videos <span>22</span></div>
-                    <div class="filter-item">Miscellaneous <span>5</span></div>
-                </div>
-
-                <!-- UNOFFICIAL -->
-                <div class="filter-box mt-2" onclick="toggleMenu('unoffMenu', this)">
-                    <span class="arrow down"></span> Unofficial <span>52</span>
-                </div>
-                <div id="unoffMenu" class="hidden">
-                    <div class="filter-item">Albums <span>13</span></div>
-                    <div class="filter-item">Singles & EPs <span>20</span></div>
-                    <div class="filter-item">Compilations <span>9</span></div>
-                    <div class="filter-item">Videos <span>2</span></div>
-                    <div class="filter-item">Miscellaneous <span>8</span></div>
-                </div>
-
-                <!-- CREDITS -->
-                <div class="filter-box mt-2" onclick="toggleMenu('creditMenu', this)">
-                    <span class="arrow down"></span> Credits <span>366</span>
-                </div>
-                <div id="creditMenu" class="hidden">
-                    <div class="filter-item">Featuring & Presenting <span>107</span></div>
-                    <div class="filter-item">Writing & Arrangement <span>156</span></div>
-                    <div class="filter-item">Production <span>31</span></div>
-                    <div class="filter-item">Vocals <span>61</span></div>
-                    <div class="filter-item">Technical <span>5</span></div>
-                    <div class="filter-item">Instruments & Performance <span>5</span></div>
-                    <div class="filter-item">Visual <span>1</span></div>
-                </div>
-
-            </div>
-
-
-            <!-- RIGHT CONTENT -->
-            <div class="col-md-9">
-
-                <h5 class="fw-bold">Release</h5>
-
-                <!-- FILTER BAR (hidden dulu) -->
-                <div id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
-                    <div class="row g-2">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a format">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a label">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a country">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a year">
-                        </div>
-                    </div>
-
-                    <input type="text" class="form-control mt-2" placeholder="Search Discography">
-                </div>
-
-                <!-- TOP CONTROL -->
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="small">
-                        Showing 1–25 of 88
-                        <a href="#" class="ms-2">Next ›</a>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-2">
-                        <button id="toggleFilter" class="btn btn-dark rounded-pill px-2" style="width:160px">
-                            <p>Search & Filters 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-                                </svg> 
-                            </p>
-                        </button>
-
-                        <span id="sortYear" class="small" style="cursor:pointer;">
-                            Year ↑
-                        </span>
-
-                        <button class="view-btn active" data-view="grid">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-grid-fill" viewBox="0 0 16 16">
-                            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/>
-                            </svg>
-                        </button>
-                        <button class="view-btn" data-view="gridlist"> 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"/>
-                            <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"/>
-                            <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z"/>
-                            </svg>
-                        </button>
-                        <button class="view-btn" data-view="list">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                            </svg>
-                        </button>
-
-                        <select class="form-select form-select-sm" style="width:70px;">
-                            <option>25</option>
-                            <option>50</option>
-                            <option>100</option>
-                            <option>250</option>
-                            <option>500</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <!-- LIST ITEM -->
-                <div id="releaseContainer" class="grid-view">
-
-                    <div class="release-item" data-year="2013">
-                        <img src="https://i.discogs.com/hR1_tNewaSFa8myEfAwEdXYo5xnDKYZOrdCz8nYkW_8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NDI0/MzQtMTQ2MzY2NzI4/OC01MTM4LmpwZWc.jpeg">
-
-                        <!-- GRID VIEW -->
-                        <div class="grid-info">
-                            <div class="title"><a href="#">Yours Truly</a></div>
-                            <div class="artist"><a href="#">Ariana Grande</a></div>
-                            <div class="year">2013</div>
-                        </div>
-
-                        <!-- GRIDLIST + LIST -->
-                        <div class="release-main">
-                            <div>
-                                <div class="title"><a href="#">Yours Truly</a></div>
-                                <div class="versions">36 versions ▼</div>
-                            </div>
-                        </div>
-
-                        <div class="release-label">Republic Records</div>
-                        <div class="release-year">2013</div>
-                        <div class="release-more">•••</div>
-
-                    </div>
-
-                    <!-- ini kubikin buat ngecek tombol year aj-->
-                    <div class="release-item" data-year="2024">
-                            
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="150">
-
-                        <!-- GRID VIEW -->
-                        <div class="grid-info">
-                            <div class="title"><a href="#">Eternal Sunshine</a></div>
-                            <div class="artist"><a href="#">Ariana Grande</a></div>
-                            <div class="year">2024</div>
-                        </div>
-
-                        <!-- GRIDLIST + LIST -->
-                        <div class="release-main">
-                            <div>
-                                <div class="title"><a href="#">Eternal Sunshine</a></div>
-                                <div class="versions">60 versions ▼</div>
-                            </div>
-                        </div>
-
-                        <div class="release-label">Republic Records</div>
-                        <div class="release-year">2024</div>
-                        <div class="release-more">•••</div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <!-- REVIEWS -->
-    <div id="tab-reviews" class="tab-content d-none">
-        <h4>Reviews</h4>
-        <textarea class="form-control" placeholder="Enter your comment"></textarea>
-        <button class="btn btn-secondary mt-2 mb-4">Submit</button>
-    </div>
-
-    <!-- VIDEOS -->
-    <div id="tab-videos" class="tab-content d-none">
-        <h5 class="fw-bold">Videos (149)</h5>
-
-        <div class="row mt-3">
-            <!-- big vid -->
-            <div class="col-md-8">
-                <iframe id="mainVideo"
-                    width="100%"
-                    height="400"
-                    src="https://www.youtube.com/embed/_sV0S8qWSy0"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <!-- vid list -->
-            <div class="col-md-4" style="max-height:400px; overflow-y:auto;">
-
-                <div class="video-item d-flex mb-3" data-video="_sV0S8qWSy0" style="cursor:pointer;">
-                    <img src="https://img.youtube.com/vi/_sV0S8qWSy0/mqdefault.jpg" width="120">
-                    <div class="ms-2">
-                        <div class="small fw-bold">
-                            Ariana Grande - The Way (Official Video)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-item d-flex mb-3" data-video="BPgEgaPk62M" style="cursor:pointer;">
-                    <img src="https://img.youtube.com/vi/BPgEgaPk62M/mqdefault.jpg" width="120">
-                    <div class="ms-2">
-                        <div class="small fw-bold">
-                            Ariana Grande - raindrops (audio)
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-    <!-- LISTS -->
-    <div id="tab-lists" class="tab-content d-none">
-        <div class="fw-bold">List 
-            <a href="#">Add to List</a>
-        </div>
-
-        <li>
-            <a href="#">Love POP :)</a> by <a href="#">pop.music.love</a>
-        </li>
-        <li>
-            <a href="#">Completed Artist</a> by <a href="#">DylanBryl</a>
-        </li>
-    </div>
-
 </div>
-
 </div>
-
-
+</div>
 <script>
-/* ACTIVE FILTER */
-document.querySelectorAll('.filter-item, .filter-box').forEach(item => {
-    item.addEventListener('click', () => {
-        document.querySelectorAll('.filter-item, .filter-box')
-            .forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-    });
-});
+    function toggleDropdown() {
+    const menu = document.getElementById("formatMenu");
+    const arrow = document.getElementById("arrow");
 
-/* TOGGLE MENU */
-function toggleMenu(id, el) {
-    const menu = document.getElementById(id);
-    const arrow = el.querySelector('.arrow');
+    menu.classList.toggle("hidden");
 
-    menu.classList.toggle('hidden');
-
-    if (menu.classList.contains('hidden')) {
-        arrow.classList.remove('down');
-        arrow.classList.add('right');
+    if (menu.classList.contains("hidden")) {
+        arrow.classList.remove("down");
+        arrow.classList.add("right");
     } else {
-        arrow.classList.remove('right');
-        arrow.classList.add('down');
+        arrow.classList.remove("right");
+        arrow.classList.add("down");
     }
 }
-
-/* FILTER BAR */
-document.getElementById('toggleFilter').onclick = () => {
-    document.getElementById('filterBar').classList.toggle('d-none');
-};
-
-/* VIEW SWITCH */
-const container = document.getElementById('releaseContainer');
-
-document.querySelectorAll('.view-btn').forEach(btn => {
-    btn.onclick = () => {
-        document.querySelectorAll('.view-btn')
-            .forEach(b => b.classList.remove('active'));
-
-        btn.classList.add('active');
-
-        container.className = ''; // reset
-        container.classList.add(btn.dataset.view + '-view');
-    };
-});
-
-let asc = true;
-
-document.getElementById('sortYear').addEventListener('click', function () {
-    const container = document.getElementById('releaseContainer');
-    const items = Array.from(container.querySelectorAll('.release-item'));
-
-    items.sort((a, b) => {
-        const yearA = parseInt(a.dataset.year);
-        const yearB = parseInt(b.dataset.year);
-
-        return asc ? yearA - yearB : yearB - yearA;
-    });
-
-    // toggle arah
-    asc = !asc;
-    this.innerText = asc ? 'Year ↑' : 'Year ↓';
-
-    // render ulang
-    items.forEach(item => container.appendChild(item));
-});
-
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-
-        // reset active button
-        document.querySelectorAll('.tab-btn')
-            .forEach(b => b.classList.remove('active'));
-
-        btn.classList.add('active');
-
-        // sembunyikan semua konten
-        document.querySelectorAll('.tab-content')
-            .forEach(c => c.classList.add('d-none'));
-
-        // tampilkan sesuai tab
-        const tab = btn.dataset.tab;
-        document.getElementById('tab-' + tab)
-            .classList.remove('d-none');
-    });
-});
-
-document.querySelectorAll('.video-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const videoId = item.dataset.video;
-        document.getElementById('mainVideo').src =
-            "https://www.youtube.com/embed/" + videoId;
-    });
-});
-
 </script>
+
 
 @endsection
