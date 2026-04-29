@@ -36,7 +36,7 @@ Route::get('/signup', function () {
 
 Route::get('/search', function () {
     return view('search');
-});
+})->name('search');
 
 Route::get('/resources', function () {
     return view('resources');

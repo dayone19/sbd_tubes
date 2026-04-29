@@ -98,7 +98,7 @@ a {text-decoration: none !important;}
                         Shop Music
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Shop My Wants</a></li>
+                        <li><a class="dropdown-item" href="">Shop My Wants</a></li>
                         <li><a class="dropdown-item" href="#">New & Upcoming</a></li>
                         <li><a class="dropdown-item" href="/sell/list">Vinyl</a></li>
                         <li><a class="dropdown-item" href="#">CD</a></li>

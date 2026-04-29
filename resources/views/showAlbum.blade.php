@@ -17,6 +17,7 @@
 .profile-text {line-height: 1.5;}
 /* LINK */
 .artist-page a {color: #2a5bd7;text-decoration: none;}
+.row {margin-right: 0;margin-left: 0;}
 /* SIDEBAR */
 .sidebar {padding-left: 20px;}
 .sidebar .d-flex {margin-top: 10px;}
@@ -53,15 +54,9 @@
     margin-right: 8px;
     transition: 0.2s;
 }
-
 /* arah panah */
-.arrow.right {
-    transform: rotate(-45deg);
-}
-
-.arrow.down {
-    transform: rotate(45deg);
-}
+.arrow.right {transform: rotate(-45deg);}
+.arrow.down {transform: rotate(45deg);}
 /* tombol */
 .view-btn { border: 1px solid #ccc;background: white; padding: 5px 10px;}
 .view-btn.active { background: #333; color: white;}

@@ -3,10 +3,6 @@
 @section('content')
 @include('components.navbarMarket')
 
-@extends('layouts.app')
-
-@section('content')
-@include('components.navbarMarket')
 
 <style>
     body {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;background-color: #fff;color: #333;margin: 0;}
@@ -224,6 +220,5 @@
 
 </div>
 
-@endsection
 
 @endsection
