@@ -26,7 +26,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1.4fr;
       gap: 40px;
-      border-bottom: 1px solid #2a2a2a;
+      border-bottom: none;
       padding-bottom: 40px;
     }
 
@@ -68,7 +68,7 @@
     /* Social icons */
     .social-icons {
       display: flex;
-      gap: 18px;
+      gap: 50px;
       align-items: center;
     }
 
@@ -453,17 +453,17 @@
       </svg>
       Cookie Settings
     </span>
-    <span class="divider">|</span>
+    <span class="divider"></span>
     <a href="#">Cookie Policy</a>
-    <span class="divider">|</span>
+    <span class="divider"></span>
     <a href="#">Terms of Service</a>
-    <span class="divider">|</span>
+    <span class="divider"></span>
     <a href="#">Privacy Policy</a>
-    <span class="divider">|</span>
+    <span class="divider"></span>
     <a href="#">California Privacy Notice</a>
-    <span class="divider">|</span>
+    <span class="divider"></span>
     <a href="#">Accessibility Statement</a>
-    <span class="divider">|</span>
+    <span class="divider"></span>
     <a href="#">Impressum</a>
   </div>
 </footer>
