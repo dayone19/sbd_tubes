@@ -14,11 +14,15 @@ Route::get('/search/advanced', function () {
     return view('search.advanced');
 });
 
+Route::get('/release/add', function () {
+    return view('release.add');
+});
+
 Route::get('/start', function () {
     return view('start');
 });
 
-route::get('/updates', function () {
+Route::get('/updates', function () {
     return view('updates');
 });
 
@@ -59,6 +63,10 @@ Route::prefix('user')->group(function () {
     Route::get('/lists', function () {
         return view('user.lists');
     })->name('user.lists');
+
+    Route::get('/drafts', function () {
+        return view('user.drafts');
+    })->name('user.drafts');
     
 });
 

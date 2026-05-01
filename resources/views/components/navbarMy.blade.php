@@ -29,7 +29,7 @@
             Submissions
         </a>
 
-        <a href="#" class="{{ request()->is('drafts') ? 'active' : '' }}">
+        <a href="/user/drafts" class="{{ request()->is('user/drafts') ? 'active' : '' }}">
             Drafts
         </a>
 
