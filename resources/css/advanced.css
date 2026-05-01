@@ -56,16 +56,18 @@ label {
 .checks label span {
     white-space: nowrap;
 }
-.footer {
+.advanced .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 25px;
+    background-color: #fff;
 }
-.footer p {
+.advanced .footer p {
     font-size: 13px;
+    color: #000;
 }
-.footer a {
+.advanced .footer a {
     color: #0073e6;
     text-decoration: none;
 }

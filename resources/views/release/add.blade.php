@@ -24,7 +24,7 @@
 /* BUTTON */
 .btn{border:1px solid #bbb;background:#fff;padding:4px 18px; font-size:13px; cursor:pointer; border-radius:3px;}
 .btn + .btn{margin-left:8px; background:#f5f5f5;}
-.btn-green{background:green;color:#fff; border:none;font-weight:700;}
+.add.btn-green{background:green;color:#fff; border:none;font-weight:700;}
 .btn-dark{background:#000;color:#fff;border:none;}
 .btn-format{border:1px solid #bbb; border-radius: 3px; background:#f5f5f5; font-size:12px; padding: 4px 5px; width:80px;}
 /* SECTION */

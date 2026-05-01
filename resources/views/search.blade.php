@@ -4,7 +4,7 @@
 
 <style>
     /*Sidebar */
-    .sidebar { position: sticky; top: 20px; }
+    .sidebar { top: 20px; }
     .sidebar-title { font-weight: 600; margin-bottom: 10px; }
     .sidebar-item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
     .sidebar-item a { color: #2a5bd7; text-decoration: none; }

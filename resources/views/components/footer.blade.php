@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Discogs Footer</title>
   <style>
-    *, *::before, *::after {
+    .footer *, .footer *::before, .footer *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
+    .footer .body {
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
@@ -243,34 +243,37 @@
     }
 
     /* ── BOTTOM BAR ── */
-    .footer-bottom {
+    .footer .footer-bottom {
       margin-top: 28px;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 6px 20px;
+      flex-wrap: nowrap; 
+      gap: 16px;
       font-size: 12px;
       color: #666666;
+      white-space: nowrap;
+      overflow-x: auto;
     }
 
-    .footer-bottom a {
+    .footer .footer-bottom a {
       color: #666666;
       text-decoration: none;
       transition: color 0.2s;
     }
 
-    .footer-bottom a:hover {
+    .footer .footer-bottom a:hover {
       color: #ffffff;
     }
 
-    .footer-bottom .copyright {
+    .footer .footer-bottom .copyright {
       color: #666666;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
+      gap: 0;
+      flex-shrink: 0;
     }
 
-    .footer-bottom .cookie-settings {
+    .footer .footer-bottom .cookie-settings {
       display: flex;
       align-items: center;
       gap: 5px;
@@ -279,11 +282,11 @@
       transition: color 0.2s;
     }
 
-    .footer-bottom .cookie-settings:hover {
+    .footer .footer-bottom .cookie-settings:hover {
       color: #ffffff;
     }
 
-    .footer-bottom .cookie-settings svg {
+    .footer .footer-bottom .cookie-settings svg {
       width: 14px;
       height: 14px;
       fill: #666666;
