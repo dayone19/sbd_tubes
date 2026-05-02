@@ -129,10 +129,71 @@ body {
             <h4>Ships From</h4>
             <a href="#">United States <span>16,805,452</span></a>
             <a href="#">United Kingdom <span>11,310,924</span></a>
+            <a href="#">Germany <span>10,374,370</span></a>
+            <a href="#">Italy <span>5,815,199</span></a>
+            <a href="#">Netherlands <span>5,102,763</span></a>
+            <a href="#">Show more... </a>
 
             <h4>Format</h4>
-            <a href="#">Vinyl <span>51,465,233</span></a>
-            <a href="#">CD <span>24,923,167</span></a>
+            <a href="#">Vinyl <span>51,506,531</span></a>
+            <a href="#">CD <span>24,860,040</span></a>
+            <a href="#">Cassete <span>1,604,085</span></a>
+            <a href="#">DVD <span>710,676</span></a>
+            <a href="#">Box Set <span>674,607</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>Currency</h4>
+            <a href="#">EUR () <span>40,396,075</span></a>
+            <a href="#">USD () <span>21,583,615</span></a>
+            <a href="#">GBP () <span>11,579,616</span></a>
+            <a href="#">AUD () <span>1,281,244</span></a>
+            <a href="#">CHF (CHF) <span>1,226,249</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>Genre</h4>
+            <a href="#">Rock <span>51,506,531</span></a>
+            <a href="#">Electronic <span>24,860,040</span></a>
+            <a href="#">Pop <span>1,604,085</span></a>
+            <a href="#">Funk / Soul <span>710,676</span></a>
+            <a href="#">Jazz <span>674,607</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>Style</h4>
+            <a href="#">Pop Rock <span>51,506,531</span></a>
+            <a href="#">House <span>24,860,040</span></a>
+            <a href="#">Disco <span>1,604,085</span></a>
+            <a href="#">Synth-pop <span>710,676</span></a>
+            <a href="#">Soul <span>674,607</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>Format Description</h4>
+            <a href="#">Album <span>51,506,531</span></a>
+            <a href="#">LP <span>24,860,040</span></a>
+            <a href="#">45 RPM <span>1,604,085</span></a>
+            <a href="#">7" <span>710,676</span></a>
+            <a href="#">Stereo <span>674,607</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>Media Condition</h4>
+            <a href="#">Very Good Plus (VG+) <span>51,506,531</span></a>
+            <a href="#">Near Mint (NM or M+) <span>24,860,040</span></a>
+            <a href="#">Mint (M) <span>1,604,085</span></a>
+            <a href="#">Very Good (VG) <span>710,676</span></a>
+            <a href="#">Good Plus (G+) <span>674,607</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>Year</h4>
+            <a href="#">Costume Range </a>
+            <a href="#">1997 <span>51,506,531</span></a>
+            <a href="#">1996 <span>24,860,040</span></a>
+            <a href="#">1995 <span>1,604,085</span></a>
+            <a href="#">1989 <span>710,676</span></a>
+            <a href="#">1988 <span>674,607</span></a>
+            <a href="#">Show more... </a>
+
+            <h4>More FIlters</h4>
+            <a href="#">Make an Offer <span>51,506,531</span></a>
+            <a href="#">Seller... </a>
         </div>
 
         <!-- CONTENT -->

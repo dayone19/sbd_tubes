@@ -64,41 +64,47 @@
 
         <h5>Ships From</h5>
         <div class="filter-item">
-            <label><input type="checkbox"> Spain</label>
-            <span class="count">16</span>
+            <label><input type="checkbox"> Spain</label> <span class="count">16</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> Germany</label>
-            <span class="count">11</span>
+            <label><input type="checkbox"> Germany</label> <span class="count">11</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> Italy</label>
-            <span class="count">11</span>
+            <label><input type="checkbox"> Italy</label> <span class="count">11</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> Netherlands</label>
-            <span class="count">10</span>
+            <label><input type="checkbox"> Netherlands</label> <span class="count">10</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> United States</label>
-            <span class="count">10</span>
+            <label><input type="checkbox"> United States</label> <span class="count">10</span>
         </div>
         <a href="#" class="blue-link" style="font-size: 12px;">Show more</a>
 
         <h5 style="margin-top:25px;">Format</h5>
         <div class="filter-item">
-            <label><input type="checkbox"> Vinyl</label>
-            <span class="count">83</span>
+            <label><input type="checkbox"> Vinyl</label> <span class="count">83</span>
         </div>
 
         <h5 style="margin-top:25px;">Format Description</h5>
         <div class="filter-item">
-            <label><input type="checkbox"> Album</label>
-            <span class="count">83</span>
+            <label><input type="checkbox"> Album</label> <span class="count">83</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> Limited Edition</label>
-            <span class="count">83</span>
+            <label><input type="checkbox"> Limited Edition</label> <span class="count">83</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> LP</label> <span class="count">84</span>
+        </div>
+
+        <h5 style="margin-top:25px;">Media Condition</h5>
+        <div class="filter-item">
+            <label><input type="checkbox"></label> <span class="badge-grade"><span class="dot"></span>Mint</span> <span class="count">83</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> Limited Edition</label> <span class="count">83</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> LP</label> <span class="count">84</span>
         </div>
     </div>
 
