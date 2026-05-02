@@ -518,61 +518,58 @@
         text-decoration: underline;
     }
 
-     .page-wrapper {
-            display: flex;
-            max-width: 1300px;
-            margin: 0 auto;
-            gap: 0;
-        }
+    .page-wrapper {
+        display: flex;
+        max-width: 1300px;
+        margin: 0 auto;
+        gap: 0;
+    }
 
-        /* ===================== MAIN CONTENT ===================== */
-        .main-content {
-            flex: 1;
-            padding: 0 0 20px 0;
-            border-right: 1px solid #ddd;
-            min-width: 0;
-        }
+    .main-content {
+        flex: 1;
+        padding: 0 0 20px 0;
+        min-width: 0;
+    }
 
-        /* Show more credits */
-        .show-more-credits {
-            text-align: center;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            padding: 8px 0;
-            font-size: 13px;
-            color: #333;
-            cursor: pointer;
-            background: #fff;
-        }
+    .show-more-credits {
+        text-align: center;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 8px 0;
+        font-size: 13px;
+        color: #333;
+        cursor: pointer;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
 
-        .show-more-credits a {
-            color: #333;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
+    .show-more-credits a {
+        color: #333;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
 
-        .show-more-credits a:hover {
-            color: #0000ff;
-        }
+    .show-more-credits a:hover {
+        color: #0000ff;
+    }
 
-        .show-more-credits .arrow {
-            font-size: 10px;
-        }
+    .show-more-credits .arrow {
+        font-size: 10px;
+    }
 
-        /* Versions header */
-        .versions-header {
-            padding: 16px 0 8px 0;
-        }
+    .versions-header {
+        padding: 16px 0 8px 0;
+    }
 
-        .versions-header h2 {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 12px;
-        }
+    .versions-header h2 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 12px;
+    }
 
         /* Filter section */
         .filter-section {
@@ -598,40 +595,44 @@
             flex-wrap: wrap;
         }
 
-        .filter-select {
-            flex: 1;
-            min-width: 150px;
-            position: relative;
-        }
+    .filter-select {
+        flex: 1;
+        min-width: 150px;
+        position: relative;
+    }
 
-        .filter-select select {
-            width: 100%;
-            padding: 6px 30px 6px 10px;
-            font-size: 13px;
-            color: #555;
-            border: 1px solid #000;
-            border-radius: none;
-            background: #fff;
-            appearance: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-            outline: none;
-        }
+    .filter-select select {
+        width: 100%;
+        padding: 6px 30px 6px 10px;
+        font-size: 13px;
+        color: #555;
+        border: 1px solid #000;
+        border-radius: none;
+        background: #fff;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        outline: none;
+        height: 32px;              
+        line-height: normal; 
+        display: flex;
+        align-items: center;
+        position: relative;  
+    }
 
         .filter-select select:hover {
             border-color: #aaa;
         }
 
-        .filter-select::after {
-            content: '▾';
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            color: #555;
-            pointer-events: none;
-        }
+    .filter-select::after {
+        content: '▾';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        font-size: 12px;
+    }
 
         /* Search barcode */
         .barcode-search {
@@ -678,15 +679,13 @@
         }
 
         /* Versions table header */
-        .versions-table-header {
-            background: #e8e8e8;
-            display: flex;
-            align-items: center;
-            padding: 8px 10px;
-            margin-top: 16px;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-        }
+    .versions-table-header {
+        background: #e8e8e8;
+        display: flex;
+        align-items: center;
+        padding: 8px 10px;
+        margin-top: 16px;
+    }
 
         .versions-count {
             flex: 1;
@@ -719,12 +718,11 @@
         }
 
         /* Table column headers */
-        .table-col-headers {
-            display: grid;
-            grid-template-columns: 1fr 220px 120px 80px 40px;
-            padding: 8px 10px;
-            border-bottom: 1px solid #ddd;
-            background: #f9f9f9;
+    .table-col-headers {
+        display: grid;
+        grid-template-columns: 1fr 220px 120px 80px 40px;
+        padding: 8px 10px;
+        background: #e8e8e8;
         }
 
         .table-col-headers span {
@@ -777,9 +775,10 @@
             grid-template-columns: 1fr 220px 120px 80px 40px;
             padding: 12px 10px;
             border-bottom: 1px solid #eee;
-            align-items: start;
+            align-items: center;
             background: #fff;
         }
+
 
         .version-row:hover {
             background: #fafafa;
@@ -812,6 +811,8 @@
             font-style: italic;
             color: #c00;
         }
+
+
 
         .version-label {
             font-size: 13px;
@@ -853,10 +854,17 @@
         }
 
         /* Yellow left border on rows */
-        .version-row-wrapper {
-            border-left: 4px solid #f5a623;
-            margin-bottom: 2px;
-        }
+    .version-row-wrapper {
+        border-right: 4px solid #f5a623;
+        margin-bottom: 5px;
+        background: #fff;
+        margin: 6px 10px;
+    }
+
+    .version-list {
+        background: #e8e8e8; 
+        padding: 6px 0; 
+    }
 
         /* ===================== SIDEBAR ===================== */
         .sidebar {
@@ -1404,6 +1412,7 @@
             </span>
         </div>
 
+    <div class="version-list">
         <!-- Version Row 1 -->
         <div class="version-row-wrapper">
             <div class="version-row">
@@ -1437,13 +1446,12 @@
         </div>
     </div>
     </div>
+    </div>
 </div>
 
     <!-- end .album-left -->
 
-    <!-- ══════════════════════════════════════
-         RIGHT COLUMN
-    ══════════════════════════════════════ -->
+    <!--  RIGHT COLUMN -->
     <div class="album-right">
 
         <!-- Master Release -->
