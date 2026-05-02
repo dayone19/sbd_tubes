@@ -17,7 +17,7 @@
     /* CONTENT */
     .want-content { flex: 1;}
     .content-title-row {display: flex;justify-content: space-between;align-items: flex-end;margin-bottom: 10px;}
-    .content-title-row h2 {font-size: 24px;margin: 0;}
+    .content-title-row h2 {font-size: 24px;margin: 0; font-weight:bold;}
     .learn-link {font-size: 12px;color: #2d5bd1;text-decoration: none;}
     /* PAGINATION BAR */
     .pagination-bar {display: flex;justify-content: space-between;align-items: center;margin-bottom: 15px;font-size: 13px;}
