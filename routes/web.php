@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\ValuableController;
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Route::get('/selling', function () {
     return view('selling');
@@ -97,3 +99,9 @@ Route::get('/showAlbum/{id}', function ($id) {
     $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
     return view('showAlbum', compact('album'));
 });
+
+//route untuk controller AlbumController.php
+Route::get('/', [AlbumController::class, 'index']);
+
+//route untuk controller ValuableController.php
+Route::get('/valuables', [ValuableController::class, 'index']);
