@@ -26,7 +26,7 @@
 .btn-plus{border:1px solid #000; background:#f5f5f5; padding:4px 18px; font-size:13px; cursor:pointer; border-radius:3px;}
 .btn-green{background:#158a1b; color:#fff; border:none; padding:5px 10px; font-size:13px; border-radius:3px;cursor:pointer; font-weight:bold;}
 .btn-dark{background:#000;color:#fff;border:none;}
-.btn-format{border:1px solid #bbb; border-radius: 3px; background:#f5f5f5; font-size:12px; padding: 4px 5px; width:80px;}
+.btn-format{border:1px solid #bbb; border-radius: 3px; background:#f5f5f5; font-size:12px; padding: 4px 5px; width:90px;}
 /* SECTION */
 .sec{border:1px solid var(--border);border-top:none;padding:10px 20px 15px 25px;}
 .sec-title{font-size:15px;font-weight:700;margin-bottom:18px;}
@@ -42,6 +42,7 @@ select,textarea{
 textarea{resize:vertical;}
 .input-medium{ max-width: 400px; border: 1px solid #000; border-radius:3px; padding:2px; margin-left: 10px; background-color:white;}
 .input-small{ max-width: 50px; border: 1px solid #000; border-radius:3px; padding:2px; margin-left: 10px; background-color:white;}
+.input-format{ max-width: 350px; border: 1px solid #000; border-radius:3px; padding:2px; margin-left: 10px; background-color:white;}
 /* IMAGE */
 .image-grid{display:grid;grid-template-columns: 1.8fr 1fr;gap:30px;}
 .drop{border:3px dashed #ddd;padding:55px 30px;text-align:center;}
@@ -224,7 +225,7 @@ textarea{resize:vertical;}
 
             <div class="image-grid">
                 <div class="drop">
-                    <p>⬆</p>
+                    <p><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg></p>
                     <p>Drag and drop image files here</p>
                     <p>or</p>
                     <button class="btn btn-dark">Browse files</button>
@@ -258,14 +259,25 @@ textarea{resize:vertical;}
 
         <!-- Artists -->
         <div class="sec">
-            <div class="sec-title">Artists <span class="req">*</span> <span class="info">ⓘ</span></div>
+        <div class="sec-title">Artists <span class="req">*</span></div>
 
+        <div id="artistContainer">
             <div class="row">
-                <input type="text" class="input-medium" placeholder="Name">
-                <button class="btn-format">Add ANV</button>
-            </div>
+                <div class="grid3">
+                    <input type="text" class="input-medium" placeholder="Name">
 
-            <button class="btn-plus">+ Add artist</button>
+                    <button class="btn-format">Add ANV</button>
+
+                    <input type="text" class="input-format" placeholder="ANV" style="display:none;">
+
+                    <button class="btn-remove">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-plus">+ Add artist</button>
         </div>
 
         <!-- Title -->
@@ -605,5 +617,81 @@ textarea{resize:vertical;}
     </div>
 
 </div>
+
+<script>
+//add anv
+document.addEventListener("click", function(e) {
+
+  if (e.target.classList.contains("btn-format")) {
+    const row = e.target.closest(".row");
+    const anvInput = row.querySelector(".input-format");
+
+    if (anvInput.style.display === "none") {
+      anvInput.style.display = "inline-block";
+      e.target.textContent = "Remove ANV";
+    } else {
+      anvInput.style.display = "none";
+      anvInput.value = "";
+      e.target.textContent = "Add ANV";
+    }
+  }
+
+});
+
+// remove artist
+document.addEventListener("click", function(e) {
+
+  const removeBtn = e.target.closest(".btn-remove");
+  if (!removeBtn) return;
+
+  const row = removeBtn.closest(".row");
+  const container = document.getElementById("artistContainer");
+
+  if (container.children.length > 1) {
+    row.remove();
+    updateRemoveButtons();
+  }
+});
+
+function updateRemoveButtons() {
+  const rows = document.querySelectorAll("#artistContainer .row");
+
+  rows.forEach(row => {
+    const btn = row.querySelector(".btn-remove");
+
+    if (rows.length > 1) {
+      btn.style.display = "inline-block";
+    } else {
+      btn.style.display = "none";
+    }
+  });
+}
+
+// add artist
+document.addEventListener("click", function(e) {
+
+  if (e.target.classList.contains("btn-plus")) {
+
+    // khusus artist section
+    const container = document.getElementById("artistContainer");
+    if (!container) return;
+
+    const firstRow = container.querySelector(".row");
+    const newRow = firstRow.cloneNode(true);
+
+    // reset input
+    newRow.querySelector(".input-medium").value = "";
+    newRow.querySelector(".input-format").value = "";
+    newRow.querySelector(".input-format").style.display = "none";
+
+    // reset tombol ANV
+    newRow.querySelector(".btn-format").textContent = "Add ANV";
+
+    container.appendChild(newRow);
+    updateRemoveButtons();
+  }
+
+});
+</script>
 
 @endsection
