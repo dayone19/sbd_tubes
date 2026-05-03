@@ -292,7 +292,7 @@
 
                 <h5 class="fw-bold">Release</h5>
 
-                <!-- FILTER BAR (hidden dulu) -->
+                <!-- FILTER BAR (hidden) -->
                 <div id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
                     <div class="row g-2">
                         <div class="col-md-3">
@@ -320,24 +320,25 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2">
-                        <button id="toggleFilter" class="btn btn-dark rounded-pill px-2" style="width:160px">
-                            <p>Search & Filters 
+                        <button id="toggleFilter" class="btn btn-dark rounded-pill px-3" style="width:170px;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Search & Filters</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-                                </svg> 
-                            </p>
+                                    <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                </svg>
+                            </div>
                         </button>
 
                         <span id="sortYear" class="small" style="cursor:pointer;">
                             Year ↑
                         </span>
 
-                        <button class="view-btn active" data-view="grid">
+                        <button class="view-btn" data-view="grid">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-grid-fill" viewBox="0 0 16 16">
                             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/>
                             </svg>
                         </button>
-                        <button class="view-btn" data-view="gridlist"> 
+                        <button class="view-btn active" data-view="gridlist"> 
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"/>
                             <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"/>
@@ -362,7 +363,7 @@
                 </div>
 
                 <!-- LIST ITEM -->
-                <div id="releaseContainer" class="grid-view">
+                <div id="releaseContainer" class="gridlist-view">
 
                     <div class="release-item" data-year="2013">
                         <img src="https://i.discogs.com/hR1_tNewaSFa8myEfAwEdXYo5xnDKYZOrdCz8nYkW_8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NDI0/MzQtMTQ2MzY2NzI4/OC01MTM4LmpwZWc.jpeg">
@@ -384,7 +385,15 @@
 
                         <div class="release-label">Republic Records</div>
                         <div class="release-year">2013</div>
-                        <div class="release-more">•••</div>
+                        <div class="dropdown">
+                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
+                                •••
+                            </div>
+                            <ul class="dropdown-menu" style="color: black; background: white; border: 1px solid #ddd;">
+                                <li><a class="dropdown-item" href="#">Add to List</a></li>
+                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
+                            </ul>
+                        </div>
 
                     </div>
 
@@ -410,7 +419,15 @@
 
                         <div class="release-label">Republic Records</div>
                         <div class="release-year">2024</div>
-                        <div class="release-more">•••</div>
+                        <div class="dropdown" >
+                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
+                                •••
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Add to List</a></li>
+                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
+                            </ul>
+                        </div>
 
                     </div>
 
@@ -551,7 +568,6 @@ document.getElementById('sortYear').addEventListener('click', function () {
     asc = !asc;
     this.innerText = asc ? 'Year ↑' : 'Year ↓';
 
-    // render ulang
     items.forEach(item => container.appendChild(item));
 });
 
