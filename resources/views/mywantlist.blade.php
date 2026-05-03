@@ -33,13 +33,13 @@
     .check-col{width:42px;text-align:center;}
     .release-flex{display:flex; gap:14px;}
     .thumb{width:64px;height:64px;border:1px solid #ccc;object-fit:cover;}
-    .title a{color:#2d5bd1;font-size:18px;}
+    .title a{color:#2d5bd1;font-size:14px;}
     .artist{ color:#c2007a;}
-    .sale{ margin-top:6px; font-size:16px;}
+    .sale{ margin-top:6px; font-size:14px;}
     .sale a{ color:#1f48d8; font-weight:bold;}
     .price{color:#d64500; font-weight:bold;}
-    .stars{ color:#999; font-size:24px; letter-spacing:2px;}
-    .edit-link{color:#2d5bd1;}
+    .stars{ color:#f0c000; font-size:18px; letter-spacing:2px;}
+    .notes-input{width:80%; height:32px; border:1px solid #ccc;padding:0 10px;font-size:14px;}
     /* FOOTER */
     .bottom-bar{margin-top:18px;display:flex;justify-content:space-between;align-items:center;font-size:18px; font-weight:bold;}
 </style>
@@ -130,10 +130,24 @@
                     </td>
 
                     <td>LP, Album, Ltd, Red</td>
+
                     <td>2026</td>
-                    <td><span class="stars">☆☆☆☆☆</span></td>
+
+                    <td class="rating-col">
+                        <div class="stars" data-value="0">
+                            <span data-star="1">☆</span>
+                            <span data-star="2">☆</span>
+                            <span data-star="3">☆</span>
+                            <span data-star="4">☆</span>
+                            <span data-star="5">☆</span>
+                        </div>
+                    </td>
+
                     <td>10 minutes ago</td>
-                    <td><a href="#" class="edit-link">Edit</a></td>
+
+                    <td>
+                        <input type="text" class="notes-input" placeholder="Edit">
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -159,4 +173,18 @@
     </div>
 </div>
 
+<script>
+document.querySelectorAll('.rating span').forEach(star => {
+    star.addEventListener('click', function () {
+        let value = this.getAttribute('data-star');
+        let parent = this.parentElement;
+
+        parent.setAttribute('data-value', value);
+
+        parent.querySelectorAll('span').forEach(s => {
+            s.textContent = s.getAttribute('data-star') <= value ? '★' : '☆';
+        });
+    });
+});
+</script>
 @endsection

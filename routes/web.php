@@ -100,6 +100,10 @@ Route::get('/showAlbum/{id}', function ($id) {
     return view('showAlbum', compact('album'));
 });
 
+Route::get('/showLabel', function () {
+    return view('showLabel');
+});
+
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
 
