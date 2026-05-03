@@ -640,14 +640,16 @@ document.addEventListener("click", function(e) {
 
 // remove artist
 document.addEventListener("click", function(e) {
-  if (e.target.classList.contains("btn-remove")) {
-    const row = e.target.closest(".row");
-    const container = document.getElementById("artistContainer");
 
-    if (container.children.length > 1) {
-      row.remove();
-      updateRemoveButtons();
-    }
+  const removeBtn = e.target.closest(".btn-remove");
+  if (!removeBtn) return;
+
+  const row = removeBtn.closest(".row");
+  const container = document.getElementById("artistContainer");
+
+  if (container.children.length > 1) {
+    row.remove();
+    updateRemoveButtons();
   }
 });
 
@@ -666,22 +668,29 @@ function updateRemoveButtons() {
 }
 
 // add artist
-document.querySelector(".btn-plus").addEventListener("click", () => {
-  const container = document.getElementById("artistContainer");
-  const firstRow = container.querySelector(".row");
+document.addEventListener("click", function(e) {
 
-  const newRow = firstRow.cloneNode(true);
+  if (e.target.classList.contains("btn-plus")) {
 
-  // reset isi input
-  newRow.querySelector(".input-medium").value = "";
-  newRow.querySelector(".input-anv").value = "";
-  newRow.querySelector(".input-anv").style.display = "none";
+    // khusus artist section
+    const container = document.getElementById("artistContainer");
+    if (!container) return;
 
-  // reset tombol
-  newRow.querySelector(".btn-format").textContent = "Add ANV";
+    const firstRow = container.querySelector(".row");
+    const newRow = firstRow.cloneNode(true);
 
-  container.appendChild(newRow);
-  updateRemoveButtons();
+    // reset input
+    newRow.querySelector(".input-medium").value = "";
+    newRow.querySelector(".input-format").value = "";
+    newRow.querySelector(".input-format").style.display = "none";
+
+    // reset tombol ANV
+    newRow.querySelector(".btn-format").textContent = "Add ANV";
+
+    container.appendChild(newRow);
+    updateRemoveButtons();
+  }
+
 });
 </script>
 
