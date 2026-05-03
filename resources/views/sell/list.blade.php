@@ -143,10 +143,10 @@ body {
             <a href="#">Show more... </a>
 
             <h4>Currency</h4>
-            <a href="#">EUR () <span>40,396,075</span></a>
-            <a href="#">USD () <span>21,583,615</span></a>
-            <a href="#">GBP () <span>11,579,616</span></a>
-            <a href="#">AUD () <span>1,281,244</span></a>
+            <a href="#">EUR (€) <span>40,396,075</span></a>
+            <a href="#">USD ($) <span>21,583,615</span></a>
+            <a href="#">GBP (£) <span>11,579,616</span></a>
+            <a href="#">AUD (A$) <span>1,281,244</span></a>
             <a href="#">CHF (CHF) <span>1,226,249</span></a>
             <a href="#">Show more... </a>
 
