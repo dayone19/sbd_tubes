@@ -104,3 +104,5 @@ Route::get('/showLabel', function () {
     return view('showLabel');
 });
 
+//route untuk controller AlbumController.php
+Route::get('/', [AlbumController::class, 'index']);

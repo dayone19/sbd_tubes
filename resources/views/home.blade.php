@@ -171,7 +171,7 @@
                 </div>
 
                 <div class="year">
-                    {{$collected->total_copies ?? 0 }} copies from ${{number_format($collected->lowest_price ?? 0, 2)}}
+                    {{$collected->total_copies ?? 0 }} copies from ${{number_format($collected->total_lowest ?? 0, 2)}}
                 </div>
             </div>
             @endforeach
