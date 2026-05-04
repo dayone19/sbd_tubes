@@ -19,7 +19,7 @@
 .label-page a {color: #2a5bd7;text-decoration: none;}
 .row { margin-right: 0;margin-left: 0;}
 /* SIDEBAR */
-.sidebar {padding-left: 20px;}
+.sidebar {padding-left: 20px; width: 400px;}
 .sidebar .d-flex {margin-top: 10px;}
 /* SMALL TEXT */
 .small {font-size: 12px;color: #666;}
@@ -124,6 +124,47 @@
 .release-year {text-align: right;}
 .release-more {text-align: center;}
 .release-catalog {font-size: 13px;color: #333;}
+.master-release-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 6px;
+        margin-bottom: 8px;
+    }
+
+    .master-release-header .release-id {
+        font-size: 12px;
+        font-weight: normal;
+        color: #555;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 40px;
+    }
+.release-icon {
+        width: 12px;
+        height: 12px;
+        background: #000;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+    }
+
+    .release-icon::after {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
 
 <div class="label-page">
@@ -174,13 +215,17 @@
     <!-- RIGHT -->
     <div class="col-md-3 sidebar">
 
-        <div class="d-flex justify-content-between">
-            <strong>Label</strong>
-            <span>[l1389993]</span>
+        <div class="master-release-header">
+            <span>Label</span>
+            <span class="release-id">
+                <span class="release-icon"></span>
+                [l{{ $album->master_id ?? '138147' }}]
+            </span>
         </div>
-        <hr>
-        <div>
+        <div class="master-release-links">
             <a href="#">Edit Label</a>
+            <div style="color:black;">Data quality rating: Data Correct</div>
+            <div style="color:blue; font-weight: bold;">19993 submissions pending</div>
         </div>
         
         <div class="d-flex justify-content-between">
@@ -197,7 +242,7 @@
                 <!-- ITEM 1 -->
                 <div class="carousel-item active">
                     <div class="d-flex mt-2">
-                        <img src=https://i.discogs.com/iIZ74y-SGUGNfUaccYF3zVP5gCj4j6u_6ht7M-SUiis/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTU0/NjUzLTE1MjE5MzA0/MjEtMjAxMC5qcGVn.jpeg width="90" height="90" class="me-2">
+                        <img src=https://i.discogs.com/iIZ74y-SGUGNfUaccYF3zVP5gCj4j6u_6ht7M-SUiis/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTU0/NjUzLTE1MjE5MzA0/MjEtMjAxMC5qcGVn.jpeg width="100" height="100" class="me-2">
 
                         <div>
                             <div class="small">MASTER RELEASE</div>

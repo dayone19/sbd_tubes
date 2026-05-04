@@ -19,7 +19,7 @@
 .artist-page a {color: #2a5bd7;text-decoration: none;}
 .row { margin-right: 0;margin-left: 0;}
 /* SIDEBAR */
-.sidebar {padding-left: 20px;}
+.sidebar {padding-left: 20px; width: 400px;}
 .sidebar .d-flex {margin-top: 10px;}
 /* SMALL TEXT */
 .small {font-size: 12px;color: #666;}
@@ -80,6 +80,47 @@
 .release-label {color: #2a5bd7;}
 .release-year {text-align: right;}
 .release-more {text-align: center;}
+.master-release-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 6px;
+        margin-bottom: 8px;
+    }
+
+    .master-release-header .release-id {
+        font-size: 12px;
+        font-weight: normal;
+        color: #555;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 40px;
+    }
+.release-icon {
+        width: 12px;
+        height: 12px;
+        background: #000;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+    }
+
+    .release-icon::after {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
 
 <div class="artist-page">
@@ -132,12 +173,16 @@
     <!-- RIGHT -->
     <div class="col-md-3 sidebar">
 
-        <div class="d-flex justify-content-between">
-            <strong>Artist</strong>
-            <span>[a3310737]</span>
+        <div class="master-release-header">
+            <span>Artist</span>
+            <span class="release-id">
+                <span class="release-icon"></span>
+                [a{{ $album->master_id ?? '3310737' }}]
+            </span>
         </div>
-        <hr>
-        <a href="#">Edit Artist</a>
+        <div class="master-release-links">
+            <a href="#">Edit Artist</a>
+        </div>
         
         <div class="d-flex justify-content-between">
             <strong>For Sale</strong>
@@ -153,7 +198,7 @@
                 <!-- ITEM 1 -->
                 <div class="carousel-item active">
                     <div class="d-flex mt-2">
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="90" class="me-2">
+                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="100" height="100" class="me-2">
 
                         <div>
                             <div class="small">MASTER RELEASE</div>

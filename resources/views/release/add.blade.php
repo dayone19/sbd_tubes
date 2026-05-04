@@ -82,36 +82,29 @@ textarea{resize:vertical;}
     margin-bottom:12px;
 }
 /* TRACKLIST */
-/* HEADER */
 .tracklist-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
     margin-bottom:8px;
 }
-
-/* TABLE */
 .track-table{
     width:100%;
     border-collapse:collapse;
     border:1px solid #ccc;
     font-size:13px;
 }
-
 .track-table th{
     background:#f2f2f2;
     border-bottom:1px solid #ccc;
     padding:6px;
     text-align:left;
 }
-
 .track-table td{
     border-top:1px solid #eee;
     padding:6px;
     vertical-align:middle;
 }
-
-/* INPUT */
 .input-track{
     width:100%;
     padding:4px 6px;
@@ -119,45 +112,34 @@ textarea{resize:vertical;}
     border-radius:2px;
     font-size:13px;
 }
-
 .input-track.small{
     width:70px;
 }
-
-/* LINKS */
 .add-link{
     color:#333;
     text-decoration:none;
     font-size:13px;
 }
-
 .add-link span{
     font-weight:bold;
     margin-right:3px;
 }
-
-/* CREDITS */
 .credits{
     font-size:12px;
     color:#555;
     margin-top:4px;
 }
-
-/* ICONS */
 .drag{
     text-align:center;
     color:#aaa;
     cursor:move;
 }
-
 .arrow{
     text-align:center;
     color:#aaa;
     cursor:pointer;
     font-size:11px;
 }
-
-/* FOOTER */
 .track-footer{
     margin-top:10px;
     background:#f5f5f5;
@@ -167,7 +149,6 @@ textarea{resize:vertical;}
     gap:6px;
     align-items:center;
 }
-
 .track-footer button{
     background:#fff;
     border:1px solid #bbb;
@@ -175,12 +156,9 @@ textarea{resize:vertical;}
     font-size:12px;
     cursor:pointer;
 }
-
 .track-footer button:hover{
     background:#eee;
 }
-
-/* LINKS */
 .mini-link{
     color:#2457d6;
     text-decoration:none;
@@ -194,10 +172,23 @@ textarea{resize:vertical;}
 .guide-link{ display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid #ececec;text-decoration:none;color:#111;font-size:15px;font-weight:700;}
 .help-link{display:inline-block;margin-top:22px;color:#2457d6;text-decoration:none;font-size:15px;}
 /* CHECK / RADIO */
-.add.input[type=checkbox],
-.add.input[type=radio]{ transform:scale(1.6); margin-right:20px;}
 .rating{display:flex;gap:30px;margin-top:15px;}
 .rating label{text-align:center;font-size:15px;}
+
+/* REMOVE BUTTON — konsisten untuk semua section */
+.btn-remove{
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:2px 6px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+    flex-shrink:0;
+}
+.btn-remove:hover{ color:#cc0000; }
+.btn-remove svg{ pointer-events:none; }
 </style>
 
 <div class="release-wrap">
@@ -229,7 +220,6 @@ textarea{resize:vertical;}
                     <p>Drag and drop image files here</p>
                     <p>or</p>
                     <button class="btn btn-dark">Browse files</button>
-
                     <small>
                         Accepted image formats are .jpg, .gif, .png.
                         Images must be larger than 150 px wide and less than 4 MB.
@@ -238,17 +228,14 @@ textarea{resize:vertical;}
 
                 <div>
                     <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Image Rules and Requirements</div>
-
                     <div class="rule">
                         <div class="rule-no">1</div>
                         <div>Images must match the exact version of the release. For example, don't add the CD image to the LP version.</div>
                     </div>
-
                     <div class="rule">
                         <div class="rule-no">2</div>
-                        <div>Do not upload images with watermarks, or images of generic sleeves. </div>
+                        <div>Do not upload images with watermarks, or images of generic sleeves.</div>
                     </div>
-
                     <div class="rule">
                         <div class="rule-no">3</div>
                         <div>Do not copy images from the Internet unless one of the Intellectual Property Rules requirements is met.</div>
@@ -257,27 +244,30 @@ textarea{resize:vertical;}
             </div>
         </div>
 
-        <!-- Artists -->
+        <!-- ═══════════════════════════════════════ ARTISTS ══ -->
         <div class="sec">
-        <div class="sec-title">Artists <span class="req">*</span></div>
+            <div class="sec-title">Artists <span class="req">*</span></div>
 
-        <div id="artistContainer">
-            <div class="row">
-                <div class="grid3">
-                    <input type="text" class="input-medium" placeholder="Name">
-
-                    <button class="btn-format">Add ANV</button>
-
-                    <input type="text" class="input-format" placeholder="ANV" style="display:none;">
-
-                    <button class="btn-remove">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-                    </button>
+            <div id="artistContainer">
+                <!-- Template row artist (1 row awal, remove btn disembunyikan lewat JS) -->
+                <div class="row artist-row">
+                    <div class="grid3" style="align-items:center;">
+                        <input type="text" class="input-medium" placeholder="Name">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <button class="btn-format btn-anv">Add ANV</button>
+                            <input type="text" class="input-format anv-input" placeholder="ANV" style="display:none;margin-left:0;">
+                        </div>
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <input type="text" class="input-format" placeholder="Join phrase (e.g. &, feat.)">
+                            <button class="btn-remove btn-remove-artist" title="Remove artist">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button class="btn-plus">+ Add artist</button>
+            <button class="btn-plus" id="addArtistBtn">+ Add artist</button>
         </div>
 
         <!-- Title -->
@@ -286,29 +276,52 @@ textarea{resize:vertical;}
             <input type="text" class="input-medium" placeholder="Title" style="margin-left:-2px">
         </div>
 
-        <!-- Label -->
+        <!-- ════════════════════════════════════════ LABEL ═══ -->
         <div class="sec">
             <div class="sec-title">Label, Company, Catalog Number, Etc. <span class="req">*</span> <span class="info">ⓘ</span></div>
-            <div class="row">
-                <div class="grid3">
-                    <select>
-                        <option>Label</option>
-                    </select>
 
-                    <input type="text" class="input-medium" placeholder="Name">
-
-                    <input type="text" class="input-medium" placeholder="Catalog Number">
+            <div id="labelContainer">
+                <div class="row label-row">
+                    <div class="grid3" style="align-items:center;">
+                        <select>
+                            <option value="">Label</option>
+                            <option>Label</option>
+                            <option>Series</option>
+                            <option>Company</option>
+                            <option>Publisher</option>
+                            <option>Distributor</option>
+                            <option>Phonographic Copyright ℗</option>
+                            <option>Copyright ©</option>
+                            <option>Manufactured By</option>
+                            <option>Produced For</option>
+                            <option>Marketed By</option>
+                            <option>Recorded At</option>
+                            <option>Mixed At</option>
+                            <option>Mastered At</option>
+                            <option>Pressed By</option>
+                            <option>Published By</option>
+                        </select>
+                        <input type="text" class="input-medium" placeholder="Name">
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <input type="text" class="input-medium" placeholder="Catalog Number" style="margin-left:0;">
+                            <button class="btn-remove btn-remove-label" title="Remove label">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <button class="btn-plus">+ Add label</button>
+
+            <button class="btn-plus" id="addLabelBtn">+ Add label</button>
         </div>
 
-        <!-- Barcodes -->
+        <!-- ══════════════════════════════════════ BARCODES ══ -->
         <div class="sec">
             <div class="sec-title">Barcodes and Other Identifiers <span class="info">ⓘ</span></div>
 
-            <button class="btn-plus">+ Add barcode or other identifier</button>
+            <div id="barcodeContainer"></div>
+
+            <button class="btn-plus" id="addBarcodeBtn">+ Add barcode or other identifier</button>
         </div>
 
         <!-- Format -->
@@ -320,7 +333,6 @@ textarea{resize:vertical;}
                     <select style="max-width:420px;">
                         <option>Vinyl</option>
                     </select>
-
                     <span style="font-size:15px;">Qty:</span>
                     <input type="text" class="input-small" value="1">
                     <span style="font-size:20px;">▲</span>
@@ -331,90 +343,84 @@ textarea{resize:vertical;}
                 <div class="format-grid">
                     <div>
                         <b style="font-size:15px;">Size *</b><br>
-                        <label><input type="checkbox">LP</label>
-                        <label><input type="checkbox">16"</label>
-                        <label><input type="checkbox">14"</label>
-                        <label><input type="checkbox">12"</label>
-                        <label><input type="checkbox">11"</label>
-                        <label><input type="checkbox">10"</label>
-                        <label><input type="checkbox">9"</label>
-                        <label><input type="checkbox">8"</label>
-                        <label><input type="checkbox">7"</label>
-                        <label><input type="checkbox">6½"</label>
-                        <label><input type="checkbox">6"</label>
-                        <label><input type="checkbox">5½"</label>
-                        <label><input type="checkbox">5"</label>
-                        <label><input type="checkbox">4"</label>
-                        <label><input type="checkbox">3½"</label>
-                        <label><input type="checkbox">3"</label>
-                        <label><input type="checkbox">2"</label>
-                        <label><input type="checkbox">1"</label>
+                        <label><input type="checkbox"> LP</label>
+                        <label><input type="checkbox"> 16"</label>
+                        <label><input type="checkbox"> 14"</label>
+                        <label><input type="checkbox"> 12"</label>
+                        <label><input type="checkbox"> 11"</label>
+                        <label><input type="checkbox"> 10"</label>
+                        <label><input type="checkbox"> 9"</label>
+                        <label><input type="checkbox"> 8"</label>
+                        <label><input type="checkbox"> 7"</label>
+                        <label><input type="checkbox"> 6½"</label>
+                        <label><input type="checkbox"> 6"</label>
+                        <label><input type="checkbox"> 5½"</label>
+                        <label><input type="checkbox"> 5"</label>
+                        <label><input type="checkbox"> 4"</label>
+                        <label><input type="checkbox"> 3½"</label>
+                        <label><input type="checkbox"> 3"</label>
+                        <label><input type="checkbox"> 2"</label>
+                        <label><input type="checkbox"> 1"</label>
                     </div>
-
                     <div>
                         <b style="font-size:15px;">Speed</b><br>
-                        <label><input type="checkbox">8⅓ RPM</label>
-                        <label><input type="checkbox">16⅔ RPM</label>
-                        <label><input type="checkbox">33⅓ RPM</label>
-                        <label><input type="checkbox">45 RPM</label>
-                        <label><input type="checkbox">78 RPM</label>
-                        <label><input type="checkbox">80 RPM</label>
-
+                        <label><input type="checkbox"> 8⅓ RPM</label>
+                        <label><input type="checkbox"> 16⅔ RPM</label>
+                        <label><input type="checkbox"> 33⅓ RPM</label>
+                        <label><input type="checkbox"> 45 RPM</label>
+                        <label><input type="checkbox"> 78 RPM</label>
+                        <label><input type="checkbox"> 80 RPM</label>
                         <br><b style="font-size:15px;">Shape</b><br>
-                        <label><input type="checkbox">Shape</label>
-
+                        <label><input type="checkbox"> Shape</label>
                         <br><b style="font-size:15px;">Sides</b><br>
-                        <label><input type="checkbox">Single Sides</label>
+                        <label><input type="checkbox"> Single Sided</label>
                     </div>
-
                     <div>
                         <b style="font-size:15px;">Description</b><br>
-                        <label><input type="checkbox">Advanced</label>
-                        <label><input type="checkbox">Album</label>
-                        <label><input type="checkbox">Mini-Album</label>
-                        <label><input type="checkbox">EP</label>
-                        <label><input type="checkbox">Maxi-Single</label>
-                        <label><input type="checkbox">Record Store Day</label>
-                        <label><input type="checkbox">Single</label>
-                        <label><input type="checkbox">Compilation</label>
-                        <label><input type="checkbox">Bioplastic</label>
-                        <label><input type="checkbox">Card Backed</label>
-                        <label><input type="checkbox">Club Edition</label>
-                        <label><input type="checkbox">Deluxe Edition</label>
-                        <label><input type="checkbox">Enhanced</label>
-                        <label><input type="checkbox">Etched</label>
-                        <label><input type="checkbox">Jukebox</label>
-                        <label><input type="checkbox">Limited Edition</label>
-                        <label><input type="checkbox">Mispress</label>
-                        <label><input type="checkbox">Misprint</label>
-                        <label><input type="checkbox">Mixed</label>
-                        <label><input type="checkbox">Mixtape</label>
-                        <label><input type="checkbox">Numbered</label>
-                        <label><input type="checkbox">Partially Mixed</label>
-                        <label><input type="checkbox">Partially Unofficial</label>
-                        <label><input type="checkbox">Picture Disc</label>
-                        <label><input type="checkbox">Promo</label>
-                        <label><input type="checkbox">Reissue</label>
-                        <label><input type="checkbox">Remastered</label>
-                        <label><input type="checkbox">Repress</label>
-                        <label><input type="checkbox">Sampler</label>
-                        <label><input type="checkbox">Special Cut</label>
-                        <label><input type="checkbox">Special Edition</label>
-                        <label><input type="checkbox">Styrene</label>
-                        <label><input type="checkbox">Test Pressing</label>
-                        <label><input type="checkbox">Tour Recording</label>
-                        <label><input type="checkbox">Transcription</label>
-                        <label><input type="checkbox">Unofficial Release</label>
-                        <label><input type="checkbox">White Label</label>
+                        <label><input type="checkbox"> Advanced</label>
+                        <label><input type="checkbox"> Album</label>
+                        <label><input type="checkbox"> Mini-Album</label>
+                        <label><input type="checkbox"> EP</label>
+                        <label><input type="checkbox"> Maxi-Single</label>
+                        <label><input type="checkbox"> Record Store Day</label>
+                        <label><input type="checkbox"> Single</label>
+                        <label><input type="checkbox"> Compilation</label>
+                        <label><input type="checkbox"> Bioplastic</label>
+                        <label><input type="checkbox"> Card Backed</label>
+                        <label><input type="checkbox"> Club Edition</label>
+                        <label><input type="checkbox"> Deluxe Edition</label>
+                        <label><input type="checkbox"> Enhanced</label>
+                        <label><input type="checkbox"> Etched</label>
+                        <label><input type="checkbox"> Jukebox</label>
+                        <label><input type="checkbox"> Limited Edition</label>
+                        <label><input type="checkbox"> Mispress</label>
+                        <label><input type="checkbox"> Misprint</label>
+                        <label><input type="checkbox"> Mixed</label>
+                        <label><input type="checkbox"> Mixtape</label>
+                        <label><input type="checkbox"> Numbered</label>
+                        <label><input type="checkbox"> Partially Mixed</label>
+                        <label><input type="checkbox"> Partially Unofficial</label>
+                        <label><input type="checkbox"> Picture Disc</label>
+                        <label><input type="checkbox"> Promo</label>
+                        <label><input type="checkbox"> Reissue</label>
+                        <label><input type="checkbox"> Remastered</label>
+                        <label><input type="checkbox"> Repress</label>
+                        <label><input type="checkbox"> Sampler</label>
+                        <label><input type="checkbox"> Special Cut</label>
+                        <label><input type="checkbox"> Special Edition</label>
+                        <label><input type="checkbox"> Styrene</label>
+                        <label><input type="checkbox"> Test Pressing</label>
+                        <label><input type="checkbox"> Tour Recording</label>
+                        <label><input type="checkbox"> Transcription</label>
+                        <label><input type="checkbox"> Unofficial Release</label>
+                        <label><input type="checkbox"> White Label</label>
                     </div>
-
                     <div>
                         <b style="font-size:15px;">Channels</b><br>
-                        <label><input type="checkbox">Stereo</label>
-                        <label><input type="checkbox">Mono</label>
-                        <label><input type="checkbox">Quardraphonic</label>
-                        <label><input type="checkbox">Ambisonic</label>
-
+                        <label><input type="checkbox"> Stereo</label>
+                        <label><input type="checkbox"> Mono</label>
+                        <label><input type="checkbox"> Quadraphonic</label>
+                        <label><input type="checkbox"> Ambisonic</label>
                         <br><b style="font-size:15px;">Free Text</b><br>
                         <input type="text" class="input-medium">
                     </div>
@@ -422,15 +428,14 @@ textarea{resize:vertical;}
             </div>
 
             <button class="btn-plus">+ Add Format</button>
-
         </div>
 
         <!-- Country -->
         <div class="sec">
             <div class="sec-title">Country <span class="info">ⓘ</span></div>
-                <select style="max-width:300px;">
-                    <option> </option>
-                </select>
+            <select style="max-width:300px;">
+                <option> </option>
+            </select>
         </div>
 
         <!-- Released -->
@@ -439,109 +444,82 @@ textarea{resize:vertical;}
             <input type="text" class="input-medium" placeholder="Date" style="margin-left:-2px">
         </div>
 
-        <!-- Track -->
+        <!-- Tracklist -->
         <div class="sec">
+            <div class="tracklist-header">
+                <span class="sec-title">
+                    Tracklist <span class="req">*</span> <span class="info">ⓘ</span>
+                </span>
+                <div>
+                    <a href="#" class="mini-link">Edit all Track Artists/Credits</a>
+                    <span class="separator">|</span>
+                    <a href="#" class="mini-link">Save all Track Artists/Credits</a>
+                </div>
+            </div>
 
-    <!-- HEADER -->
-    <div class="tracklist-header">
-        <span class="sec-title">
-            Tracklist <span class="req">*</span> <span class="info">ⓘ</span>
-        </span>
+            <table class="track-table">
+                <thead>
+                    <tr>
+                        <th style="width:30px;"></th>
+                        <th style="width:90px;">Position</th>
+                        <th style="width:130px;">Artist</th>
+                        <th>Title/Credits</th>
+                        <th style="width:110px;">Duration</th>
+                        <th style="width:30px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="trackBody">
+                    @for($i=0; $i<4; $i++)
+                    <tr>
+                        <td class="drag">↕</td>
+                        <td><input type="text" class="input-track small" placeholder="#"></td>
+                        <td><a href="#" class="add-link"><span>+</span> Add</a></td>
+                        <td>
+                            <input type="text" class="input-track" placeholder="Track Title">
+                            <div class="credits">Credits <a href="#" class="add-link"><span>+</span> Add</a></div>
+                        </td>
+                        <td><input type="text" class="input-track small" placeholder="0:00"></td>
+                        <td class="arrow">▼</td>
+                    </tr>
+                    @endfor
+                </tbody>
+            </table>
 
-        <div>
-            <a href="#" class="mini-link">Edit all Track Artists/Credits</a>
-            <span class="separator">|</span>
-            <a href="#" class="mini-link">Save all Track Artists/Credits</a>
+            <div class="track-footer">
+                <select style="width:auto;">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <button id="addTracksBtn">Add Tracks</button>
+                <span class="separator">|</span>
+                <button>Auto-number Tracks</button>
+                <button>Add Artist Per Track</button>
+                <button>Add Credit Per Track</button>
+            </div>
         </div>
-    </div>
-
-    <!-- TABLE -->
-    <table class="track-table">
-        <thead>
-            <tr>
-                <th style="width:30px;"></th>
-                <th style="width:90px;">Position</th>
-                <th style="width:130px;">Artist</th>
-                <th>Title/Credits</th>
-                <th style="width:110px;">Duration</th>
-                <th style="width:30px;"></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @for($i=0; $i<4; $i++)
-            <tr>
-                <!-- drag -->
-                <td class="drag">↕</td>
-
-                <!-- position -->
-                <td>
-                    <input type="text" class="input-track small" placeholder="#">
-                </td>
-
-                <!-- artist -->
-                <td>
-                    <a href="#" class="add-link"><span>+</span> Add</a>
-                </td>
-
-                <!-- title -->
-                <td>
-                    <input type="text" class="input-track" placeholder="Track Title">
-
-                    <div class="credits">
-                        Credits <a href="#" class="add-link"><span>+</span> Add</a>
-                    </div>
-                </td>
-
-                <!-- duration -->
-                <td>
-                    <input type="text" class="input-track small" placeholder="0:00">
-                </td>
-
-                <!-- dropdown -->
-                <td class="arrow">▼</td>
-            </tr>
-            @endfor
-        </tbody>
-    </table>
-
-    <!-- FOOTER -->
-    <div class="track-footer">
-        <select>
-            <option>1</option>
-        </select>
-
-        <button>Add Tracks</button>
-
-        <span class="separator">|</span>
-
-        <button>Auto-number Tracks</button>
-        <button>Add Artist Per Track</button>
-        <button>Add Credit Per Track</button>
-    </div>
-
-</div>
 
         <!-- Genres -->
         <div class="sec">
             <div class="sec-title">Genres <span class="req">*</span> <span class="info">ⓘ</span></div>
-
             <div class="genre-grid">
-                <label><input type="checkbox">Electronic</label>
-                <label><input type="checkbox">Rock</label>
-                <label><input type="checkbox">Funk / Soul</label>
-                <label><input type="checkbox">Pop</label>
-                <label><input type="checkbox">Children's</label>
-                <label><input type="checkbox">Hip Hop</label>
-                <label><input type="checkbox">Reggae</label>
-                <label><input type="checkbox">Blues</label>
-                <label><input type="checkbox">Classical</label>
-                <label><input type="checkbox">Folk, World & Country</label>
-                <label><input type="checkbox">Jazz</label>
-                <label><input type="checkbox">Latin</label>
-                <label><input type="checkbox">Non-Music</label>
-                <label><input type="checkbox">Brass & Military</label>
-                <label><input type="checkbox">Stage & Screen</label>
+                <label><input type="checkbox"> Electronic</label>
+                <label><input type="checkbox"> Rock</label>
+                <label><input type="checkbox"> Funk / Soul</label>
+                <label><input type="checkbox"> Pop</label>
+                <label><input type="checkbox"> Children's</label>
+                <label><input type="checkbox"> Hip Hop</label>
+                <label><input type="checkbox"> Reggae</label>
+                <label><input type="checkbox"> Blues</label>
+                <label><input type="checkbox"> Classical</label>
+                <label><input type="checkbox"> Folk, World & Country</label>
+                <label><input type="checkbox"> Jazz</label>
+                <label><input type="checkbox"> Latin</label>
+                <label><input type="checkbox"> Non-Music</label>
+                <label><input type="checkbox"> Brass & Military</label>
+                <label><input type="checkbox"> Stage & Screen</label>
             </div>
         </div>
 
@@ -557,17 +535,13 @@ textarea{resize:vertical;}
         </div>
 
         <div class="sec">
-            <div>
-                <label><input type="checkbox"> Add to My Collection</label>
-            </div>
+            <label><input type="checkbox"> Add to My Collection</label>
         </div>
 
         <div class="sec">
             <div class="sec-title">Rating</div>
-
             <div class="rating">
                 <label><input type="radio" name="r"><br>No rating</label>
-
                 @for($i=1;$i<=5;$i++)
                 <label><input type="radio" name="r"><br>{{$i}}</label>
                 @endfor
@@ -579,14 +553,12 @@ textarea{resize:vertical;}
             <button class="btn btn-green">Preview / Submit</button>
         </div>
 
-    </div>
+    </div><!-- /main-release -->
 
     <!-- Sidebar -->
     <div class="side-guide">
         <div class="side-card">
-
             <div class="side-title">ⓘ Guidelines Reference</div>
-
             @for($i=1;$i<=13;$i++)
             <a href="#" class="guide-link">
                 <span>
@@ -610,86 +582,216 @@ textarea{resize:vertical;}
                 <span>↗</span>
             </a>
             @endfor
-
             <a href="#" class="help-link">Search Help Center ↗</a>
-
         </div>
     </div>
 
-</div>
+</div><!-- /release-wrap -->
 
 <script>
-//add anv
-document.addEventListener("click", function(e) {
-
-  if (e.target.classList.contains("btn-format")) {
-    const row = e.target.closest(".row");
-    const anvInput = row.querySelector(".input-format");
-
-    if (anvInput.style.display === "none") {
-      anvInput.style.display = "inline-block";
-      e.target.textContent = "Remove ANV";
-    } else {
-      anvInput.style.display = "none";
-      anvInput.value = "";
-      e.target.textContent = "Add ANV";
-    }
-  }
-
-});
-
-// remove artist
-document.addEventListener("click", function(e) {
-
-  const removeBtn = e.target.closest(".btn-remove");
-  if (!removeBtn) return;
-
-  const row = removeBtn.closest(".row");
-  const container = document.getElementById("artistContainer");
-
-  if (container.children.length > 1) {
-    row.remove();
-    updateRemoveButtons();
-  }
-});
-
-function updateRemoveButtons() {
-  const rows = document.querySelectorAll("#artistContainer .row");
-
-  rows.forEach(row => {
-    const btn = row.querySelector(".btn-remove");
-
-    if (rows.length > 1) {
-      btn.style.display = "inline-block";
-    } else {
-      btn.style.display = "none";
-    }
-  });
+/* ═══════════════════════════════════════════════════
+   HELPER — ikon X untuk tombol remove
+═══════════════════════════════════════════════════ */
+function removeIcon() {
+    return `<svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor">
+        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+    </svg>`;
 }
 
-// add artist
-document.addEventListener("click", function(e) {
+/* ═══════════════════════════════════════════════════
+   HELPER — refresh visibilitas tombol remove
+   Kalau cuma 1 row tersisa, sembunyikan tombol remove
+═══════════════════════════════════════════════════ */
+function refreshRemove(containerId, btnClass) {
+    const rows = document.querySelectorAll(`#${containerId} .row`);
+    rows.forEach(row => {
+        const btn = row.querySelector(`.${btnClass}`);
+        if (btn) btn.style.visibility = rows.length > 1 ? 'visible' : 'hidden';
+    });
+}
 
-  if (e.target.classList.contains("btn-plus")) {
+/* ══════════════════════════════════════════════════
+   SECTION: ARTIST
+══════════════════════════════════════════════════ */
+function makeArtistRow() {
+    const div = document.createElement('div');
+    div.className = 'row artist-row';
+    div.innerHTML = `
+        <div class="grid3" style="align-items:center;">
+            <input type="text" class="input-medium" placeholder="Name">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button class="btn-format btn-anv">Add ANV</button>
+                <input type="text" class="input-format anv-input" placeholder="ANV" style="display:none;margin-left:0;">
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+                <input type="text" class="input-format" placeholder="Join phrase (e.g. &, feat.)">
+                <button class="btn-remove btn-remove-artist" title="Remove artist">${removeIcon()}</button>
+            </div>
+        </div>`;
+    return div;
+}
 
-    // khusus artist section
-    const container = document.getElementById("artistContainer");
-    if (!container) return;
+document.getElementById('addArtistBtn').addEventListener('click', function() {
+    document.getElementById('artistContainer').appendChild(makeArtistRow());
+    refreshRemove('artistContainer', 'btn-remove-artist');
+});
 
-    const firstRow = container.querySelector(".row");
-    const newRow = firstRow.cloneNode(true);
+// Sembunyikan remove saat halaman load (hanya 1 row)
+refreshRemove('artistContainer', 'btn-remove-artist');
 
-    // reset input
-    newRow.querySelector(".input-medium").value = "";
-    newRow.querySelector(".input-format").value = "";
-    newRow.querySelector(".input-format").style.display = "none";
+/* ══════════════════════════════════════════════════
+   SECTION: LABEL
+══════════════════════════════════════════════════ */
+function makeLabelRow() {
+    const div = document.createElement('div');
+    div.className = 'row label-row';
+    div.innerHTML = `
+        <div class="grid3" style="align-items:center;">
+            <select>
+                <option value="">Label</option>
+                <option>Label</option>
+                <option>Series</option>
+                <option>Company</option>
+                <option>Publisher</option>
+                <option>Distributor</option>
+                <option>Phonographic Copyright ℗</option>
+                <option>Copyright ©</option>
+                <option>Manufactured By</option>
+                <option>Produced For</option>
+                <option>Marketed By</option>
+                <option>Recorded At</option>
+                <option>Mixed At</option>
+                <option>Mastered At</option>
+                <option>Pressed By</option>
+                <option>Published By</option>
+            </select>
+            <input type="text" class="input-medium" placeholder="Name">
+            <div style="display:flex;align-items:center;gap:6px;">
+                <input type="text" class="input-medium" placeholder="Catalog Number" style="margin-left:0;">
+                <button class="btn-remove btn-remove-label" title="Remove label">${removeIcon()}</button>
+            </div>
+        </div>`;
+    return div;
+}
 
-    // reset tombol ANV
-    newRow.querySelector(".btn-format").textContent = "Add ANV";
+document.getElementById('addLabelBtn').addEventListener('click', function() {
+    document.getElementById('labelContainer').appendChild(makeLabelRow());
+    refreshRemove('labelContainer', 'btn-remove-label');
+});
 
-    container.appendChild(newRow);
-    updateRemoveButtons();
-  }
+refreshRemove('labelContainer', 'btn-remove-label');
+
+/* ══════════════════════════════════════════════════
+   SECTION: BARCODE / IDENTIFIER
+══════════════════════════════════════════════════ */
+function makeBarcodeRow() {
+    const div = document.createElement('div');
+    div.className = 'row barcode-row';
+    div.innerHTML = `
+        <div class="grid3" style="align-items:center;">
+            <select>
+                <option value="">-- Type --</option>
+                <option>Barcode</option>
+                <option>Matrix / Runout</option>
+                <option>Label Code</option>
+                <option>Catalog Number</option>
+                <option>Price Code</option>
+                <option>Rights Society</option>
+                <option>SPARS Code</option>
+                <option>ASIN</option>
+                <option>Depósito Legal</option>
+                <option>ISRC</option>
+                <option>Mould SID Code</option>
+                <option>Mastering SID Code</option>
+                <option>Other</option>
+            </select>
+            <input type="text" class="input-medium" placeholder="Value">
+            <div style="display:flex;align-items:center;gap:6px;">
+                <input type="text" class="input-format" placeholder="Description (optional)" style="margin-left:0;">
+                <button class="btn-remove btn-remove-barcode" title="Remove identifier">${removeIcon()}</button>
+            </div>
+        </div>`;
+    return div;
+}
+
+document.getElementById('addBarcodeBtn').addEventListener('click', function() {
+    const container = document.getElementById('barcodeContainer');
+    container.appendChild(makeBarcodeRow());
+    // barcode mulai dari 0, jadi selalu tampilkan remove
+    refreshRemove('barcodeContainer', 'btn-remove-barcode');
+});
+
+/* ══════════════════════════════════════════════════
+   SECTION: TRACKLIST — tombol "Add Tracks"
+══════════════════════════════════════════════════ */
+function makeTrackRow() {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td class="drag">↕</td>
+        <td><input type="text" class="input-track small" placeholder="#"></td>
+        <td><a href="#" class="add-link"><span>+</span> Add</a></td>
+        <td>
+            <input type="text" class="input-track" placeholder="Track Title">
+            <div class="credits">Credits <a href="#" class="add-link"><span>+</span> Add</a></div>
+        </td>
+        <td><input type="text" class="input-track small" placeholder="0:00"></td>
+        <td class="arrow">▼</td>`;
+    return tr;
+}
+
+document.getElementById('addTracksBtn').addEventListener('click', function() {
+    const qty = parseInt(document.querySelector('.track-footer select').value) || 1;
+    const tbody = document.getElementById('trackBody');
+    for (let i = 0; i < qty; i++) {
+        tbody.appendChild(makeTrackRow());
+    }
+});
+
+/* ══════════════════════════════════════════════════
+   EVENT DELEGATION — semua tombol remove & ANV
+══════════════════════════════════════════════════ */
+document.addEventListener('click', function(e) {
+
+    /* --- ANV toggle --- */
+    if (e.target.classList.contains('btn-anv')) {
+        const row   = e.target.closest('.row');
+        const input = row.querySelector('.anv-input');
+        if (input.style.display === 'none') {
+            input.style.display = 'inline-block';
+            e.target.textContent = 'Remove ANV';
+        } else {
+            input.style.display = 'none';
+            input.value = '';
+            e.target.textContent = 'Add ANV';
+        }
+        return;
+    }
+
+    /* --- Remove Artist --- */
+    if (e.target.closest('.btn-remove-artist')) {
+        const container = document.getElementById('artistContainer');
+        if (container.querySelectorAll('.row').length > 1) {
+            e.target.closest('.row').remove();
+        }
+        refreshRemove('artistContainer', 'btn-remove-artist');
+        return;
+    }
+
+    /* --- Remove Label --- */
+    if (e.target.closest('.btn-remove-label')) {
+        const container = document.getElementById('labelContainer');
+        if (container.querySelectorAll('.row').length > 1) {
+            e.target.closest('.row').remove();
+        }
+        refreshRemove('labelContainer', 'btn-remove-label');
+        return;
+    }
+
+    /* --- Remove Barcode --- */
+    if (e.target.closest('.btn-remove-barcode')) {
+        e.target.closest('.row').remove();
+        return;
+    }
 
 });
 </script>

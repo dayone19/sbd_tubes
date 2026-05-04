@@ -174,7 +174,7 @@
 </div>
 
 <script>
-document.querySelectorAll('.rating span').forEach(star => {
+document.querySelectorAll('.stars span').forEach(star => {
     star.addEventListener('click', function () {
         let value = this.getAttribute('data-star');
         let parent = this.parentElement;
