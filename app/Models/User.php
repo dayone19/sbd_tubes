@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $primarykey = 'user_id';
     
     //mematikan perubahan waktu update
-    public $timstamps = false;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -82,5 +82,25 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class, 'user_id');
+    }
+
+    public function userProfile()
+    {
+        return $this->hasOne(UserProfile::class, 'user_id');
+    }
+
+    public function discogsLists()
+    {
+        return $this->hasMany(DiscogsList::class, 'user_id');
+    }
+
+    public function releases()
+    {
+        return $this->belongsToMany(Release::class, 'contributor_release', 'user_id', 'release_id');
+    }
+
+    public function contributorRelease()
+    {
+        return $this->hasMany(ContributorRelease::class, 'user_id');
     }
 }

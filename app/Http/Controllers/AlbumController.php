@@ -19,7 +19,7 @@ class AlbumController extends Controller
     //        m.year AS tahun,
     //        GROUP_CONCAT(DISTINCT s.name) AS style,
     //        GROUP_CONCAT(DISTINCT g.name) AS genre,
-    //        p.format AS format,
+    //        GROUP_CONCAT(DISTINCT f.name) AS format,
     //        SUM(td.quantity) AS total_copies,
     //        MIN(p.price) AS lowest_price
     // FROM releases r
@@ -35,7 +35,10 @@ class AlbumController extends Controller
     //   JOIN genre_release gr ON r.release_id = gr.release_id
     //   JOIN genres g ON gr.genre_id = g.genre_id
 
-    //   LEFT JOIN products p ON r.release_id = p.release_id
+    // JOIN products p ON r.release = p.release
+
+    //   LEFT JOIN format_release fr ON r.release_id = fr.release_id
+    //   LEFT JOIN formats f ON fr.format_id = f.format_id
 
     //   JOIN transaction_details td ON p.product_id = td.product_id
     //   JOIN transactions t ON td.transaction_id = t.transaction_id
@@ -45,7 +48,6 @@ class AlbumController extends Controller
     // GROUP BY  r.release_id,
     // 		     i.url,
     //           m.year,
-    //           p.format
 
     // ORDER BY total_copies DESC
 
@@ -67,7 +69,11 @@ class AlbumController extends Controller
         ->join('genre_release as gr', 'r.release_id', '=', 'gr.release_id')
         ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
 
-        ->leftJoin('products as p', 'r.release_id', '=', 'p.release_id')
+        ->join('products as p', 'r.release_id', '=', 'p.release_id')
+
+        ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+        ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
+
 
         ->join('transaction_details as td', 'p.product_id', '=', 'td.product_id')
         ->join('transactions as t', 'td.transaction_id', '=', 't.transaction_id')
@@ -78,7 +84,7 @@ class AlbumController extends Controller
                   'm.year AS tahun',
                   DB::raw("GROUP_CONCAT(DISTINCT s.name SEPARATOR ', ') AS style"),
                   DB::raw("GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') AS genre"),
-                  'p.format AS format',
+                  DB::raw("GROUP_CONCAT(DISTINCT f.name SEPARATOR ', ') AS format"),
                   DB::raw('SUM(td.quantity) as total_copies'),
                   DB::raw('MIN(p.price) as lowest_price')
                 )
@@ -93,7 +99,6 @@ class AlbumController extends Controller
                  'i.url',
                  'r.title',
                  'm.year',
-                 'p.format',
                 )
         
         ->orderByDesc('total_copies')
@@ -111,7 +116,7 @@ class AlbumController extends Controller
         //     m.year AS tahun,
         //     GROUP_CONCAT(DISTINCT s.name) AS style,
         //     GROUP_CONCAT(DISTINCT g.name) AS genre,
-        //     p.format AS format,
+        //     GROUP_CONCAT(DISTINCT f.name) AS format,
         //     MAX(p.price) AS paling_mahal,
         //     SUM(td.quantity) AS total_copies,
         //     SUM(p.stock) AS total_stock
@@ -132,7 +137,10 @@ class AlbumController extends Controller
         // JOIN genre_release gr ON r.release_id = gr.release_id
         // JOIN genres g ON gr.genre_id = g.genre_id
 
-        // LEFT JOIN products p ON r.release_id = p.release_id
+        // JOIN products p ON r.release = p.release
+
+        //   LEFT JOIN format_release fr ON r.release_id = fr.release_id
+        //   LEFT JOIN formats f ON fr.format_id = f.format_id
 
         // JOIN transaction_details td ON p.product_id = td.product_id
 
@@ -143,7 +151,6 @@ class AlbumController extends Controller
         //     i.url,
         //     r.title,
         //     m.year,
-        //     p.format
 
         // ORDER BY 
         //     paling_mahal DESC,
@@ -168,7 +175,10 @@ class AlbumController extends Controller
         ->join('genre_release as gr', 'r.release_id', '=', 'gr.release_id')
         ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
 
-        ->leftJoin('products as p', 'r.release_id', '=', 'p.release_id')
+        ->join('products as p', 'r.release_id', '=', 'p.release_id')
+
+        ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+        ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
 
         ->join('transaction_details as td', 'p.product_id', '=', 'td.product_id')
         ->join('transactions as t', 'td.transaction_id', '=', 't.transaction_id')
@@ -179,7 +189,7 @@ class AlbumController extends Controller
                   'm.year AS tahun',
                   DB::raw("GROUP_CONCAT(DISTINCT s.name SEPARATOR ', ') AS style"),
                   DB::raw("GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') AS genre"),
-                  'p.format AS format',
+                  DB::raw("GROUP_CONCAT(DISTINCT f.name SEPARATOR ', ') AS format"),
                   DB::raw('MAX(p.price) as paling_mahal'),
                   DB::raw('SUM(td.quantity) as total_copies'),
                   DB::raw('SUM(p.stock) as total_stock'),
@@ -194,7 +204,6 @@ class AlbumController extends Controller
                  'i.url',
                  'r.title',
                  'm.year',
-                 'p.format',
                 )
         
         ->orderByDesc('paling_mahal')
@@ -213,7 +222,7 @@ class AlbumController extends Controller
         //     m.year AS tahun,
         //     GROUP_CONCAT(DISTINCT s.name) AS style,
         //     GROUP_CONCAT(DISTINCT g.name) AS genre,
-        //     p.format AS format,
+        //     GROUP_CONCAT(DISTINCT f.name) AS format,
         //     SUM(td.quantity) AS total_copies,
         //     COUNT(DISTINCT t.user_id) AS total_yang_di_koleksi
         //     SUM(p.price) AS lowest_price
@@ -234,7 +243,10 @@ class AlbumController extends Controller
         // JOIN genre_release gr ON r.release_id = gr.release_id
         // JOIN genres g ON gr.genre_id = g.genre_id
 
-        // LEFT JOIN products p ON r.release_id = p.release_id
+        // JOIN products p ON r.release = p.release
+
+        //   LEFT JOIN format_release fr ON r.release_id = fr.release_id
+        //   LEFT JOIN formats f ON fr.format_id = f.format_id
 
         // JOIN transaction_details td ON p.product_id = td.product_id
         // JOIN transactions t ON td.transaction_id = t.transaction_id
@@ -244,7 +256,6 @@ class AlbumController extends Controller
         //     i.url,
         //     r.title,
         //     m.year,
-        //     p.format
 
         // ORDER BY 
         //     total_yang_di_koleksi DESC
@@ -267,7 +278,10 @@ class AlbumController extends Controller
         ->join('genre_release as gr', 'r.release_id', '=', 'gr.release_id')
         ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
 
-        ->leftJoin('products as p', 'r.release_id', '=', 'p.release_id')
+        ->join('products as p', 'r.release_id', '=', 'p.release_id')
+
+        ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+        ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
 
         ->join('transaction_details as td', 'p.product_id', '=', 'td.product_id')
         ->join('transactions as t', 'td.transaction_id', '=', 't.transaction_id')
@@ -278,7 +292,7 @@ class AlbumController extends Controller
                   'm.year AS tahun',
                   DB::raw("GROUP_CONCAT(DISTINCT s.name SEPARATOR ', ') AS style"),
                   DB::raw("GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') AS genre"),
-                  'p.format AS format',
+                  DB::raw("GROUP_CONCAT(DISTINCT f.name SEPARATOR ', ') AS format"),
                   DB::raw('SUM(td.quantity) as total_copies'),
                   DB::raw('COUNT(DISTINCT t.user_id) as total_yang_di_koleksi'),
                   DB::raw('SUM(p.price) as total_lowest'),
@@ -293,7 +307,6 @@ class AlbumController extends Controller
                  'i.url',
                  'r.title',
                  'm.year',
-                 'p.format',
                 )
         
         ->orderByDesc('total_yang_di_koleksi')

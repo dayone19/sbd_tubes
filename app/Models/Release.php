@@ -66,4 +66,30 @@ class Release extends Model
     {
         return $this->hasMany(Product::class, 'release_Id');
     }
+
+    public function formats()
+    {
+        return $this->belongToMany(Format::class, 'format_release', 'release_id', 'format_id');
+    }
+
+    public function companies()
+    {
+        return $this->belongToMany(Companie::class, 'companies_release',  'format_id','release_id',);
+    }
+
+    public function discogsLists()
+    {
+        return $this->belongsToMany(DiscogsList::class, 'list_release',  'release_id', 'list_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,  'contributor_release', 'release_id', 'user_id');
+    }
+
+    public function contributorRelease()
+    {
+        return $this->hasMany(ContributorRelease::class, 'release_id');
+    }
+
 }
