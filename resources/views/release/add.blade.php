@@ -20,13 +20,13 @@
 .top-links{margin-bottom:12px;}
 .top-links a{color:#2457d6;text-decoration:none;font-size:13px;margin-right:28px;}
 .top-box{border:1px solid var(--border);background:#f5f5f5;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;}
-.top-box h2{margin:0;font-size:20px; font-weight:bold;}
+.top-box h2{margin:0;font-size:20px;font-weight:bold;}
 /* BUTTON */
-.btn{border:1px solid #bbb; background:#fff;padding:4px 18px; font-size:13px; cursor:pointer; border-radius:3px;}
-.btn-plus{border:1px solid #000; background:#f5f5f5; padding:4px 18px; font-size:13px; cursor:pointer; border-radius:3px;}
-.btn-green{background:#158a1b; color:#fff; border:none; padding:5px 10px; font-size:13px; border-radius:3px;cursor:pointer; font-weight:bold;}
+.btn{border:1px solid #bbb;background:#fff;padding:4px 18px;font-size:13px;cursor:pointer;border-radius:3px;}
+.btn-plus{border:1px solid #000;background:#f5f5f5;padding:4px 18px;font-size:13px;cursor:pointer;border-radius:3px;}
+.btn-green{background:#158a1b;color:#fff;border:none;padding:5px 10px;font-size:13px;border-radius:3px;cursor:pointer;font-weight:bold;}
 .btn-dark{background:#000;color:#fff;border:none;}
-.btn-format{border:1px solid #bbb; border-radius: 3px; background:#f5f5f5; font-size:12px; padding: 4px 5px; width:90px;}
+.btn-format{border:1px solid #bbb;border-radius:3px;background:#f5f5f5;font-size:12px;padding:4px 5px;width:90px;}
 /* SECTION */
 .sec{border:1px solid var(--border);border-top:none;padding:10px 20px 15px 25px;}
 .sec-title{font-size:15px;font-weight:700;margin-bottom:18px;}
@@ -38,19 +38,19 @@ select,textarea{
     padding:2px 10px;
     font-size:15px;
     box-sizing:border-box;
-    background:#fff;}
+    background:#fff;
+}
 textarea{resize:vertical;}
-.input-medium{ max-width: 400px; border: 1px solid #000; border-radius:3px; padding:2px; margin-left: 10px; background-color:white;}
-.input-small{ max-width: 50px; border: 1px solid #000; border-radius:3px; padding:2px; margin-left: 10px; background-color:white;}
-.input-format{ max-width: 350px; border: 1px solid #000; border-radius:3px; padding:2px; margin-left: 10px; background-color:white;}
+.input-medium{max-width:400px;border:1px solid #000;border-radius:3px;padding:2px;margin-left:10px;background-color:white;}
+.input-small{max-width:50px;border:1px solid #000;border-radius:3px;padding:2px;margin-left:10px;background-color:white;}
+.input-format{max-width:350px;border:1px solid #000;border-radius:3px;padding:2px;margin-left:10px;background-color:white;}
 /* IMAGE */
-.image-grid{display:grid;grid-template-columns: 1.8fr 1fr;gap:30px;}
+.image-grid{display:grid;grid-template-columns:1.8fr 1fr;gap:30px;}
 .drop{border:3px dashed #ddd;padding:55px 30px;text-align:center;}
 .drop p{font-size:15px;margin:10px 0;}
 .drop small{display:block;color:#666;font-size:13px;margin-top:18px;}
 .rule{display:flex;gap:18px;margin-bottom:24px;font-size:15px;line-height:1.45;}
-.rule-no{width:100px; height:45px; border-radius:50%;background:#f0d730;
-    display:flex;align-items:center;justify-content:center;font-weight:700;}
+.rule-no{width:100px;height:45px;border-radius:50%;background:#f0d730;display:flex;align-items:center;justify-content:center;font-weight:700;}
 /* FLEX */
 .row{
     display:flex;
@@ -58,137 +58,99 @@ textarea{resize:vertical;}
     align-items:center;
     margin-bottom:16px;
     background-color:#f5f5f5;
-    padding: 9px 1px 9px;
-    border: 1px solid #ddd;
+    padding:9px 1px 9px;
+    border:1px solid #ddd;
 }
-.grid3{display:grid; grid-template-columns: 220px 1fr 280px;gap:18px;}
-.grid4{display:grid;grid-template-columns: 220px 25px 450px 10px; gap:8px;}
+.grid3{display:grid;grid-template-columns:220px 1fr 280px;gap:18px;}
 /* FORMAT */
-.format-box{
-    border:1px solid var(--border);
-    background:#fafafa;
-    padding: 18px;
-    margin:-16px -10px 10px -10px;
+.format-entry{border:1px solid var(--border);border-radius:3px;margin-bottom:10px;overflow:hidden;}
+.format-header{
+    display:flex;align-items:center;gap:10px;
+    background:#f5f5f5;
+    padding:8px 12px;
+    border-bottom:1px solid var(--border);
 }
-.format-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
+.format-header .fmt-type-select{
+    flex:1;max-width:240px;
+    border:1px solid #9f9f9f;
+    padding:4px 8px;font-size:14px;
+    border-radius:3px;background:#fff;
+    width:auto;
 }
-.format-grid label,
-.genre-grid label{
-    display:block;
-    font-size:15px;
-    margin-bottom:12px;
+.qty-wrap{display:flex;align-items:center;gap:6px;font-size:13px;color:#555;}
+.qty-wrap .qty-input{
+    max-width:48px;border:1px solid #9f9f9f;border-radius:3px;
+    padding:4px 6px;text-align:center;font-size:13px;background:#fff;
+    margin-left:0;
+}
+.qty-btn{
+    background:#fff;border:1px solid #bbb;border-radius:3px;
+    width:24px;height:24px;cursor:pointer;font-size:15px;
+    display:flex;align-items:center;justify-content:center;line-height:1;
+}
+.qty-btn:hover{background:#eee;}
+.toggle-format-btn{
+    margin-left:auto;
+    background:#fff;border:1px solid #bbb;
+    border-radius:3px;padding:4px 12px;font-size:12px;cursor:pointer;
+    color:#333;display:flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.toggle-format-btn:hover{background:#eee;}
+.toggle-format-btn .chevron{display:inline-block;transition:transform .2s;font-size:10px;}
+.toggle-format-btn.open .chevron{transform:rotate(180deg);}
+.btn-remove-format{
+    background:none;border:none;cursor:pointer;
+    padding:2px 6px;display:inline-flex;
+    align-items:center;justify-content:center;
+    color:#555;flex-shrink:0;
+}
+.btn-remove-format:hover{color:#cc0000;}
+.format-panel{padding:16px 18px;display:none;background:#fafafa;}
+.format-panel.open{display:block;}
+.format-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.format-grid label{display:block;font-size:14px;margin-bottom:8px;cursor:pointer;}
+.genre-grid label{display:block;font-size:15px;margin-bottom:12px;}
+.format-free-input{
+    width:100%;border:1px solid #9f9f9f;border-radius:3px;
+    padding:4px 8px;font-size:13px;margin-top:4px;box-sizing:border-box;
 }
 /* TRACKLIST */
-.tracklist-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:8px;
-}
-.track-table{
-    width:100%;
-    border-collapse:collapse;
-    border:1px solid #ccc;
-    font-size:13px;
-}
-.track-table th{
-    background:#f2f2f2;
-    border-bottom:1px solid #ccc;
-    padding:6px;
-    text-align:left;
-}
-.track-table td{
-    border-top:1px solid #eee;
-    padding:6px;
-    vertical-align:middle;
-}
-.input-track{
-    width:100%;
-    padding:4px 6px;
-    border:1px solid #bbb;
-    border-radius:2px;
-    font-size:13px;
-}
-.input-track.small{
-    width:70px;
-}
-.add-link{
-    color:#333;
-    text-decoration:none;
-    font-size:13px;
-}
-.add-link span{
-    font-weight:bold;
-    margin-right:3px;
-}
-.credits{
-    font-size:12px;
-    color:#555;
-    margin-top:4px;
-}
-.drag{
-    text-align:center;
-    color:#aaa;
-    cursor:move;
-}
-.arrow{
-    text-align:center;
-    color:#aaa;
-    cursor:pointer;
-    font-size:11px;
-}
+.tracklist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.track-table{width:100%;border-collapse:collapse;border:1px solid #ccc;font-size:13px;}
+.track-table th{background:#f2f2f2;border-bottom:1px solid #ccc;padding:6px;text-align:left;}
+.track-table td{border-top:1px solid #eee;padding:6px;vertical-align:middle;}
+.input-track{width:100%;padding:4px 6px;border:1px solid #bbb;border-radius:2px;font-size:13px;}
+.input-track.small{width:70px;}
+.add-link{color:#333;text-decoration:none;font-size:13px;}
+.add-link span{font-weight:bold;margin-right:3px;}
+.credits{font-size:12px;color:#555;margin-top:4px;}
+.drag{text-align:center;color:#aaa;cursor:move;}
+.arrow{text-align:center;color:#aaa;cursor:pointer;font-size:11px;}
 .track-footer{
-    margin-top:10px;
-    background:#f5f5f5;
-    padding:8px;
-    border:1px solid #ddd;
-    display:flex;
-    gap:6px;
-    align-items:center;
+    margin-top:10px;background:#f5f5f5;padding:8px;
+    border:1px solid #ddd;display:flex;gap:6px;align-items:center;
 }
-.track-footer button{
-    background:#fff;
-    border:1px solid #bbb;
-    padding:4px 8px;
-    font-size:12px;
-    cursor:pointer;
-}
-.track-footer button:hover{
-    background:#eee;
-}
-.mini-link{
-    color:#2457d6;
-    text-decoration:none;
-    font-size:13px;
-}
+.track-footer button{background:#fff;border:1px solid #bbb;padding:4px 8px;font-size:12px;cursor:pointer;}
+.track-footer button:hover{background:#eee;}
+.mini-link{color:#2457d6;text-decoration:none;font-size:13px;}
 /* GENRE */
 .genre-grid{display:grid;grid-template-columns:repeat(5,1fr);}
 /* SIDEBAR */
-.side-card{ border-left:1px solid #ddd;padding-left:22px;position:sticky;top:15px;}
-.side-title{font-size:15px; font-weight:700; margin-bottom:18px;}
-.guide-link{ display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid #ececec;text-decoration:none;color:#111;font-size:15px;font-weight:700;}
+.side-card{border-left:1px solid #ddd;padding-left:22px;position:sticky;top:15px;}
+.side-title{font-size:15px;font-weight:700;margin-bottom:18px;}
+.guide-link{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid #ececec;text-decoration:none;color:#111;font-size:15px;font-weight:700;}
 .help-link{display:inline-block;margin-top:22px;color:#2457d6;text-decoration:none;font-size:15px;}
 /* CHECK / RADIO */
 .rating{display:flex;gap:30px;margin-top:15px;}
 .rating label{text-align:center;font-size:15px;}
-
-/* REMOVE BUTTON — konsisten untuk semua section */
+/* REMOVE BUTTON */
 .btn-remove{
-    background:none;
-    border:none;
-    cursor:pointer;
-    padding:2px 6px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    color:#555;
-    flex-shrink:0;
+    background:none;border:none;cursor:pointer;padding:2px 6px;
+    display:inline-flex;align-items:center;justify-content:center;
+    color:#555;flex-shrink:0;
 }
-.btn-remove:hover{ color:#cc0000; }
-.btn-remove svg{ pointer-events:none; }
+.btn-remove:hover{color:#cc0000;}
+.btn-remove svg,.btn-remove-format svg{pointer-events:none;}
 </style>
 
 <div class="release-wrap">
@@ -213,10 +175,13 @@ textarea{resize:vertical;}
         <!-- Images -->
         <div class="sec">
             <div class="sec-title">Images <span class="info">ⓘ</span></div>
-
             <div class="image-grid">
                 <div class="drop">
-                    <p><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000"><path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg></p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000">
+                            <path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/>
+                        </svg>
+                    </p>
                     <p>Drag and drop image files here</p>
                     <p>or</p>
                     <button class="btn btn-dark">Browse files</button>
@@ -225,7 +190,6 @@ textarea{resize:vertical;}
                         Images must be larger than 150 px wide and less than 4 MB.
                     </small>
                 </div>
-
                 <div>
                     <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Image Rules and Requirements</div>
                     <div class="rule">
@@ -244,12 +208,10 @@ textarea{resize:vertical;}
             </div>
         </div>
 
-        <!-- ═══════════════════════════════════════ ARTISTS ══ -->
+        <!-- ARTISTS -->
         <div class="sec">
             <div class="sec-title">Artists <span class="req">*</span></div>
-
             <div id="artistContainer">
-                <!-- Template row artist (1 row awal, remove btn disembunyikan lewat JS) -->
                 <div class="row artist-row">
                     <div class="grid3" style="align-items:center;">
                         <input type="text" class="input-medium" placeholder="Name">
@@ -266,7 +228,6 @@ textarea{resize:vertical;}
                     </div>
                 </div>
             </div>
-
             <button class="btn-plus" id="addArtistBtn">+ Add artist</button>
         </div>
 
@@ -276,10 +237,9 @@ textarea{resize:vertical;}
             <input type="text" class="input-medium" placeholder="Title" style="margin-left:-2px">
         </div>
 
-        <!-- ════════════════════════════════════════ LABEL ═══ -->
+        <!-- LABEL -->
         <div class="sec">
             <div class="sec-title">Label, Company, Catalog Number, Etc. <span class="req">*</span> <span class="info">ⓘ</span></div>
-
             <div id="labelContainer">
                 <div class="row label-row">
                     <div class="grid3" style="align-items:center;">
@@ -287,19 +247,31 @@ textarea{resize:vertical;}
                             <option value="">Label</option>
                             <option>Label</option>
                             <option>Series</option>
-                            <option>Company</option>
-                            <option>Publisher</option>
-                            <option>Distributor</option>
+                            <option>Record Company</option>
+                            <option>Licensed To</option>
+                            <option>Licensed From</option>
+                            <option>Marketed By</option>
+                            <option>Distributed By</option>
+                            <option>Manufactured By</option>
+                            <option>Recorded By</option>
+                            <option>Exported By</option>
+                            <option>Produced For</option>
+                            <option>Manufactured For</option>
+                            <option>Funded By</option>
+                            <option>Corporate Owner</option>
+                            <option>Trademark Owner</option>
                             <option>Phonographic Copyright ℗</option>
                             <option>Copyright ©</option>
-                            <option>Manufactured By</option>
-                            <option>Produced For</option>
-                            <option>Marketed By</option>
-                            <option>Recorded At</option>
-                            <option>Mixed At</option>
-                            <option>Mastered At</option>
+                            <option>Made By</option>
                             <option>Pressed By</option>
+                            <option>Duplicated By</option>
+                            <option>Printed By</option>
                             <option>Published By</option>
+                            <option>Designed At</option>
+                            <option>Filmed At</option>
+                            <option>Remastered At</option>
+                            <option>Edited At</option>
+                            <option>Exclusive Retailer</option>
                         </select>
                         <input type="text" class="input-medium" placeholder="Name">
                         <div style="display:flex;align-items:center;gap:6px;">
@@ -311,123 +283,21 @@ textarea{resize:vertical;}
                     </div>
                 </div>
             </div>
-
             <button class="btn-plus" id="addLabelBtn">+ Add label</button>
         </div>
 
-        <!-- ══════════════════════════════════════ BARCODES ══ -->
+        <!-- BARCODES -->
         <div class="sec">
             <div class="sec-title">Barcodes and Other Identifiers <span class="info">ⓘ</span></div>
-
             <div id="barcodeContainer"></div>
-
             <button class="btn-plus" id="addBarcodeBtn">+ Add barcode or other identifier</button>
         </div>
 
-        <!-- Format -->
+        <!-- FORMAT -->
         <div class="sec">
             <div class="sec-title">Format <span class="req">*</span> <span class="info">ⓘ</span></div>
-
-            <div class="row">
-                <div class="grid4">
-                    <select style="max-width:420px;">
-                        <option>Vinyl</option>
-                    </select>
-                    <span style="font-size:15px;">Qty:</span>
-                    <input type="text" class="input-small" value="1">
-                    <span style="font-size:20px;">▲</span>
-                </div>
-            </div>
-
-            <div class="format-box">
-                <div class="format-grid">
-                    <div>
-                        <b style="font-size:15px;">Size *</b><br>
-                        <label><input type="checkbox"> LP</label>
-                        <label><input type="checkbox"> 16"</label>
-                        <label><input type="checkbox"> 14"</label>
-                        <label><input type="checkbox"> 12"</label>
-                        <label><input type="checkbox"> 11"</label>
-                        <label><input type="checkbox"> 10"</label>
-                        <label><input type="checkbox"> 9"</label>
-                        <label><input type="checkbox"> 8"</label>
-                        <label><input type="checkbox"> 7"</label>
-                        <label><input type="checkbox"> 6½"</label>
-                        <label><input type="checkbox"> 6"</label>
-                        <label><input type="checkbox"> 5½"</label>
-                        <label><input type="checkbox"> 5"</label>
-                        <label><input type="checkbox"> 4"</label>
-                        <label><input type="checkbox"> 3½"</label>
-                        <label><input type="checkbox"> 3"</label>
-                        <label><input type="checkbox"> 2"</label>
-                        <label><input type="checkbox"> 1"</label>
-                    </div>
-                    <div>
-                        <b style="font-size:15px;">Speed</b><br>
-                        <label><input type="checkbox"> 8⅓ RPM</label>
-                        <label><input type="checkbox"> 16⅔ RPM</label>
-                        <label><input type="checkbox"> 33⅓ RPM</label>
-                        <label><input type="checkbox"> 45 RPM</label>
-                        <label><input type="checkbox"> 78 RPM</label>
-                        <label><input type="checkbox"> 80 RPM</label>
-                        <br><b style="font-size:15px;">Shape</b><br>
-                        <label><input type="checkbox"> Shape</label>
-                        <br><b style="font-size:15px;">Sides</b><br>
-                        <label><input type="checkbox"> Single Sided</label>
-                    </div>
-                    <div>
-                        <b style="font-size:15px;">Description</b><br>
-                        <label><input type="checkbox"> Advanced</label>
-                        <label><input type="checkbox"> Album</label>
-                        <label><input type="checkbox"> Mini-Album</label>
-                        <label><input type="checkbox"> EP</label>
-                        <label><input type="checkbox"> Maxi-Single</label>
-                        <label><input type="checkbox"> Record Store Day</label>
-                        <label><input type="checkbox"> Single</label>
-                        <label><input type="checkbox"> Compilation</label>
-                        <label><input type="checkbox"> Bioplastic</label>
-                        <label><input type="checkbox"> Card Backed</label>
-                        <label><input type="checkbox"> Club Edition</label>
-                        <label><input type="checkbox"> Deluxe Edition</label>
-                        <label><input type="checkbox"> Enhanced</label>
-                        <label><input type="checkbox"> Etched</label>
-                        <label><input type="checkbox"> Jukebox</label>
-                        <label><input type="checkbox"> Limited Edition</label>
-                        <label><input type="checkbox"> Mispress</label>
-                        <label><input type="checkbox"> Misprint</label>
-                        <label><input type="checkbox"> Mixed</label>
-                        <label><input type="checkbox"> Mixtape</label>
-                        <label><input type="checkbox"> Numbered</label>
-                        <label><input type="checkbox"> Partially Mixed</label>
-                        <label><input type="checkbox"> Partially Unofficial</label>
-                        <label><input type="checkbox"> Picture Disc</label>
-                        <label><input type="checkbox"> Promo</label>
-                        <label><input type="checkbox"> Reissue</label>
-                        <label><input type="checkbox"> Remastered</label>
-                        <label><input type="checkbox"> Repress</label>
-                        <label><input type="checkbox"> Sampler</label>
-                        <label><input type="checkbox"> Special Cut</label>
-                        <label><input type="checkbox"> Special Edition</label>
-                        <label><input type="checkbox"> Styrene</label>
-                        <label><input type="checkbox"> Test Pressing</label>
-                        <label><input type="checkbox"> Tour Recording</label>
-                        <label><input type="checkbox"> Transcription</label>
-                        <label><input type="checkbox"> Unofficial Release</label>
-                        <label><input type="checkbox"> White Label</label>
-                    </div>
-                    <div>
-                        <b style="font-size:15px;">Channels</b><br>
-                        <label><input type="checkbox"> Stereo</label>
-                        <label><input type="checkbox"> Mono</label>
-                        <label><input type="checkbox"> Quadraphonic</label>
-                        <label><input type="checkbox"> Ambisonic</label>
-                        <br><b style="font-size:15px;">Free Text</b><br>
-                        <input type="text" class="input-medium">
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn-plus">+ Add Format</button>
+            <div id="formatContainer"></div>
+            <button class="btn-plus" id="addFormatBtn">+ Add Format</button>
         </div>
 
         <!-- Country -->
@@ -456,7 +326,6 @@ textarea{resize:vertical;}
                     <a href="#" class="mini-link">Save all Track Artists/Credits</a>
                 </div>
             </div>
-
             <table class="track-table">
                 <thead>
                     <tr>
@@ -484,7 +353,6 @@ textarea{resize:vertical;}
                     @endfor
                 </tbody>
             </table>
-
             <div class="track-footer">
                 <select style="width:auto;">
                     <option>1</option>
@@ -590,17 +458,17 @@ textarea{resize:vertical;}
 
 <script>
 /* ═══════════════════════════════════════════════════
-   HELPER — ikon X untuk tombol remove
+   HELPER — ikon X
 ═══════════════════════════════════════════════════ */
-function removeIcon() {
-    return `<svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor">
+function removeIcon(size) {
+    size = size || '22px';
+    return `<svg xmlns="http://www.w3.org/2000/svg" height="${size}" viewBox="0 -960 960 960" width="${size}" fill="currentColor" style="pointer-events:none;">
         <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
     </svg>`;
 }
 
 /* ═══════════════════════════════════════════════════
    HELPER — refresh visibilitas tombol remove
-   Kalau cuma 1 row tersisa, sembunyikan tombol remove
 ═══════════════════════════════════════════════════ */
 function refreshRemove(containerId, btnClass) {
     const rows = document.querySelectorAll(`#${containerId} .row`);
@@ -610,9 +478,142 @@ function refreshRemove(containerId, btnClass) {
     });
 }
 
-/* ══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
+   SECTION: FORMAT
+═══════════════════════════════════════════════════ */
+const FORMAT_TYPES = [
+    'Vinyl','CD','Cassette','DVD','Blu-ray','SACD',
+    'Lathe Cut','Flexi-disc','Shellac','Box Set','All Media'
+];
+const SIZE_OPTS = ['LP','16"','14"','12"','11"','10"','9"','8"','7"','6½"','6"','5½"','5"','4"','3½"','3"','2"','1"'];
+const SPEED_OPTS = ['8⅓ RPM','16⅔ RPM','33⅓ RPM','45 RPM','78 RPM','80 RPM'];
+const DESC_OPTS = [
+    'Advanced','Album','Mini-Album','EP','Maxi-Single','Record Store Day','Single','Compilation',
+    'Bioplastic','Card Backed','Club Edition','Deluxe Edition','Enhanced','Etched','Jukebox',
+    'Limited Edition','Mispress','Misprint','Mixed','Mixtape','Numbered','Partially Mixed',
+    'Partially Unofficial','Picture Disc','Promo','Reissue','Remastered','Repress','Sampler',
+    'Special Cut','Special Edition','Styrene','Test Pressing','Tour Recording','Transcription',
+    'Unofficial Release','White Label'
+];
+const CHAN_OPTS = ['Stereo','Mono','Quadraphonic','Ambisonic'];
+
+let formatCount = 0;
+
+function makeCheckboxes(arr) {
+    return arr.map(o => `<label><input type="checkbox"> ${o}</label>`).join('');
+}
+
+function makeFormatEntry(defaultFormat) {
+    formatCount++;
+    const id = 'fmt-' + formatCount;
+    const typeOpts = FORMAT_TYPES.map(f =>
+        `<option${f === (defaultFormat || 'Vinyl') ? ' selected' : ''}>${f}</option>`
+    ).join('');
+
+    const div = document.createElement('div');
+    div.className = 'format-entry';
+    div.id = id;
+    div.innerHTML = `
+        <div class="format-header">
+            <select class="fmt-type-select">${typeOpts}</select>
+            <div class="qty-wrap">
+                <span>Qty:</span>
+                <button type="button" class="qty-btn" data-dir="-1">−</button>
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+                <button type="button" class="qty-btn" data-dir="1">+</button>
+            </div>
+            <button type="button" class="toggle-format-btn" data-target="${id}">
+                <span class="chevron">▼</span>
+            </button>
+            <button type="button" class="btn-remove-format" data-id="${id}" title="Remove format">${removeIcon('20px')}</button>
+        </div>
+        <div class="format-panel" id="panel-${id}">
+            <div class="format-grid">
+                <div>
+                    <b style="font-size:14px;">Size <span style="color:#cc0000">*</span></b><br>
+                    ${makeCheckboxes(SIZE_OPTS)}
+                </div>
+                <div>
+                    <b style="font-size:14px;">Speed</b><br>
+                    ${makeCheckboxes(SPEED_OPTS)}
+                    <br><b style="font-size:14px;">Shape</b><br>
+                    <label><input type="checkbox"> Shape</label>
+                    <br><b style="font-size:14px;">Sides</b><br>
+                    <label><input type="checkbox"> Single Sided</label>
+                </div>
+                <div>
+                    <b style="font-size:14px;">Description</b><br>
+                    ${makeCheckboxes(DESC_OPTS)}
+                </div>
+                <div>
+                    <b style="font-size:14px;">Channels</b><br>
+                    ${makeCheckboxes(CHAN_OPTS)}
+                    <br><b style="font-size:14px;">Free Text</b><br>
+                    <input type="text" class="format-free-input" placeholder="e.g. Green vinyl">
+                </div>
+            </div>
+        </div>`;
+    return div;
+}
+
+function refreshFormatRemove() {
+    const entries = document.querySelectorAll('.format-entry');
+    entries.forEach(e => {
+        const btn = e.querySelector('.btn-remove-format');
+        if (btn) btn.style.visibility = entries.length > 1 ? 'visible' : 'hidden';
+    });
+}
+
+/* Init: 1 format entry saat load */
+document.getElementById('formatContainer').appendChild(makeFormatEntry('Vinyl'));
+refreshFormatRemove();
+
+/* + Add Format */
+document.getElementById('addFormatBtn').addEventListener('click', function () {
+    document.getElementById('formatContainer').appendChild(makeFormatEntry('Vinyl'));
+    refreshFormatRemove();
+});
+
+/* Event delegation format container */
+document.getElementById('formatContainer').addEventListener('click', function (e) {
+
+    /* Toggle panel options */
+    const toggleBtn = e.target.closest('.toggle-format-btn');
+    if (toggleBtn) {
+        const id    = toggleBtn.dataset.target;
+        const panel = document.getElementById('panel-' + id);
+        const isOpen = panel.classList.toggle('open');
+        toggleBtn.classList.toggle('open', isOpen);
+        toggleBtn.querySelector('.btn-label').textContent = isOpen ? 'Hide' : 'Options';
+        return;
+    }
+
+    /* Remove format entry */
+    const removeBtn = e.target.closest('.btn-remove-format');
+    if (removeBtn) {
+        const id = removeBtn.dataset.id;
+        if (document.querySelectorAll('.format-entry').length > 1) {
+            document.getElementById(id).remove();
+            refreshFormatRemove();
+        }
+        return;
+    }
+
+    /* Qty +/− */
+    const qtyBtn = e.target.closest('.qty-btn');
+    if (qtyBtn) {
+        const entry = qtyBtn.closest('.format-entry');
+        const inp   = entry.querySelector('.qty-input');
+        let v = parseInt(inp.value) || 1;
+        v += parseInt(qtyBtn.dataset.dir);
+        inp.value = Math.max(1, Math.min(99, v));
+        return;
+    }
+});
+
+/* ═══════════════════════════════════════════════════
    SECTION: ARTIST
-══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function makeArtistRow() {
     const div = document.createElement('div');
     div.className = 'row artist-row';
@@ -631,17 +632,16 @@ function makeArtistRow() {
     return div;
 }
 
-document.getElementById('addArtistBtn').addEventListener('click', function() {
+document.getElementById('addArtistBtn').addEventListener('click', function () {
     document.getElementById('artistContainer').appendChild(makeArtistRow());
     refreshRemove('artistContainer', 'btn-remove-artist');
 });
 
-// Sembunyikan remove saat halaman load (hanya 1 row)
 refreshRemove('artistContainer', 'btn-remove-artist');
 
-/* ══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    SECTION: LABEL
-══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function makeLabelRow() {
     const div = document.createElement('div');
     div.className = 'row label-row';
@@ -651,19 +651,31 @@ function makeLabelRow() {
                 <option value="">Label</option>
                 <option>Label</option>
                 <option>Series</option>
-                <option>Company</option>
-                <option>Publisher</option>
-                <option>Distributor</option>
+                <option>Record Company</option>
+                <option>Licensed To</option>
+                <option>Licensed From</option>
+                <option>Marketed By</option>
+                <option>Distributed By</option>
+                <option>Manufactured By</option>
+                <option>Recorded By</option>
+                <option>Exported By</option>
+                <option>Produced For</option>
+                <option>Manufactured For</option>
+                <option>Funded By</option>
+                <option>Corporate Owner</option>
+                <option>Trademark Owner</option>
                 <option>Phonographic Copyright ℗</option>
                 <option>Copyright ©</option>
-                <option>Manufactured By</option>
-                <option>Produced For</option>
-                <option>Marketed By</option>
-                <option>Recorded At</option>
-                <option>Mixed At</option>
-                <option>Mastered At</option>
+                <option>Made By</option>
                 <option>Pressed By</option>
+                <option>Duplicated By</option>
+                <option>Printed By</option>
                 <option>Published By</option>
+                <option>Designed At</option>
+                <option>Filmed At</option>
+                <option>Remastered At</option>
+                <option>Edited At</option>
+                <option>Exclusive Retailer</option>
             </select>
             <input type="text" class="input-medium" placeholder="Name">
             <div style="display:flex;align-items:center;gap:6px;">
@@ -674,16 +686,16 @@ function makeLabelRow() {
     return div;
 }
 
-document.getElementById('addLabelBtn').addEventListener('click', function() {
+document.getElementById('addLabelBtn').addEventListener('click', function () {
     document.getElementById('labelContainer').appendChild(makeLabelRow());
     refreshRemove('labelContainer', 'btn-remove-label');
 });
 
 refreshRemove('labelContainer', 'btn-remove-label');
 
-/* ══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    SECTION: BARCODE / IDENTIFIER
-══════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function makeBarcodeRow() {
     const div = document.createElement('div');
     div.className = 'row barcode-row';
@@ -705,25 +717,26 @@ function makeBarcodeRow() {
                 <option>Mastering SID Code</option>
                 <option>Other</option>
             </select>
-            <input type="text" class="input-medium" placeholder="Value">
+            <input type="text" class="input-medium" placeholder=" ">
             <div style="display:flex;align-items:center;gap:6px;">
-                <input type="text" class="input-format" placeholder="Description (optional)" style="margin-left:0;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button class="btn-format btn-anv">Add Description</button>
+                    <input type="text" class="input-format anv-input" placeholder="Description" style="display:none;margin-left:0;">
+                </div>
                 <button class="btn-remove btn-remove-barcode" title="Remove identifier">${removeIcon()}</button>
             </div>
         </div>`;
     return div;
 }
 
-document.getElementById('addBarcodeBtn').addEventListener('click', function() {
-    const container = document.getElementById('barcodeContainer');
-    container.appendChild(makeBarcodeRow());
-    // barcode mulai dari 0, jadi selalu tampilkan remove
+document.getElementById('addBarcodeBtn').addEventListener('click', function () {
+    document.getElementById('barcodeContainer').appendChild(makeBarcodeRow());
     refreshRemove('barcodeContainer', 'btn-remove-barcode');
 });
 
-/* ══════════════════════════════════════════════════
-   SECTION: TRACKLIST — tombol "Add Tracks"
-══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   SECTION: TRACKLIST
+═══════════════════════════════════════════════════ */
 function makeTrackRow() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -739,60 +752,52 @@ function makeTrackRow() {
     return tr;
 }
 
-document.getElementById('addTracksBtn').addEventListener('click', function() {
-    const qty = parseInt(document.querySelector('.track-footer select').value) || 1;
+document.getElementById('addTracksBtn').addEventListener('click', function () {
+    const qty   = parseInt(document.querySelector('.track-footer select').value) || 1;
     const tbody = document.getElementById('trackBody');
-    for (let i = 0; i < qty; i++) {
-        tbody.appendChild(makeTrackRow());
-    }
+    for (let i = 0; i < qty; i++) tbody.appendChild(makeTrackRow());
 });
 
-/* ══════════════════════════════════════════════════
-   EVENT DELEGATION — semua tombol remove & ANV
-══════════════════════════════════════════════════ */
-document.addEventListener('click', function(e) {
+/* ═══════════════════════════════════════════════════
+   EVENT DELEGATION — remove & ANV (artist / label / barcode)
+═══════════════════════════════════════════════════ */
+document.addEventListener('click', function (e) {
 
-    /* --- ANV toggle --- */
+    /* ANV / Description toggle */
     if (e.target.classList.contains('btn-anv')) {
-        const row   = e.target.closest('.row');
-        const input = row.querySelector('.anv-input');
-        if (input.style.display === 'none') {
-            input.style.display = 'inline-block';
-            e.target.textContent = 'Remove ANV';
-        } else {
-            input.style.display = 'none';
-            input.value = '';
-            e.target.textContent = 'Add ANV';
-        }
+        const row    = e.target.closest('.row');
+        const input  = row.querySelector('.anv-input');
+        const hidden = input.style.display === 'none';
+        input.style.display = hidden ? 'inline-block' : 'none';
+        if (!hidden) input.value = '';
+        const isDesc = e.target.textContent.includes('Description');
+        e.target.textContent = hidden
+            ? (isDesc ? 'Remove Description' : 'Remove ANV')
+            : (isDesc ? 'Add Description'    : 'Add ANV');
         return;
     }
 
-    /* --- Remove Artist --- */
+    /* Remove Artist */
     if (e.target.closest('.btn-remove-artist')) {
-        const container = document.getElementById('artistContainer');
-        if (container.querySelectorAll('.row').length > 1) {
-            e.target.closest('.row').remove();
-        }
+        const c = document.getElementById('artistContainer');
+        if (c.querySelectorAll('.row').length > 1) e.target.closest('.row').remove();
         refreshRemove('artistContainer', 'btn-remove-artist');
         return;
     }
 
-    /* --- Remove Label --- */
+    /* Remove Label */
     if (e.target.closest('.btn-remove-label')) {
-        const container = document.getElementById('labelContainer');
-        if (container.querySelectorAll('.row').length > 1) {
-            e.target.closest('.row').remove();
-        }
+        const c = document.getElementById('labelContainer');
+        if (c.querySelectorAll('.row').length > 1) e.target.closest('.row').remove();
         refreshRemove('labelContainer', 'btn-remove-label');
         return;
     }
 
-    /* --- Remove Barcode --- */
+    /* Remove Barcode */
     if (e.target.closest('.btn-remove-barcode')) {
         e.target.closest('.row').remove();
         return;
     }
-
 });
 </script>
 
