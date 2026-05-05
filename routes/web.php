@@ -67,3 +67,9 @@ Route::get('/showAlbum/{id}', function ($id) {
     $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
     return view('showAlbum', compact('album'));
 });
+
+Route::get('/showRelease', function () {
+    return view('showRelease', [
+        'album' => (object)[]
+    ]);
+});
