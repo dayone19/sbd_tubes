@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Artist')
+@section('title', 'Label')
 
 @section('content')
 <style>
 .row {margin-right: 0;margin-left: 0;}
-.artist-page {font-size: 14px;color: #222;}
+.label-page {font-size: 14px;color: #222;}
 /* TITLE */
-.artist-name {font-size: 28px;font-weight: 700;margin-top: 15px;}
+.label-name {font-size: 28px;font-weight: 700;margin-top: 15px;}
 /* IMAGE */
-.artist-img {width: 160px;margin: 25px;}
+.label-img {width: 140px;margin: 25px;}
 /* INFO */
 .info-row {display: flex;margin-bottom: 8px;}
 .label {width: 130px;color: #555;}
 .content {flex: 1;}
 .profile-text {line-height: 1.5;}
 /* LINK */
-.artist-page a {color: #2a5bd7;text-decoration: none;}
+.label-page a {color: #2a5bd7;text-decoration: none;}
 .row { margin-right: 0;margin-left: 0;}
 /* SIDEBAR */
 .sidebar {padding-left: 20px; width: 400px;}
@@ -44,6 +44,13 @@
 .filter-box.active {background: #e5e5e5;font-weight: 600;}
 #releaseMenu {margin-left: 10px;}
 .hidden {display: none;}
+#toggleFilter {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+}
 .filter-box { display: flex;justify-content: space-between; cursor: pointer; padding: 8px 10px; border-radius: 6px;background: #eee;font-weight: 600;width:200px; ;}
 .arrow {
     display: inline-block;
@@ -58,28 +65,65 @@
 .arrow.right {transform: rotate(-45deg);}
 .arrow.down {transform: rotate(45deg);}
 /* tombol */
-.view-btn { border: 1px solid #ccc;background: white; padding: 5px 10px;}
-.view-btn.active { background: #333; color: white;}
+.view-btn { border: 1px solid #ccc;background: white; padding: 5px 10px; border-radius: 50%; /* Membuat tombol bulat */
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;}
+.view-btn.active { background: #222; color: white; border-color: #222;}
 /* view default*/
 .release-main,.release-label,.release-year,.release-more,.grid-info {display: none;}
 /* gridview*/
 #releaseContainer.grid-view .grid-info {display: block;text-align: left;}
 #releaseContainer.grid-view .release-item {display: block;}
+.release-header {
+    display: grid;
+    grid-template-columns: 80px 3fr 1.5fr 1fr 40px;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px 0;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;}
+.release-header div { color: #2a5bd7; }
 .grid-info .title {color: purple; font-weight: 700;font-size: 16px;}
 .grid-info .artist { color: purple; font-size: 14px;}
 .grid-info .year {font-size: 14px;  color: #333;}
 /* gridlistview*/
 #releaseContainer.gridlist-view .release-main,#releaseContainer.gridlist-view .release-label,#releaseContainer.gridlist-view .release-year, #releaseContainer.gridlist-view .release-more {display: block;}
-#releaseContainer.gridlist-view .release-item {display: grid;grid-template-columns: 60px 2fr 1.5fr 80px 40px;align-items: center;gap: 15px;padding: 12px 0;border-bottom: 1px solid #ddd;}
+#releaseContainer.gridlist-view .release-item {
+    display: grid;
+    /* Adjusted columns: Cover/Title | Catalog | Year | Options */
+    grid-template-columns: 60px 3fr 1fr 100px 40px; 
+    align-items: start;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
 /* listview */
 #releaseContainer.list-view .release-main,#releaseContainer.list-view .release-label,#releaseContainer.list-view .release-year,#releaseContainer.list-view .release-more {display: block;}
 #releaseContainer.list-view .release-item {display: grid;grid-template-columns: 1fr 1fr 80px 40px;align-items: center; padding: 12px 0;border-bottom: 1px solid #ddd;}
 #releaseContainer.list-view img {display: none;}
 #releaseContainer.list-view .release-main .title {color: #2a5bd7;font-weight: 500;}
 #releaseContainer.list-view .versions { font-size: 12px;background: #eee; padding: 3px 8px; border-radius: 4px;display: inline-block;margin-top: 5px;}
+.release-main .title a {color: #2a5bd7;font-weight: 500;text-decoration: none;}
+.release-main .title a:hover {text-decoration: underline;}
+.release-label, .release-year {font-size: 13px;color: #333;}
 .release-label {color: #2a5bd7;}
+.release-main .format-text {
+    font-size: 13px;
+    color: #333;
+    margin-top: 4px;
+}
+.release-catalog, .release-year {
+    font-size: 13px;
+    color: #333;
+    padding-top: 2px;
+}
 .release-year {text-align: right;}
 .release-more {text-align: center;}
+.release-catalog {font-size: 13px;color: #333;}
 .master-release-header {
         display: flex;
         justify-content: space-between;
@@ -123,65 +167,65 @@
     }
 </style>
 
-<div class="artist-page">
+<div class="label-page">
 <div class="row">
 
     <!-- LEFT -->
     <div class="col-md-2">
-        <img src="https://i.discogs.com/k_MaY-4qMwso5o-xKS4MxnsZKCk8vBgj6irhOgJ4Hoo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTMzMTA3/MzctMTc3NTMyNzI2/Ny04NjUwLmpwZWc.jpeg" class="artist-img">
+        <img src="https://i.discogs.com/fNKnV5ZMswwZSBYhqUDVMq13KIcT10dr2ILJMtwrITU/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9MLTQxMzIx/LTEzMzk3MTI3NzQt/MTIxMS5naWY.jpeg" class="label-img">
     </div>
 
     <!-- MIDDLE -->
     <div class="col-md-6">
-        <div class="artist-name">Ariana Grande</div>
-
-        <div class="info-row">
-            <div class="label">Real Name:</div>
-            <div class="content">Ariana Grande-Butera</div>
-        </div>
+        <div class="label-name">Warner Bros. Music</div>
 
         <div class="info-row">
             <div class="label">Profile:</div>
             <div class="content profile-text">
-                American singer and actress, born June 26, 1993.
-                Grande began her career in the Broadway musical 13, before landing the role of Cat Valentine on the Nickelodeon television series Victorious in 2009.
-                After the show ended, Grande rose to prominence as a teen idol on her own spinoff, Sam & Cat. She later signed a recording contract with Republic Records, and released 7 studio albums with them: Yours Truly in 2013, 
-                My Everything in 2014, Dangerous Woman in 2016, Sweetener in 2018, Thank U, Next in 2019, Positions in 2020, and Eternal Sunshine in 2024.
+                Publishing company affiliated with Warner Bros. Records. Use this entry if no further information is given. If a specific company/entity is mentioned such as
+                1) Wb Music Corp. (including variants such as Warner Bros. Music Corp., Warner Bros. Music Corporation etc.) or
+                2) Warner Bros. Music Ltd. (including variants such as Warner Bros. Music Ltd., Warner Brothers Music Ltd. etc.)
+                use these entries. First of these entites is since 2019 known as WC Music Corp., second of these is since 1988 known as Warner Chappell Music Ltd.
             </div>
         </div>
 
         <div class="info-row">
-            <div class="label">Sites:</div>
-            <div class="content">arianagrande.com , Facebook , X , Instagram , Instagram , Instagram , Soundcloud , YouTube , YouTube , YouTube , Wikipedia , Lastfm </div>
+            <div class="label">Parent Label:</div>
+            <div class="content"><a>Warner Chappell Music</a></div>
         </div>
 
         <div class="info-row">
-            <div class="label">In Groups:</div>
-            <div class="content">Kids Who Care: The Musical Troupe, Victorious Cast, Wicked Movie Cast </div>
+            <div class="label">Sublabels:</div>
+            <div class="content"><a>Warner Bros. Music, Inc., Warner Brothers Music, France</a></div>
         </div>
 
         <div class="info-row">
-            <div class="label">Variations:</div>
-            <div class="content">Viewing All| Ariana Grande</div>
+            <div class="label">Contact Info:</div>
+            <div class="content">Manufacturer Contact<br>
+                Warner Bros. Music (obsolete)<br>
+                Warner/Chappell<br>
+                777 S. Santa Fe Avenue<br>
+                Los Angeles, CA 90021<br>
+                USA
+                https://warnerchappell.com/</div>
         </div>
 
-        <div class="info-row">
-            <div class="content">A Grande, A. Grande, Ariana Grande-Butera, Arianna Grande, Grande, アリアナ・グランデ, 亞莉安娜, 安娜公主亞莉安娜</div>
-        </div>
     </div>
 
     <!-- RIGHT -->
     <div class="col-md-3 sidebar">
 
         <div class="master-release-header">
-            <span>Artist</span>
+            <span>Label</span>
             <span class="release-id">
                 <span class="release-icon"></span>
-                [a{{ $album->master_id ?? '3310737' }}]
+                [l{{ $album->master_id ?? '138147' }}]
             </span>
         </div>
         <div class="master-release-links">
-            <a href="#">Edit Artist</a>
+            <a href="#">Edit Label</a>
+            <div style="color:black;">Data quality rating: Data Correct</div>
+            <div style="color:blue; font-weight: bold;">19993 submissions pending</div>
         </div>
         
         <div class="d-flex justify-content-between">
@@ -198,19 +242,20 @@
                 <!-- ITEM 1 -->
                 <div class="carousel-item active">
                     <div class="d-flex mt-2">
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="100" height="100" class="me-2">
+                        <img src=https://i.discogs.com/iIZ74y-SGUGNfUaccYF3zVP5gCj4j6u_6ht7M-SUiis/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTU0/NjUzLTE1MjE5MzA0/MjEtMjAxMC5qcGVn.jpeg width="100" height="100" class="me-2">
 
                         <div>
                             <div class="small">MASTER RELEASE</div>
-                            <strong>Wicked: For Good</strong><br>
-                            <span class="small">2025</span><br>
+                            <strong>Les Mystérieuses Cités D'Or</strong><br>
+                            <span class="small">Apollo (18)</span><br>
+                            <span class="small">1983</span><br>
                             <span class="small">Vinyl · CD</span><br>
-                            <span class="small">From $5 to $500</span>
+                            <span class="small">From $17 to $125</span>
                         </div>
                     </div>
 
                     <button class="btn btn-green w-100 mt-3">
-                        Shop 625 Listings
+                        Shop 23 Listings
                     </button>
                 </div>
 
@@ -221,9 +266,11 @@
 
                         <div>
                             <div class="small">MASTER RELEASE</div>
-                            <strong>Album 2</strong><br>
-                            <span class="small">2024</span><br>
-                            <span class="small">2024</span>
+                            <strong>Goldorak</strong><br>
+                            <span class="small">Various</span><br>
+                            <span class="small">2018</span><br>
+                            <span class="small">Vinyl</span><br>
+                            <span class="small">France</span>
                         </div>
                     </div>
 
@@ -253,7 +300,7 @@
 
         <!-- BUTTON BAWAH -->
         <button class="btn btn-light w-100 mt-2">
-            Shop All Ariana Grande
+            Shop All Warner Brothers Music, France
         </button>
 
     </div>
@@ -262,78 +309,12 @@
 
 <div class="container mt-4">
 
-    <!-- TAB NAV -->
-    <div class="mt-5 border-bottom">
-        <div class="d-flex gap-2">
-            <button data-tab="discography" class="tab-btn active">Discography</button>
-            <button data-tab="reviews" class="tab-btn">Reviews</button>
-            <button data-tab="videos" class="tab-btn">Videos</button>
-            <button data-tab="lists" class="tab-btn">Lists</button>
-        </div>
-    </div>
 
     <!-- RELEASES -->
     <div id="tab-discography" class="tab-content">
         <div class="mt-4">
-        <!-- left -->
-        <div class="row">
-            <!-- sidebar -->
-            <div class="col-md-3 filter-sidebar">
 
-                <div class="filter-box" onclick="toggleMenu('releaseMenu', this)">
-                    <span class="arrow down"></span> Releases <span>88</span>
-                </div>
-                <div id="releaseMenu">
-                    <div class="filter-item">Albums <span>12</span></div>
-                    <div class="filter-item">Singles & EPs <span>72</span></div>
-                    <div class="filter-item">Compilations <span>2</span></div>
-                    <div class="filter-item">Miscellaneous <span>2</span></div>
-                </div>
-
-                <!-- APPEARANCES -->
-                <div class="filter-box mt-2" onclick="toggleMenu('appearMenu', this)">
-                    <span class="arrow down"></span> Appearances <span>1422</span>
-                </div>
-                <div id="appearMenu" class="hidden">
-                    <div class="filter-item">Albums <span>64</span></div>
-                    <div class="filter-item">Singles & EPs <span>4</span></div>
-                    <div class="filter-item">Compilations <span>1187</span></div>
-                    <div class="filter-item">Mixes <span>140</span></div>
-                    <div class="filter-item">Videos <span>22</span></div>
-                    <div class="filter-item">Miscellaneous <span>5</span></div>
-                </div>
-
-                <!-- UNOFFICIAL -->
-                <div class="filter-box mt-2" onclick="toggleMenu('unoffMenu', this)">
-                    <span class="arrow down"></span> Unofficial <span>52</span>
-                </div>
-                <div id="unoffMenu" class="hidden">
-                    <div class="filter-item">Albums <span>13</span></div>
-                    <div class="filter-item">Singles & EPs <span>20</span></div>
-                    <div class="filter-item">Compilations <span>9</span></div>
-                    <div class="filter-item">Videos <span>2</span></div>
-                    <div class="filter-item">Miscellaneous <span>8</span></div>
-                </div>
-
-                <!-- CREDITS -->
-                <div class="filter-box mt-2" onclick="toggleMenu('creditMenu', this)">
-                    <span class="arrow down"></span> Credits <span>366</span>
-                </div>
-                <div id="creditMenu" class="hidden">
-                    <div class="filter-item">Featuring & Presenting <span>107</span></div>
-                    <div class="filter-item">Writing & Arrangement <span>156</span></div>
-                    <div class="filter-item">Production <span>31</span></div>
-                    <div class="filter-item">Vocals <span>61</span></div>
-                    <div class="filter-item">Technical <span>5</span></div>
-                    <div class="filter-item">Instruments & Performance <span>5</span></div>
-                    <div class="filter-item">Visual <span>1</span></div>
-                </div>
-
-            </div>
-
-
-            <!-- RIGHT CONTENT -->
-            <div class="col-md-9">
+            <div class="col-md-13">
 
                 <h5 class="fw-bold">Release</h5>
 
@@ -407,11 +388,20 @@
 
                 </div>
 
+
                 <!-- LIST ITEM -->
                 <div id="releaseContainer" class="gridlist-view">
 
-                    <div class="release-item" data-year="2013">
-                        <img src="https://i.discogs.com/hR1_tNewaSFa8myEfAwEdXYo5xnDKYZOrdCz8nYkW_8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NDI0/MzQtMTQ2MzY2NzI4/OC01MTM4LmpwZWc.jpeg">
+                    <div class="release-header">
+                        <div></div> <!-- Kosong untuk sejajar gambar -->
+                        <div>Artist <span class="small">▼</span> – Title ( Format )</div>
+                        <div>Catalog Number</div>
+                        <div>Year</div>
+                        <div></div>
+                    </div>
+
+                    <div class="release-item" data-year="2020">
+                        <img src=https://i.discogs.com/7BI3dmn1urMQJPrC_M72b2IVa8BX3PDK8u4FDFo9XhE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0OTA0/MzczLTE1OTAxNjc5/NzAtNjA2OS5qcGVn.jpeg>
 
                         <!-- GRID VIEW -->
                         <div class="grid-info">
@@ -423,13 +413,15 @@
                         <!-- GRIDLIST + LIST -->
                         <div class="release-main">
                             <div>
-                                <div class="title"><a href="#">Yours Truly</a></div>
-                                <div class="versions">36 versions ▼</div>
+                                <div class="title"><a href="#">Various</a> – <a href="#">Goldorak</a></div>
+                                <div class="format-text">(LP, Pic, RE)</div>
                             </div>
                         </div>
 
-                        <div class="release-label">Republic Records</div>
-                        <div class="release-year">2013</div>
+                        <div class="release-catalog">3374786</div>
+
+                        <div class="release-year">2020</div>
+                        
                         <div class="dropdown">
                             <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
                                 •••
@@ -443,44 +435,13 @@
                     </div>
 
                     <!-- ini kubikin buat ngecek tombol year aj-->
-                    <div class="release-item" data-year="2024">
-                            
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="150">
-
-                        <!-- GRID VIEW -->
-                        <div class="grid-info">
-                            <div class="title"><a href="#">Eternal Sunshine</a></div>
-                            <div class="artist"><a href="#">Ariana Grande</a></div>
-                            <div class="year">2024</div>
-                        </div>
-
-                        <!-- GRIDLIST + LIST -->
-                        <div class="release-main">
-                            <div>
-                                <div class="title"><a href="#">Eternal Sunshine</a></div>
-                                <div class="versions">60 versions ▼</div>
-                            </div>
-                        </div>
-
-                        <div class="release-label">Republic Records</div>
-                        <div class="release-year">2024</div>
-                        <div class="dropdown" >
-                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
-                                •••
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Add to List</a></li>
-                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
+                    
 
                 </div>
 
             </div>
         </div>
-        </div>
+
     </div>
 
     <!-- REVIEWS -->
@@ -490,46 +451,6 @@
         <button class="btn btn-secondary mt-2 mb-4">Submit</button>
     </div>
 
-    <!-- VIDEOS -->
-    <div id="tab-videos" class="tab-content d-none">
-        <h5 class="fw-bold">Videos (149)</h5>
-
-        <div class="row mt-3">
-            <!-- big vid -->
-            <div class="col-md-8">
-                <iframe id="mainVideo"
-                    width="100%"
-                    height="400"
-                    src="https://www.youtube.com/embed/_sV0S8qWSy0"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <!-- vid list -->
-            <div class="col-md-4" style="max-height:400px; overflow-y:auto;">
-
-                <div class="video-item d-flex mb-3" data-video="_sV0S8qWSy0" style="cursor:pointer;">
-                    <img src="https://img.youtube.com/vi/_sV0S8qWSy0/mqdefault.jpg" width="120">
-                    <div class="ms-2">
-                        <div class="small fw-bold">
-                            Ariana Grande - The Way (Official Video)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-item d-flex mb-3" data-video="BPgEgaPk62M" style="cursor:pointer;">
-                    <img src="https://img.youtube.com/vi/BPgEgaPk62M/mqdefault.jpg" width="120">
-                    <div class="ms-2">
-                        <div class="small fw-bold">
-                            Ariana Grande - raindrops (audio)
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
 
     <!-- LISTS -->
     <div id="tab-lists" class="tab-content d-none">
@@ -636,13 +557,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
-document.querySelectorAll('.video-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const videoId = item.dataset.video;
-        document.getElementById('mainVideo').src =
-            "https://www.youtube.com/embed/" + videoId;
-    });
-});
 
 </script>
 

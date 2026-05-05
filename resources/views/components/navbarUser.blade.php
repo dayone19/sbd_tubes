@@ -177,8 +177,13 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/showArtist">Essentials</a></li>
                         <li><a class="dropdown-item" href="/showAlbum">Features</a></li>
+<<<<<<< HEAD
                         <li><a class="dropdown-item" href="/showRelease">Most Valuable</a></li>
                         <li><a class="dropdown-item" href="#">Collecting</a></li>
+=======
+                        <li><a class="dropdown-item" href="#">Most Valuable</a></li>
+                        <li><a class="dropdown-item" href="/showLabel">Collecting</a></li>
+>>>>>>> b5b459a5ac3ae977cec315e12d1534f21d17dd13
                         <li><a class="dropdown-item" href="#">Audio Gear</a></li>
                     </ul>
             </div>

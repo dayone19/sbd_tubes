@@ -193,7 +193,8 @@ body{
 }
 .album-card .artist {
     font-size: 0.85rem;
-    color: #333;
+    font-weight: 535;
+    color: #000000;
     margin:10px;
 }
 .album-card .year {
