@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', isset($album) ? 'Album - ' . $album->title : 'Album')
+@section('title', 'Release')
 
 @section('content')
 
@@ -1167,6 +1167,39 @@
     display: none;
 }
 
+.tracklist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-credits {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #000;
+}
+
+.toggle-credits:hover {
+    text-decoration: underline;
+}
+
+.eye-icon {
+    width: 16px;
+    height: 16px;
+    fill: #000;
+}
+
+.credits {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+}
+
         
 
     /* Responsive */
@@ -1199,57 +1232,61 @@
         <!-- Header: cover + meta -->
         <div class="album-header">
             <div class="album-cover-wrap">
-               <img src="https://i.discogs.com/7OyH6ag4ze3_wbHt4uIxkLeqUlQDUgBHP0eL9oWGu8A/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2NjI4/NDIwLTE3NzIyOTE4/NzAtNTQ5Ny5qcGVn.jpeg" alt="Bruno Mars - The Romantic album cover" width="150" height="147" >
+               <img src="https://i.discogs.com/55OYJqGsg9ov3VrCPSdj3lmQyBrmeoRBO7EGNcPC7cE/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMTM2/NzU1LTE3Mzk1ODQ4/NTAtMTUzNi5qcGVn.jpeg" alt="Sabrina Carpenter - Short N' Sweet (Deluxe) album cover" width="150" height="150">
                 <a href="#">More images</a>
             </div>
             <div class="album-meta">
                 <div class="album-title">
-                    <a href="#" class="artist-name">{{ $album->artist ?? 'Bruno Mars' }}</a>
-                    &ndash; {{ $album->title ?? 'The Romantic' }}
+                    <a href="#" class="artist-name">Sabrina Carpenter</a>
+                    &ndash;Short N\' Sweet (Deluxe)
                 </div>
                 <table class="album-info-table">
                     <tr>
-                        <td>Genre:</td>
+                        <td>Label:</td>
                         <td>
-                            @if(isset($album->genres))
-                                @foreach($album->genres as $genre)
-                                    <a href="#">{{ $genre }}</a>@if(!$loop->last), @endif
-                                @endforeach
-                            @else
-                                <a href="#">Funk / Soul</a>, <a href="#">Pop</a>
-                            @endif
+                                <a href="#">Island Records</a> &ndash; 602475656999
                         </td>
+                    </tr>
+                    <tr>
+                        <td>Format:</td>
+                        <td>
+                                2 x <a href="#">Vinyl,</a> LP, Album, Deluxe Edition, Repress, <i>Blue Opaque [Bright Azure]</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td><a href="#">US</a></td>
+                    </tr>
+                    <tr>
+                        <td>Released:</td>
+                        <td><a href="#">14 Feb 2025</a></td>
+                    </tr>
+                    <tr>
+                        <td>Genre:</td>
+                        <td><a href="#">Funk / Soul, Pop</a></td>
                     </tr>
                     <tr>
                         <td>Style:</td>
-                        <td>
-                            @if(isset($album->styles))
-                                @foreach($album->styles as $style)
-                                    <a href="#">{{ $style }}</a>@if(!$loop->last), @endif
-                                @endforeach
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Year:</td>
-                        <td><a href="#">{{ $album->year ?? '2026' }}</a></td>
+                        <td><a href="#">Bubblegum, Contempory R&B, Nu-Disco, Voca</a></td>
                     </tr>
                 </table>
             </div>
         </div>
 
         <!-- Tracklist -->
-        <div class="section-title">Tracklist</div>
+        <div class="section-title tracklist-header">
+            <span>Tracklist</span>
+
+            <button class="toggle-credits" onclick="toggleCredits()">
+                <svg class="eye-icon" viewBox="0 0 24 24">
+                    <path d="M12 5C6 5 2 12 2 12s4 7 10 7 10-7 10-7-4-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                    <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <span class="toggle-text">Hide Credits</span>
+            </button>
+        </div>
+
         <table class="tracklist">
-            @if(isset($album->tracks) && count($album->tracks))
-                @foreach($album->tracks as $track)
-                    <tr>
-                        <td>{{ $track->title }}</td>
-                    </tr>
-                @endforeach
-            @else
                 <tr><td>Risk It All</td></tr>
                 <tr><td>Cha Cha Cha</td></tr>
                 <tr><td>I Just Might</td></tr>
@@ -1259,7 +1296,6 @@
                 <tr><td>Something Serious</td></tr>
                 <tr><td>Nothing Left</td></tr>
                 <tr><td>Dance With Me</td></tr>
-            @endif
         </table>
 
         <!-- Credits -->
@@ -1453,15 +1489,16 @@
 
         <!-- Master Release -->
         <div class="master-release-header">
-            <span>Master Release</span>
+            <span>Release</span>
             <span class="release-id">
                 <span class="release-icon"></span>
-                [m{{ $album->master_id ?? '4146559' }}]
+                [r33136755]
             </span>
         </div>
         <div class="master-release-links">
-            <a href="#">Edit Master Release</a>
-            <span style="color:black;">Recently Edited</span>
+            <a href="#">Edit Release</a>
+            <a href="#">See all versions</a>
+            <span style="color:black;">Recently Edited</span> 
         </div>
 
         <!-- For Sale -->
@@ -1471,19 +1508,15 @@
         </div>
 
         <div class="release-card">
-            <img src="https://i.discogs.com/7OyH6ag4ze3_wbHt4uIxkLeqUlQDUgBHP0eL9oWGu8A/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2NjI4/NDIwLTE3NzIyOTE4/NzAtNTQ5Ny5qcGVn.jpeg" alt="Bruno Mars - The Romantic album cover" width="150" height="147" >
+            <img src="https://i.discogs.com/55OYJqGsg9ov3VrCPSdj3lmQyBrmeoRBO7EGNcPC7cE/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMTM2/NzU1LTE3Mzk1ODQ4/NTAtMTUzNi5qcGVn.jpeg" alt="Sabrina Carpenter - Short N' Sweet (Deluxe) album cover" width="150" height="150">
             <div class="release-card-info">
-                <div class="label">Master Release</div>
-                <div class="title">{{ $album->title ?? 'The Romantic' }}</div>
-                <div class="year">{{ $album->year ?? '2026' }}</div>
-                <div class="formats">
-                    <a href="#"><u>Vinyl</u></a><span> • </span><a href="#"><u>CD</u></a><span> • </span><a href="#"><u>Cassette</u></a>
-                </div>
-                <div class="price-range">From $12 to $1,000</div>
+                <div class="label">VINYL</div>
+                <div class="title">Short N' Sweet (Deluxe)</div>
+                <div class="price-range">From $30 to $100</div>
             </div>
         </div>
 
-        <a href="#" class="btn-shop">Shop {{ $album->listing_count ?? '414' }} Listings</a>
+        <a href="#" class="btn-shop">Shop 25 Vinyl</a>
 
         <!-- Statistics -->
         <div class="statistics-header">Statistics</div>
@@ -1577,6 +1610,23 @@
         
     </div>
     <!-- end .album-right -->
+
+<script>
+    let visible = true;
+
+    function toggleCredits() {
+    const credits = document.querySelectorAll('.credits');
+    const text = document.querySelector('.toggle-text');
+
+    visible = !visible;
+
+    credits.forEach(c => {
+        c.style.display = visible ? 'block' : 'none';
+    });
+
+    text.innerText = visible ? 'Hide Credits' : 'Show Credits';
+}
+</script>
 
 </div>
 
