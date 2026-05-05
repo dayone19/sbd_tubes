@@ -29,7 +29,7 @@
 
     <div class="community-text">
         Want to see other lists from the Discogs Community?
-        Check out <a href="#">Recent Lists</a>.
+        Check out <a href="/lists">Recent Lists</a>.
     </div>
 
     <div class="list-title">
