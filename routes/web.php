@@ -56,6 +56,10 @@ Route::get('/mywants', function () {
     return view('mywants');
 })->name('mywants');
 
+Route::get('/lists', function () {
+    return view('lists');
+});
+
 Route::prefix('user')->group(function () {
 
     Route::get('/collection', function () {
