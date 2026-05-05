@@ -99,19 +99,3 @@ Route::get('/showAlbum/{id}', function ($id) {
     $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
     return view('showAlbum', compact('album'));
 });
-
-<<<<<<< HEAD
-Route::get('/showRelease', function () {
-    return view('showRelease', [
-        'album' => (object)[]
-    ]);
-});;
-
-=======
-Route::get('/showLabel', function () {
-    return view('showLabel');
-});
-
-//route untuk controller AlbumController.php
-Route::get('/', [AlbumController::class, 'index']);
->>>>>>> b5b459a5ac3ae977cec315e12d1534f21d17dd13
