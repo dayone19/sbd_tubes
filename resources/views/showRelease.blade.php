@@ -7,18 +7,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
     * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
     }
-
     body {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 13px;
         color: #333;
         background: #fff;
     }
-
     .album-wrapper {
         max-width: 1100px;
         margin: 20px auto;
@@ -26,13 +22,11 @@
         display: flex;
         gap: 24px;
     }
-
     /* ── LEFT COLUMN ── */
     .album-left {
         flex: 1 1 0;
         min-width: 0;
     }
-
     /* Header */
     .album-header {
         display: flex;
@@ -40,12 +34,10 @@
         align-items: flex-start;
         margin-bottom: 20px;
     }
-
     .album-cover-wrap {
         flex-shrink: 0;
         text-align: center;
     }
-
     .album-cover-wrap img {
         width: 160px;
         height: 160px;
@@ -53,7 +45,6 @@
         display: block;
         border: 1px solid #ccc;
     }
-
     .album-cover-wrap a {
         display: block;
         font-size: 11px;
@@ -61,16 +52,13 @@
         margin-top: 4px;
         text-decoration: none;
     }
-
     .album-cover-wrap a:hover {
         text-decoration: underline;
     }
-
     .album-meta {
         flex: 1;
         padding-top: 4px;
     }
-
     .album-title {
         font-size: 22px;
         font-weight: bold;
@@ -78,42 +66,34 @@
         margin-bottom: 10px;
         line-height: 1.2;
     }
-
     .album-title .artist-name {
         color: #0a71b3;
         text-decoration: none;
     }
-
     .album-title .artist-name:hover {
         text-decoration: underline;
     }
-
     .album-info-table {
         border: none;
         border-collapse: collapse;
     }
-
     .album-info-table td {
         padding: 2px 8px 2px 0;
         vertical-align: top;
         font-size: 13px;
     }
-
     .album-info-table td:first-child {
         color: #333;
         font-weight: normal;
         white-space: nowrap;
     }
-
     .album-info-table td a {
         color: #0a71b3;
         text-decoration: none;
     }
-
     .album-info-table td a:hover {
         text-decoration: underline;
     }
-
     /* Section divider */
     .section-title {
         font-size: 14px;
@@ -124,28 +104,23 @@
         margin-bottom: 0;
         margin-top: 20px;
     }
-
     /* Tracklist */
     .tracklist {
         width: 100%;
         border-collapse: collapse;
         margin-top: 0;
     }
-
     .tracklist tr {
         border-bottom: 1px solid #e8e8e8;
     }
-
     .tracklist tr:last-child {
         border-bottom: none;
     }
-
     .tracklist td {
         padding: 3px 4px;
         font-size: 13px;
         color: #333;
     }
-
     /* Credits */
     .credits-grid {
         display: grid;
@@ -153,7 +128,6 @@
         gap: 0;
         margin-top: 0;
     }
-
     .credit-item {
         display: flex;
         align-items: center;
@@ -161,12 +135,10 @@
         padding: 10px 8px;
         border-bottom: none;
     }
-
     .credit-item img {
         width: 60px;
         height: auto;
     }
-
     .credit-info a {
         color: #0a71b3;
         text-decoration: none;
@@ -174,17 +146,14 @@
         font-weight: bold;
         display: block;
     }
-
     .credit-info a:hover {
         text-decoration: underline;
     }
-
     .credit-info span {
         font-size: 12px;
         color: #666;
         display: block;
     }
-
     /* ── RIGHT COLUMN ── */
     .album-right {
         width: 280px;
@@ -281,7 +250,6 @@
         gap: 10px;
         margin-bottom: 12px;
     }
-
     .release-card img {
         width: 75px;
         height: 75px;
@@ -289,49 +257,39 @@
         border: 1px solid #ccc;
         flex-shrink: 0;
     }
-
     .release-card-info {
         font-size: 12px;
         line-height: 1.5;
     }
-
     .release-card-info .label {
         font-size: 10px;
         color: #888;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
-
     .release-card-info .title {
         font-size: 14px;
         font-weight: bold;
         color: #333;
     }
-
     .release-card-info .year {
         color: #555;
     }
-
     .release-card-info .formats a {
         color: black;
         text-decoration: none;
         font-size: 12px;
     }
-
     .release-card-info .formats a:hover {
         text-decoration: underline;
     }
-
     .release-card-info .formats span {
         color: #666;
     }
-
     .release-card-info .price-range {
         color: #333;
         font-size: 12px;
     }
-
-
     .btn {
         display: flex;
         align-items: center;
@@ -339,7 +297,6 @@
         gap: 6px;
         white-space: nowrap;
     }
-
     /* Shop button */
     .btn-shop {
         display: block;
@@ -552,7 +509,7 @@
         padding-top: 15px;
         display: flex;
         flex-direction: column;
-        max-height: 400px;
+        max-height: 200px;
     }
 
     #video-sidebar-section .v-header {
@@ -600,7 +557,7 @@
     }
 
     .v-list {
-        max-height: 200px;
+        max-height: 120px;
         overflow-y: auto;
         flex: 1;         
         min-height: 0;    
@@ -1717,7 +1674,7 @@
   </div>
 
         
-                    <div id="video-sidebar-section">
+                <div id="video-sidebar-section">
                 <div class="v-header">
                     <h2>Videos (11)</h2>
                     <a href="#" class="small">Edit</a>
@@ -1726,6 +1683,7 @@
                 <div class="main-player" id="mainPlayer">
                     <img src="https://via.placeholder.com/400x225/222/fff?text=BRUNO+MARS+VIDEO" id="currentThumb">
                     <div class="play-btn-overlay"></div>
+                </div>
                 </div>
 
                 <div class="v-list">
