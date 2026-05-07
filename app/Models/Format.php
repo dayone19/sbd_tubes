@@ -10,6 +10,8 @@ class Format extends Model
     public $timestamps = false;
     protected $fillable = [
         'name',
+        'size',
+        'speed',
     ];
 
     public function releases()
