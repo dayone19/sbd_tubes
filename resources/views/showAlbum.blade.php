@@ -1083,7 +1083,6 @@
     
     .main-player {
     width: 100%;
-    height: 220px; /* tambahin ini */
     background-color: #000;
     position: relative;
     display: flex;
@@ -1569,7 +1568,7 @@
     <hr class="my-2">
 
     <!-- FOOTER -->
-    <a href="#" class="view-more-lists">View More List</a>
+    <a href="#" class="view-more-lists">View More List </a>
 </div>
 
         

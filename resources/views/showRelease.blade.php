@@ -4,6 +4,7 @@
 
 @section('content')
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
     * {
         margin: 0;
@@ -330,6 +331,15 @@
         font-size: 12px;
     }
 
+
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
     /* Shop button */
     .btn-shop {
         display: block;
@@ -351,55 +361,70 @@
         background: #257025;
     }
 
-    /* Statistics */
-    .statistics-header {
-        font-size: 14px;
+    
+    /* STATISTICS */
+    .stats-box {
+        margin-bottom: 16px;
+    }
+
+    .stats-box h3 {
+        font-size: 15px;
         font-weight: bold;
         color: #333;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 6px;
         margin-bottom: 8px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 4px;
     }
 
     .stats-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* 2 kolom */
-        gap: 10px 20px;
-        font-size: 12px;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 30px;
+        row-gap: 2px;
+        position: relative;
+    }
+
+    .stats-grid::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .stats-grid .stat-pair:nth-last-child(-n+2) {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 6px;
     }
 
     .stat-pair {
         display: flex;
         justify-content: space-between;
-        border-bottom: none;
-        padding-bottom: 4px;
+        white-space: nowrap;
+        gap: 7px; /* dari 6 → 12 biar agak lega */
     }
 
-    .stat-pair a {
-        color: #0a71b3;
-        text-decoration: none;
+    .stat-row {
+        display: contents;
     }
 
-    .stat-pair a:hover {
-        text-decoration: underline;
+    .stat-label {
+        color: #000;
     }
 
-    .stats-grid .stat-label {
-        color: #555;
-    }
-
-    .stats-grid .stat-value a {
-        color: #0a71b3;
-        text-decoration: none;
-    }
-
-    .stats-grid .stat-value a:hover {
-        text-decoration: underline;
-    }
-
-    .stats-grid .stat-value {
+    .stat-value {
+        color: #000;
         text-align: right;
-        color: #555;
+    }
+
+    .stat-value a {
+        color: #4b75b9;
+        text-decoration: none;
+    }
+
+    .stat-value a:hover {
+        text-decoration: underline;
     }
 
     /* Share */
@@ -467,99 +492,6 @@
         text-decoration: underline;
     }
 
-    /* Video thumbnail */
-    .video-thumb {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 16/9;
-        background: #000;
-        cursor: pointer;
-        overflow: hidden;
-    }
-
-    .video-thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.8;
-    }
-
-    .video-thumb .play-btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 48px;
-        height: 48px;
-        background: rgba(255,255,255,0.9);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .video-thumb .play-btn::after {
-        content: '';
-        border-left: 18px solid #333;
-        border-top: 11px solid transparent;
-        border-bottom: 11px solid transparent;
-        margin-left: 4px;
-    }
-
-    .video-more-link {
-        display: block;
-        color: #0a71b3;
-        font-size: 12px;
-        text-decoration: none;
-        margin-top: 6px;
-    }
-
-    .video-more-link:hover {
-        text-decoration: underline;
-    }
-
-    .page-wrapper {
-        display: flex;
-        max-width: 1300px;
-        margin: 0 auto;
-        gap: 0;
-    }
-
-    .main-content {
-        flex: 1;
-        padding: 0 0 20px 0;
-        min-width: 0;
-    }
-
-    .show-more-credits {
-        text-align: center;
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
-        padding: 8px 0;
-        font-size: 13px;
-        color: #333;
-        cursor: pointer;
-        background: #fff;
-        border: 1px solid #ddd;
-    }
-
-    .show-more-credits a {
-        color: #333;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-    }
-
-    .show-more-credits a:hover {
-        color: #0000ff;
-    }
-
-    .show-more-credits .arrow {
-        font-size: 10px;
-    }
-
     .versions-header {
         padding: 16px 0 8px 0;
     }
@@ -569,69 +501,6 @@
         font-weight: bold;
         color: #333;
         margin-bottom: 12px;
-    }
-
-    /* Filter section */
-    .filter-section {
-        padding: 0 0 10px 0;
-    }
-
-    .filter-label {
-        font-size: 13px;
-        color: #333;
-        margin-bottom: 8px;
-        margin-top: 8px;
-    }
-
-    .filter-title {
-        font-size: 12px;
-        color: #555;
-        margin-bottom: 3px;
-    }
-
-    .filter-row {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .filter-select {
-        flex: 1;
-        min-width: 150px;
-        position: relative;
-    }
-
-    .filter-select select {
-        width: 100%;
-        padding: 6px 30px 6px 10px;
-        font-size: 13px;
-        color: #555;
-        border: 1px solid #000;
-        border-radius: none;
-        background: #fff;
-        appearance: none;
-        -webkit-appearance: none;
-        cursor: pointer;
-        outline: none;
-        height: 32px;              
-        line-height: normal; 
-        display: flex;
-        align-items: center;
-        position: relative;  
-    }
-
-    .filter-select select:hover {
-        border-color: #aaa;
-    }
-
-    .filter-select::after {
-        content: '▾';
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        font-size: 12px;
     }
 
     .barcode-search {
@@ -677,396 +546,7 @@
         color: #333;
     }
 
-    .versions-table-header {
-        background: #e8e8e8;
-        display: flex;
-        align-items: center;
-        padding: 8px 10px;
-        margin-top: 16px;
-    }
-
-    .versions-count {
-        flex: 1;
-        font-size: 13px;
-        color: #333;
-    }
-
-    .add-wantlist-btn {
-        background: #333;
-        color: #fff;
-        border: none;
-        padding: 7px 14px;
-        font-size: 13px;
-        cursor: pointer;
-        border-radius: 3px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .add-wantlist-btn:hover {
-        background: #555;
-    }
-
-    .add-wantlist-btn .btn-arrow {
-        font-size: 10px;
-        border-left: 1px solid #666;
-        padding-left: 6px;
-        margin-left: 2px;
-    }
-
-    .table-col-headers {
-        display: grid;
-        grid-template-columns: 1fr 220px 120px 80px 40px;
-        padding: 8px 10px;
-        background: #e8e8e8;
-        }
-
-    .table-col-headers span {
-        font-size: 12px;
-        font-weight: bold;
-        color: #333;
-    }
-
-        .col-year {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .col-year .sort-arrow {
-            font-size: 10px;
-            color: #666;
-        }
-
-        .col-view-toggle {
-            display: flex;
-            gap: 5px;
-            justify-content: flex-end;
-        }
-
-        .view-btn {
-            width: 26px;
-            height: 26px;
-            border: 1px solid #ccc;
-            background: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            color: #555;
-            border-radius: 2px;
-        }
-
-        .view-btn.active {
-            background: #555;
-            color: #fff;
-            border-color: #555;
-        }
-
-        /* Version rows */
-        .version-row {
-            display: grid;
-            grid-template-columns: 1fr 220px 120px 80px 40px;
-            padding: 12px 10px;
-            border-bottom: 1px solid #eee;
-            align-items: center;
-            background: #fff;
-        }
-
-
-        .version-row:hover {
-            background: #fafafa;
-        }
-
-        .version-row + .version-row {
-            border-top: none;
-        }
-
-        .version-title-col {}
-
-        .version-title {
-            font-size: 13px;
-            color: #0000ff;
-            text-decoration: none;
-            font-weight: normal;
-        }
-
-        .version-title:hover {
-            text-decoration: underline;
-        }
-
-        .version-format {
-            font-size: 12px;
-            color: #555;
-            margin-top: 2px;
-        }
-
-        .version-format em {
-            font-style: italic;
-            color: #c00;
-        }
-
-
-
-        .version-label {
-            font-size: 13px;
-        }
-
-        .version-label a {
-            color: #0000ff;
-            text-decoration: none;
-        }
-
-        .version-label a:hover {
-            text-decoration: underline;
-        }
-
-        .version-country {
-            font-size: 13px;
-            color: #333;
-        }
-
-        .version-year {
-            font-size: 13px;
-            color: #333;
-        }
-
-        .version-expand {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            color: #555;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .version-expand:hover {
-            color: #333;
-        }
-
-        /* Yellow left border on rows */
-    .version-row-wrapper {
-        border-right: 4px solid #f5a623;
-        margin-bottom: 5px;
-        background: #fff;
-        margin: 6px 10px;
-    }
-
-    .version-list {
-        background: #e8e8e8; 
-        padding: 6px 0; 
-    }
-
-        /* ===================== SIDEBAR ===================== */
-        .sidebar {
-            width: 260px;
-            flex-shrink: 0;
-            padding: 0 0 20px 20px;
-            height: 100%;
-        }
-
-        /* Video/media placeholder */
-        .sidebar-media {
-            margin-bottom: 16px;
-        }
-
-        .media-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .media-thumb {
-            width: 60px;
-            height: 60px;
-            background: #000;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .media-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-        }
-
-        .media-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #555;
-        }
-
-        .media-progress-bar {
-            height: 100%;
-            background: #fff;
-            width: 0%;
-        }
-
-        .media-time {
-            position: absolute;
-            bottom: 4px;
-            left: 4px;
-            font-size: 10px;
-            color: #fff;
-        }
-
-        .media-info a {
-            font-size: 13px;
-            color: #0000ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .media-info a:hover {
-            text-decoration: underline;
-        }
-
-        .sidebar-collapse-btn {
-            display: block;
-            text-align: center;
-            color: #aaa;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 4px;
-        }
-
-        /* Lists section */
-        .sidebar-section {
-            margin-top: 12px;
-        }
-
-        .sidebar-section-header {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .sidebar-section-header h3 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .sidebar-section-header a {
-            font-size: 13px;
-            color: #0000ff;
-            text-decoration: none;
-        }
-
-        .sidebar-section-header a:hover {
-            text-decoration: underline;
-        }
-
-        .list-item {
-            font-size: 13px;
-            line-height: 1.8;
-            color: #333;
-        }
-
-        .list-item a {
-            color: #0000ff;
-            text-decoration: none;
-        }
-
-        .list-item a:hover {
-            text-decoration: underline;
-        }
-
-        .view-more-lists {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: #2a5bd7;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.view-more-lists::after {
-    content: " →"; /* panah */
-    font-size: 14px;
-    transition: transform 0.2s ease;
-}
-
-.view-more-lists:hover {
-    text-decoration: underline;
-}
-
-.view-more-lists:hover::after {
-    transform: translateX(3px); /* animasi geser dikit */
-}
-
-        /* Ad placeholder */
-        .sidebar-ad {
-            margin-top: 20px;
-            width: 220px;
-            height: 220px;
-            background: #1a1a2e;
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .sidebar-ad img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .sidebar-ad-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            font-size: 13px;
-            font-weight: bold;
-            padding: 8px 10px;
-            line-height: 1.3;
-        }
-
-        .sidebar-ad-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 2px;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #333;
-        }
-
-        .sidebar-ad-logo {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            background: #fff;
-            border-radius: 2px;
-            padding: 2px 5px;
-            font-size: 10px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        #video-sidebar-section {
+    #video-sidebar-section {
         margin-top: 10px;
         border-top: none;
         padding-top: 15px;
@@ -1074,6 +554,7 @@
         flex-direction: column;
         max-height: 400px;
     }
+
     #video-sidebar-section .v-header {
         display: flex;
         gap: 8px; 
@@ -1081,20 +562,25 @@
         margin-bottom: 10px;
         border-bottom: 1px solid #ddd; 
     }
-    #video-sidebar-section h2 { font-size: 13px; font-weight: bold; margin: 0; }
+
+    #video-sidebar-section h2 { 
+        font-size: 13px; 
+        font-weight: bold; 
+        margin: 0; 
+    }
     
     .main-player {
-    width: 100%;
-    height: 220px; /* tambahin ini */
-    background-color: #000;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    height: 250px;
-}
-    .main-player img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        width: 100%;
+        background-color: #000;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        height: 350px;
+    }
+    
+    .player img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
     .play-btn-overlay {
         position: absolute;
         width: 50px;
@@ -1105,6 +591,7 @@
         justify-content: center;
         align-items: center;
     }
+
     .play-btn-overlay::after {
         content: '';
         border-style: solid;
@@ -1113,12 +600,12 @@
     }
 
     .v-list {
-    max-height: 200px;
-    overflow-y: auto;
+        max-height: 200px;
+        overflow-y: auto;
+        flex: 1;         
+        min-height: 0;    
+    }
 
-    flex: 1;          /* penting */
-    min-height: 0;    /* SUPER penting buat scroll di flex */
-}
     .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .v-item:hover { background: #f9f9f9; }
     .v-thumb { width: 100px; height: 60px; position: relative; flex-shrink: 0; }
@@ -1127,80 +614,494 @@
     .v-title { font-size: 13px; color: #2a5bd7; line-height: 1.2; }
 
     /* Custom scrollbar untuk list video */
-    .v-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.v-list::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 10px;
-}
-
-.v-list::-webkit-scrollbar-thumb:hover {
-    background: #999;
-}
-
+    .v-list::-webkit-scrollbar {width: 6px;}
+    .v-list::-webkit-scrollbar-thumb {background: #ccc;border-radius: 10px;}
+    .v-list::-webkit-scrollbar-thumb:hover {background: #999;}
     .l-section { border-top: none; padding-top: 0px; }
     .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-    .filter-box {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 10px;
-    background: white;
-    border: 1px solid black; 
-    border-radius: 0;        
-    cursor: pointer;
-    width: 200px;
+
+    .tracklist-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+/* Container bintang + share */
+.middle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 10px 0;
+  padding: 0 20px; /* biar ada ruang kiri kanan */
 }
 
-.filter-item {
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+.middle-row::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 1px;
+  background: #ccc;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.filter-item:hover {
-    background: #f2f2f2;
+/* Bintang */
+.stars {
+  display: flex;
+  gap: 3px;
+  margin-left: auto;
+  margin-right: 8px; /* jarak ke garis */
 }
 
-.hidden {
-    display: none;
+.star {
+  font-size: 18px;
+  line-height: 1;
 }
 
-.tracklist-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.star.filled {
+  color: #f5a623; /* kuning */
 }
 
-.toggle-credits {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
+.star.empty {
+  color: #ccc; /* abu */
+}
+
+/* Share button */
+ .share-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #0a71b3;
+        font-size: 13px;
+        text-decoration: none;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+        margin-left: 70px;
+        margin-right: 70px;
+        top: -5px;
+    }
+
+    .share-btn:hover {
+        text-decoration: underline;
+    }
+
+    .share-icon {
+        width: 14px;
+        height: 14px;
+        fill: #0a71b3;
+    }
+/* Divider */
+.divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+/* Button group */
+.btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* Button */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;              /* ⬅️ jarak icon & teks diperkecil */
+  padding: 6px 10px;     /* ⬅️ dalam tombol diperkecil */
+
+  font-size: 12px;       /* opsional biar lebih compact */
+
+  background: #f2f2e8;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: #f2f2e8;
+}
+
+ .tl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2px;
+      border-bottom: 1px solid #e0e0e0;;
+      margin-bottom: 0;
+    }
+    .tl-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .show-credits-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #1a6bbf;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0;
+    }
+    .show-credits-btn i { font-size: 17px; }
+    .track-row { border-bottom: 1px solid #e0e0e0; }
+    .track-row:last-child { border-bottom: none; }
+    .track-main {
+      display: flex;
+      align-items: center;
+      padding: 2px 0;
+    }
+    .track-num {
+      width: 38px;
+      font-size: 13px;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .track-title {
+      flex: 1;
+      font-size: 13px;
+      color: #000;
+    }
+    .track-dur {
+      font-size: 13px;
+      color: #000;
+    }
+    .track-credits {
+      padding: 0 0 10px 38px;
+      display: none;
+    }
+    .track-credits.open { display: block; }
+    .credit-line {
+      font-size: 12px;
+      color: #000;
+      line-height: 1.3;
+      padding-left: 12px;
+    }
+    .credit-line a {
+      color: #1a6bbf;
+      text-decoration: none;
+    }
+    .credit-line a:hover { text-decoration: underline; }
+        
+    .companies-section {
+    border-top: 1px solid #ccc;   /* garis di atas */
+    padding-top: 5px;
+    margin-top: 3px;
+}
+    .companies-section p {
+      line-height: 1.3;   /* dari 1.7 → lebih rapat */
+      margin-bottom: 2px; /* kecilin jarak bawah */
+      font-size: 12px; 
+      color: #000; 
+    }
+
+    .companies-section a {
+    color: #0070c0;
+    text-decoration: none;
+    }
+    
+    .companies-section a:hover { text-decoration: underline; }
+
+    h2 {
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom:none;
+    padding-bottom: 3px;
+    margin-bottom: 6px;
+    margin-top: 14px;
+    color: #000;
+  }
+  .credits-section {
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+    margin-top: 3px;
+}
+  .credits-section p {
+    line-height: 1.3;   /* dari 1.7 → lebih rapat */
+    margin-bottom: 2px; /* kecilin jarak bawah */
+    font-size: 12px; 
+    color: #000;
+  }
+  .credits-section a {
+    color: #0070c0;
+    text-decoration: none;
+  }
+  .credits-section a:hover { text-decoration: underline; }
+  .notes-section p {
+    margin-bottom: 6px;
+    line-height: 1.6;
+    color: #000;
+    font-size: 12px;
+  }
+  .notes-section a {
+    color: #0070c0;
+    text-decoration: none;
+  }
+  .notes-section,
+  .identifiers-section {
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+    margin-top: 3px;
+}
+  .notes-section a:hover { text-decoration: underline; }
+  .identifiers-section p {
+    line-height: 1.2;   /* kecilin tinggi baris */
+    margin: 0;          /* hilangin jarak atas bawah */
     font-size: 12px;
     color: #000;
-}
+  }
 
-.toggle-credits:hover {
-    text-decoration: underline;
+  /* OTHER VERSIONS */
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; margin-top: 18px; padding-bottom: 6px; border-bottom: 1px solid #ccc; }
+  .section-header span { font-size: 13px; font-weight: bold; }
+  .section-header a { font-size: 12px; color: #0070c0; text-decoration: none; }
+  .section-header a:hover { text-decoration: underline; }
+ 
+  /* TABLE HEADER */
+  .table-head { display: grid; grid-template-columns: 1fr 140px 160px 90px 50px; border-bottom: 1px solid #ccc; padding: 6px 4px; font-weight: bold; font-size: 12px; color: #333; }
+ 
+  /* TABLE ROWS */
+.table-row { 
+    display: grid; 
+    grid-template-columns: 1fr 140px 160px 90px 50px; 
+    border-bottom: 1px solid #e0e0e0; 
+    padding: 5px 4px; 
+    align-items: start; 
+    position: relative; 
+    line-height: 1.2;
 }
+  .table-row.highlighted { border-left: 6px solid #e8a000; padding-left: 6px; background: #fff; }
+ 
+  .col-title a { color: #0070c0; text-decoration: none; font-size: 13px; }
+  .col-title a:hover { text-decoration: underline; }
+  .col-title span { font-style: italic; }
+ 
+  .col-label a { color: #0070c0; text-decoration: none; font-size: 13px; }
+  .col-label a:hover { text-decoration: underline; }
+ 
+  .col-cat { font-size: 12px; color: #333; }
+  .col-country { font-size: 12px; color: #333; }
+  .col-year { font-size: 12px; color: #333; }
+ 
+  /* RECOMMENDATIONS */
+  .rec-header { 
+    font-size: 14px; 
+    font-weight: bold; 
+    margin: 20px 0 12px 0; 
 
-.eye-icon {
-    width: 16px;
-    height: 16px;
-    fill: #000;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
 }
+ 
+  .rec-list { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+ 
+ .rec-card { 
+    min-width: 140px; 
+    max-width: 150px; 
+    flex-shrink: 0; 
 
-.credits {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    background: #fff;
+}
+  .rec-card img { width: 100%; height: 130px; object-fit: cover; display: block; }
+  .rec-card .img-placeholder { width: 100%; height: 130px; background: #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #666; }
+ 
+  .rec-card .rec-title { font-size: 13px; font-weight: bold; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rec-card .rec-artist { font-size: 10px; color: #555; }
+  .rec-card .rec-year { font-size: 10px; color: #555; }
+  .rec-card .rec-format { font-size: 11px; color: #555; display: flex; align-items: center; gap: 4px; }
+  .rec-card .rec-format::before { content: "⊙"; font-size: 12px; }
+ 
+  .rec-card .btn-shop,
+  .rec-card .btn-want {
+    width: 100%;
+    padding: 5px 0;
+    margin: 0;
     font-size: 12px;
-    color: #666;
-    margin-top: 2px;
-}
+    color: #333;
+    text-align: center;
 
-        
+    background: #f2f2e8;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+
+    cursor: pointer;
+}
+  .rec-card .btn-shop:hover, .rec-card .btn-want:hover { background: #e8e8e8; }
+ 
+  /* NAVIGATION ARROWS */
+  .nav-arrows { display: flex; justify-content: space-between; margin-top: 12px; }
+  .nav-arrows a { color: #0070c0; text-decoration: none; font-size: 18px; }
+  .nav-arrows a:hover { color: #004a99; }
+
+  .reviews-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+
+    margin-top: 25px; /* jarak dari rekomendasi */
+
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+}
+ 
+   .add-review-btn {
+    display: inline-block;
+
+    padding: 4px 10px;
+    font-size: 12px;
+
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+
+    cursor: pointer;
+    color: #333;
+
+    margin-bottom: 20px;
+}
+ 
+    .add-review-btn:hover {
+      background-color: #e8e8e8;
+    }
+ 
+    .review-item {
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+ 
+    .avatar {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 0;
+
+    background-color: #c8c8c8;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+ 
+    .avatar-icon {
+      width: 100%;
+      height: 100%;
+      background: #bbb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    .avatar-icon svg {
+      width: 30px;
+      height: 30px;
+      fill: #888;
+    }
+ 
+    .review-content {
+      flex: 1;
+    }
+ 
+    .review-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1px;
+}
+ 
+    .review-username {
+      color: #1a73e8;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+    }
+ 
+    .review-date {
+      color: #666;
+      font-size: 13px;
+    }
+ 
+    .stars {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 6px;
+    }
+ 
+    .star {
+      color: #e67e22;
+      font-size: 18px;
+    }
+ 
+    .review-text {
+    color: #333;
+    font-size: 12px;
+    line-height: 1.3;
+    margin-bottom: 5px;
+}
+ 
+    .review-actions {
+      display: flex;
+      gap: 16px;
+    }
+ 
+    .action-link {
+      color: #1a73e8;
+      font-size: 13px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+ 
+    .action-link:hover {
+      text-decoration: underline;
+    }
+ 
+    .action-icon {
+      font-size: 13px;
+    }
+ 
+    .dropdown-arrow {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      color: #555;
+      font-size: 12px;
+      cursor: pointer;
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -1238,19 +1139,19 @@
             <div class="album-meta">
                 <div class="album-title">
                     <a href="#" class="artist-name">Sabrina Carpenter</a>
-                    &ndash;Short N\' Sweet (Deluxe)
+                    &ndash; Short N\' Sweet (Deluxe)
                 </div>
                 <table class="album-info-table">
                     <tr>
                         <td>Label:</td>
                         <td>
-                                <a href="#">Island Records</a> &ndash; 602475656999
+                            <a href="#">Island Records</a> &ndash; 602475656999</a>
                         </td>
                     </tr>
                     <tr>
                         <td>Format:</td>
                         <td>
-                                2 x <a href="#">Vinyl,</a> LP, Album, Deluxe Edition, Repress, <i>Blue Opaque [Bright Azure]</i>
+                            2 x <a href="#">Vinyl,</a> LP, Album, Deluxe Edition, Repress, <i>Blue Opaque [Bright Azure]</i>
                         </td>
                     </tr>
                     <tr>
@@ -1274,213 +1175,429 @@
         </div>
 
         <!-- Tracklist -->
-        <div class="section-title tracklist-header">
-            <span>Tracklist</span>
-
-            <button class="toggle-credits" onclick="toggleCredits()">
-                <svg class="eye-icon" viewBox="0 0 24 24">
-                    <path d="M12 5C6 5 2 12 2 12s4 7 10 7 10-7 10-7-4-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
-                    <circle cx="12" cy="12" r="2"/>
-                </svg>
-                <span class="toggle-text">Hide Credits</span>
-            </button>
-        </div>
-
-        <table class="tracklist">
-                <tr><td>Risk It All</td></tr>
-                <tr><td>Cha Cha Cha</td></tr>
-                <tr><td>I Just Might</td></tr>
-                <tr><td>God Was Showing Off</td></tr>
-                <tr><td>Why You Wanna Fight?</td></tr>
-                <tr><td>On My Soul</td></tr>
-                <tr><td>Something Serious</td></tr>
-                <tr><td>Nothing Left</td></tr>
-                <tr><td>Dance With Me</td></tr>
-        </table>
-
-        <!-- Credits -->
-        <div class="section-title" style="margin-top:20px;">
-            Credits ({{ $album->credits_count ?? '57' }})
-        </div>
-        <div class="credits-grid">
-            @if(isset($album->credits) && count($album->credits))
-                @foreach($album->credits as $credit)
-                    <div class="credit-item">
-                        <img src="{{ $credit->photo ?? asset('images/default-person.jpg') }}" alt="{{ $credit->name }}">
-                        <div class="credit-info">
-                            <a href="#">{{ $credit->name }}</a>
-                            <span>{{ $credit->role }}</span>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <div class="credit-item">
-                   <img src="https://i.discogs.com/ybMm_0uVnr36tXqpU8rivrlaIuTGe118KVYo0hZtwEM/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ3MjAw/OS0xMjA4NTQ2MjUz/LmpwZWc.jpeg" alt="Steve Tirpak" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Steven Tirpak*</a>
-                        <span>Arranged By [Strings, Co]</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/VohVwMYOWsSIs1sRFOLr6ATRfBRRv1uXHedPr9Pf2bo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIxMzI4/MC0xNTkxNDc3MDc2/LTc3MTEuanBlZw.jpeg" alt="Larry Gold" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Larry Gold</a>
-                        <span>Arranged By [Strings]</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/UYK3QABIA2glrBqrn4y_LtiCix9wNPPsQrWgl-x0Vt0/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTcyNDY4/NC0xNDM1OTE0MTg0/LTkzNzAuanBlZw.jpeg" alt="Glenn Fischbach" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Glenn Fischbach</a>
-                        <span>Cello</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/VohVwMYOWsSIs1sRFOLr6ATRfBRRv1uXHedPr9Pf2bo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIxMzI4/MC0xNTkxNDc3MDc2/LTc3MTEuanBlZw.jpeg" alt="Larry Gold" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Larry Gold</a>
-                        <span>Conductor [Strings]</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/4wV9jzZ8OX1L0NVY2utfB5uhHhD85DmErfF-IC7Q1OU/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTcwMTMx/OTItMTY0MzE0MTQ4/Ni0xNjIwLmpwZWc.jpeg" alt="Daniel Rodriguez (15)" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Daniel Rodriguez (15)</a>
-                        <span>Congas</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/ybMm_0uVnr36tXqpU8rivrlaIuTGe118KVYo0hZtwEM/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ3MjAw/OS0xMjA4NTQ2MjUz/LmpwZWc.jpeg" alt="Steve Tirpak" class="image_RSPxy" width="80px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Steven Tirpak*</a>
-                        <span>Copyist</span>
-                    </div>
-                </div>
-            @endif
-        </div>
-
-        <div class="page-wrapper">
-
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="main-content">
-
-        <!-- Show more credits -->
-        <div class="show-more-credits">
-            <a href="#">
-                <span class="arrow">▾</span>
-                Show more credits...
-            </a>
-        </div>
-
-        <!-- Versions heading -->
-        <div class="section-title">Versions</div>
-
-        <!-- Filter by -->
-        <div class="filter-section">
-            <div class="filter-label">Filter by</div>
-            <div class="filter-row">
-                <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
-                        <option value="">Find a format</option>
-                        <option value="lp">LP</option>
-                        <option value="cd">CD</option>
-                        <option value="cassette">Cassette</option>
-                    </select>
-                </div>
-
-                <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
-                        <option value="">Find a label or comp...</option>
-                        <option value="atlantic">Atlantic</option>
-                        <option value="columbia">Columbia</option>
-                    </select>
-                </div>
-                <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
-                        <option value="">Find a country</option>
-                        <option value="usa">USA</option>
-                        <option value="europe">Europe</option>
-                        <option value="uk">UK</option>
-                    </select>
-                </div>
-                <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
-                        <option value="">Find a year</option>
-                        <option value="2026">2026</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Barcode search -->
-            <div class="barcode-search">
-                <input type="text" placeholder="Search barcodes and other identifiers...">
-                <button class="search-btn">&#128269;</button>
-            </div>
-        </div>
-
-        <!-- Table header bar -->
-        <div class="versions-table-header">
-            <span class="versions-count">23 versions</span>
-            <button class="add-wantlist-btn">
-                Add to Wantlist
-                <span class="btn-arrow">▾</span>
-            </button>
-        </div>
-
-        <!-- Column headers -->
-        <div class="table-col-headers">
-            <span>Title, Format</span>
-            <span>Label – Catalog Number</span>
-            <span>Country</span>
-            <span class="col-year">Year <span class="sort-arrow">▾</span></span>
-            <span class="col-view-toggle">
-                <button class="view-btn">&#9783;</button>
-                <button class="view-btn active">&#9776;</button>
-            </span>
-        </div>
-
-    <div class="version-list">
-        <!-- Version Row 1 -->
-        <div class="version-row-wrapper">
-            <div class="version-row">
-                <div class="version-title-col">
-                    <div><a href="#" class="version-title">The Romantic</a></div>
-                    <div class="version-format">LP, Album, Limited Edition, <em>Red Translucent</em></div>
-                </div>
-                <div class="version-label">
-                    <a href="#">Atlantic</a> – 075678590511
-                </div>
-                <div class="version-country">USA &amp; Europe</div>
-                <div class="version-year">2026</div>
-                <button class="version-expand">▾</button>
-            </div>
-        </div>
-
-        <!-- Version Row 2 -->
-        <div class="version-row-wrapper">
-            <div class="version-row">
-                <div class="version-title-col">
-                    <div><a href="#" class="version-title">The Romantic</a></div>
-                    <div class="version-format">LP, Album, <em>White</em></div>
-                </div>
-                <div class="version-label">
-                    <a href="#">Atlantic</a> – 075678590511
-                </div>
-                <div class="version-country">Europe</div>
-                <div class="version-year">2026</div>
-                <button class="version-expand">▾</button>
-            </div>
-        </div>
+       <div class="tl-wrap">
+  <div class="tl-header">
+    <h2>Tracklist</h2>
+    <button class="show-credits-btn" id="toggleBtn" onclick="toggleAll()">
+        <i id="btnIcon" class="ti ti-eye"></i>
+        <span id="btnLabel">Show Credits</span>
+    </button>
+  </div>
+ 
+  <!-- A1 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">A1</span>
+      <span class="track-title">Taste</span>
+      <span class="track-dur">2:37</span>
     </div>
+    <div class="track-credits" id="c0">
+      <div class="credit-line">Drums – <a href="#">Aaron Sterling</a></div>
+      <div class="credit-line">Engineer [Mix] – <a href="#">Bryce Bordone</a></div>
+      <div class="credit-line">Mastered By – <a href="#">Nathan Dantzler</a></div>
+      <div class="credit-line">Mixed By – <a href="#">Serban Ghenea</a></div>
+      <div class="credit-line">Producer – <a href="#">Ian Kirkpatrick</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
+      <div class="credit-line">Programmed By, Guitar, Bass, Drums, Keyboards, Percussion – <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
+      <div class="credit-line">Recorded By – <a href="#">Jeff Gunnell</a>, <a href="#">John Ryan (17)</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Ian Kirkpatrick</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julia Michaels</a>, <a href="#">Sabrina Carpenter</a></div>
     </div>
+  </div>
+ 
+  <!-- A2 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">A2</span>
+      <span class="track-title">Please Please Please</span>
+      <span class="track-dur">3:06</span>
     </div>
+    <div class="track-credits" id="c1">
+      <div class="credit-line">Drum Programming, Percussion, Drums [Drum Kit], Electric Guitar, Acoustic Guitar, Synthesizer [Juno 60, Moog, Prophet 5, Korg M1], Bass Guitar – <a href="#">Jack Antonoff</a></div>
+      <div class="credit-line">Engineer [Assistant] – <a href="#">Jack Manning (9)</a>, <a href="#">Joey Miller (7)</a>, <a href="#">Jozef Caldwell</a></div>
+      <div class="credit-line">Engineer [Mix] – <a href="#">Bryce Bordone</a></div>
+      <div class="credit-line">Flute – <a href="#">Evan Smith (2)</a></div>
+      <div class="credit-line">Mastered By – <a href="#">Ruairi O'Flaherty</a></div>
+      <div class="credit-line">Mixed By – <a href="#">Serban Ghenea</a></div>
+      <div class="credit-line">Producer – <a href="#">Jack Antonoff</a></div>
+      <div class="credit-line">Recorded By – <a href="#">Laura Sisk</a>, <a href="#">Oli Jacobs</a></div>
+      <div class="credit-line">Violin – <a href="#">Bobby Hawk</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Jack Antonoff</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
+  <!-- A3 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">A3</span>
+      <span class="track-title">Good Graces</span>
+      <span class="track-dur">3:05</span>
+    </div>
+    <div class="track-credits" id="c2">
+      <div class="credit-line">Mastered By – <a href="#">Nathan Dantzler</a></div>
+      <div class="credit-line">Mastered By [Assistant] – <a href="#">Harrison Tate</a></div>
+      <div class="credit-line">Mixed By – <a href="#">Manny Marroquin</a></div>
+      <div class="credit-line">Mixed By [Assistant] – <a href="#">Anthony Vilchis</a>, <a href="#">Trey Station</a>, <a href="#">Zach Pereyra</a></div>
+      <div class="credit-line">Producer – <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
+      <div class="credit-line">Programmed By, Guitar, Bass, Drums, Keyboards, Percussion – <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
+      <div class="credit-line">Recorded By – <a href="#">Jeff Gunnell</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julia Michaels</a>, <a href="#">Julian Bunetta</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
+  <!-- A4 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">A4</span>
+      <span class="track-title">Sharpest Tool</span>
+      <span class="track-dur">3:38</span>
+    </div>
+    <div class="track-credits" id="c3">
+      <div class="credit-line">Producer – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
+  <!-- A5 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">A5</span>
+      <span class="track-title">Coincidence</span>
+      <span class="track-dur">2:44</span>
+    </div>
+    <div class="track-credits" id="c4">
+      <div class="credit-line">Producer – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
+  <!-- A6 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">A6</span>
+      <span class="track-title">Bed Chem</span>
+      <span class="track-dur">2:51</span>
+    </div>
+    <div class="track-credits" id="c5">
+      <div class="credit-line">Producer – <a href="#">Jack Antonoff</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Jack Antonoff</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
+  <!-- B7 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">B7</span>
+      <span class="track-title">Espresso</span>
+      <span class="track-dur">2:55</span>
+    </div>
+    <div class="track-credits" id="c6">
+      <div class="credit-line">Producer – <a href="#">Amy Allen (3)</a>, <a href="#">Julian Bunetta</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Julian Bunetta</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
+  <!-- B8 -->
+  <div class="track-row">
+    <div class="track-main">
+      <span class="track-num">B8</span>
+      <span class="track-title">Dumb & Poetic</span>
+      <span class="track-dur">2:13</span>
+    </div>
+    <div class="track-credits" id="c7">
+      <div class="credit-line">Producer – <a href="#">Ian Kirkpatrick</a></div>
+      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
+      <div class="credit-line">Written-By – <a href="#">Ian Kirkpatrick</a>, <a href="#">Sabrina Carpenter</a></div>
+    </div>
+  </div>
+ 
 </div>
+
+        <!-- Companies -->
+<h2>Companies, etc.</h2>
+<div class="companies-section">
+    <p>Phonographic Copyright ℗ –<a href="#"> Island Records</a></p>
+    <p>Copyright © - <a href="#">Island Records</a></p>
+    <p>Record Company - <a href="#">UMG Recordungs, Inc.</a></p>
+    <p>Distributed By - <a href="#">UMG Commercial Services</a></p>
+    <p>Pressed By - <a href="#">Vantiva, Guadalajara, Mexico</a> - 1271098 </p>
+    <p>Published By - <a href="#">Sabalicious Songs</a></p>
+    <p>Mixed At - <a href="#">MixStar Studios</a></p>
+    <p>Mastered At - <a href="#">Nomograph Mastering</a></p>
+    <p>Recorded At - <a href="#">The Perch</a></p>
+</div>
+
+<h2>Credits</h2>
+<div class="credits-section">
+  <p>A&R – <a href="#">Jackie Winkler</a></p>
+  <p>A&R, Administrator – <a href="#">Gabrielle Rosen</a></p>
+  <p>Art Direction – <a href="#">Sarah Carpenter (3)</a></p>
+  <p>Coordinator, A&R – <a href="#">Gloria Jozwicki</a></p>
+  <p>Creative Director – <a href="#">Dannah Gottlieb</a></p>
+  <p>Graphic Design – <a href="#">Chase Shawbridge</a></p>
+  <p>Legal [Business Affairs] – <a href="#">Antoinette Trotman</a>, <a href="#">Ian Allen (7)</a>, <a href="#">Julia Nagar</a>, <a href="#">Niya Fleming</a>, <a href="#">Rachel Meisner</a>, <a href="#">Skyler Salamon</a></p>
+  <p>Management – <a href="#">Volara Management</a></p>
+  <p>Marketing – <a href="#">Natasha Kilibarda</a></p>
+  <p>Production Manager [Package Production] – <a href="#">Paul Lane</a></p>
+</div>
+ 
+<h2>Notes</h2>
+<div class="notes-section">
+  <p>Issued in gatefold jacket with printed die-cut inner sleeves, foldout poster, and double-sided credit insert.</p>
+  <p>Copies signed on the front cover by the artist were also available at indie record stores at release with a barcode sticker on rear shrink wrap.</p>
+  <p>"VINYL MADE IN MEXICO" printed on rear shrink wrap.</p>
+  <p>Signed copies were released with a barcode sticker on rear shrink wrap without the manufacturer's printing.</p>
+  <p>Side A &amp; B were repressed with lacquers from the <a href="#">standard edition release</a>.<br>
+  Side C &amp; D were cut new for the deluxe release.</p>
+  <p>Tracks are listed sequentially, regardless of side.</p>
+  <p>Track times are listed on center labels.</p>
+  <p>Runouts are stamped.</p>
+</div>
+ 
+<h2>Barcode and Other Identifiers</h2>
+<div class="identifiers-section">
+  <p>Barcode (Printed, text): 6 02475 85899 9</p>
+  <p>Barcode (Printed, scanned): 602475858999</p>
+  <p>Barcode (Stickered, text): 6 02475 85859 1</p>
+  <p>Barcode (Stickered, scanned): 602475858591</p>
+  <p>Rights Society: BMI</p>
+  <p>Rights Society: ASCAP</p>
+  <p>Other (Side A label): 00602475658999-A</p>
+  <p>Other (Side B label): 00602475658999-B</p>
+  <p>Other (Side C label): 00602475658999-C</p>
+  <p>Other (Side D label): 60247565899 9-D</p>
+  <p>Matrix / Runout (Side A runout): (1271098) 01010252 00602465835199A</p>
+  <p>Matrix / Runout (Side B runout): (1271099) 01010613 00602465835199B</p>
+  <p>Matrix / Runout (Side C runout): (1288399) 01010310 60247565899 9A</p>
+  <p>Matrix / Runout (Side D runout): (1280400) 01010320 60247565899 9B</p>
+</div>
+
+<!-- OTHER VERSIONS -->
+<div class="section-header">
+  <span>Other Versions (5 of 53)</span>
+  <a href="#">View All</a>
+</div>
+ 
+<!-- Table Header -->
+<div class="table-head">
+  <div>Title (Format)</div>
+  <div>Label</div>
+  <div>Cat#</div>
+  <div>Country</div>
+  <div>Year</div>
+</div>
+ 
+<!-- Row 1 -->
+<div class="table-row">
+  <div class="col-title">
+    <a href="#">Short N' Sweet</a> (LP, Album, <span>Blue Marbled [Light Sky]</span>)
+  </div>
+  <div class="col-label"><a href="#">Island Records</a>, <a href="#">Island Records</a></div>
+  <div class="col-cat">00602465835199,<br>602465835199</div>
+  <div class="col-country">Worldwide</div>
+  <div class="col-year">2024</div>
+</div>
+ 
+<!-- Row 2 (highlighted) -->
+<div class="table-row highlighted">
+  <div class="col-title">
+    <a href="#">Short N' Sweet</a> (LP, Album, Limited Edition, Stereo, <span>Clear [Moonlight], Optimal Media GmbH Pressing</span>)
+  </div>
+  <div class="col-label"><a href="#">Island Records</a></div>
+  <div class="col-cat">00602465839807</div>
+  <div class="col-country">Worldwide</div>
+  <div class="col-year">2024</div>
+</div>
+ 
+<!-- Row 3 (highlighted) -->
+<div class="table-row highlighted">
+  <div class="col-title">
+    <a href="#">Short N' Sweet</a> (12×File, AAC, Album, <span>256 kbps</span>)
+  </div>
+  <div class="col-label"><a href="#">Island Records</a></div>
+  <div class="col-cat">none</div>
+  <div class="col-country">Worldwide</div>
+  <div class="col-year">2024</div>
+</div>
+ 
+<!-- Row 4 (highlighted) -->
+<div class="table-row highlighted">
+  <div class="col-title">
+    <a href="#">Short N' Sweet</a> (LP, Album, <span>Blue [Lapis Lazuli]</span>)
+  </div>
+  <div class="col-label"><a href="#">Island Records</a></div>
+  <div class="col-cat">602465869118</div>
+  <div class="col-country">Europe</div>
+  <div class="col-year">2024</div>
+</div>
+ 
+<!-- Row 5 (highlighted) -->
+<div class="table-row highlighted">
+  <div class="col-title">
+    <a href="#">Short N' Sweet</a> (LP, Album, Stereo, <span>Blue Marbled [Light Sky]</span>)
+  </div>
+  <div class="col-label"><a href="#">Island Records</a></div>
+  <div class="col-cat">602465835199</div>
+  <div class="col-country">US</div>
+  <div class="col-year">2024</div>
+</div>
+ 
+<!-- RECOMMENDATIONS -->
+<div class="rec-header">Recommendations</div>
+ 
+<div class="rec-list">
+ 
+  <!-- Card 1: Reputation -->
+  <div class="rec-card">
+    <img src="https://i.discogs.com/reputation_taylor_swift.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Reputation">
+    <div class="img-placeholder" style="background:#222;color:#fff;font-size:10px;text-align:center;padding:4px;">reputation<br><small>Taylor Swift</small></div>
+    <div class="rec-title">Reputation</div>
+    <div class="rec-artist">Taylor Swift</div>
+    <div class="rec-year">2017 USA &amp; Europe</div>
+    <div class="rec-format">Vinyl — LP, Album...</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+ 
+  <!-- Card 2: The Tortured Poets Department -->
+  <div class="rec-card">
+    <div class="img-placeholder" style="background:#2a2a2a;color:#aaa;font-size:10px;text-align:center;padding:4px;">The Tortured Poe...</div>
+    <div class="rec-title">The Tortured Poe...</div>
+    <div class="rec-artist">Taylor Swift</div>
+    <div class="rec-year">2024 US</div>
+    <div class="rec-format">Vinyl — LP</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+ 
+  <!-- Card 3: Lover (Live From...) -->
+  <div class="rec-card">
+    <div class="img-placeholder" style="background:#d4b8a0;color:#fff;font-size:10px;text-align:center;padding:4px;">Lover (Live From...)</div>
+    <div class="rec-title">Lover (Live From ...</div>
+    <div class="rec-artist">Taylor Swift</div>
+    <div class="rec-year">2025 USA &amp; Europe</div>
+    <div class="rec-format">Vinyl — 8", 33 ⅓ ...</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+ 
+  <!-- Card 4: Lover -->
+  <div class="rec-card">
+    <div class="img-placeholder" style="background:#b0c8e8;color:#fff;font-size:10px;text-align:center;padding:4px;">Lover</div>
+    <div class="rec-title">Lover</div>
+    <div class="rec-artist">Taylor Swift</div>
+    <div class="rec-year">2019 USA &amp; Canada</div>
+    <div class="rec-format">Vinyl — LP</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+ 
+  <!-- Card 5: 1989 (Taylor's Version) -->
+  <div class="rec-card">
+    <div class="img-placeholder" style="background:#87aec4;color:#fff;font-size:10px;text-align:center;padding:4px;">1989 (Taylor's Ver...)</div>
+    <div class="rec-title">1989 (Taylor's Ver...</div>
+    <div class="rec-artist">Taylor Swift</div>
+    <div class="rec-year">2023 Worldwide</div>
+    <div class="rec-format">Vinyl — LP, Album...</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+ 
+  <!-- Card 6: Mid... (partial) -->
+  <div class="rec-card">
+    <div class="img-placeholder" style="background:#c0a080;color:#fff;font-size:10px;text-align:center;padding:4px;">Mid...</div>
+    <div class="rec-title">Mid...</div>
+    <div class="rec-artist">Taylo...</div>
+    <div class="rec-year">2022</div>
+    <div class="rec-format">Vinyl...</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+</div>
+
+<div class="reviews-title">Reviews</div>
+ 
+  <button class="add-review-btn">Add Review</button>
+ 
+  <!-- Review 1 -->
+  <div class="review-item">
+    <div class="avatar">
+      <div class="avatar-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="review-content">
+      <div class="review-header">
+        <a href="#" class="review-username">tlrbreslin</a>
+        <span class="review-date">Aug 17, 2025</span>
+      </div>
+      <div class="review-text">This is actually a really good quality pressing, I am impressed.</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
+ 
+  <!-- Review 2 -->
+  <div class="review-item">
+    <div class="avatar">
+      <div class="avatar-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="review-content">
+      <div class="review-header">
+        <a href="#" class="review-username">Oliviatay19</a>
+        <span class="review-date">Jul 12, 2025</span>
+      </div>
+      <div class="stars">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <div class="review-text">This album is pop perfection, Sabrina is a star and this album is funny, short and super sweet.</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
+ 
+  <!-- Review 3 -->
+  <div class="review-item">
+    <div class="avatar">
+      <img src="https://i.pravatar.cc/48?img=12" alt="shawnhostetler1982" />
+    </div>
+    <div class="review-content">
+      <div class="review-header">
+        <a href="#" class="review-username">shawnhostetler1982</a>
+        <span class="review-date">Mar 9, 2025</span>
+      </div>
+      <div class="review-text">Yo! This Blows. I already bought the original album. I HATE When Artist Do This! Even with Dolly Parton on the song with you isn't enough. The songs are So So and honestly seemed rushed. Why didn't you just include them on the original album?</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
+</div>
+
+
 
     <!-- end .album-left -->
 
@@ -1519,41 +1636,90 @@
         <a href="#" class="btn-shop">Shop 25 Vinyl</a>
 
         <!-- Statistics -->
-        <div class="statistics-header">Statistics</div>
-        <div class="stats-grid">
-            <div class="stat-pair">
-                <div class="stat-label">Have:</div>
-                <div class="stat-value"><a href="#">{{ $album->have_count ?? '9289' }}</a></div>
-            </div>
+        {{-- Statistics --}}
+        <div class="stats-box">
+            <h3>Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-pair">
+                    <div class="stat-label">Have:</div>
+                    <div class="stat-value">11316</div>
+                </div>
 
-            <div class="stat-pair">
-                <div class="stat-label">Avg Rating:</div>
-                <div class="stat-value">{{ $album->avg_rating ?? '4.7' }} / 5</div>
-            </div>
-            
-            <div class="stat-pair">
-                <div class="stat-label">Want:</div>
-                <div class="stat-value"><a href="#">{{  $album->want_count ?? '1103' }}</a></div>
-            </div>
+                <div class="stat-pair">
+                    <div class="stat-label">Last Sold:</div>
+                    <div class="stat-value">May 2, 2026</div>
+                </div>
 
-            <div class="stat-pair">
-                <div class="stat-label">Ratings:</div>
-                <div class="stat-value"><a href="#">{{ $album->ratings_count ?? '1377' }}</a></div>
+                <div class="stat-pair">
+                    <div class="stat-label">Want:</div>
+                    <div class="stat-value">2132</div>
+                </div>
+
+                <div class="stat-pair">
+                    <div class="stat-label">Low:</div>
+                    <div class="stat-value">$15.00</div>
+                </div>
+
+                <div class="stat-pair">
+                    <div class="stat-label">Avg Rating:</div>
+                    <div class="stat-value">4.77 / 5</div>
+                </div>
+
+                <div class="stat-pair">
+                    <div class="stat-label">Median:</div>
+                    <div class="stat-value">$33.61</div>
+                </div>
+
+                <div class="stat-pair">
+                    <div class="stat-label">Ratings:</div>
+                    <div class="stat-value">1321</div>
+                </div>
+
+                <div class="stat-pair">
+                    <div class="stat-label">High:</div>
+                    <div class="stat-value">$139.99</div>
+                </div>
             </div>
         </div>
 
-        <!-- Share -->
-        <button class="share-btn">
-            <svg class="share-icon" viewBox="0 0 24 24">
-            <path path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path>
-            <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
-            </svg>Share
-        </button>
+        <div class="middle-row">
+    <div class="stars">
+      <span class="star filled">★</span>
+      <span class="star filled">★</span>
+      <span class="star filled">★</span>
+      <span class="star empty">★</span>
+      <span class="star empty">★</span>
+    </div>
+    <button class="share-btn">
+        <svg class="share-icon" viewBox="0 0 24 24">
+        <path path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path>
+        <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
+        </svg>Share
+    </button>
+  </div>
+ 
+  <div class="btn-group">
+    <button class="btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <line x1="8" y1="8" x2="16" y2="8"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+        <line x1="8" y1="16" x2="16" y2="16"/>
+      </svg>
+      Add to Collection
+    </button>
+    <button class="btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/>
+        <circle cx="12" cy="12" r="3"/>
+        </svg>Add to Wantlist
+    </button>
+  </div>
 
         
                     <div id="video-sidebar-section">
                 <div class="v-header">
-                    <h2>Videos (6)</h2>
+                    <h2>Videos (11)</h2>
                     <a href="#" class="small">Edit</a>
                 </div>
 
@@ -1582,29 +1748,28 @@
 
                 <div class="l-section">
 
-    <!-- HEADER -->
-    <div class="d-flex align-items-center mb-2">
-        <h2 class="mb-0 me-2" style="font-size: 15px;">Lists</h2>
-        <a href="#" class="small text-decoration-none" style="position: relative; top: 4px;">
-            Add to List
-        </a>
+      <div style="margin-bottom: 10px;">
+    <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
+      <span style="font-weight: bold; font-size: 13px;">Lists</span>
+      <span style="color: #0088cc; font-size: 12px; cursor: pointer;">Add to List</span>
     </div>
-
-    <hr class="my-2">
-
-    <!-- LIST -->
-    <div>
-        <div><a href="#">listening log</a> by <a href="#">agasa</a></div>
-        <div><a href="#">Albums/EPs I've Listened To</a> by <a href="#">DylanBryl</a></div>
-        <div><a href="#">ren</a> by <a href="#">sirenzz</a></div>
-        <div><a href="#">Albums I Really Want</a> by <a href="#">Britliz1960</a></div>
-        <div><a href="#">.past - present - eternal.</a> by <a href="#">BubbleBuzz</a></div>
+    <div style="font-size: 12px; line-height: 1.8;">
+      <div>Sabrina Carpenter by <span style="color: #0088cc; cursor: pointer;">musiccouple25</span></div>
+      <div>◇#．blue pressings！ by <span style="color: #0088cc; cursor: pointer;">healthyhabit</span></div>
+      <div>pop by <span style="color: #0088cc; cursor: pointer;">amerella</span></div>
     </div>
+    <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">View More Lists →</div>
+  </div>
 
-    <hr class="my-2">
+    <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
+    <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
+      tonevendor, reunov, tji, myvinyldiscography, soldoutvinylrecords, IanMeetsMcEnroe, melodramarecords, beebotjean, SP_Vinyl, _DjRay1967_, Killerian123333, Nicolas-1223, timohanen
+  </div>
 
-    <!-- FOOTER -->
-    <a href="#" class="view-more-lists">View More List</a>
+  
+    <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">Report Suspicious Activity</div>
+
+    
 </div>
 
         
@@ -1612,9 +1777,10 @@
     <!-- end .album-right -->
 
 <script>
-    let visible = true;
+let visible = true;
+let showing = false;
 
-    function toggleCredits() {
+function toggleCredits() {
     const credits = document.querySelectorAll('.credits');
     const text = document.querySelector('.toggle-text');
 
@@ -1625,6 +1791,27 @@
     });
 
     text.innerText = visible ? 'Hide Credits' : 'Show Credits';
+}
+
+function toggleAll() {
+    showing = !showing;
+
+    const credits = document.querySelectorAll('.track-credits');
+
+    credits.forEach(el => {
+        el.classList.toggle('open', showing);
+    });
+
+    const icon = document.getElementById('btnIcon');
+    const label = document.getElementById('btnLabel');
+
+    if (showing) {
+        icon.className = 'ti ti-eye-off'; // mata tertutup
+        label.textContent = 'Hide Credits';
+    } else {
+        icon.className = 'ti ti-eye'; // mata terbuka
+        label.textContent = 'Show Credits';
+    }
 }
 </script>
 
