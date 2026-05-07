@@ -23,6 +23,7 @@ class Release extends Model
         'release_date',
         'notes',
         'catalog_number',
+        'barcode',
     ];
 
     // RELASI TABEL
@@ -90,6 +91,11 @@ class Release extends Model
     public function contributorRelease()
     {
         return $this->hasMany(ContributorRelease::class, 'release_id');
+    }
+
+    public function video()
+    {
+        return $this->belongsTo(Video::class, 'release_id');
     }
 
 }

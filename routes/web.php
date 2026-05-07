@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ValuableController;
+use App\Http\Controllers\ShowReleaseController;
+use App\Http\Controllers\ShowAlbumController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -95,9 +96,9 @@ Route::get('/showArtist', function () {
     return view('showArtist');
 });
 
-Route::get('/showAlbum', function () {
-    return view('showAlbum');
-});
+// Route::get('/showAlbum', function () {
+//     return view('showAlbum');
+// });
 
 Route::get('/showAlbum/{id}', function ($id) {
     $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
@@ -116,4 +117,10 @@ Route::get('/showLabel', function () {
 
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
+Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
+Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
+
+//route untuk ShowReleaseController.php
+Route::get('/albums/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
+
 

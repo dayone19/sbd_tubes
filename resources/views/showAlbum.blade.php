@@ -1197,42 +1197,40 @@
         <!-- Header: cover + meta -->
         <div class="album-header">
             <div class="album-cover-wrap">
-               <img src="https://i.discogs.com/7OyH6ag4ze3_wbHt4uIxkLeqUlQDUgBHP0eL9oWGu8A/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2NjI4/NDIwLTE3NzIyOTE4/NzAtNTQ5Ny5qcGVn.jpeg" alt="Bruno Mars - The Romantic album cover" width="150" height="147" >
+               <img src="{{$album->image ?? 'https://via.placeholder.com/200'}}" alt = "{{$album->title}}" width="150" height="147" >
                 <a href="#">More images</a>
             </div>
             <div class="album-meta">
                 <div class="album-title">
-                    <a href="#" class="artist-name">{{ $album->artist ?? 'Bruno Mars' }}</a>
-                    &ndash; {{ $album->title ?? 'The Romantic' }}
+                    @foreach($artists as $artist)
+                     <a href="#" class="artist-name">{{ $artist }}</a>@if(!$loop->last)@endif
+                    @endforeach
+                    &ndash; {{ $album->title}}
                 </div>
                 <table class="album-info-table">
                     <tr>
                         <td>Genre:</td>
                         <td>
-                            @if(isset($album->genres))
-                                @foreach($album->genres as $genre)
+                            @foreach($genres as $genre)
                                     <a href="#">{{ $genre }}</a>@if(!$loop->last), @endif
-                                @endforeach
-                            @else
-                                <a href="#">Funk / Soul</a>, <a href="#">Pop</a>
-                            @endif
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
                         <td>Style:</td>
                         <td>
-                            @if(isset($album->styles))
-                                @foreach($album->styles as $style)
+                            <!-- @if(isset($album->styles)) -->
+                                @foreach($styles as $style)
                                     <a href="#">{{ $style }}</a>@if(!$loop->last), @endif
                                 @endforeach
-                            @else
+                            <!-- @else -->
                                 &nbsp;
-                            @endif
+                            <!-- @endif -->
                         </td>
                     </tr>
                     <tr>
                         <td>Year:</td>
-                        <td><a href="#">{{ $album->year ?? '2026' }}</a></td>
+                        <td><a href="#">{{ $album->year }}</a></td>
                     </tr>
                 </table>
             </div>
@@ -1241,32 +1239,22 @@
         <!-- Tracklist -->
         <div class="section-title">Tracklist</div>
         <table class="tracklist">
-            @if(isset($album->tracks) && count($album->tracks))
-                @foreach($album->tracks as $track)
+
+                @foreach($tracks as $track)
                     <tr>
                         <td>{{ $track->title }}</td>
                     </tr>
                 @endforeach
-            @else
-                <tr><td>Risk It All</td></tr>
-                <tr><td>Cha Cha Cha</td></tr>
-                <tr><td>I Just Might</td></tr>
-                <tr><td>God Was Showing Off</td></tr>
-                <tr><td>Why You Wanna Fight?</td></tr>
-                <tr><td>On My Soul</td></tr>
-                <tr><td>Something Serious</td></tr>
-                <tr><td>Nothing Left</td></tr>
-                <tr><td>Dance With Me</td></tr>
-            @endif
+
         </table>
 
         <!-- Credits -->
         <div class="section-title" style="margin-top:20px;">
-            Credits ({{ $album->credits_count ?? '57' }})
+            Credits ({{ $credits_count }})
         </div>
         <div class="credits-grid">
-            @if(isset($album->credits) && count($album->credits))
-                @foreach($album->credits as $credit)
+
+                @foreach($credits as $credit)
                     <div class="credit-item">
                         <img src="{{ $credit->photo ?? asset('images/default-person.jpg') }}" alt="{{ $credit->name }}">
                         <div class="credit-info">
@@ -1275,50 +1263,7 @@
                         </div>
                     </div>
                 @endforeach
-            @else
-                <div class="credit-item">
-                   <img src="https://i.discogs.com/ybMm_0uVnr36tXqpU8rivrlaIuTGe118KVYo0hZtwEM/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ3MjAw/OS0xMjA4NTQ2MjUz/LmpwZWc.jpeg" alt="Steve Tirpak" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Steven Tirpak*</a>
-                        <span>Arranged By [Strings, Co]</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/VohVwMYOWsSIs1sRFOLr6ATRfBRRv1uXHedPr9Pf2bo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIxMzI4/MC0xNTkxNDc3MDc2/LTc3MTEuanBlZw.jpeg" alt="Larry Gold" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Larry Gold</a>
-                        <span>Arranged By [Strings]</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/UYK3QABIA2glrBqrn4y_LtiCix9wNPPsQrWgl-x0Vt0/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTcyNDY4/NC0xNDM1OTE0MTg0/LTkzNzAuanBlZw.jpeg" alt="Glenn Fischbach" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Glenn Fischbach</a>
-                        <span>Cello</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/VohVwMYOWsSIs1sRFOLr6ATRfBRRv1uXHedPr9Pf2bo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIxMzI4/MC0xNTkxNDc3MDc2/LTc3MTEuanBlZw.jpeg" alt="Larry Gold" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Larry Gold</a>
-                        <span>Conductor [Strings]</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/4wV9jzZ8OX1L0NVY2utfB5uhHhD85DmErfF-IC7Q1OU/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTcwMTMx/OTItMTY0MzE0MTQ4/Ni0xNjIwLmpwZWc.jpeg" alt="Daniel Rodriguez (15)" class="image_RSPxy" width="60px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Daniel Rodriguez (15)</a>
-                        <span>Congas</span>
-                    </div>
-                </div>
-                <div class="credit-item">
-                    <img src="https://i.discogs.com/ybMm_0uVnr36tXqpU8rivrlaIuTGe118KVYo0hZtwEM/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ3MjAw/OS0xMjA4NTQ2MjUz/LmpwZWc.jpeg" alt="Steve Tirpak" class="image_RSPxy" width="80px" height="40px">
-                    <div class="credit-info">
-                        <a href="#">Steven Tirpak*</a>
-                        <span>Copyist</span>
-                    </div>
-                </div>
-            @endif
+
         </div>
 
         <div class="page-wrapper">
@@ -1338,57 +1283,59 @@
         <div class="section-title">Versions</div>
 
         <!-- Filter by -->
+        <form method="GET" action="{{route('album.versions', $album->master_id) }}">
         <div class="filter-section">
             <div class="filter-label">Filter by</div>
             <div class="filter-row">
                 <div class="filter-select">
                     <div class="filter-title">Format</div>
-                    <select>
+                    <select name="format">
                         <option value="">Find a format</option>
-                        <option value="lp">LP</option>
-                        <option value="cd">CD</option>
-                        <option value="cassette">Cassette</option>
+                        @foreach($formats as $f)
+                        <option value="{{ $f }}">{{ $f }}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
-                        <option value="">Find a label or comp...</option>
-                        <option value="atlantic">Atlantic</option>
-                        <option value="columbia">Columbia</option>
+                    <div class="filter-title">Label</div>
+                    <select name="label">
+                        <option value="">Find a label</option>
+                        @foreach($labels as $l)
+                        <option value="{{ $l }}">{{ $l }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
+                    <div class="filter-title">Country</div>
+                    <select name="country">
                         <option value="">Find a country</option>
-                        <option value="usa">USA</option>
-                        <option value="europe">Europe</option>
-                        <option value="uk">UK</option>
+                        @foreach($countries as $c)
+                        <option value="{{ $c }}">{{ $c }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="filter-select">
-                    <div class="filter-title">Format</div>
-                    <select>
+                    <div class="filter-title">Year</div>
+                    <select name="year">
                         <option value="">Find a year</option>
-                        <option value="2026">2026</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
+                        @foreach($years as $y)
+                        <option value="{{ $y }}">{{ $y }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
 
             <!-- Barcode search -->
             <div class="barcode-search">
-                <input type="text" placeholder="Search barcodes and other identifiers...">
-                <button class="search-btn">&#128269;</button>
+                <input type="text" name="barcode" value="{{ request('barcode') }}" placeholder="Search barcodes and other identifiers...">
+                <button type="submit" class="search-btn">&#128269;</button>
             </div>
         </div>
-
+    </form>
         <!-- Table header bar -->
         <div class="versions-table-header">
-            <span class="versions-count">23 versions</span>
+            <span class="versions-count">{{ $versions->count() }} versions</span>
             <button class="add-wantlist-btn">
                 Add to Wantlist
                 <span class="btn-arrow">▾</span>
@@ -1407,38 +1354,41 @@
             </span>
         </div>
 
+
     <div class="version-list">
         <!-- Version Row 1 -->
+         @foreach($versions as $v)
         <div class="version-row-wrapper">
             <div class="version-row">
-                <div class="version-title-col">
-                    <div><a href="#" class="version-title">The Romantic</a></div>
-                    <div class="version-format">LP, Album, Limited Edition, <em>Red Translucent</em></div>
-                </div>
-                <div class="version-label">
-                    <a href="#">Atlantic</a> – 075678590511
-                </div>
-                <div class="version-country">USA &amp; Europe</div>
-                <div class="version-year">2026</div>
-                <button class="version-expand">▾</button>
-            </div>
-        </div>
 
-        <!-- Version Row 2 -->
-        <div class="version-row-wrapper">
-            <div class="version-row">
+            <!-- title & format-->
                 <div class="version-title-col">
-                    <div><a href="#" class="version-title">The Romantic</a></div>
-                    <div class="version-format">LP, Album, <em>White</em></div>
+                    <div>
+                        <a href="#" class="version-title">{{ $v->title }}
+
+                        </a>
+                    </div>
+                    <div class="version-format">{{ $v->format }}</div>
                 </div>
+
+                <!-- label -->
                 <div class="version-label">
-                    <a href="#">Atlantic</a> – 075678590511
+                    <a href="#">{{ $v->label }}</a> – {{ $v->catalog_number }}
                 </div>
-                <div class="version-country">Europe</div>
-                <div class="version-year">2026</div>
+
+                <!-- country -->
+                <div class="version-country">
+                    {{ $v->country }}
+                </div>
+
+                <!-- year -->
+                <div class="version-year">
+                    {{ $v->year }}
+                </div>
                 <button class="version-expand">▾</button>
             </div>
         </div>
+        @endforeach
     </div>
     </div>
     </div>
@@ -1454,7 +1404,7 @@
             <span>Master Release</span>
             <span class="release-id">
                 <span class="release-icon"></span>
-                [m{{ $album->master_id ?? '4146559' }}]
+                [m{{ $album->master_id }}]
             </span>
         </div>
         <div class="master-release-links">
@@ -1469,41 +1419,45 @@
         </div>
 
         <div class="release-card">
-            <img src="https://i.discogs.com/7OyH6ag4ze3_wbHt4uIxkLeqUlQDUgBHP0eL9oWGu8A/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2NjI4/NDIwLTE3NzIyOTE4/NzAtNTQ5Ny5qcGVn.jpeg" alt="Bruno Mars - The Romantic album cover" width="150" height="147" >
+            <img src="{{ $album->image }}" alt="{{$album->title}}" width="150" height="147" >
             <div class="release-card-info">
                 <div class="label">Master Release</div>
-                <div class="title">{{ $album->title ?? 'The Romantic' }}</div>
-                <div class="year">{{ $album->year ?? '2026' }}</div>
+                <div class="title">{{ $album->title }}</div>
+                <div class="year">{{ $album->year }}</div>
                 <div class="formats">
-                    <a href="#"><u>Vinyl</u></a><span> • </span><a href="#"><u>CD</u></a><span> • </span><a href="#"><u>Cassette</u></a>
+                    @foreach($formats as $format)
+                        <a href="#">
+                            <u>{{ $format }}</u>
+                        </a><span> • </span>
+                    @endforeach
                 </div>
-                <div class="price-range">From $12 to $1,000</div>
+                <div class="price-range">From {{ $stats->lowest_price }} to {{ $stats->highest_price }}</div>
             </div>
         </div>
 
-        <a href="#" class="btn-shop">Shop {{ $album->listing_count ?? '414' }} Listings</a>
+        <a href="#" class="btn-shop">Shop {{ $listing_count }} Listings</a>
 
         <!-- Statistics -->
         <div class="statistics-header">Statistics</div>
         <div class="stats-grid">
             <div class="stat-pair">
                 <div class="stat-label">Have:</div>
-                <div class="stat-value"><a href="#">{{ $album->have_count ?? '9289' }}</a></div>
+                <div class="stat-value"><a href="#">{{ $stats->have }}</a></div>
             </div>
 
             <div class="stat-pair">
                 <div class="stat-label">Avg Rating:</div>
-                <div class="stat-value">{{ $album->avg_rating ?? '4.7' }} / 5</div>
+                <div class="stat-value">{{ $stats->avg_rating }} / 5</div>
             </div>
             
             <div class="stat-pair">
                 <div class="stat-label">Want:</div>
-                <div class="stat-value"><a href="#">{{  $album->want_count ?? '1103' }}</a></div>
+                <div class="stat-value"><a href="#">{{  $stats->want }}</a></div>
             </div>
 
             <div class="stat-pair">
                 <div class="stat-label">Ratings:</div>
-                <div class="stat-value"><a href="#">{{ $album->ratings_count ?? '1377' }}</a></div>
+                <div class="stat-value"><a href="#">{{ $stats->total_rating }}</a></div>
             </div>
         </div>
 
@@ -1515,34 +1469,30 @@
             </svg>Share
         </button>
 
-        
+        <!-- VIDEO -->
                     <div id="video-sidebar-section">
                 <div class="v-header">
-                    <h2>Videos (6)</h2>
+                    <h2>Videos ({{ $videos->count() }})</h2>
                     <a href="#" class="small">Edit</a>
                 </div>
 
+                @if($videos->count() > 0)
                 <div class="main-player" id="mainPlayer">
-                    <img src="https://via.placeholder.com/400x225/222/fff?text=BRUNO+MARS+VIDEO" id="currentThumb">
+                    <img src="{{ $videos[0]->thumbnail }}" id="currentThumb">
                     <div class="play-btn-overlay"></div>
                 </div>
+                @endif
 
                 <div class="v-list">
-                    <div class="v-item" onclick="changeVideo('https://via.placeholder.com/400x225/111/fff?text=FULL+ALBUM', 'Full Album')">
+                    @foreach($videos as $video)
+                    <div class="v-item" onclick="changevideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}') ">
                         <div class="v-thumb">
-                            <img src="https://via.placeholder.com/100x60/333/fff?text=Play">
-                            <span class="v-time">45:10</span>
+                            <img src="{{ $video->thumbnail }}">
+                            <span class="v-time"> {{ $video->duration }} </span>
                         </div>
-                        <div class="v-title"><b>Bruno Mars - The Romantic (Full Album)</b></div>
+                        <div class="v-title"><b> {{ $video->title }} </b></div>
                     </div>
-
-                    <div class="v-item" onclick="changeVideo('https://via.placeholder.com/400x225/444/fff?text=MUSIC+VIDEO', 'Official Video')">
-                        <div class="v-thumb">
-                            <img src="https://via.placeholder.com/100x60/555/fff?text=Play">
-                            <span class="v-time">3:45</span>
-                        </div>
-                        <div class="v-title"><b>Bruno Mars - The Romantic (Official Video)</b></div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <div class="l-section">
@@ -1559,11 +1509,9 @@
 
     <!-- LIST -->
     <div>
-        <div><a href="#">listening log</a> by <a href="#">agasa</a></div>
-        <div><a href="#">Albums/EPs I've Listened To</a> by <a href="#">DylanBryl</a></div>
-        <div><a href="#">ren</a> by <a href="#">sirenzz</a></div>
-        <div><a href="#">Albums I Really Want</a> by <a href="#">Britliz1960</a></div>
-        <div><a href="#">.past - present - eternal.</a> by <a href="#">BubbleBuzz</a></div>
+        @foreach($lists as $list)
+            <div><a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a></div>
+        @endforeach
     </div>
 
     <hr class="my-2">
@@ -1577,5 +1525,12 @@
     <!-- end .album-right -->
 
 </div>
+
+<!-- UNTUK KLIK VIDEO -->
+<script>
+    function changeVideo(thumbnail, youtube_url) {
+        document.getElementById('currentThumb').src = thumbnail;
+    }
+</script>
 
 @endsection
