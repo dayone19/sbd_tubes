@@ -558,17 +558,6 @@
         font-size: 10px;
     }
 
-    .versions-header {
-        padding: 16px 0 8px 0;
-    }
-
-    .versions-header h2 {
-        font-size: 16px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 12px;
-    }
-
     /* Filter section */
     .filter-section {
         padding: 0 0 10px 0;
@@ -783,8 +772,6 @@
             border-top: none;
         }
 
-        .version-title-col {}
-
         .version-title {
             font-size: 13px;
             color: #0000ff;
@@ -874,62 +861,6 @@
             margin-bottom: 16px;
         }
 
-        .media-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .media-thumb {
-            width: 60px;
-            height: 60px;
-            background: #000;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .media-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-        }
-
-        .media-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #555;
-        }
-
-        .media-progress-bar {
-            height: 100%;
-            background: #fff;
-            width: 0%;
-        }
-
-        .media-time {
-            position: absolute;
-            bottom: 4px;
-            left: 4px;
-            font-size: 10px;
-            color: #fff;
-        }
-
-        .media-info a {
-            font-size: 13px;
-            color: #0000ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .media-info a:hover {
-            text-decoration: underline;
-        }
 
         .sidebar-collapse-btn {
             display: block;
@@ -938,49 +869,6 @@
             font-size: 18px;
             cursor: pointer;
             margin-top: 4px;
-        }
-
-        /* Lists section */
-        .sidebar-section {
-            margin-top: 12px;
-        }
-
-        .sidebar-section-header {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .sidebar-section-header h3 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .sidebar-section-header a {
-            font-size: 13px;
-            color: #0000ff;
-            text-decoration: none;
-        }
-
-        .sidebar-section-header a:hover {
-            text-decoration: underline;
-        }
-
-        .list-item {
-            font-size: 13px;
-            line-height: 1.8;
-            color: #333;
-        }
-
-        .list-item a {
-            color: #0000ff;
-            text-decoration: none;
-        }
-
-        .list-item a:hover {
-            text-decoration: underline;
         }
 
         .view-more-lists {
@@ -1006,63 +894,6 @@
 .view-more-lists:hover::after {
     transform: translateX(3px); /* animasi geser dikit */
 }
-
-        /* Ad placeholder */
-        .sidebar-ad {
-            margin-top: 20px;
-            width: 220px;
-            height: 220px;
-            background: #1a1a2e;
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .sidebar-ad img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .sidebar-ad-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            font-size: 13px;
-            font-weight: bold;
-            padding: 8px 10px;
-            line-height: 1.3;
-        }
-
-        .sidebar-ad-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 2px;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #333;
-        }
-
-        .sidebar-ad-logo {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            background: #fff;
-            border-radius: 2px;
-            padding: 2px 5px;
-            font-size: 10px;
-            font-weight: bold;
-            color: #333;
-        }
 
         #video-sidebar-section {
         margin-top: 10px;
@@ -1139,31 +970,157 @@
 
     .l-section { border-top: none; padding-top: 0px; }
     .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-    .filter-box {
+
+/* Reviews Section */
+.reviews-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+
+    margin-top: 25px; /* jarak dari rekomendasi */
+
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+}
+ 
+   .add-review-btn {
+    display: inline-block;
+
+    padding: 4px 10px;
+    font-size: 12px;
+
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+
+    cursor: pointer;
+    color: #333;
+
+    margin-bottom: 20px;
+}
+ 
+    .add-review-btn:hover {
+      background-color: #e8e8e8;
+    }
+ 
+    .review-item {
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0;
     display: flex;
-    justify-content: space-between;
-    padding: 8px 10px;
-    background: white;
-    border: 1px solid black; 
-    border-radius: 0;        
-    cursor: pointer;
-    width: 200px;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
 }
+ 
+    .avatar {
+    width: 48px;
+    height: 48px;
 
-.filter-item {
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 0;
+
+    background-color: #c8c8c8;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.filter-item:hover {
-    background: #f2f2f2;
+ 
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+ 
+    .avatar-icon {
+      width: 100%;
+      height: 100%;
+      background: #bbb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    .avatar-icon svg {
+      width: 30px;
+      height: 30px;
+      fill: #888;
+    }
+ 
+    .review-content {
+      flex: 1;
+    }
+ 
+    .review-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1px;
 }
-
-.hidden {
-    display: none;
+ 
+    .review-username {
+      color: #1a73e8;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+    }
+ 
+    .review-date {
+      color: #666;
+      font-size: 13px;
+    }
+ 
+    .stars {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 6px;
+    }
+ 
+    .star {
+      color: #e67e22;
+      font-size: 18px;
+    }
+ 
+    .review-text {
+    color: #333;
+    font-size: 12px;
+    line-height: 1.3;
+    margin-bottom: 5px;
 }
-
+ 
+    .review-actions {
+      display: flex;
+      gap: 16px;
+    }
+ 
+    .action-link {
+      color: #1a73e8;
+      font-size: 13px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+ 
+    .action-link:hover {
+      text-decoration: underline;
+    }
+ 
+    .action-icon {
+      font-size: 13px;
+    }
+ 
+    .dropdown-arrow {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      color: #555;
+      font-size: 12px;
+      cursor: pointer;
+    }
         
 
     /* Responsive */
@@ -1439,6 +1396,82 @@
             </div>
         </div>
     </div>
+
+    <div class="reviews-title">Reviews</div>
+ 
+  <button class="add-review-btn">Add Review</button>
+ 
+  <!-- Review 1 -->
+  <div class="review-item">
+    <div class="avatar">
+      <div class="avatar-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="review-content">
+      <div class="review-header">
+        <a href="#" class="review-username">tlrbreslin</a>
+        <span class="review-date">Aug 17, 2025</span>
+      </div>
+      <div class="review-text">This is actually a really good quality pressing, I am impressed.</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
+ 
+  <!-- Review 2 -->
+  <div class="review-item">
+    <div class="avatar">
+      <div class="avatar-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="review-content">
+      <div class="review-header">
+        <a href="#" class="review-username">Oliviatay19</a>
+        <span class="review-date">Jul 12, 2025</span>
+      </div>
+      <div class="stars">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <div class="review-text">This album is pop perfection, Sabrina is a star and this album is funny, short and super sweet.</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
+ 
+  <!-- Review 3 -->
+  <div class="review-item">
+    <div class="avatar">
+      <img src="https://i.pravatar.cc/48?img=12" alt="shawnhostetler1982" />
+    </div>
+    <div class="review-content">
+      <div class="review-header">
+        <a href="#" class="review-username">shawnhostetler1982</a>
+        <span class="review-date">Mar 9, 2025</span>
+      </div>
+      <div class="review-text">Yo! This Blows. I already bought the original album. I HATE When Artist Do This! Even with Dolly Parton on the song with you isn't enough. The songs are So So and honestly seemed rushed. Why didn't you just include them on the original album?</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
     </div>
     </div>
 </div>
