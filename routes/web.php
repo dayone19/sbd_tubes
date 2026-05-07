@@ -100,16 +100,16 @@ Route::get('/showArtist', function () {
 //     return view('showAlbum');
 // });
 
-Route::get('/showAlbum/{id}', function ($id) {
-    $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
-    return view('showAlbum', compact('album'));
-});
+// Route::get('/showAlbum/{id}', function ($id) {
+//     $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
+//     return view('showAlbum', compact('album'));
+// });
 
-Route::get('/showRelease', function () {
-    return view('showRelease', [
-        'album' => (object)[]
-    ]);
-});
+// Route::get('/showRelease', function () {
+//     return view('showRelease', [
+//         'album' => (object)[]
+//     ]);
+// });
 
 Route::get('/showLabel', function () {
     return view('showLabel');
@@ -117,10 +117,13 @@ Route::get('/showLabel', function () {
 
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
+
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
-Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
 
 //route untuk ShowReleaseController.php
-Route::get('/albums/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
+Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
+
+//route untuk ShowAlbumController.php
+Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
 
 
