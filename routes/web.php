@@ -74,6 +74,10 @@ Route::prefix('user')->group(function () {
     Route::get('/drafts', function () {
         return view('user.drafts');
     })->name('user.drafts');
+
+    Route::get('/profile', function () {
+        return view('user.profile');
+    })->name('user.profile');
     
 });
 
@@ -90,6 +94,18 @@ Route::prefix('sell')->group(function () {
     Route::get('/purchases', function () {
         return view('sell.purchases');
     })->name('sell.purchases');
+});
+
+Route::prefix('settings')->group(function () {
+
+    Route::get('/user', function () {
+        return view('settings.user');
+    })->name('settings.user');
+
+    Route::get('/buyer', function () {
+        return view('settings.buyer');
+    })->name('settings.buyer');
+    
 });
 
 Route::get('/showArtist', function () {

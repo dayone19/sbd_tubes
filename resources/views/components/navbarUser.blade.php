@@ -177,13 +177,10 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/showArtist">Essentials</a></li>
                         <li><a class="dropdown-item" href="/showAlbum">Features</a></li>
-<<<<<<< HEAD
                         <li><a class="dropdown-item" href="/showRelease">Most Valuable</a></li>
                         <li><a class="dropdown-item" href="#">Collecting</a></li>
-=======
                         <li><a class="dropdown-item" href="#">Most Valuable</a></li>
                         <li><a class="dropdown-item" href="/showLabel">Collecting</a></li>
->>>>>>> b5b459a5ac3ae977cec315e12d1534f21d17dd13
                         <li><a class="dropdown-item" href="#">Audio Gear</a></li>
                     </ul>
             </div>
@@ -202,8 +199,8 @@ a {text-decoration: none !important;}
 
     <!-- HEADER -->
     <div class="sidebar-header">
-        <h3>Hi, sirenzz</h3>
-        <a href="#">View my profile</a>
+        <h3>Hi, Gweh</h3>
+        <a href="/user/profile">View my profile</a>
     </div>
 
     <!-- CONTENT -->
@@ -212,8 +209,8 @@ a {text-decoration: none !important;}
         <!-- LEFT -->
         <div class="sidebar-col">
             <h4>Shop Music</h4>
-            <a href="#">Shop My Wants</a>
-            <a href="#">Purchases</a>
+            <a href="/mywants">Shop My Wants</a>
+            <a href="/sell/purchases">Purchases</a>
 
             <h4>Sell Music</h4>
             <a href="#">My Storefront</a>
@@ -223,7 +220,7 @@ a {text-decoration: none !important;}
 
             <h4>Contribute</h4>
             <a href="#">Submissions</a>
-            <a href="#">Drafts</a>
+            <a href="/user/drafts">Drafts</a>
         </div>
 
         <!-- RIGHT -->
@@ -231,9 +228,9 @@ a {text-decoration: none !important;}
             <h4>Account</h4>
             <a href="#">Dashboard</a>
             <a href="#">Messages</a>
-            <a href="#">Collection</a>
-            <a href="#">Wantlist</a>
-            <a href="#">Lists</a>
+            <a href="/user/collection">Collection</a>
+            <a href="/mywantlist">Wantlist</a>
+            <a href="/user/lists">Lists</a>
             <a href="#">Friends</a>
             <a href="#">Settings</a>
             <a href="#">Help</a>
