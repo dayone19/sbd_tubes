@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('home');
@@ -38,9 +39,6 @@ Route::get('/signup', function () {
     return view('auth.signup');
 });
 
-Route::get('/search', function () {
-    return view('search');
-})->name('search');
 
 Route::get('/resources', function () {
     return view('resources');
