@@ -9,10 +9,10 @@
     .want-container {display: flex;gap: 40px;padding: 20px 40px;}
     /* SIDEBAR */
     .want-sidebar {width: 210px;font-size: 13px;}
-    .want-sidebar h4, .want-sidebar h5 {font-size: 14px;font-weight: bold;margin-bottom: 10px;}
+    .want-sidebar h4, .want-sidebar h5 {font-size: 18px;font-weight: bold;margin-bottom: 10px;}
     .save-btn {width: 100%;background: #eee;border: 1px solid #ccc;color: #999;padding: 6px;border-radius: 3px;margin-bottom: 20px;text-align: center;font-size: 13px;}
-    .filter-item {display: flex;justify-content: space-between;margin-bottom: 8px;align-items: center;}
-    .filter-item label {display: flex;align-items: center;gap: 8px;cursor: pointer;}
+    .filter-item {display: flex;justify-content: space-between;margin-bottom: 8px; align-items: flex-start;}
+    .filter-item label {display: flex, align-items: center;gap: 8px;cursor: pointer;}
     .filter-item .count {color: #888;}
     /* CONTENT */
     .want-content { flex: 1;}
@@ -35,8 +35,13 @@
     .item-row {display: flex;padding: 15px 0; border-bottom: 1px solid #eee; font-size: 13px;}
     .item-row img {width: 65px;height: 65px;border: 1px solid #ddd;margin-right: 15px;}
     .release-title {font-size: 15px;font-weight: bold;display: block;margin-bottom: 3px;}
-    .badge-grade {background: #758918;color: white;padding: 0px 4px;border-radius: 2px;font-weight: bold;font-size: 11px;}
+    .badgeM-grade {background: #758918;color: white;padding: 2px 5px;border-radius: 2px; font-size: 13px;}
+    .badgeNM-grade {background: #5d7e68;color: white;padding: 2px 5px;border-radius: 2px; font-size: 13px;}
+    .badgeVGP-grade {background: #186f6e;color: white;padding: 2px 5px;border-radius: 2px; font-size: 13px;}
+    .badgeVG-grade {background: #524c94;color: white;padding: 2px 5px;border-radius: 2px; font-size: 13px;}
+    .badgeG-grade {background: #9e3fb3;color: white;padding: 2px 5px;border-radius: 2px; font-size: 13px;}
     .dot {height: 8px;width: 8px;background-color: #fff;border-radius: 50%;display: inline-block;margin-right: 2px;}
+    .rect {width: 8px;height: 8px;background-color: #fff;display: inline-block;margin-right: 2px;}
     .seller-info .name {font-weight: bold;font-size: 14px;}
     .price-container {text-align: right;}
     .main-price {font-size: 22px;font-weight: bold;display: block;}
@@ -98,13 +103,46 @@
 
         <h5 style="margin-top:25px;">Media Condition</h5>
         <div class="filter-item">
-            <label><input type="checkbox"></label> <span class="badge-grade"><span class="dot"></span>Mint</span> <span class="count">83</span>
+            <label><input type="checkbox"> <span class="badgeM-grade"><span class="dot"></span>Mint (M)</span> </label>
+            <span class="count">83</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> Limited Edition</label> <span class="count">83</span>
+            <label><input type="checkbox"> <span class="badgeNM-grade"><span class="dot"></span>Near Mint (NM)</span> </label>
+            <span class="count">83</span>
         </div>
         <div class="filter-item">
-            <label><input type="checkbox"> LP</label> <span class="count">84</span>
+            <label><input type="checkbox"> <span class="badgeVGP-grade"><span class="dot"></span>Very Good Plus (VGP)</span> </label>
+            <span class="count">84</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeVG-grade"><span class="dot"></span>Very Good (VG)</span> </label>
+            <span class="count">84</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeG-grade"><span class="dot"></span>Good (G)</span> </label>
+            <span class="count">84</span>
+        </div>
+
+        <h5 style="margin-top:25px;"> Sleeve Condition</h5>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeM-grade"><span class="rect"></span>Mint (M)</span> </label>
+            <span class="count">83</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeNM-grade"><span class="rect"></span>Near Mint (NM)</span> </label>
+            <span class="count">83</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeVGP-grade"><span class="rect"></span>Very Good Plus (VGP)</span> </label>
+            <span class="count">84</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeVG-grade"><span class="rect"></span>Very Good (VG)</span> </label>
+            <span class="count">84</span>
+        </div>
+        <div class="filter-item">
+            <label><input type="checkbox"> <span class="badgeG-grade"><span class="rect"></span>Good (G)</span> </label>
+            <span class="count">84</span>
         </div>
     </div>
 

@@ -15,6 +15,10 @@
                 <label>Type</label>
                 <select>
                     <option>All</option>
+                    <option>Artist</option>
+                    <option>Labels</option>
+                    <option>Releases</option>
+                    <option>Master Releases</option>
                 </select>
             </div>
 

@@ -1,11 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\SearchController;
 
-Route::get('/', function () {
-    return view('home');
-});
+
+use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\ShowReleaseController;
+use App\Http\Controllers\ShowAlbumController;
+
+
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Route::get('/selling', function () {
     return view('selling');
@@ -52,6 +57,10 @@ Route::get('/mywants', function () {
     return view('mywants');
 })->name('mywants');
 
+Route::get('/lists', function () {
+    return view('lists');
+});
+
 Route::prefix('user')->group(function () {
 
     Route::get('/collection', function () {
@@ -65,6 +74,10 @@ Route::prefix('user')->group(function () {
     Route::get('/drafts', function () {
         return view('user.drafts');
     })->name('user.drafts');
+
+    Route::get('/profile', function () {
+        return view('user.profile');
+    })->name('user.profile');
     
 });
 
@@ -83,15 +96,50 @@ Route::prefix('sell')->group(function () {
     })->name('sell.purchases');
 });
 
+Route::prefix('settings')->group(function () {
+
+    Route::get('/user', function () {
+        return view('settings.user');
+    })->name('settings.user');
+
+    Route::get('/buyer', function () {
+        return view('settings.buyer');
+    })->name('settings.buyer');
+    
+});
+
 Route::get('/showArtist', function () {
     return view('showArtist');
 });
 
-Route::get('/showAlbum', function () {
-    return view('showAlbum');
+// Route::get('/showAlbum', function () {
+//     return view('showAlbum');
+// });
+
+// Route::get('/showAlbum/{id}', function ($id) {
+//     $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
+//     return view('showAlbum', compact('album'));
+// });
+
+// Route::get('/showRelease', function () {
+//     return view('showRelease', [
+//         'album' => (object)[]
+//     ]);
+// });
+
+Route::get('/showLabel', function () {
+    return view('showLabel');
 });
 
-Route::get('/showAlbum/{id}', function ($id) {
-    $album = \App\Models\Album::with(['tracks','credits','reviews'])->findOrFail($id);
-    return view('showAlbum', compact('album'));
-});
+//route untuk controller AlbumController.php
+Route::get('/', [AlbumController::class, 'index']);
+
+Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
+
+//route untuk ShowReleaseController.php
+Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
+
+//route untuk ShowAlbumController.php
+Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
+
+

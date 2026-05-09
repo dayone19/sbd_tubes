@@ -13,6 +13,10 @@ class Artist extends Model
         'name',
         'profile',
         'country',
+        'real_name',
+        'birht_date',
+        'is_gropu',
+        'image',
     ];
 
     // RELASI TABEL

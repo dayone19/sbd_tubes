@@ -1,0 +1,624 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+
+class ShowAlbumController extends Controller
+{
+    //SQL
+    // SELECT 
+    //     i.url AS image,
+    //     GROUP_CONCAT(DISTINCT ar.name) AS artist,
+    //     r.title,
+    //     GROUP_CONCAT(DISTINCT g.name) AS genre,
+    //     GROUP_CONCAT(DISTINCT s.name) AS style,
+    //     m.year AS year,
+    //     GROUP_CONCAT(DISTINCT t.title) AS tracks_name,
+    //     GROUP_CONCAT(DISTINCT arl.role) AS role,
+    //     GROUP_CONCAT(DISTINCT f.name) AS format,
+    //     MIN(p.price) AS lowest_price,
+    //     MAX(p.price) AS highest_price,
+    //     m.master_id AS master_code,
+
+    //     SUM(td.quantity) AS have,
+    //     SUM(ct.quantity) AS want,
+
+    //     AVG(rw.rating) AS avg_rating,
+    //     COUNT(rw.rating) AS total_rating,
+
+    //     l.name AS list_name,
+    //     GROUP_CONCAT(DISTINCT u.username) AS username
+
+    // FROM releases r
+
+    // LEFT JOIN images i 
+    //   ON r.release_id = i.release_id 
+    //  AND i.type = 'primary'
+
+    // JOIN artist_release arl ON r.release_id = arl.release_id
+    // JOIN artists ar ON arl.artist_id = ar.artist_id
+
+    // JOIN genre_release gr ON r.release_id = gr.release_id
+    // JOIN genres g ON gr.genre_id = g.genre_id
+
+    // JOIN release_style rs ON r.release_id = rs.release_id
+    // JOIN styles s ON rs.style_id = s.style_id
+
+    // LEFT JOIN master_albums m ON r.master_id = m.master_id
+
+    // LEFT JOIN tracks t ON r.release_id = t.release_id
+
+    // JOIN format_release fr ON r.release_id = fr.release_id
+    // JOIN formats f ON fr.format_id = f.format_id
+
+    // LEFT JOIN products p ON r.release_id = p.release_id
+
+    // LEFT JOIN transaction_details td ON p.product_id = td.product_id
+
+    // LEFT JOIN cart_items ct ON p.product_id = ct.product_id
+
+    // LEFT JOIN reviews rw ON p.product_id = rw.product_id
+    // LEFT JOIN users u ON rw.user_id = u.user_id
+
+    // JOIN list_release lr ON r.release_id = lr.release_id
+    // JOIN lists l ON lr.list_id = l.list_id
+
+    // GROUP BY 
+    //     r.release_id,
+    //     i.url,
+    //     r.title,
+    //     m.year,
+    //     m.master_id,
+    //     l.name;
+
+
+    public function index()
+    {
+
+        // $masters = DB::table('releases as r')
+
+        // ->leftJoin('images as i', function ($join) {
+        //     $join->on('r.release_id', '=', 'i.release_id')
+        //         ->where('i.type', '=', 'primary');
+        // })
+
+        // ->join('artist_release as arl', 'r.release_id', '=', 'arl.release_id')
+        // ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+
+        // ->join('genre_release as gr', 'r.release_id', '=', 'gr.release_id')
+        // ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
+
+        // ->join('release_style as rs', 'r.release_id', '=', 'rs.release_id')
+        // ->join('styles as s', 'rs.style_id', '=', 's.style_id')
+
+        // ->leftJoin('master_albums as m', 'r.master_id', '=', 'm.master_id')
+
+        // ->leftJoin('tracks as t', 'r.release_id', '=', 't.release_id')
+
+        // ->join('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+        // ->join('formats as f', 'fr.format_id', '=', 'f.format_id')
+
+        // ->leftJoin('products as p', 'r.release_id', '=', 'p.release_id')
+
+        // ->leftJoin('transaction_details as td', 'p.product_id', '=', 'td.product_id')
+
+        // ->leftJoin('cart_items as ct', 'p.product_id', '=', 'ct.product_id')
+
+        // ->leftJoin('reviews as rw', 'p.product_id', '=', 'rw.product_id')
+        // ->leftJoin('users as u', 'rw.user_id', '=', 'u.user_id')
+
+        // ->join('list_release as lr', 'r.release_id', '=', 'lr.release_id')
+        // ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
+
+        // ->select([
+        //     'i.url as image',
+        //     DB::raw("GROUP_CONCAT(DISTINCT ar.name) as artist"),
+        //     'r.title',
+        //     DB::raw("GROUP_CONCAT(DISTINCT g.name) as genre"),
+        //     DB::raw("GROUP_CONCAT(DISTINCT s.name) as style"),
+        //     'm.year as year',
+        //     DB::raw("GROUP_CONCAT(DISTINCT t.title) as tracks_name"),
+        //     DB::raw("GROUP_CONCAT(DISTINCT arl.role) as role"),
+        //     DB::raw("GROUP_CONCAT(DISTINCT f.name) as format"),
+
+        //     DB::raw("MIN(p.price) as lowest_price"),
+        //     DB::raw("MAX(p.price) as highest_price"),
+
+        //     'm.master_id as master_code',
+
+        //     DB::raw("SUM(td.quantity) as have"),
+        //     DB::raw("SUM(ct.quantity) as want"),
+
+        //     DB::raw("AVG(rw.rating) as avg_rating"),
+        //     DB::raw("COUNT(rw.rating) as total_rating"),
+
+        //     'l.name as list_name',
+        //     DB::raw("GROUP_CONCAT(DISTINCT u.username) as username")
+        // ])
+
+        // ->groupBy(
+        //     'r.release_id',
+        //     'i.url',
+        //     'r.title',
+        //     'm.year',
+        //     'm.master_id',
+        //     'l.name'
+        // )
+
+        // ->get();
+
+        // return view('showAlbum', compact('masters'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+
+        // SQL:
+        // SELECT r.release_id, r.title, i.url, m.year, m.master_id
+        // FROM releases r
+        // LEFT JOIN images i ON r.release_id = i.release_id AND i.type = 'primary'
+        // LEFT JOIN master_albums m ON r.master_id = m.master_id
+        // WHERE r.master_id = ?
+        $album = DB::table('releases as r')
+            ->leftJoin('images as i', function ($join) {
+                $join->on('r.release_id', '=', 'i.release_id')
+                    ->where('i.type', '=', 'primary');
+            })
+            ->leftJoin('master_albums as m', 'r.master_id', '=', 'm.master_id')
+            ->where('r.master_id', $id)
+            ->select(
+                'r.release_id',
+                'r.title',
+                'i.url as image',
+                'm.year',
+                'm.master_id'
+            )
+            ->first();
+
+            if (!$album) {
+                abort(404, 'Album not found');
+            }
+
+        // SQL:
+        // SELECT ar.name
+        // FROM artist_release arl
+        // JOIN artists ar ON arl.artist_id = ar.artist_id
+        // WHERE arl.release_id = ?
+        $artists = DB::table('artist_release as arl')
+            ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->where('arl.release_id', $album->release_id)
+            ->pluck('ar.name');
+
+        // SQL:
+        // SELECT g.name
+        // FROM genre_release gr
+        // JOIN genres g ON gr.genre_id = g.genre_id
+        // WHERE gr.release_id = ?
+        $genres = DB::table('genre_release as gr')
+            ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
+            ->where('gr.release_id', $album->release_id)
+            ->pluck('g.name');
+
+        // SQL:
+        // SELECT s.name
+        // FROM release_style rs
+        // JOIN styles s ON rs.style_id = s.style_id
+        // WHERE rs.release_id = ?
+        $styles = DB::table('release_style as rs')
+            ->join('styles as s', 'rs.style_id', '=', 's.style_id')
+            ->where('rs.release_id', $album->release_id)
+            ->pluck('s.name');
+
+        // SQL:
+        // SELECT *
+        // FROM tracks
+        // WHERE release_id = ?
+        $tracks = DB::table('tracks')
+            ->where('release_id', $album->release_id)
+            ->get();
+
+        // SQL:
+        // SELECT ar.name, arl.role, i.url
+        // FROM artist_release arl
+        // JOIN artists ar ON arl.artist_id = ar.artist_id
+        // LEFT JOIN images i ON ar.artist_id = i.artist_id AND i.type = 'primary'
+        // WHERE arl.release_id = ?
+        // AND arl.role != 'Main'
+        $credits = DB::table('artist_release as arl')
+            ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->leftJoin('images as i', function ($join) {
+                $join->on('ar.artist_id', '=', 'i.artist_id')
+                    ->where('i.type', '=', 'primary');
+            })
+            ->where('arl.release_id', $album->release_id)
+            ->where('arl.role', '!=', 'Main')
+            ->select(
+                'ar.name',
+                'arl.role',
+                'i.url as photo'
+            )
+            ->get();
+
+        // SQL:
+        // SELECT SUM(td.quantity), SUM(ct.quantity), AVG(rw.rating), COUNT(rw.rating),
+        //        MIN(p.price), MAX(p.price)
+        // FROM products p
+        // LEFT JOIN transaction_details td ON p.product_id = td.product_id
+        // LEFT JOIN cart_items ct ON p.product_id = ct.product_id
+        // LEFT JOIN reviews rw ON p.product_id = rw.product_id
+        // WHERE p.release_id = ?
+        $stats = DB::table('products as p')
+            ->leftJoin('transaction_details as td', 'p.product_id', '=', 'td.product_id')
+            ->leftJoin('cart_items as ct', 'p.product_id', '=', 'ct.product_id')
+            ->leftJoin('reviews as rw', 'p.product_id', '=', 'rw.product_id')
+            ->where('p.release_id', $album->release_id)
+            ->select(
+                DB::raw("SUM(td.quantity) as have"),
+                DB::raw("SUM(ct.quantity) as want"),
+                DB::raw("AVG(rw.rating) as avg_rating"),
+                DB::raw("COUNT(rw.rating) as total_rating"),
+                DB::raw("MIN(p.price) as lowest_price"),
+                DB::raw("MAX(p.price) as highest_price")
+            )
+            ->first();
+
+            // SQL:
+            // SELECT DISTINCT name FROM formats
+            $formats = DB::table('formats')->pluck('name');
+
+            // SQL:
+            // SELECT DISTINCT name FROM labels
+            $labels = DB::table('labels')->pluck('name');
+
+            // SQL:
+            // SELECT DISTINCT country FROM releases
+            $countries = DB::table('releases')->distinct()->pluck('country');
+
+            // SQL:
+            // SELECT DISTINCT year FROM master_albums
+            $years = DB::table('master_albums')->distinct()->pluck('year');
+
+            // SELECT COUNT(*) AS listing_count
+            // FROM products
+            // WHERE release_id = ?;
+            $listing_count = DB::table('products')
+            ->where('release_id', $album->release_id)
+            ->count();
+
+            // SELECT l.name AS list_name, 
+            //        u.username
+            // FROM list_release lr
+            // JOIN lists l ON lr.list_id = l.list_id
+            // JOIN users u ON l.user_id = u.user_id
+            // WHERE lr.release_id = ?;
+            $lists = DB::table('list_release AS lr')
+            ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
+            ->join('users as u', 'l.user_id', '=', 'u.user_id')
+
+            ->where('lr.release_id', $album->release_id)
+            ->select('l.name AS list_name',
+                     'u.username')
+            ->get();
+
+            // SELECT *
+            // FROM videos
+            // WHERE release_id = ?
+            $videos = DB::table('videos')
+            ->where('release_id', $album->release_id)
+            ->get();
+
+            // SQL:
+            // SELECT rw.comment,
+            //        rw.rating,
+            //        rw.created_at,
+            //        u.username
+            // FROM reviews rw
+            // JOIN users u ON rw.user_id = u.user_id
+            // JOIN products p ON rw.product_id = p.product_id
+            // WHERE p.release_id = ?
+
+            $reviews = DB::table('reviews as rw')
+                ->join('users as u', 'rw.user_id', '=', 'u.user_id')
+                ->join('products as p', 'rw.product_id', '=', 'p.product_id')
+
+                ->where('p.release_id', $album->release_id)
+
+                ->select(
+                    'rw.comment',
+                    'rw.rating',
+                    'rw.created_at',
+                    'u.username'
+                )
+
+                ->orderBy('rw.created_at', 'desc')
+                ->get();
+
+        return view('showAlbum', compact(
+            'album',
+            'artists',
+            'genres',
+            'styles',
+            'tracks',
+            'credits',
+            'stats',
+            'formats',
+            'labels',
+            'countries',
+            'years',
+            'listing_count',
+            'lists',
+            'videos',
+            'reviews'
+        ));
+    }
+
+    public function versions(Request $request, $master_id)
+    {
+        
+        // $albums = Release::findOrFail($id);
+        // ambil input filter dari view
+        $format  = $request->format;
+        $label   = $request->label;
+        $country = $request->country;
+        $year    = $request->year;
+        $barcode = $request->barcode;
+        $catalog_number = $request->catalog_number;
+
+        // SQL:
+        // SELECT r.release_id, r.title, i.url, m.year, m.master_id
+        // FROM releases r
+        // LEFT JOIN images i ON r.release_id = i.release_id AND i.type = 'primary'
+        // LEFT JOIN master_albums m ON r.master_id = m.master_id
+        // WHERE r.master_id = ?
+        $album = DB::table('releases as r')
+            ->leftJoin('images as i', function ($join) {
+                $join->on('r.release_id', '=', 'i.release_id')
+                    ->where('i.type', '=', 'primary');
+            })
+            ->leftJoin('master_albums as m', 'r.master_id', '=', 'm.master_id')
+            ->where('r.master_id', $master_id)
+            ->select(
+                'r.release_id',
+                'r.title',
+                'i.url as image',
+                'm.year',
+                'm.master_id'
+            )
+            ->first();
+
+            if (!$album) {
+                abort(404, 'Album not found');
+            }
+
+        // SQL:
+        // SELECT ar.name
+        // FROM artist_release arl
+        // JOIN artists ar ON arl.artist_id = ar.artist_id
+        // WHERE arl.release_id = ?
+        $artists = DB::table('artist_release as arl')
+            ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->where('arl.release_id', $album->release_id)
+            ->pluck('ar.name');
+        
+        // SQL:
+        // SELECT SUM(td.quantity), SUM(ct.quantity), AVG(rw.rating), COUNT(rw.rating),
+        //        MIN(p.price), MAX(p.price)
+        // FROM products p
+        // LEFT JOIN transaction_details td ON p.product_id = td.product_id
+        // LEFT JOIN cart_items ct ON p.product_id = ct.product_id
+        // LEFT JOIN reviews rw ON p.product_id = rw.product_id
+        // WHERE p.release_id = ?
+        $stats = DB::table('products as p')
+            ->leftJoin('transaction_details as td', 'p.product_id', '=', 'td.product_id')
+            ->leftJoin('cart_items as ct', 'p.product_id', '=', 'ct.product_id')
+            ->leftJoin('reviews as rw', 'p.product_id', '=', 'rw.product_id')
+            ->where('p.release_id', $album->release_id)
+            ->select(
+                DB::raw("SUM(td.quantity) as have"),
+                DB::raw("SUM(ct.quantity) as want"),
+                DB::raw("AVG(rw.rating) as avg_rating"),
+                DB::raw("COUNT(rw.rating) as total_rating"),
+                DB::raw("MIN(p.price) as lowest_price"),
+                DB::raw("MAX(p.price) as highest_price")
+            )
+            ->first();
+
+
+        $query = DB::table('releases as r')
+
+            // SQL:
+            // SELECT *
+            // FROM master_albums
+            // WHERE master_id = ?
+            ->join('master_albums as m', 'r.master_id', '=', 'm.master_id')
+
+            // SQL:
+            // SELECT *
+            // FROM format_release
+            // JOIN formats ON format_release.format_id = formats.format_id
+            ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+            ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
+
+            // SQL:
+            // SELECT *
+            // FROM label_release
+            // JOIN labels ON label_release.label_id = labels.label_id
+            ->leftJoin('label_release as lr', 'r.release_id', '=', 'lr.release_id')
+            ->leftJoin('labels as l', 'lr.label_id', '=', 'l.label_id')
+
+            // SQL:
+            // SELECT *
+            // FROM releases
+            ->select(
+                'r.release_id',
+                'r.title',
+                'm.year',
+                'r.country',
+                'r.barcode',
+                DB::raw('GROUP_CONCAT(DISTINCT f.name) as format'),
+                DB::raw('GROUP_CONCAT(DISTINCT l.name) as label'),
+                DB::raw('GROUP_CONCAT(DISTINCT lr.catalog_number) as catalog_number')
+            )
+
+            ->where('r.master_id', $master_id)
+
+            ->groupBy(
+                'r.release_id',
+                'r.title',
+                'm.year',
+                'r.country',
+                'r.barcode',
+            );
+
+        // SQL:
+        // SELECT g.name
+        // FROM genre_release gr
+        // JOIN genres g ON gr.genre_id = g.genre_id
+        // WHERE gr.release_id = ?
+        $genres = DB::table('genre_release as gr')
+            ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
+            ->where('gr.release_id', $album->release_id)
+            ->pluck('g.name');
+
+        if ($format) {
+            $query->havingRaw("format LIKE ?", ["%$format%"]);
+        }
+
+        if ($label) {
+            $query->havingRaw("label LIKE ?", ["%$label%"]);
+        }
+
+        if ($country) {
+            $query->where('r.country', $country);
+        }
+
+        if ($year) {
+            $query->where('m.year', $year);
+        }
+        if ($barcode) {
+            $query->where('r.barcode', 'LIKE', "%$barcode%");
+        }
+
+        $versions = $query->get();
+
+        // DATA UNTUK DROPDOWN
+
+        $tracks = DB::table('tracks')->where('release_id', $album->release_id)->get();
+    
+        $credits = DB::table('artist_release as arl')
+            ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->leftJoin('images as i', function ($join) {
+                $join->on('arl.release_id', '=', 'i.release_id')->where('i.type', '=', 'primary');
+            })
+            ->where('arl.release_id', $album->release_id)
+            ->where('arl.role', '!=', 'Main')
+            ->select('ar.name', 'arl.role', 'i.url as photo')
+            ->get();
+        
+            $credits_count = $credits->count();
+
+        $videos = DB::table('videos')->where('release_id', $album->release_id)->get();
+        
+        $lists = DB::table('list_release AS lr')
+            ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
+            ->join('users as u', 'l.user_id', '=', 'u.user_id')
+            ->where('lr.release_id', $album->release_id)
+            ->select('l.name AS list_name', 'u.username')
+            ->get();
+
+        $reviews = DB::table('reviews as rw')
+            ->join('users as u', 'rw.user_id', '=', 'u.user_id')
+            ->join('products as p', 'rw.product_id', '=', 'p.product_id')
+            ->where('p.release_id', $album->release_id)
+            ->select('rw.comment', 'rw.rating', 'rw.created_at', 'u.username')
+            ->orderBy('rw.created_at', 'desc')
+            ->get();
+
+    // Hitung listing_count untuk sidebar
+    $listing_count = DB::table('products')->where('release_id', $album->release_id)->count();
+
+        // SQL:
+        // SELECT DISTINCT name FROM formats
+        $formats = DB::table('formats')->pluck('name');
+
+        // SQL:
+        // SELECT DISTINCT name FROM labels
+        $labels = DB::table('labels')->pluck('name');
+
+        // SQL:
+        // SELECT DISTINCT country FROM releases
+        $countries = DB::table('releases')->distinct()->pluck('country');
+
+        // SQL:
+        // SELECT DISTINCT year FROM master_albums
+        $years = DB::table('master_albums')->distinct()->pluck('year');
+
+        // SQL:
+        // SELECT DISTINCT catalog_number FROM label_release
+        $catalog_number = DB::table('label_release')->distinct()->pluck('catalog_number');
+
+        return view('showAlbum', compact(
+            'album',
+            'artists',
+            'stats',
+            'versions',
+            'formats',
+            'labels',
+            'countries',
+            'years',
+            'genres',
+            'tracks',
+            'credits',
+            'credits_count',
+            'videos',
+            'lists',
+            'reviews',
+            'listing_count',
+        ));
+    }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

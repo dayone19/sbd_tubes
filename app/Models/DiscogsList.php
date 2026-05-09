@@ -3,29 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Product;
 
-class Riview extends Model
+class DiscogsList extends Model
 {
-    protected $primaryKey = 'review_id';
+    protected $primaryKey = 'list_id';
     public $timestamps = false;
     protected $fillable = [
         'user_id',
-        'product_id',
-        'rating',
-        'comment',
+        'name',
         'created_at',
     ];
 
-    // RELASI TABEL
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function product()
+    public function releases()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsToMany(Release::class, 'list_release', 'list_id', 'release_id');
     }
 }

@@ -131,8 +131,18 @@ tbody td{
     margin-top:3px;
 }
 .rating{
-    color:#888;
+    color:#f0c000;
     font-size:18px;
+}
+.rating-col{
+    width:120px;
+}
+.notes-input{
+    width:100%;
+    height:32px;
+    border:1px solid #ffffff;
+    padding:0 10px;
+    font-size:14px;
 }
 /* FOOT */
 .bottom-row{
@@ -149,6 +159,16 @@ tbody td{
     background:#fff;
     font-size:20px;
     color:#999;
+}
+.condition {
+    color:#555;
+    font-size: 12px;
+}
+.condition-select{
+    width:120px;
+    height:30px;
+    border: none;
+    font-size:13px;
 }
 </style>
 
@@ -270,9 +290,47 @@ tbody td{
                         <a href="#">Uncategorized</a>
                     </td>
 
-                    <td class="rating">☆☆☆☆☆</td>
+                    <td class="rating-col">
+                        <div class="rating" data-value="0">
+                            <span data-star="1">☆</span>
+                            <span data-star="2">☆</span>
+                            <span data-star="3">☆</span>
+                            <span data-star="4">☆</span>
+                            <span data-star="5">☆</span>
+                        </div>
+                        <div class="condition"> 
+                            <span>Media Condition</span>
+                            <select class="condition-select">
+                                <option></option>
+                                <option>Mint (M)</option>
+                                <option>Near Mint (NM or M-)</option>
+                                <option>Very Good Plus (VG+)</option>
+                                <option>Very Good (VG)</option>
+                                <option>Good Plus (G+)</option>
+                                <option>Good (G)</option>
+                                <option>Poor (P)</option>
+                            </select>
+                        </div>
+                        <div class="condition"> 
+                            <span>Sleeve Condition</span>
+                            <select class="condition-select">
+                                <option></option>
+                                <option>Generic</option>
+                                <option>No Cover</option>
+                                <option>Mint (M)</option>
+                                <option>Near Mint (NM or M-)</option>
+                                <option>Very Good Plus (VG+)</option>
+                                <option>Very Good (VG)</option>
+                                <option>Good Plus (G+)</option>
+                                <option>Good (G)</option>
+                                <option>Poor (P)</option>
+                            </select>
+                        </div>
+                    </td>
 
-                    <td></td>
+                    <td>
+                        <input type="text" class="notes-input" placeholder="Add notes...">
+                    </td>
 
                 </tr>
             </tbody>
@@ -289,5 +347,22 @@ tbody td{
 
 </div>
 </div>
+
+
+<script>
+
+document.querySelectorAll('.rating span').forEach(star => {
+    star.addEventListener('click', function () {
+        let value = this.getAttribute('data-star');
+        let parent = this.parentElement;
+
+        parent.setAttribute('data-value', value);
+
+        parent.querySelectorAll('span').forEach(s => {
+            s.textContent = s.getAttribute('data-star') <= value ? '★' : '☆';
+        });
+    });
+});
+</script>
 
 @endsection

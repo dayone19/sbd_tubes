@@ -19,7 +19,7 @@
 .artist-page a {color: #2a5bd7;text-decoration: none;}
 .row { margin-right: 0;margin-left: 0;}
 /* SIDEBAR */
-.sidebar {padding-left: 20px;}
+.sidebar {padding-left: 20px; width: 400px;}
 .sidebar .d-flex {margin-top: 10px;}
 /* SMALL TEXT */
 .small {font-size: 12px;color: #666;}
@@ -45,15 +45,7 @@
 #releaseMenu {margin-left: 10px;}
 .hidden {display: none;}
 .filter-box { display: flex;justify-content: space-between; cursor: pointer; padding: 8px 10px; border-radius: 6px;background: #eee;font-weight: 600;width:200px; ;}
-.arrow {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border: solid black;
-    border-width: 0 2px 2px 0;
-    margin-right: 8px;
-    transition: 0.2s;
-}
+.arrow {display: inline-block;width: 6px;height: 6px;border: solid black;border-width: 0 2px 2px 0;margin-right: 8px;transition: 0.2s;}
 /* arah panah */
 .arrow.right {transform: rotate(-45deg);}
 .arrow.down {transform: rotate(45deg);}
@@ -80,7 +72,56 @@
 .release-label {color: #2a5bd7;}
 .release-year {text-align: right;}
 .release-more {text-align: center;}
+.master-release-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+    margin-bottom: 8px;}
+.master-release-header .release-id { font-size: 12px; font-weight: normal; color: #555; display: flex; align-items: center; gap: 4px;margin-top: 40px;}
+.release-icon { width: 12px; height: 12px; background: #000;border-radius: 50%;display: inline-block; position: relative;}
+.release-icon::after {content: '';width: 4px;height: 4px;background: #fff;border-radius: 50%;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);}
+.lists-container {list-style: none;padding: 0;margin-top: 15px;}
+.lists-container li {margin-bottom: 4px;font-size: 14px;}
+.lists-container a {color: #2a5bd7;text-decoration: none;}
+.lists-container a:hover {text-decoration: underline;}
+.view-more-link {color: #800080;text-decoration: none;font-size: 14px;display: block;margin-top: 20px;}
+/* Styling utama Modal */
+#addToListModal .modal-content { border-radius: 4px;box-shadow: 0 5px 15px rgba(0,0,0,.3);border: 1px solid #999; font-family: Arial, sans-serif;}
+#addToListModal .modal-header { border-bottom: 1px solid #eee; padding: 10px 15px;}
+#addToListModal .modal-title { font-size: 18px; color: #000;}
+/* Styling Label dan Input */ 
+#addToListModal .form-label {font-size: 14px;color: #000;margin-bottom: 3px;}
+#addToListModal .form-control, 
+#addToListModal .form-select {border-radius: 3px;border: 1px solid #333; /* Border lebih gelap sesuai gambar */font-size: 14px;padding: 4px 8px;}
+#addToListModal .text-muted.fst-italic {color: #888 !important;font-weight: normal;}
+/* Radio Button Custom */
+#addToListModal .form-check-label {font-size: 15px;margin-left: 5px;}
+/* Tombol */
+#addToListModal .btn-success { background-color: #008000 !important;
+        border: 1px solid #006400 !important;
+        border-radius: 4px;
+        font-weight: normal;
+        padding: 5px 20px;}
+    #addToListModal .btn-light {
+        background-color: #f1f1f1 !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px;
+        color: #333;
+        padding: 5px 20px;
+    }
+
+    /* Close Button */
+    #addToListModal .btn-close {
+        background-size: 10px;
+        opacity: 0.8;
+    }
 </style>
+
 
 <div class="artist-page">
 <div class="row">
@@ -132,12 +173,16 @@
     <!-- RIGHT -->
     <div class="col-md-3 sidebar">
 
-        <div class="d-flex justify-content-between">
-            <strong>Artist</strong>
-            <span>[a3310737]</span>
+        <div class="master-release-header">
+            <span>Artist</span>
+            <span class="release-id">
+                <span class="release-icon"></span>
+                [a{{ $album->master_id ?? '3310737' }}]
+            </span>
         </div>
-        <hr>
-        <a href="#">Edit Artist</a>
+        <div class="master-release-links">
+            <a href="#">Edit Artist</a>
+        </div>
         
         <div class="d-flex justify-content-between">
             <strong>For Sale</strong>
@@ -153,14 +198,14 @@
                 <!-- ITEM 1 -->
                 <div class="carousel-item active">
                     <div class="d-flex mt-2">
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="90" class="me-2">
+                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="100" height="100" class="me-2">
 
                         <div>
                             <div class="small">MASTER RELEASE</div>
-                            <strong>Wicked: For Good</strong><br>
-                            <span class="small">2025</span><br>
+                            <strong>Eternal Sunshine</strong><br>
+                            <span class="small">2024</span><br>
                             <span class="small">Vinyl · CD</span><br>
-                            <span class="small">From $5 to $500</span>
+                            <span class="small">From $4 to $2,125</span>
                         </div>
                     </div>
 
@@ -292,7 +337,7 @@
 
                 <h5 class="fw-bold">Release</h5>
 
-                <!-- FILTER BAR (hidden dulu) -->
+                <!-- FILTER BAR (hidden) -->
                 <div id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
                     <div class="row g-2">
                         <div class="col-md-3">
@@ -320,24 +365,25 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-2">
-                        <button id="toggleFilter" class="btn btn-dark rounded-pill px-2" style="width:160px">
-                            <p>Search & Filters 
+                        <button id="toggleFilter" class="btn btn-dark rounded-pill px-3" style="width:170px;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Search & Filters</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-                                </svg> 
-                            </p>
+                                    <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                </svg>
+                            </div>
                         </button>
 
                         <span id="sortYear" class="small" style="cursor:pointer;">
                             Year ↑
                         </span>
 
-                        <button class="view-btn active" data-view="grid">
+                        <button class="view-btn" data-view="grid">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-grid-fill" viewBox="0 0 16 16">
                             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/>
                             </svg>
                         </button>
-                        <button class="view-btn" data-view="gridlist"> 
+                        <button class="view-btn active" data-view="gridlist"> 
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"/>
                             <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"/>
@@ -362,7 +408,7 @@
                 </div>
 
                 <!-- LIST ITEM -->
-                <div id="releaseContainer" class="grid-view">
+                <div id="releaseContainer" class="gridlist-view">
 
                     <div class="release-item" data-year="2013">
                         <img src="https://i.discogs.com/hR1_tNewaSFa8myEfAwEdXYo5xnDKYZOrdCz8nYkW_8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NDI0/MzQtMTQ2MzY2NzI4/OC01MTM4LmpwZWc.jpeg">
@@ -384,7 +430,15 @@
 
                         <div class="release-label">Republic Records</div>
                         <div class="release-year">2013</div>
-                        <div class="release-more">•••</div>
+                        <div class="dropdown">
+                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
+                                •••
+                            </div>
+                            <ul class="dropdown-menu" style="color: black; background: white; border: 1px solid #ddd;">
+                                <li><a class="dropdown-item" href="#">Add to List</a></li>
+                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
+                            </ul>
+                        </div>
 
                     </div>
 
@@ -410,7 +464,15 @@
 
                         <div class="release-label">Republic Records</div>
                         <div class="release-year">2024</div>
-                        <div class="release-more">•••</div>
+                        <div class="dropdown" >
+                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
+                                •••
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Add to List</a></li>
+                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
+                            </ul>
+                        </div>
 
                     </div>
 
@@ -469,24 +531,93 @@
         </div>
     </div>
 
+
     <!-- LISTS -->
     <div id="tab-lists" class="tab-content d-none">
-        <div class="fw-bold">List 
-            <a href="#">Add to List</a>
+        <div class="d-flex align-items-center gap-2 mb-2 mt-4">
+            <h5 class="fw-bold m-0" style="font-size: 18px;">Lists</h5>
+            <a href="#" class="small text-decoration-none" 
+                data-bs-toggle="modal" 
+                data-bs-target="#addToListModal" 
+                style="color: #2a5bd7;">Add to List</a>
         </div>
 
-        <li>
-            <a href="#">Love POP :)</a> by <a href="#">pop.music.love</a>
-        </li>
-        <li>
-            <a href="#">Completed Artist</a> by <a href="#">DylanBryl</a>
-        </li>
+        <ul class="lists-container">
+            <li><a href="#">Completed Artists</a> by <a href="#">DylanBryl</a></li>
+            <li><a href="#">Rejected from the ***Women Wearing Boots*** list 👢👢</a> by <a href="#">sauvageon27</a></li>
+            <li><a href="#">Love POP :)</a> by <a href="#">pop.music.love</a></li>
+        </ul>
+
+        <a href="/lists" class="view-more-link mb-4">View More Lists →</a>
     </div>
 
 </div>
 
 </div>
 
+<!-- Modal Add Listnya -->
+<div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 450px;"> <!-- Lebar disesuaikan -->
+    <div class="modal-content">
+      <div class="modal-header border-0 pb-2">
+        <h5 class="modal-title fw-bold">Add Artist to List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr class="m-0" style="color: #eee; opacity: 1;"> <!-- Garis pemisah tipis -->
+      
+      <div class="modal-body p-3">
+        <form id="addToListForm">
+          <!-- Radio Options -->
+          <div class="mb-3 mt-1">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="listOption" id="radioExisting" value="existing" checked>
+              <label class="form-check-label" for="radioExisting">Existing List</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="listOption" id="radioNew" value="new">
+              <label class="form-check-label" for="radioNew">New List</label>
+            </div>
+          </div>
+
+          <!-- SECTION: NEW LIST -->
+          <div id="new-list-fields" class="d-none">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description <span class="text-muted fst-italic ms-1">Optional</span></label>
+              <textarea class="form-control" rows="2" style="resize: vertical;"></textarea>
+            </div>
+          </div>
+
+          <!-- SECTION: EXISTING LIST -->
+          <div id="existing-list-fields">
+            <div class="mb-3">
+              <label class="form-label">List</label>
+              <select class="form-select">
+                <optgroup label="Recently Used"><option>nama listnya</option></optgroup>
+                <optgroup label="All Lists"><option>nama listnya</option></optgroup>
+              </select>
+            </div>
+          </div>
+
+          <!-- Common Field: Comments -->
+          <div class="mb-3">
+            <label class="form-label">Comments on this item <span class="text-muted fst-italic ms-1">Optional</span></label>
+            <textarea class="form-control" rows="2" style="resize: vertical;"></textarea>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex gap-2 pt-2">
+            <button type="submit" class="btn btn-success">Save</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ACTIVE FILTER */
@@ -551,7 +682,6 @@ document.getElementById('sortYear').addEventListener('click', function () {
     asc = !asc;
     this.innerText = asc ? 'Year ↑' : 'Year ↓';
 
-    // render ulang
     items.forEach(item => container.appendChild(item));
 });
 
@@ -581,6 +711,27 @@ document.querySelectorAll('.video-item').forEach(item => {
         document.getElementById('mainVideo').src =
             "https://www.youtube.com/embed/" + videoId;
     });
+});
+
+// modal
+document.addEventListener('DOMContentLoaded', function() {
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+        if (radioNew.checked) {
+            existingFields.classList.add('d-none');
+            newFields.classList.remove('d-none');
+        } else {
+            existingFields.classList.remove('d-none');
+            newFields.classList.add('d-none');
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
 });
 
 </script>
