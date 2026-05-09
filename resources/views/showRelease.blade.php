@@ -1090,42 +1090,55 @@
         <!-- Header: cover + meta -->
         <div class="album-header">
             <div class="album-cover-wrap">
-               <img src="https://i.discogs.com/55OYJqGsg9ov3VrCPSdj3lmQyBrmeoRBO7EGNcPC7cE/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMTM2/NzU1LTE3Mzk1ODQ4/NTAtMTUzNi5qcGVn.jpeg" alt="Sabrina Carpenter - Short N' Sweet (Deluxe) album cover" width="150" height="150">
+              
+               <img src="{{ $release->image }}" alt="{{ $release->title }}" width="150" height="150">
                 <a href="#">More images</a>
+
             </div>
             <div class="album-meta">
                 <div class="album-title">
-                    <a href="#" class="artist-name">Sabrina Carpenter</a>
-                    &ndash; Short N\' Sweet (Deluxe)
+                  @foreach($artists as $artis)
+                    <a href="#" class="artist-name">{{ $artis }}</a>@if(!$loop->last)@endif
+                    &ndash; {{ $release->title }}
+                  @endforeach
                 </div>
                 <table class="album-info-table">
                     <tr>
                         <td>Label:</td>
                         <td>
-                            <a href="#">Island Records</a> &ndash; 602475656999</a>
+                          @foreach($labels as $label)
+                              <a href="#">{{ $label }}</a> – {{ $release->barcode }}
+                              @if(!$loop->last), @endif
+                          @endforeach
                         </td>
                     </tr>
                     <tr>
                         <td>Format:</td>
                         <td>
-                            2 x <a href="#">Vinyl,</a> LP, Album, Deluxe Edition, Repress, <i>Blue Opaque [Bright Azure]</i>
+                          @foreach($formats as $format)
+                           <a href="#">{{ $format }}</a>@if(!$loop->last), @endif
+                           @endforeach
                         </td>
                     </tr>
                     <tr>
                         <td>Country:</td>
-                        <td><a href="#">US</a></td>
+                        <td><a href="#">{{ $release->country }}</a></td>
                     </tr>
                     <tr>
                         <td>Released:</td>
-                        <td><a href="#">14 Feb 2025</a></td>
+                        <td><a href="#">{{ $release->release_date }}</a></td>
                     </tr>
                     <tr>
                         <td>Genre:</td>
-                        <td><a href="#">Funk / Soul, Pop</a></td>
+                        @foreach($genres as $genre)
+                        <td><a href="#">{{ $genre }}</a>@if(!$loop->last), @endif</td>
+                        @endforeach
                     </tr>
                     <tr>
                         <td>Style:</td>
-                        <td><a href="#">Bubblegum, Contempory R&B, Nu-Disco, Voca</a></td>
+                        @foreach($styles as $style)
+                        <td><a href="#">{{ $style }}</a>@if(!$loop->last), @endif</td>
+                        @endforeach
                     </tr>
                 </table>
             </div>
@@ -1141,202 +1154,60 @@
     </button>
   </div>
  
+  @foreach($tracks as $track)
   <!-- A1 -->
   <div class="track-row">
     <div class="track-main">
-      <span class="track-num">A1</span>
-      <span class="track-title">Taste</span>
-      <span class="track-dur">2:37</span>
+      
+      <span class="track-num">{{ $track->position }}</span>
+      <span class="track-title">{{ $track->title }}</span>
+      <span class="track-dur">{{ $track->duration }}</span>
+      
     </div>
     <div class="track-credits" id="c0">
-      <div class="credit-line">Drums – <a href="#">Aaron Sterling</a></div>
-      <div class="credit-line">Engineer [Mix] – <a href="#">Bryce Bordone</a></div>
-      <div class="credit-line">Mastered By – <a href="#">Nathan Dantzler</a></div>
-      <div class="credit-line">Mixed By – <a href="#">Serban Ghenea</a></div>
-      <div class="credit-line">Producer – <a href="#">Ian Kirkpatrick</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
-      <div class="credit-line">Programmed By, Guitar, Bass, Drums, Keyboards, Percussion – <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
-      <div class="credit-line">Recorded By – <a href="#">Jeff Gunnell</a>, <a href="#">John Ryan (17)</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Ian Kirkpatrick</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julia Michaels</a>, <a href="#">Sabrina Carpenter</a></div>
+      @foreach($credits as $credit)
+      <div class="credit-line">{{ $credit->role }} – 
+        <a href="#">{{ $credit->name }}</a></div>
+       @endforeach 
     </div>
   </div>
- 
-  <!-- A2 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">A2</span>
-      <span class="track-title">Please Please Please</span>
-      <span class="track-dur">3:06</span>
-    </div>
-    <div class="track-credits" id="c1">
-      <div class="credit-line">Drum Programming, Percussion, Drums [Drum Kit], Electric Guitar, Acoustic Guitar, Synthesizer [Juno 60, Moog, Prophet 5, Korg M1], Bass Guitar – <a href="#">Jack Antonoff</a></div>
-      <div class="credit-line">Engineer [Assistant] – <a href="#">Jack Manning (9)</a>, <a href="#">Joey Miller (7)</a>, <a href="#">Jozef Caldwell</a></div>
-      <div class="credit-line">Engineer [Mix] – <a href="#">Bryce Bordone</a></div>
-      <div class="credit-line">Flute – <a href="#">Evan Smith (2)</a></div>
-      <div class="credit-line">Mastered By – <a href="#">Ruairi O'Flaherty</a></div>
-      <div class="credit-line">Mixed By – <a href="#">Serban Ghenea</a></div>
-      <div class="credit-line">Producer – <a href="#">Jack Antonoff</a></div>
-      <div class="credit-line">Recorded By – <a href="#">Laura Sisk</a>, <a href="#">Oli Jacobs</a></div>
-      <div class="credit-line">Violin – <a href="#">Bobby Hawk</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Jack Antonoff</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
-  <!-- A3 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">A3</span>
-      <span class="track-title">Good Graces</span>
-      <span class="track-dur">3:05</span>
-    </div>
-    <div class="track-credits" id="c2">
-      <div class="credit-line">Mastered By – <a href="#">Nathan Dantzler</a></div>
-      <div class="credit-line">Mastered By [Assistant] – <a href="#">Harrison Tate</a></div>
-      <div class="credit-line">Mixed By – <a href="#">Manny Marroquin</a></div>
-      <div class="credit-line">Mixed By [Assistant] – <a href="#">Anthony Vilchis</a>, <a href="#">Trey Station</a>, <a href="#">Zach Pereyra</a></div>
-      <div class="credit-line">Producer – <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
-      <div class="credit-line">Programmed By, Guitar, Bass, Drums, Keyboards, Percussion – <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
-      <div class="credit-line">Recorded By – <a href="#">Jeff Gunnell</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julian Bunetta</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">John Ryan (17)</a>, <a href="#">Julia Michaels</a>, <a href="#">Julian Bunetta</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
-  <!-- A4 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">A4</span>
-      <span class="track-title">Sharpest Tool</span>
-      <span class="track-dur">3:38</span>
-    </div>
-    <div class="track-credits" id="c3">
-      <div class="credit-line">Producer – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
-  <!-- A5 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">A5</span>
-      <span class="track-title">Coincidence</span>
-      <span class="track-dur">2:44</span>
-    </div>
-    <div class="track-credits" id="c4">
-      <div class="credit-line">Producer – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Jon Bellion</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
-  <!-- A6 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">A6</span>
-      <span class="track-title">Bed Chem</span>
-      <span class="track-dur">2:51</span>
-    </div>
-    <div class="track-credits" id="c5">
-      <div class="credit-line">Producer – <a href="#">Jack Antonoff</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Jack Antonoff</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
-  <!-- B7 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">B7</span>
-      <span class="track-title">Espresso</span>
-      <span class="track-dur">2:55</span>
-    </div>
-    <div class="track-credits" id="c6">
-      <div class="credit-line">Producer – <a href="#">Amy Allen (3)</a>, <a href="#">Julian Bunetta</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Amy Allen (3)</a>, <a href="#">Julian Bunetta</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
-  <!-- B8 -->
-  <div class="track-row">
-    <div class="track-main">
-      <span class="track-num">B8</span>
-      <span class="track-title">Dumb & Poetic</span>
-      <span class="track-dur">2:13</span>
-    </div>
-    <div class="track-credits" id="c7">
-      <div class="credit-line">Producer – <a href="#">Ian Kirkpatrick</a></div>
-      <div class="credit-line">Vocals – <a href="#">Sabrina Carpenter</a></div>
-      <div class="credit-line">Written-By – <a href="#">Ian Kirkpatrick</a>, <a href="#">Sabrina Carpenter</a></div>
-    </div>
-  </div>
- 
+@endforeach 
 </div>
 
         <!-- Companies -->
 <h2>Companies, etc.</h2>
 <div class="companies-section">
-    <p>Phonographic Copyright ℗ –<a href="#"> Island Records</a></p>
-    <p>Copyright © - <a href="#">Island Records</a></p>
-    <p>Record Company - <a href="#">UMG Recordungs, Inc.</a></p>
-    <p>Distributed By - <a href="#">UMG Commercial Services</a></p>
-    <p>Pressed By - <a href="#">Vantiva, Guadalajara, Mexico</a> - 1271098 </p>
-    <p>Published By - <a href="#">Sabalicious Songs</a></p>
-    <p>Mixed At - <a href="#">MixStar Studios</a></p>
-    <p>Mastered At - <a href="#">Nomograph Mastering</a></p>
-    <p>Recorded At - <a href="#">The Perch</a></p>
+  @foreach($companies as $companie)
+    <p>{{ $companie->role }}–
+      <a href="#"> {{ $companie->name }}</a>
+    </p>
+  @endforeach
 </div>
 
 <h2>Credits</h2>
 <div class="credits-section">
-  <p>A&R – <a href="#">Jackie Winkler</a></p>
-  <p>A&R, Administrator – <a href="#">Gabrielle Rosen</a></p>
-  <p>Art Direction – <a href="#">Sarah Carpenter (3)</a></p>
-  <p>Coordinator, A&R – <a href="#">Gloria Jozwicki</a></p>
-  <p>Creative Director – <a href="#">Dannah Gottlieb</a></p>
-  <p>Graphic Design – <a href="#">Chase Shawbridge</a></p>
-  <p>Legal [Business Affairs] – <a href="#">Antoinette Trotman</a>, <a href="#">Ian Allen (7)</a>, <a href="#">Julia Nagar</a>, <a href="#">Niya Fleming</a>, <a href="#">Rachel Meisner</a>, <a href="#">Skyler Salamon</a></p>
-  <p>Management – <a href="#">Volara Management</a></p>
-  <p>Marketing – <a href="#">Natasha Kilibarda</a></p>
-  <p>Production Manager [Package Production] – <a href="#">Paul Lane</a></p>
+  @foreach($credits as $credit)
+  <p>{{ $credit->role }} – 
+    <a href="#">{{ $credit->name }}</a>
+  </p>
+  @endforeach
 </div>
  
 <h2>Notes</h2>
 <div class="notes-section">
-  <p>Issued in gatefold jacket with printed die-cut inner sleeves, foldout poster, and double-sided credit insert.</p>
-  <p>Copies signed on the front cover by the artist were also available at indie record stores at release with a barcode sticker on rear shrink wrap.</p>
-  <p>"VINYL MADE IN MEXICO" printed on rear shrink wrap.</p>
-  <p>Signed copies were released with a barcode sticker on rear shrink wrap without the manufacturer's printing.</p>
-  <p>Side A &amp; B were repressed with lacquers from the <a href="#">standard edition release</a>.<br>
-  Side C &amp; D were cut new for the deluxe release.</p>
-  <p>Tracks are listed sequentially, regardless of side.</p>
-  <p>Track times are listed on center labels.</p>
-  <p>Runouts are stamped.</p>
+  <p> {{ $release->notes }} </p>
 </div>
  
 <h2>Barcode and Other Identifiers</h2>
 <div class="identifiers-section">
-  <p>Barcode (Printed, text): 6 02475 85899 9</p>
-  <p>Barcode (Printed, scanned): 602475858999</p>
-  <p>Barcode (Stickered, text): 6 02475 85859 1</p>
-  <p>Barcode (Stickered, scanned): 602475858591</p>
-  <p>Rights Society: BMI</p>
-  <p>Rights Society: ASCAP</p>
-  <p>Other (Side A label): 00602475658999-A</p>
-  <p>Other (Side B label): 00602475658999-B</p>
-  <p>Other (Side C label): 00602475658999-C</p>
-  <p>Other (Side D label): 60247565899 9-D</p>
-  <p>Matrix / Runout (Side A runout): (1271098) 01010252 00602465835199A</p>
-  <p>Matrix / Runout (Side B runout): (1271099) 01010613 00602465835199B</p>
-  <p>Matrix / Runout (Side C runout): (1288399) 01010310 60247565899 9A</p>
-  <p>Matrix / Runout (Side D runout): (1280400) 01010320 60247565899 9B</p>
+  @foreach($barcodes as $barcode)
+  <p>{{ $barcode->type }} {{ $barcode->description }}: {{ $barcode->value }}</p>
+  @endforeach
 </div>
 
 <!-- OTHER VERSIONS -->
 <div class="section-header">
-  <span>Other Versions (5 of 53)</span>
+  <span>Other Versions ({{ $otherVersions->count() }} of {{ $totalVersions }})</span>
   <a href="#">View All</a>
 </div>
  
@@ -1350,212 +1221,87 @@
 </div>
  
 <!-- Row 1 -->
+ @foreach($otherVersions as $version)
 <div class="table-row">
   <div class="col-title">
-    <a href="#">Short N' Sweet</a> (LP, Album, <span>Blue Marbled [Light Sky]</span>)
+     <a href="{{ route('release.show', $version->release_id) }}">
+            {{ $version->title }}
+        </a>
   </div>
-  <div class="col-label"><a href="#">Island Records</a>, <a href="#">Island Records</a></div>
-  <div class="col-cat">00602465835199,<br>602465835199</div>
-  <div class="col-country">Worldwide</div>
-  <div class="col-year">2024</div>
+  <div class="col-label"><a href="#">{{ $version->labels }} ,</a></div>
+  <div class="col-cat">{{ $version->catno }} ,<br></div>
+  <div class="col-country">{{ $version->country }}</div>
+  <div class="col-year"> {{ \Carbon\Carbon::parse($version->release_date)->format('Y') }}</div>
 </div>
- 
-<!-- Row 2 (highlighted) -->
-<div class="table-row highlighted">
-  <div class="col-title">
-    <a href="#">Short N' Sweet</a> (LP, Album, Limited Edition, Stereo, <span>Clear [Moonlight], Optimal Media GmbH Pressing</span>)
-  </div>
-  <div class="col-label"><a href="#">Island Records</a></div>
-  <div class="col-cat">00602465839807</div>
-  <div class="col-country">Worldwide</div>
-  <div class="col-year">2024</div>
-</div>
- 
-<!-- Row 3 (highlighted) -->
-<div class="table-row highlighted">
-  <div class="col-title">
-    <a href="#">Short N' Sweet</a> (12×File, AAC, Album, <span>256 kbps</span>)
-  </div>
-  <div class="col-label"><a href="#">Island Records</a></div>
-  <div class="col-cat">none</div>
-  <div class="col-country">Worldwide</div>
-  <div class="col-year">2024</div>
-</div>
- 
-<!-- Row 4 (highlighted) -->
-<div class="table-row highlighted">
-  <div class="col-title">
-    <a href="#">Short N' Sweet</a> (LP, Album, <span>Blue [Lapis Lazuli]</span>)
-  </div>
-  <div class="col-label"><a href="#">Island Records</a></div>
-  <div class="col-cat">602465869118</div>
-  <div class="col-country">Europe</div>
-  <div class="col-year">2024</div>
-</div>
- 
-<!-- Row 5 (highlighted) -->
-<div class="table-row highlighted">
-  <div class="col-title">
-    <a href="#">Short N' Sweet</a> (LP, Album, Stereo, <span>Blue Marbled [Light Sky]</span>)
-  </div>
-  <div class="col-label"><a href="#">Island Records</a></div>
-  <div class="col-cat">602465835199</div>
-  <div class="col-country">US</div>
-  <div class="col-year">2024</div>
-</div>
+@endforeach
  
 <!-- RECOMMENDATIONS -->
 <div class="rec-header">Recommendations</div>
  
 <div class="rec-list">
  
-  <!-- Card 1: Reputation -->
+  @foreach($recommendations as $recommendation)
   <div class="rec-card">
-    <img src="https://i.discogs.com/reputation_taylor_swift.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="Reputation">
-    <div class="img-placeholder" style="background:#222;color:#fff;font-size:10px;text-align:center;padding:4px;">reputation<br><small>Taylor Swift</small></div>
-    <div class="rec-title">Reputation</div>
-    <div class="rec-artist">Taylor Swift</div>
-    <div class="rec-year">2017 USA &amp; Europe</div>
-    <div class="rec-format">Vinyl — LP, Album...</div>
-    <button class="btn-shop">Shop</button>
-    <button class="btn-want">Want</button>
-  </div>
- 
-  <!-- Card 2: The Tortured Poets Department -->
-  <div class="rec-card">
-    <div class="img-placeholder" style="background:#2a2a2a;color:#aaa;font-size:10px;text-align:center;padding:4px;">The Tortured Poe...</div>
-    <div class="rec-title">The Tortured Poe...</div>
-    <div class="rec-artist">Taylor Swift</div>
-    <div class="rec-year">2024 US</div>
-    <div class="rec-format">Vinyl — LP</div>
-    <button class="btn-shop">Shop</button>
-    <button class="btn-want">Want</button>
-  </div>
- 
-  <!-- Card 3: Lover (Live From...) -->
-  <div class="rec-card">
-    <div class="img-placeholder" style="background:#d4b8a0;color:#fff;font-size:10px;text-align:center;padding:4px;">Lover (Live From...)</div>
-    <div class="rec-title">Lover (Live From ...</div>
-    <div class="rec-artist">Taylor Swift</div>
-    <div class="rec-year">2025 USA &amp; Europe</div>
-    <div class="rec-format">Vinyl — 8", 33 ⅓ ...</div>
-    <button class="btn-shop">Shop</button>
-    <button class="btn-want">Want</button>
-  </div>
- 
-  <!-- Card 4: Lover -->
-  <div class="rec-card">
-    <div class="img-placeholder" style="background:#b0c8e8;color:#fff;font-size:10px;text-align:center;padding:4px;">Lover</div>
-    <div class="rec-title">Lover</div>
-    <div class="rec-artist">Taylor Swift</div>
-    <div class="rec-year">2019 USA &amp; Canada</div>
-    <div class="rec-format">Vinyl — LP</div>
-    <button class="btn-shop">Shop</button>
-    <button class="btn-want">Want</button>
-  </div>
- 
-  <!-- Card 5: 1989 (Taylor's Version) -->
-  <div class="rec-card">
-    <div class="img-placeholder" style="background:#87aec4;color:#fff;font-size:10px;text-align:center;padding:4px;">1989 (Taylor's Ver...)</div>
-    <div class="rec-title">1989 (Taylor's Ver...</div>
-    <div class="rec-artist">Taylor Swift</div>
-    <div class="rec-year">2023 Worldwide</div>
-    <div class="rec-format">Vinyl — LP, Album...</div>
-    <button class="btn-shop">Shop</button>
-    <button class="btn-want">Want</button>
-  </div>
- 
-  <!-- Card 6: Mid... (partial) -->
-  <div class="rec-card">
-    <div class="img-placeholder" style="background:#c0a080;color:#fff;font-size:10px;text-align:center;padding:4px;">Mid...</div>
-    <div class="rec-title">Mid...</div>
-    <div class="rec-artist">Taylo...</div>
-    <div class="rec-year">2022</div>
-    <div class="rec-format">Vinyl...</div>
-    <button class="btn-shop">Shop</button>
-    <button class="btn-want">Want</button>
-  </div>
-</div>
+    <a href="{{ route('show.release', $recommendation->release_id) }}">
+    <img src="{{ $recommendation->image }}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" alt="{{ $recommendation->title }}">
 
+    <!-- <div class="img-placeholder" style="background:#222;color:#fff;font-size:10px;text-align:center;padding:4px;">{{ $recommendation->title }}<br>
+    <small>{{ $recommendation->artist }}</small>
+  </div> -->
+  </a>
+    <div class="rec-title">{{ $recommendation->title }}</div>
+    <div class="rec-artist">{{ $recommendation->artist }}</div>
+    <div class="rec-year">  {{ \Carbon\Carbon::parse($release->release_date)->format('Y') }} &amp; {{ $recommendation->country }}</div>
+    <div class="rec-format">{{ $recommendation->formats }}</div>
+    <button class="btn-shop">Shop</button>
+    <button class="btn-want">Want</button>
+  </div>
+  @endforeach
+  </div>
+ 
 <div class="reviews-title">Reviews</div>
  
   <button class="add-review-btn">Add Review</button>
  
   <!-- Review 1 -->
+   @foreach($reviews as $review)
   <div class="review-item">
     <div class="avatar">
-      <div class="avatar-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-        </svg>
-      </div>
+        <div class="avatar">
+          <img src="{{ $review->image }}" alt="{{ $review->username }}" />
+        </div>
     </div>
     <div class="review-content">
       <div class="review-header">
-        <a href="#" class="review-username">tlrbreslin</a>
-        <span class="review-date">Aug 17, 2025</span>
+        <a href="#" class="review-username">{{ $review->username }}</a>
+        <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
       </div>
-      <div class="review-text">This is actually a really good quality pressing, I am impressed.</div>
-      <div class="review-actions">
-        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
-        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
-      </div>
-    </div>
-    <div class="dropdown-arrow">▼</div>
-  </div>
- 
-  <!-- Review 2 -->
-  <div class="review-item">
-    <div class="avatar">
-      <div class="avatar-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-        </svg>
-      </div>
-    </div>
-    <div class="review-content">
-      <div class="review-header">
-        <a href="#" class="review-username">Oliviatay19</a>
-        <span class="review-date">Jul 12, 2025</span>
-      </div>
-      <div class="stars">
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-      </div>
-      <div class="review-text">This album is pop perfection, Sabrina is a star and this album is funny, short and super sweet.</div>
-      <div class="review-actions">
-        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
-        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
-      </div>
-    </div>
-    <div class="dropdown-arrow">▼</div>
-  </div>
- 
-  <!-- Review 3 -->
-  <div class="review-item">
-    <div class="avatar">
-      <img src="https://i.pravatar.cc/48?img=12" alt="shawnhostetler1982" />
-    </div>
-    <div class="review-content">
-      <div class="review-header">
-        <a href="#" class="review-username">shawnhostetler1982</a>
-        <span class="review-date">Mar 9, 2025</span>
-      </div>
-      <div class="review-text">Yo! This Blows. I already bought the original album. I HATE When Artist Do This! Even with Dolly Parton on the song with you isn't enough. The songs are So So and honestly seemed rushed. Why didn't you just include them on the original album?</div>
-      <div class="review-actions">
-        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
-        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
-      </div>
-    </div>
-    <div class="dropdown-arrow">▼</div>
-  </div>
+      <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
+    @for ($i = 1; $i <= 5; $i++)
+        @if ($i <= $review->rating)
+            <span>★</span> {{-- Bintang isi --}}
+        @else
+            <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
+        @endif
+    @endfor
+    <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
 </div>
+      <div class="review-text">T{{ $review->comment }}</div>
+      <div class="review-actions">
+        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+      </div>
+    </div>
+    <div class="dropdown-arrow">▼</div>
+  </div>
 
-
-
+   <div class="stars">
+        <span class="star">{{ $review->rating }}</span>
+    </div>
+ @endforeach
+ </div>
+ 
+ 
     <!-- end .album-left -->
 
     <!--  RIGHT COLUMN -->
@@ -1566,12 +1312,12 @@
             <span>Release</span>
             <span class="release-id">
                 <span class="release-icon"></span>
-                [r33136755]
+                [r{{ $release->release_id }}]
             </span>
         </div>
         <div class="master-release-links">
             <a href="#">Edit Release</a>
-            <a href="#">See all versions</a>
+            <a href="{{route('album.versions', $release->master_id)}}">See all versions</a>
             <span style="color:black;">Recently Edited</span> 
         </div>
 
@@ -1582,15 +1328,15 @@
         </div>
 
         <div class="release-card">
-            <img src="https://i.discogs.com/55OYJqGsg9ov3VrCPSdj3lmQyBrmeoRBO7EGNcPC7cE/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMTM2/NzU1LTE3Mzk1ODQ4/NTAtMTUzNi5qcGVn.jpeg" alt="Sabrina Carpenter - Short N' Sweet (Deluxe) album cover" width="150" height="150">
+            <img src="{{ $release->image }}" alt="{{ $release->title }}" width="150" height="150">
             <div class="release-card-info">
-                <div class="label">VINYL</div>
-                <div class="title">Short N' Sweet (Deluxe)</div>
-                <div class="price-range">From $30 to $100</div>
+                <div class="label">{{ strtoupper($formats->first() ?? '-') }}</div>
+                <div class="title">{{ $release->title }}</div>
+                <div class="price-range">From {{ $stats->lowest_price }} to {{ $stats->highest_price }}</div>
             </div>
         </div>
 
-        <a href="#" class="btn-shop">Shop 25 Vinyl</a>
+        <a href="#" class="btn-shop">{{ $productCount }} {{ strtoupper($formats->first()) }}</a>
 
         <!-- Statistics -->
         {{-- Statistics --}}
@@ -1599,42 +1345,44 @@
             <div class="stats-grid">
                 <div class="stat-pair">
                     <div class="stat-label">Have:</div>
-                    <div class="stat-value">11316</div>
+                    <a href="">
+                    <div class="stat-value">{{ $stats->have }}</div>
+                    </a>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">Last Sold:</div>
-                    <div class="stat-value">May 2, 2026</div>
+                    <div class="stat-value">{{ $stats->last_sold ? date('M j, Y', strtotime($stats->last_sold)) : 'Never' }}</div>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">Want:</div>
-                    <div class="stat-value">2132</div>
+                    <div class="stat-value">{{ $stats->want }}</div>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">Low:</div>
-                    <div class="stat-value">$15.00</div>
+                    <div class="stat-value">{{ number_format($stats->lowest_price, 2) }}</div>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">Avg Rating:</div>
-                    <div class="stat-value">4.77 / 5</div>
+                    <div class="stat-value">{{ number_format($stats->avg_rating, 2) }} / 5</div>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">Median:</div>
-                    <div class="stat-value">$33.61</div>
+                    <div class="stat-value">{{ number_format($stats->median_price, 2) }}</div>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">Ratings:</div>
-                    <div class="stat-value">1321</div>
+                    <div class="stat-value">{{ $stats->total_rating, 2 }}</div>
                 </div>
 
                 <div class="stat-pair">
                     <div class="stat-label">High:</div>
-                    <div class="stat-value">$139.99</div>
+                    <div class="stat-value">{{ number_format($stats->highest_price, 2) }}</div>
                 </div>
             </div>
         </div>
@@ -1674,38 +1422,33 @@
   </div>
 
         
-                <div id="video-sidebar-section">
+              <div id="video-sidebar-section">
                 <div class="v-header">
-                    <h2>Videos (11)</h2>
+                    <h2>Videos ({{ $videos->count() }})</h2>
                     <a href="#" class="small">Edit</a>
                 </div>
 
+                @if($videos->count() > 0)
                 <div class="main-player" id="mainPlayer">
-                    <img src="https://via.placeholder.com/400x225/222/fff?text=BRUNO+MARS+VIDEO" id="currentThumb">
+                    <img src="{{ $videos[0]->thumbnail }}" id="currentThumb">
                     <div class="play-btn-overlay"></div>
                 </div>
-                </div>
+                @endif
+                <!-- </div> -->
 
                 <div class="v-list">
-                    <div class="v-item" onclick="changeVideo('https://via.placeholder.com/400x225/111/fff?text=FULL+ALBUM', 'Full Album')">
+                    @foreach($videos as $video)
+                    <div class="v-item" onclick="changevideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}') ">
                         <div class="v-thumb">
-                            <img src="https://via.placeholder.com/100x60/333/fff?text=Play">
-                            <span class="v-time">45:10</span>
+                            <img src="{{ $video->thumbnail }}">
+                            <span class="v-time"> {{ $video->duration }} </span>
                         </div>
-                        <div class="v-title"><b>Bruno Mars - The Romantic (Full Album)</b></div>
+                        <div class="v-title"><b> {{ $video->title }} </b></div>
                     </div>
-
-                    <div class="v-item" onclick="changeVideo('https://via.placeholder.com/400x225/444/fff?text=MUSIC+VIDEO', 'Official Video')">
-                        <div class="v-thumb">
-                            <img src="https://via.placeholder.com/100x60/555/fff?text=Play">
-                            <span class="v-time">3:45</span>
-                        </div>
-                        <div class="v-title"><b>Bruno Mars - The Romantic (Official Video)</b></div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <div class="l-section">
-
       <div style="margin-bottom: 10px;">
     <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
       <span style="font-weight: bold; font-size: 13px;">Lists</span>
@@ -1726,13 +1469,14 @@
 
   
     <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">Report Suspicious Activity</div>
+ </div>
+      </div>
+    </div>
 
     
-</div>
-
-        
-    </div>
+   
     <!-- end .album-right -->
+     
 
 <script>
 let visible = true;
@@ -1772,7 +1516,5 @@ function toggleAll() {
     }
 }
 </script>
-
 </div>
-
 @endsection
