@@ -12,10 +12,16 @@ class Format extends Model
         'name',
         'size',
         'speed',
+        'sides',
+        'shape',
+        'description',
+        'chanels',
+        'free_text',
     ];
 
     public function releases()
     {
-        return $this->belongsToMany(Release::class, 'format_release', 'format_id', 'release_id');
+        return $this->belongsToMany(Release::class, 'format_release', 'format_id', 'release_id')
+        ->withPivot('is_limited');
     }
 }

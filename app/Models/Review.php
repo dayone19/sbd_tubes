@@ -14,6 +14,8 @@ class Riview extends Model
         'user_id',
         'product_id',
         'rating',
+        'comment',
+        'created_at',
     ];
 
     // RELASI TABEL

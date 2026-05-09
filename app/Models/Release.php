@@ -70,12 +70,13 @@ class Release extends Model
 
     public function formats()
     {
-        return $this->belongToMany(Format::class, 'format_release', 'release_id', 'format_id');
+        return $this->belongsToMany(Format::class, 'format_release', 'release_id', 'format_id')
+        ->withPivot('is_limited');
     }
 
     public function companies()
     {
-        return $this->belongToMany(Companie::class, 'companies_release',  'format_id','release_id',);
+        return $this->belongsToMany(Companie::class, 'companies_release',  'format_id','release_id',);
     }
 
     public function discogsLists()
@@ -96,6 +97,11 @@ class Release extends Model
     public function video()
     {
         return $this->belongsTo(Video::class, 'release_id');
+    }
+
+    public function identifiers()
+    {
+        return $this->hasMany(Identifier::class, 'release_id');
     }
 
 }

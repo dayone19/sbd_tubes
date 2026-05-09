@@ -1351,6 +1351,7 @@
  
   <button class="add-review-btn">Add Review</button>
  
+  @foreach($reviews as $review)
   <!-- Review 1 -->
   <div class="review-item">
     <div class="avatar">
@@ -1362,10 +1363,20 @@
     </div>
     <div class="review-content">
       <div class="review-header">
-        <a href="#" class="review-username">tlrbreslin</a>
-        <span class="review-date">Aug 17, 2025</span>
+        <a href="#" class="review-username">{{ $review->username }}</a>
+        <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
       </div>
-      <div class="review-text">This is actually a really good quality pressing, I am impressed.</div>
+      <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
+    @for ($i = 1; $i <= 5; $i++)
+        @if ($i <= $review->rating)
+            <span>★</span> {{-- Bintang isi --}}
+        @else
+            <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
+        @endif
+    @endfor
+    <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
+</div>
+      <div class="review-text">{{ $review->comment }}</div>
       <div class="review-actions">
         <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
         <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
@@ -1373,57 +1384,10 @@
     </div>
     <div class="dropdown-arrow">▼</div>
   </div>
+  @endforeach
  
-  <!-- Review 2 -->
-  <div class="review-item">
-    <div class="avatar">
-      <div class="avatar-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-        </svg>
-      </div>
-    </div>
-    <div class="review-content">
-      <div class="review-header">
-        <a href="#" class="review-username">Oliviatay19</a>
-        <span class="review-date">Jul 12, 2025</span>
-      </div>
-      <div class="stars">
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-      </div>
-      <div class="review-text">This album is pop perfection, Sabrina is a star and this album is funny, short and super sweet.</div>
-      <div class="review-actions">
-        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
-        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
-      </div>
-    </div>
-    <div class="dropdown-arrow">▼</div>
   </div>
- 
-  <!-- Review 3 -->
-  <div class="review-item">
-    <div class="avatar">
-      <img src="https://i.pravatar.cc/48?img=12" alt="shawnhostetler1982" />
-    </div>
-    <div class="review-content">
-      <div class="review-header">
-        <a href="#" class="review-username">shawnhostetler1982</a>
-        <span class="review-date">Mar 9, 2025</span>
-      </div>
-      <div class="review-text">Yo! This Blows. I already bought the original album. I HATE When Artist Do This! Even with Dolly Parton on the song with you isn't enough. The songs are So So and honestly seemed rushed. Why didn't you just include them on the original album?</div>
-      <div class="review-actions">
-        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
-        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
-      </div>
-    </div>
-    <div class="dropdown-arrow">▼</div>
-  </div>
-    </div>
-    </div>
+</div>
 </div>
 
     <!-- end .album-left -->
@@ -1457,11 +1421,11 @@
                 <div class="title">{{ $album->title }}</div>
                 <div class="year">{{ $album->year }}</div>
                 <div class="formats">
-                    @foreach($formats as $format)
+                    @if(count($formats) > 0)
                         <a href="#">
-                            <u>{{ $format }}</u>
-                        </a><span> • </span>
-                    @endforeach
+                            <u>{{ $formats[0] }}</u>
+                        </a>
+                    @endif
                 </div>
                 <div class="price-range">From {{ $stats->lowest_price }} to {{ $stats->highest_price }}</div>
             </div>
@@ -1479,17 +1443,17 @@
 
             <div class="stat-pair">
                 <div class="stat-label">Avg Rating:</div>
-                <div class="stat-value">{{ $stats->avg_rating }} / 5</div>
+                <div class="stat-value">{{ number_format($stats->avg_rating, 2) }}/ 5</div>
             </div>
             
             <div class="stat-pair">
                 <div class="stat-label">Want:</div>
-                <div class="stat-value"><a href="#">{{  $stats->want }}</a></div>
+                <div class="stat-value"><a href="#">{{  number_format($stats->want, 2) }}</a></div>
             </div>
 
             <div class="stat-pair">
                 <div class="stat-label">Ratings:</div>
-                <div class="stat-value"><a href="#">{{ $stats->total_rating }}</a></div>
+                <div class="stat-value"><a href="#">{{ number_format ($stats->total_rating, 2) }}</a></div>
             </div>
         </div>
 
