@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\ListModel;
+use App\Models\Artist;
+
 
 class ArtistController extends Controller
 {
@@ -320,28 +323,18 @@ class ArtistController extends Controller
         // GROUP BY r.release_id, r.title, fd.description, m.year, i.url;
 
         $query = DB::table('releases as r')
-
             ->join('artist_release as ar', 'r.release_id', '=', 'ar.release_id')
-
             ->join('format_release as fr', 'r.release_id', '=', 'fr.release_id')
-
             ->join('format_descriptions as fd', 'fr.id', '=', 'fd.format_release_id')
-
             ->leftJoin('master_albums as m', 'r.master_id', '=', 'm.master_id')
-
             ->leftJoin('label_release as lr', 'r.release_id', '=', 'lr.release_id')
-
             ->leftJoin('labels as l', 'lr.label_id', '=', 'l.label_id')
-
             ->leftJoin('images as i', function ($join) {
                 $join->on('r.release_id', '=', 'i.release_id')
                     ->where('i.type', '=', 'primary');
             })
-
             ->leftJoin('releases as rv', 'r.master_id', '=', 'rv.master_id')
-
             ->where('ar.artist_id', $id)
-
             ->select(
                 'r.release_id',
                 'r.title',
@@ -485,6 +478,39 @@ class ArtistController extends Controller
 
         return back()->with('success', 'Review submitted!');
     }
+
+     public function addToList(Request $request, $id)
+    {
+        $artist = Artist::findOrFail($id);
+
+        if ($request->listOption === 'new') {
+            // buat list baru
+            $list = ListModel::create([
+                'user_id' => 1,
+                // 'user_id' => auth()->id(),
+                'name'    => $request->name,
+            ]);
+
+            $release = DB::table('artist_release')
+                ->where('artist_id', $id)
+                ->value('release_id');
+
+            DB::table('list_release')->insert([
+                'list_id'   => $list->list_id,
+                'release_id'=> $release,
+            ]);
+            
+        } else {
+            
+            $list = ListModel::findOrFail($request->list_id);
+        }
+
+        $comment = $request->comments;
+
+        return redirect()->route('show.artist', $artist->artist_id)
+                        ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

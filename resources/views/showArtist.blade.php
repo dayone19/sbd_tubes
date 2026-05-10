@@ -637,7 +637,8 @@
       <hr class="m-0" style="color: #eee; opacity: 1;"> <!-- Garis pemisah tipis -->
       
       <div class="modal-body p-3">
-        <form id="addToListForm">
+        <form id="addToListForm" action="{{ route('artist.addToList', $artis->artist_id) }}" method="POST">
+            @csrf
           <!-- Radio Options -->
           <div class="mb-3 mt-1">
             <div class="form-check form-check-inline">
@@ -654,11 +655,11 @@
           <div id="new-list-fields" class="d-none">
             <div class="mb-3">
               <label class="form-label">Title</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" name="name">
             </div>
             <div class="mb-3">
               <label class="form-label">Description <span class="text-muted fst-italic ms-1">Optional</span></label>
-              <textarea class="form-control" rows="2" style="resize: vertical;"></textarea>
+              <textarea class="form-control" name="description" rows="2" style="resize: vertical;"></textarea>
             </div>
           </div>
 
@@ -666,9 +667,13 @@
           <div id="existing-list-fields">
             <div class="mb-3">
               <label class="form-label">List</label>
-              <select class="form-select">
-                <optgroup label="Recently Used"><option>nama listnya</option></optgroup>
-                <optgroup label="All Lists"><option>nama listnya</option></optgroup>
+              <select class="form-select" name="list_id">
+                <optgroup label="Recently Used">
+                    <option>nama listnya</option></optgroup>
+                <optgroup label="All Lists">
+                     @foreach($lists as $list)
+                    <option value="{{ $list->list_id }}">{{ $list->name }}</option></optgroup>
+                    @endforeach
               </select>
             </div>
           </div>
@@ -676,7 +681,7 @@
           <!-- Common Field: Comments -->
           <div class="mb-3">
             <label class="form-label">Comments on this item <span class="text-muted fst-italic ms-1">Optional</span></label>
-            <textarea class="form-control" rows="2" style="resize: vertical;"></textarea>
+            <textarea class="form-control" rows="2" style="resize: vertical;" name="comments"></textarea>
           </div>
 
           <!-- Buttons -->

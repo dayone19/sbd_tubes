@@ -1459,7 +1459,9 @@
       <div>◇#．blue pressings！ by <span style="color: #0088cc; cursor: pointer;">healthyhabit</span></div>
       <div>pop by <span style="color: #0088cc; cursor: pointer;">amerella</span></div>
     </div>
+    <a href="/lists">
     <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">View More Lists →</div>
+    </a>
   </div>
 
     <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>

@@ -154,4 +154,6 @@ Route::get('/preview', function () {
 //route untuk ArtistController.php
 Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
 Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
+Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('artist.addToList');
+
 

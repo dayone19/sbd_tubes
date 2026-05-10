@@ -103,4 +103,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ContributorRelease::class, 'user_id');
     }
+
+    public function listModels()
+    {
+        return $this->hasMany(ListModel::class, 'user_id');
+    }
 }
