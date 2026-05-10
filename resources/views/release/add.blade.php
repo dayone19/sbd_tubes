@@ -46,11 +46,11 @@ textarea{resize:vertical;}
 .input-format{max-width:350px;border:1px solid #000;border-radius:3px;padding:2px;margin-left:10px;background-color:white;}
 /* IMAGE */
 .image-grid{display:grid;grid-template-columns:1.8fr 1fr;gap:30px;}
-.drop{border:3px dashed #ddd;padding:55px 30px;text-align:center;}
+.drop{border:3px dashed #ddd;padding:55px 30px;text-align:center; border-radius: 5px;}
 .drop p{font-size:15px;margin:10px 0;}
 .drop small{display:block;color:#666;font-size:13px;margin-top:18px;}
 .rule{display:flex;gap:18px;margin-bottom:24px;font-size:15px;line-height:1.45;}
-.rule-no{width:100px;height:45px;border-radius:50%;background:#f0d730;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.rule-no{width:45px;height:45px;border-radius:50%;background:#f0d730;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
 /* FLEX */
 .row{
     display:flex;

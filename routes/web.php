@@ -146,4 +146,6 @@ Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
 
-
+Route::get('/preview', function () {
+    return view('release.preview');
+});
