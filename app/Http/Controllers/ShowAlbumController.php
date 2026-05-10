@@ -208,8 +208,10 @@ class ShowAlbumController extends Controller
         // WHERE arl.release_id = ?
         $artists = DB::table('artist_release as arl')
             ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->where('arl.role', '=', 'Main')
             ->where('arl.release_id', $album->release_id)
-            ->pluck('ar.name');
+            ->select('ar.artist_id', 'ar.name')
+            ->get();
 
         // SQL:
         // SELECT g.name
@@ -419,8 +421,10 @@ class ShowAlbumController extends Controller
         // WHERE arl.release_id = ?
         $artists = DB::table('artist_release as arl')
             ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->where('arl.role', '=', 'Main')
             ->where('arl.release_id', $album->release_id)
-            ->pluck('ar.name');
+            ->select('ar.artist_id', 'ar.name')
+            ->get();
         
         // SQL:
         // SELECT SUM(td.quantity), SUM(ct.quantity), AVG(rw.rating), COUNT(rw.rating),
@@ -529,12 +533,12 @@ class ShowAlbumController extends Controller
     
         $credits = DB::table('artist_release as arl')
             ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
-            ->leftJoin('images as i', function ($join) {
-                $join->on('arl.release_id', '=', 'i.release_id')->where('i.type', '=', 'primary');
-            })
+            // ->leftJoin('images as i', function ($join) {
+            //     $join->on('arl.release_id', '=', 'i.release_id')->where('i.type', '=', 'primary');
+            // })
             ->where('arl.release_id', $album->release_id)
             ->where('arl.role', '!=', 'Main')
-            ->select('ar.name', 'arl.role', 'i.url as photo')
+            ->select('ar.name', 'arl.role', 'ar.image as photo')
             ->get();
         
             $credits_count = $credits->count();
