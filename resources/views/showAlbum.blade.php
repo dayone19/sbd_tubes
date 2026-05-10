@@ -1513,7 +1513,7 @@
     <hr class="my-2">
 
     <!-- FOOTER -->
-    <a href="#" class="view-more-lists">View More List </a>
+    <a href="/lists" class="view-more-lists">View More List </a>
 </div>
 
         
