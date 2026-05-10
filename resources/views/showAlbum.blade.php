@@ -1159,7 +1159,7 @@
             <div class="album-meta">
                 <div class="album-title">
                     @foreach($artists as $artist)
-                     <a href="#" class="artist-name">{{ $artist }}</a>@if(!$loop->last)@endif
+                     <a href="{{ route('show.artist', $artist->artist_id) }}" class="artist-name">{{ $artist->name }}</a>@if(!$loop->last), @endif
                     @endforeach
                     &ndash; {{ $album->title}}
                 </div>

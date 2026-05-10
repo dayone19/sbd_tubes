@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ShowReleaseController;
 use App\Http\Controllers\ShowAlbumController;
+use App\Http\Controllers\ArtistController;
+
 
 // Route::get('/', function () {
 //     return view('home');
@@ -112,9 +114,9 @@ Route::prefix('settings')->group(function () {
     
 });
 
-Route::get('/showArtist', function () {
-    return view('showArtist');
-});
+// Route::get('/showArtist', function () {
+//     return view('showArtist');
+// });
 
 // Route::get('/showAlbum', function () {
 //     return view('showAlbum');
@@ -137,7 +139,6 @@ Route::get('/showLabel', function () {
 
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
-
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
 
 //route untuk ShowReleaseController.php
@@ -149,3 +150,8 @@ Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('s
 Route::get('/preview', function () {
     return view('release.preview');
 });
+
+//route untuk ArtistController.php
+Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
+Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
+

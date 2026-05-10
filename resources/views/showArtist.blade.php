@@ -128,45 +128,56 @@
 
     <!-- LEFT -->
     <div class="col-md-2">
-        <img src="https://i.discogs.com/k_MaY-4qMwso5o-xKS4MxnsZKCk8vBgj6irhOgJ4Hoo/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTMzMTA3/MzctMTc3NTMyNzI2/Ny04NjUwLmpwZWc.jpeg" class="artist-img">
+        <img src="{{ $artis->image }}" class="artist-img">
     </div>
 
     <!-- MIDDLE -->
     <div class="col-md-6">
-        <div class="artist-name">Ariana Grande</div>
+        <div class="artist-name">{{ $artis->name }}</div>
 
         <div class="info-row">
             <div class="label">Real Name:</div>
-            <div class="content">Ariana Grande-Butera</div>
+            <div class="content">{{ $artis->real_name }}</div>
         </div>
 
         <div class="info-row">
             <div class="label">Profile:</div>
             <div class="content profile-text">
-                American singer and actress, born June 26, 1993.
-                Grande began her career in the Broadway musical 13, before landing the role of Cat Valentine on the Nickelodeon television series Victorious in 2009.
-                After the show ended, Grande rose to prominence as a teen idol on her own spinoff, Sam & Cat. She later signed a recording contract with Republic Records, and released 7 studio albums with them: Yours Truly in 2013, 
-                My Everything in 2014, Dangerous Woman in 2016, Sweetener in 2018, Thank U, Next in 2019, Positions in 2020, and Eternal Sunshine in 2024.
+                {{ $artis->profile }}
             </div>
         </div>
 
         <div class="info-row">
             <div class="label">Sites:</div>
-            <div class="content">arianagrande.com , Facebook , X , Instagram , Instagram , Instagram , Soundcloud , YouTube , YouTube , YouTube , Wikipedia , Lastfm </div>
+            <div class="content">
+                <a href="">
+                {{ $artis->sites }}
+                </a>
+            </div>
         </div>
 
+        @if(!empty($artis->groups))
         <div class="info-row">
             <div class="label">In Groups:</div>
-            <div class="content">Kids Who Care: The Musical Troupe, Victorious Cast, Wicked Movie Cast </div>
+            <div class="content">
+                <a href="">
+                {{ $artis->groups }}
+                </a>
+             </div>
         </div>
+        @endif
 
         <div class="info-row">
             <div class="label">Variations:</div>
-            <div class="content">Viewing All| Ariana Grande</div>
+            <div class="content">Viewing All| <a href="">{{ $artis->name }}</a></div>
         </div>
 
         <div class="info-row">
-            <div class="content">A Grande, A. Grande, Ariana Grande-Butera, Arianna Grande, Grande, アリアナ・グランデ, 亞莉安娜, 安娜公主亞莉安娜</div>
+            <div class="content">
+                <a href="">
+                {{ $artis->variations }}
+                </a>
+            </div>
         </div>
     </div>
 
@@ -177,7 +188,7 @@
             <span>Artist</span>
             <span class="release-id">
                 <span class="release-icon"></span>
-                [a{{ $album->master_id ?? '3310737' }}]
+                [a{{ $artis->artist_id }}]
             </span>
         </div>
         <div class="master-release-links">
@@ -195,42 +206,23 @@
 
             <div class="carousel-inner">
 
-                <!-- ITEM 1 -->
-                <div class="carousel-item active">
+             @foreach($masters as $index => $master)
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                     <div class="d-flex mt-2">
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="100" height="100" class="me-2">
-
+                        <img src="{{ $master->image }}" width="100" height="100" class="me-2">
                         <div>
                             <div class="small">MASTER RELEASE</div>
-                            <strong>Eternal Sunshine</strong><br>
-                            <span class="small">2024</span><br>
-                            <span class="small">Vinyl · CD</span><br>
-                            <span class="small">From $4 to $2,125</span>
+                            <strong>{{ $master->title }}</strong><br>
+                            <span class="small">{{ $master->year }}</span><br>
+                            <span class="small">{{ $master->formats }}</span><br>
+                            <span class="small">From {{ $master->lowest_price }} to {{ $master->highest_price }}</span>
                         </div>
                     </div>
-
                     <button class="btn btn-green w-100 mt-3">
-                        Shop 625 Listings
+                        Shop {{ $master->listing_count }} Listings
                     </button>
                 </div>
-
-                <!-- ITEM 2 -->
-                <div class="carousel-item">
-                    <div class="d-flex mt-2">
-                        <img src="https://via.placeholder.com/90" width="90" class="me-2">
-
-                        <div>
-                            <div class="small">MASTER RELEASE</div>
-                            <strong>Album 2</strong><br>
-                            <span class="small">2024</span><br>
-                            <span class="small">2024</span>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-green w-100 mt-3">
-                        Shop 120 Listings
-                    </button>
-                </div>
+            @endforeach
 
             </div>
 
@@ -245,15 +237,18 @@
 
             <!-- DOT -->
             <div class="carousel-indicators">
-                <button data-bs-target="#saleCarousel" data-bs-slide-to="0" class="active"></button>
-                <button data-bs-target="#saleCarousel" data-bs-slide-to="1"></button>
+                @foreach($masters as $index => $master)
+                    <button type="button" data-bs-target="#saleCarousel" data-bs-slide-to="{{ $index }}"
+                        class="{{ $index == 0 ? 'active' : '' }}"></button>
+                @endforeach
             </div>
+
 
         </div>
 
         <!-- BUTTON BAWAH -->
         <button class="btn btn-light w-100 mt-2">
-            Shop All Ariana Grande
+            Shop All {{ $master->title }}
         </button>
 
     </div>
@@ -281,52 +276,68 @@
             <div class="col-md-3 filter-sidebar">
 
                 <div class="filter-box" onclick="toggleMenu('releaseMenu', this)">
-                    <span class="arrow down"></span> Releases <span>88</span>
+                    <span class="arrow down"></span> Releases <span>{{ $discographys->total_releases }}</span>
                 </div>
                 <div id="releaseMenu">
-                    <div class="filter-item">Albums <span>12</span></div>
-                    <div class="filter-item">Singles & EPs <span>72</span></div>
-                    <div class="filter-item">Compilations <span>2</span></div>
-                    <div class="filter-item">Miscellaneous <span>2</span></div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'albums']) }}" class="text-dark text-decoration-none">
+                            Albums <span>{{ $discographys->albums }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'singles']) }}" class="text-dark text-decoration-none">
+                            Singles & EPs <span>{{ $discographys->singles_eps }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'compilations']) }}" class="text-dark text-decoration-none">
+                            Compilations <span>{{ $discographys->compilations }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'misc']) }}" class="text-dark text-decoration-none">
+                            Miscellaneous <span>{{ $discographys->miscellaneous }}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- APPEARANCES -->
                 <div class="filter-box mt-2" onclick="toggleMenu('appearMenu', this)">
-                    <span class="arrow down"></span> Appearances <span>1422</span>
+                    <span class="arrow down"></span> Appearances <span>{{ $appearances->total_appearances }}</span>
                 </div>
                 <div id="appearMenu" class="hidden">
-                    <div class="filter-item">Albums <span>64</span></div>
-                    <div class="filter-item">Singles & EPs <span>4</span></div>
-                    <div class="filter-item">Compilations <span>1187</span></div>
-                    <div class="filter-item">Mixes <span>140</span></div>
-                    <div class="filter-item">Videos <span>22</span></div>
-                    <div class="filter-item">Miscellaneous <span>5</span></div>
+                    <div class="filter-item">Albums <span>{{ $appearances->albums }}</span></div>
+                    <div class="filter-item">Singles & EPs <span>{{ $appearances->singles_eps }}</span></div>
+                    <div class="filter-item">Compilations <span>{{ $appearances->compilations }}</span></div>
+                    <div class="filter-item">Mixes <span>{{ $appearances->mixes }}</span></div>
+                    <div class="filter-item">Videos <span>{{ $appearances->videos }}</span></div>
+                    <div class="filter-item">Miscellaneous <span>{{ $appearances->miscellaneous }}</span></div>
                 </div>
 
                 <!-- UNOFFICIAL -->
                 <div class="filter-box mt-2" onclick="toggleMenu('unoffMenu', this)">
-                    <span class="arrow down"></span> Unofficial <span>52</span>
+                    <span class="arrow down"></span> Unofficial <span>{{ $unofficial->total_unofficial }}</span>
                 </div>
                 <div id="unoffMenu" class="hidden">
-                    <div class="filter-item">Albums <span>13</span></div>
-                    <div class="filter-item">Singles & EPs <span>20</span></div>
-                    <div class="filter-item">Compilations <span>9</span></div>
-                    <div class="filter-item">Videos <span>2</span></div>
-                    <div class="filter-item">Miscellaneous <span>8</span></div>
+                    <div class="filter-item">Albums <span>{{ $unofficial->albums }}</span></div>
+                    <div class="filter-item">Singles & EPs <span>{{ $unofficial->singles_eps }}</span></div>
+                    <div class="filter-item">Compilations <span>{{ $unofficial->compilations }}</span></div>
+                    <div class="filter-item">Videos <span>{{ $unofficial->videos }}</span></div>
+                    <div class="filter-item">Miscellaneous <span>{{ $unofficial->miscellaneous }}</span></div>
                 </div>
 
                 <!-- CREDITS -->
                 <div class="filter-box mt-2" onclick="toggleMenu('creditMenu', this)">
-                    <span class="arrow down"></span> Credits <span>366</span>
+                    <span class="arrow down"></span> Credits <span>{{ $credits->total_credits }}</span>
                 </div>
                 <div id="creditMenu" class="hidden">
-                    <div class="filter-item">Featuring & Presenting <span>107</span></div>
-                    <div class="filter-item">Writing & Arrangement <span>156</span></div>
-                    <div class="filter-item">Production <span>31</span></div>
-                    <div class="filter-item">Vocals <span>61</span></div>
-                    <div class="filter-item">Technical <span>5</span></div>
-                    <div class="filter-item">Instruments & Performance <span>5</span></div>
-                    <div class="filter-item">Visual <span>1</span></div>
+                    <div class="filter-item">Featuring & Presenting <span>{{ $credits->featuring }}</span></div>
+                    <div class="filter-item">Writing & Arrangement <span>{{ $credits->writing_arrangement }}</span></div>
+                    <div class="filter-item">Production <span>{{ $credits->production }}</span></div>
+                    <div class="filter-item">Vocals <span>{{ $credits->vocals }}</span></div>
+                    <div class="filter-item">Technical <span>{{ $credits->technical }}</span></div>
+                    <div class="filter-item">Instruments & Performance <span>{{ $credits->instruments_performance }}</span></div>
+                    <div class="filter-item">Visual <span>{{ $credits->visual }}</span></div>
                 </div>
 
             </div>
@@ -335,7 +346,27 @@
             <!-- RIGHT CONTENT -->
             <div class="col-md-9">
 
-                <h5 class="fw-bold">Release</h5>
+                <h5 class="fw-bold">
+                    Release
+                    @if(!empty($filter))
+                        >
+                        @switch($filter)
+                            @case('albums')
+                                Album
+                                @break
+                            @case('singles')
+                                Singles & EPs
+                                @break
+                            @case('compilations')
+                                Compilations
+                                @break
+                            @case('misc')
+                                Miscellaneous
+                                @break
+                        @endswitch
+                    @endif
+                </h5>
+
 
                 <!-- FILTER BAR (hidden) -->
                 <div id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
@@ -360,8 +391,12 @@
                 <!-- TOP CONTROL -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="small">
-                        Showing 1–25 of 88
-                        <a href="#" class="ms-2">Next ›</a>
+                        @if($releases->total() > 0)
+                            Showing {{ $releases->firstItem() }}–{{ $releases->lastItem() }} of {{ $releases->total() }} {{ $releases->links() }}
+                        @else
+                            No releases found
+                        @endif
+                        <!-- <a href="#" class="ms-2">Next ›</a> -->
                     </div>
 
                     <div class="d-flex align-items-center gap-2">
@@ -409,53 +444,58 @@
 
                 <!-- LIST ITEM -->
                 <div id="releaseContainer" class="gridlist-view">
+                    @foreach($releases as $release)
+                        <div class="release-item" data-year="{{ $release->year }}">
+                            <img src="{{ $release->image ?? '/default.jpg'}}">
 
-                    <div class="release-item" data-year="2013">
-                        <img src="https://i.discogs.com/hR1_tNewaSFa8myEfAwEdXYo5xnDKYZOrdCz8nYkW_8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5NDI0/MzQtMTQ2MzY2NzI4/OC01MTM4LmpwZWc.jpeg">
+                            <!-- GRID VIEW -->
+                            <div class="grid-info">
+                                <div class="title">
+                                    <a href="#">{{ $release->title }}</a>
+                                    <span class="badge bg-secondary ms-2">{{ $release->tag }}</span>
+                                </div>
+                                <div class="artist"><a href="#">{{ $artis->name }}</a></div>
+                                <div class="year">{{ $release->year }}</div>
+                            </div>
 
-                        <!-- GRID VIEW -->
-                        <div class="grid-info">
-                            <div class="title"><a href="#">Yours Truly</a></div>
-                            <div class="artist"><a href="#">Ariana Grande</a></div>
-                            <div class="year">2013</div>
-                        </div>
+                            <!-- GRIDLIST + LIST -->
+                            <div class="release-main">
+                                <div>
+                                    <div class="title"><a href="#">{{ $release->title }}</a></div>
+                                    <div class="versions">{{ $release->versions_count }} versions ▼</div>
+                                </div>
+                            </div>
 
-                        <!-- GRIDLIST + LIST -->
-                        <div class="release-main">
-                            <div>
-                                <div class="title"><a href="#">Yours Truly</a></div>
-                                <div class="versions">36 versions ▼</div>
+                            <div class="release-label">{{ $release->labels }}</div>
+                            <div class="release-year">{{ $release->year }}</div>
+                            <div class="dropdown">
+                                <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
+                                    •••
+                                </div>
+                                <ul class="dropdown-menu" style="color: black; background: white; border: 1px solid #ddd;">
+                                    <li><a class="dropdown-item" href="#">Add to List</a></li>
+                                    <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
+                                </ul>
                             </div>
                         </div>
+                    @endforeach
+                </div>
 
-                        <div class="release-label">Republic Records</div>
-                        <div class="release-year">2013</div>
-                        <div class="dropdown">
-                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
-                                •••
-                            </div>
-                            <ul class="dropdown-menu" style="color: black; background: white; border: 1px solid #ddd;">
-                                <li><a class="dropdown-item" href="#">Add to List</a></li>
-                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
-                            </ul>
-                        </div>
 
-                    </div>
-
-                    <!-- ini kubikin buat ngecek tombol year aj-->
-                    <div class="release-item" data-year="2024">
+                    <!-- ini kubikin buat ngecek tombol year aj -->
+                    <!-- <div class="release-item" data-year="2024">
                             
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="150">
+                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="150"> -->
 
                         <!-- GRID VIEW -->
-                        <div class="grid-info">
+                        <!-- <div class="grid-info">
                             <div class="title"><a href="#">Eternal Sunshine</a></div>
                             <div class="artist"><a href="#">Ariana Grande</a></div>
                             <div class="year">2024</div>
-                        </div>
+                        </div> -->
 
                         <!-- GRIDLIST + LIST -->
-                        <div class="release-main">
+                        <!-- <div class="release-main">
                             <div>
                                 <div class="title"><a href="#">Eternal Sunshine</a></div>
                                 <div class="versions">60 versions ▼</div>
@@ -474,57 +514,86 @@
                             </ul>
                         </div>
 
-                    </div>
+                    </div> -->
 
                 </div>
 
             </div>
-        </div>
         </div>
     </div>
 
     <!-- REVIEWS -->
     <div id="tab-reviews" class="tab-content d-none">
-        <h4>Reviews</h4>
-        <textarea class="form-control" placeholder="Enter your comment"></textarea>
-        <button class="btn btn-secondary mt-2 mb-4">Submit</button>
+         <form action="{{ route('artist.review', $artis->artist_id) }}" method="POST">
+        @csrf
+
+                <h4>Reviews</h4>
+                <textarea name="comment" class="form-control" placeholder="Enter your comment"></textarea>
+                <button type="submit" class="btn btn-secondary mt-2 mb-4">Submit</button>
+        </form>
     </div>
 
     <!-- VIDEOS -->
     <div id="tab-videos" class="tab-content d-none">
-        <h5 class="fw-bold">Videos (149)</h5>
+        <h5 class="fw-bold">Videos {{ $totalVideos }}</h5>
 
         <div class="row mt-3">
             <!-- big vid -->
             <div class="col-md-8">
-                <iframe id="mainVideo"
-                    width="100%"
-                    height="400"
-                    src="https://www.youtube.com/embed/_sV0S8qWSy0"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
+                @if($videos->count() > 0)
+
+                    @php
+                        preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/', $videos[0]->youtube_url, $matches);
+                        $firstVideoId = $matches[1] ?? '';
+                    @endphp
+
+                    <iframe
+                        id="mainVideo"
+                        width="100%"
+                        height="400"
+                        src="https://www.youtube.com/embed/{{ $firstVideoId }}"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+
+                @else
+
+                    <div class="border rounded d-flex align-items-center justify-content-center"
+                        style="height:400px;">
+                        No videos available
+                    </div>
+
+                @endif
             </div>
             <!-- vid list -->
             <div class="col-md-4" style="max-height:400px; overflow-y:auto;">
 
-                <div class="video-item d-flex mb-3" data-video="_sV0S8qWSy0" style="cursor:pointer;">
-                    <img src="https://img.youtube.com/vi/_sV0S8qWSy0/mqdefault.jpg" width="120">
-                    <div class="ms-2">
-                        <div class="small fw-bold">
-                            Ariana Grande - The Way (Official Video)
-                        </div>
-                    </div>
-                </div>
+                @foreach($videos as $video)
 
-                <div class="video-item d-flex mb-3" data-video="BPgEgaPk62M" style="cursor:pointer;">
-                    <img src="https://img.youtube.com/vi/BPgEgaPk62M/mqdefault.jpg" width="120">
-                    <div class="ms-2">
-                        <div class="small fw-bold">
-                            Ariana Grande - raindrops (audio)
+                    @php
+                        preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/', $video->youtube_url, $matches);
+                        $videoId = $matches[1] ?? '';
+                    @endphp
+
+                    <div class="video-item d-flex mb-3"
+                        data-video="{{ $videoId }}"
+                        style="cursor:pointer;">
+
+                        <img src="{{ $video->thumbnail }}" width="120">
+
+                        <div class="ms-2">
+                            <div class="small fw-bold">
+                                {{ $video->title }}
+                            </div>
+
+                            <div class="small text-muted">
+                                {{ $video->duration }}
+                            </div>
                         </div>
+
                     </div>
-                </div>
+
+                @endforeach
 
             </div>
 
@@ -543,9 +612,11 @@
         </div>
 
         <ul class="lists-container">
-            <li><a href="#">Completed Artists</a> by <a href="#">DylanBryl</a></li>
-            <li><a href="#">Rejected from the ***Women Wearing Boots*** list 👢👢</a> by <a href="#">sauvageon27</a></li>
-            <li><a href="#">Love POP :)</a> by <a href="#">pop.music.love</a></li>
+           @foreach($lists as $list) 
+            <li><a href="#">{{ $list->name }}</a>
+                     by <a href="#">{{ $list->username }}</a>
+            </li>
+           @endforeach 
         </ul>
 
         <a href="/lists" class="view-more-link mb-4">View More Lists →</a>
