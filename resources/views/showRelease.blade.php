@@ -1224,7 +1224,7 @@
  @foreach($otherVersions as $version)
 <div class="table-row">
   <div class="col-title">
-     <a href="{{ route('release.show', $version->release_id) }}">
+     <a href="{{ route('show.release', $version->release_id) }}">
             {{ $version->title }}
         </a>
   </div>

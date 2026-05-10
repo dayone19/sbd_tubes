@@ -77,6 +77,10 @@ class ShowReleaseController extends Controller
             if (!$release) {
                 abort(404, 'Release not found');
             }
+
+            if (empty($release->master_id)) {
+                abort(404, 'Master ID not found');
+            }
         
         // SQL:
         // SELECT ar.name
