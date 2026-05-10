@@ -61,6 +61,10 @@ Route::get('/lists', function () {
     return view('lists');
 });
 
+Route::get('/submissions', function () {
+    return view('submissions');
+});
+
 Route::prefix('user')->group(function () {
 
     Route::get('/collection', function () {

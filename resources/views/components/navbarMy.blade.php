@@ -25,7 +25,7 @@
             Lists
         </a>
 
-        <a href="#" class="{{ request()->is('submissions') ? 'active' : '' }}">
+        <a href="/submissions" class="{{ request()->is('submissions') ? 'active' : '' }}">
             Submissions
         </a>
 
