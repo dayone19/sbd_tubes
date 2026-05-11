@@ -583,6 +583,16 @@ class ShowAlbumController extends Controller
         // SELECT DISTINCT catalog_number FROM label_release
         $catalog_number = DB::table('label_release')->distinct()->pluck('catalog_number');
 
+        // SQL:
+        // SELECT s.name
+        // FROM release_style rs
+        // JOIN styles s ON rs.style_id = s.style_id
+        // WHERE rs.release_id = ?
+        $styles = DB::table('release_style as rs')
+            ->join('styles as s', 'rs.style_id', '=', 's.style_id')
+            ->where('rs.release_id', $album->release_id)
+            ->pluck('s.name');
+
         return view('showAlbum', compact(
             'album',
             'artists',
@@ -600,6 +610,7 @@ class ShowAlbumController extends Controller
             'lists',
             'reviews',
             'listing_count',
+            'styles',
         ));
     }
     /**

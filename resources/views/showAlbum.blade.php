@@ -1175,13 +1175,13 @@
                     <tr>
                         <td>Style:</td>
                         <td>
-                            <!-- @if(isset($album->styles)) -->
+                            @if($styles->isNotEmpty())
                                 @foreach($styles as $style)
                                     <a href="#">{{ $style }}</a>@if(!$loop->last), @endif
                                 @endforeach
-                            <!-- @else -->
+                            @else
                                 &nbsp;
-                            <!-- @endif -->
+                            @endif
                         </td>
                     </tr>
                     <tr>
