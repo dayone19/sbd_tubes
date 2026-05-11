@@ -302,25 +302,42 @@ class ArtistController extends Controller
         $filter = $request->get('filter');
 
 
-        // SQL
-        // SELECT r.release_id,
-        //        r.title,
-        //        fd.description AS tag,
-        //        GROUP_CONCAT(DISTINCT l.name SEPARATOR ', ') AS labels,
-        //        m.year,
-        //        i.url AS image,
-        //        COUNT(DISTINCT rv.release_id) AS versions_count
+        // SELECT 
+        //     r.release_id,
+        //     r.title,
+        //     fd.description AS tag,
+        //     GROUP_CONCAT(DISTINCT l.name SEPARATOR ', ') AS labels,
+        //     m.year,
+        //     i.url AS image,
+        //     (
+        //         SELECT COUNT(DISTINCT rv.release_id) 
+        //         FROM releases rv 
+        //         WHERE rv.master_id = r.master_id
+        //     ) AS versions_count
         // FROM releases r
-        // JOIN artist_release ar ON r.release_id = ar.release_id
-        // JOIN format_release fr ON r.release_id = fr.release_id
-        // JOIN format_descriptions fd ON fr.id = fd.format_release_id
-        // LEFT JOIN master_albums m ON r.master_id = m.master_id
-        // LEFT JOIN label_release lr ON r.release_id = lr.release_id
-        // LEFT JOIN labels l ON lr.label_id = l.label_id
-        // LEFT JOIN images i ON r.release_id = i.release_id AND i.type = 'primary'
-        // LEFT JOIN releases rv ON r.master_id = rv.master_id
+        // JOIN artist_release ar 
+        //     ON r.release_id = ar.release_id
+        // JOIN format_release fr 
+        //     ON r.release_id = fr.release_id
+        // JOIN format_descriptions fd 
+        //     ON fr.id = fd.format_release_id
+        // LEFT JOIN master_albums m 
+        //     ON r.master_id = m.master_id
+        // LEFT JOIN label_release lr 
+        //     ON r.release_id = lr.release_id
+        // LEFT JOIN labels l 
+        //     ON lr.label_id = l.label_id
+        // LEFT JOIN images i 
+        //     ON r.release_id = i.release_id 
+        //    AND i.type = 'primary'
         // WHERE ar.artist_id = ?
-        // GROUP BY r.release_id, r.title, fd.description, m.year, i.url;
+        // GROUP BY 
+        //     r.release_id,
+        //     r.title,
+        //     fd.description,
+        //     r.master_id,
+        //     m.year,
+        //     i.url;
 
         $query = DB::table('releases as r')
             ->join('artist_release as ar', 'r.release_id', '=', 'ar.release_id')
@@ -333,46 +350,120 @@ class ArtistController extends Controller
                 $join->on('r.release_id', '=', 'i.release_id')
                     ->where('i.type', '=', 'primary');
             })
-            ->leftJoin('releases as rv', 'r.master_id', '=', 'rv.master_id')
+            // ->leftJoin('releases as rv', 'r.master_id', '=', 'rv.master_id')
             ->where('ar.artist_id', $id)
             ->select(
                 'r.release_id',
                 'r.title',
-                'fd.description as tag',
+                DB::raw("GROUP_CONCAT(DISTINCT fd.description SEPARATOR ', ') as tag"),
                 DB::raw('GROUP_CONCAT(DISTINCT l.name SEPARATOR ", ") as labels'),
                 'm.year',
                 'i.url as image',
-                DB::raw('COUNT(DISTINCT rv.release_id) as versions_count')
-            )
+                DB::raw('(SELECT COUNT(DISTINCT rv.release_id) 
+                            FROM releases rv 
+                            WHERE rv.master_id = r.master_id) as versions_count')
+                )
 
             ->groupBy(
                 'r.release_id',
                 'r.title',
-                'fd.description',
+                // 'fd.description',
                 'm.year',
-                'i.url'
+                'i.url',
+                'r.master_id',
             );
-
+            
 
         if ($filter === 'albums') {
-
             $query->where('fd.description', 'Album');
-
         } elseif ($filter === 'singles') {
-
             $query->whereIn('fd.description', ['Single', 'EP']);
-
         } elseif ($filter === 'compilations') {
-
             $query->where('fd.description', 'Compilation');
-
         } elseif ($filter === 'misc') {
-
             $query->where('fd.description', 'Misc');
         }
 
+        // untuk Appearances
+        elseif ($filter === 'appear_albums') {
+            $query->where('fd.description', 'Album');
+        } elseif ($filter === 'appear_singles') {
+            $query->whereIn('fd.description', ['Single', 'EP']);
+        } elseif ($filter === 'appear_compilations') {
+            $query->where('fd.description', 'Compilation');
+        } elseif ($filter === 'appear_mixes') {
+            $query->where('fd.description', 'Mix');
+        } elseif ($filter === 'appear_videos') {
+            $query->where('fd.description', 'Video');
+        } elseif ($filter === 'appear_misc') {
+            $query->where('fd.description', 'Misc');
+        }
 
-        $releases = $query->paginate(25);
+        // Unofficial
+        elseif ($filter === 'unoff_albums') {
+            $query->where('fd.description', 'Album')
+                ->where('r.notes', 'like', '%Unofficial%');
+        } elseif ($filter === 'unoff_singles') {
+            $query->whereIn('fd.description', ['Single', 'EP'])
+                ->where('r.notes', 'like', '%Unofficial%');
+        } elseif ($filter === 'unoff_compilations') {
+            $query->where('fd.description', 'Compilation')
+                ->where('r.notes', 'like', '%Unofficial%');
+        } elseif ($filter === 'unoff_videos') {
+            $query->where('fd.description', 'Video')
+                ->where('r.notes', 'like', '%Unofficial%');
+        } elseif ($filter === 'unoff_misc') {
+            $query->where('fd.description', 'Misc')
+                ->where('r.notes', 'like', '%Unofficial%');
+        }
+
+        // Credits
+        elseif ($filter === 'credit_featuring') {
+            $query->where('ar.role', 'Featuring')
+                ->where('ar.role', '!=', 'Main');
+        } elseif ($filter === 'credit_writing') {
+            $query->whereIn('ar.role', ['Written By','Composed By','Lyrics By','Arranged By'])
+                ->where('ar.role', '!=', 'Main');
+        } elseif ($filter === 'credit_production') {
+            $query->whereIn('ar.role', ['Producer','Executive Producer','Co-Producer'])
+                ->where('ar.role', '!=', 'Main');
+        } elseif ($filter === 'credit_vocals') {
+            $query->whereIn('ar.role', ['Vocals','Backing Vocals','Choir'])
+                ->where('ar.role', '!=', 'Main');
+        } elseif ($filter === 'credit_technical') {
+            $query->whereIn('ar.role', ['Engineer','Recording Engineer','Mixing','Mastered By','Edited By','Programmed By'])
+                ->where('ar.role', '!=', 'Main');
+        } elseif ($filter === 'credit_instruments') {
+            $query->whereIn('ar.role', ['Guitar','Bass','Drums','Percussion','Piano','Keyboards','Synthesizer','Cello','Violin','Saxophone','Trumpet','Conductor','Orchestra'])
+                ->where('ar.role', '!=', 'Main');
+        } elseif ($filter === 'credit_visual') {
+            $query->whereIn('ar.role', ['Artwork','Design','Photography'])
+                ->where('ar.role', '!=', 'Main');
+        }
+
+        $format = $request->get('format');
+        $label = $request->get('label');
+        $country = $request->get('country');
+        $year = $request->get('year');
+        $search = $request->get('search');
+
+        if ($format) {
+            $query->where('fd.description', 'like', "%{$format}%");
+        }
+        if ($label) {
+            $query->where('l.name', 'like', "%{$label}%");
+        }
+        if ($country) {
+            $query->where('r.country', 'like', "%{$country}%");
+        }
+        if ($year) {
+            $query->where('m.year', $year);
+        }
+        if ($search) {
+            $query->where('r.title', 'like', "%{$search}%");
+        }
+
+        $releases = $query->distinct()->paginate(25);
 
         //SQL
         // SELECT DISTINCT

@@ -55,6 +55,12 @@
 /* view default*/
 .release-main,.release-label,.release-year,.release-more,.grid-info {display: none;}
 /* gridview*/
+#releaseContainer.grid-view .grid-image {
+    width: 150px;
+    height: 158px;
+    object-fit: cover;
+}
+
 #releaseContainer.grid-view .grid-info {display: block;text-align: left;}
 #releaseContainer.grid-view .release-item {display: block;}
 .grid-info .title {color: purple; font-weight: 700;font-size: 16px;}
@@ -306,40 +312,113 @@
                     <span class="arrow down"></span> Appearances <span>{{ $appearances->total_appearances }}</span>
                 </div>
                 <div id="appearMenu" class="hidden">
-                    <div class="filter-item">Albums <span>{{ $appearances->albums }}</span></div>
-                    <div class="filter-item">Singles & EPs <span>{{ $appearances->singles_eps }}</span></div>
-                    <div class="filter-item">Compilations <span>{{ $appearances->compilations }}</span></div>
-                    <div class="filter-item">Mixes <span>{{ $appearances->mixes }}</span></div>
-                    <div class="filter-item">Videos <span>{{ $appearances->videos }}</span></div>
-                    <div class="filter-item">Miscellaneous <span>{{ $appearances->miscellaneous }}</span></div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'appear_albums']) }}" class="text-dark text-decoration-none">
+                            Albums <span>{{ $appearances->albums }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'appear_singles']) }}" class="text-dark text-decoration-none">
+                            Singles & EPs <span>{{ $appearances->singles_eps }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'appear_compilations']) }}" class="text-dark text-decoration-none">
+                            Compilations <span>{{ $appearances->compilations }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'appear_mixes']) }}" class="text-dark text-decoration-none">
+                            Mixes <span>{{ $appearances->mixes }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'appear_videos']) }}" class="text-dark text-decoration-none">
+                            Videos <span>{{ $appearances->videos }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'appear_misc']) }}" class="text-dark text-decoration-none">
+                            Miscellaneous <span>{{ $appearances->miscellaneous }}</span>
+                        </a>
+                    </div>
                 </div>
+
 
                 <!-- UNOFFICIAL -->
                 <div class="filter-box mt-2" onclick="toggleMenu('unoffMenu', this)">
                     <span class="arrow down"></span> Unofficial <span>{{ $unofficial->total_unofficial }}</span>
                 </div>
                 <div id="unoffMenu" class="hidden">
-                    <div class="filter-item">Albums <span>{{ $unofficial->albums }}</span></div>
-                    <div class="filter-item">Singles & EPs <span>{{ $unofficial->singles_eps }}</span></div>
-                    <div class="filter-item">Compilations <span>{{ $unofficial->compilations }}</span></div>
-                    <div class="filter-item">Videos <span>{{ $unofficial->videos }}</span></div>
-                    <div class="filter-item">Miscellaneous <span>{{ $unofficial->miscellaneous }}</span></div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'unoff_albums']) }}" class="text-dark text-decoration-none">
+                            Albums <span>{{ $unofficial->albums }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'unoff_singles']) }}" class="text-dark text-decoration-none">
+                            Singles & EPs <span>{{ $unofficial->singles_eps }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'unoff_compilations']) }}" class="text-dark text-decoration-none">
+                            Compilations <span>{{ $unofficial->compilations }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'unoff_videos']) }}" class="text-dark text-decoration-none">
+                            Videos <span>{{ $unofficial->videos }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'unoff_misc']) }}" class="text-dark text-decoration-none">
+                            Miscellaneous <span>{{ $unofficial->miscellaneous }}</span>
+                        </a>
+                    </div>
                 </div>
+
 
                 <!-- CREDITS -->
                 <div class="filter-box mt-2" onclick="toggleMenu('creditMenu', this)">
                     <span class="arrow down"></span> Credits <span>{{ $credits->total_credits }}</span>
                 </div>
                 <div id="creditMenu" class="hidden">
-                    <div class="filter-item">Featuring & Presenting <span>{{ $credits->featuring }}</span></div>
-                    <div class="filter-item">Writing & Arrangement <span>{{ $credits->writing_arrangement }}</span></div>
-                    <div class="filter-item">Production <span>{{ $credits->production }}</span></div>
-                    <div class="filter-item">Vocals <span>{{ $credits->vocals }}</span></div>
-                    <div class="filter-item">Technical <span>{{ $credits->technical }}</span></div>
-                    <div class="filter-item">Instruments & Performance <span>{{ $credits->instruments_performance }}</span></div>
-                    <div class="filter-item">Visual <span>{{ $credits->visual }}</span></div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_featuring']) }}" class="text-dark text-decoration-none">
+                            Featuring & Presenting <span>{{ $credits->featuring }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_writing']) }}" class="text-dark text-decoration-none">
+                            Writing & Arrangement <span>{{ $credits->writing_arrangement }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_production']) }}" class="text-dark text-decoration-none">
+                            Production <span>{{ $credits->production }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_vocals']) }}" class="text-dark text-decoration-none">
+                            Vocals <span>{{ $credits->vocals }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_technical']) }}" class="text-dark text-decoration-none">
+                            Technical <span>{{ $credits->technical }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_instruments']) }}" class="text-dark text-decoration-none">
+                            Instruments & Performance <span>{{ $credits->instruments_performance }}</span>
+                        </a>
+                    </div>
+                    <div class="filter-item">
+                        <a href="{{ route('show.artist', ['id' => $artis->artist_id, 'filter' => 'credit_visual']) }}" class="text-dark text-decoration-none">
+                            Visual <span>{{ $credits->visual }}</span>
+                        </a>
+                    </div>
                 </div>
-
             </div>
 
 
@@ -369,24 +448,29 @@
 
 
                 <!-- FILTER BAR (hidden) -->
-                <div id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
-                    <div class="row g-2">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a format">
+                <form method="GET" action="{{ route('show.artist', $artis->artist_id) }}">
+                    <div id="filterBar" class="bg-light p-3 rounded mb-3">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <input type="text" name="format" class="form-control" placeholder="Find a format">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="label" class="form-control" placeholder="Find a label">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="country" class="form-control" placeholder="Find a country">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="year" class="form-control" placeholder="Find a year">
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a label">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a country">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a year">
-                        </div>
-                    </div>
 
-                    <input type="text" class="form-control mt-2" placeholder="Search Discography">
-                </div>
+                        <input type="text" name="search" class="form-control mt-2" placeholder="Search Discography">
+
+                        <button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
+                    </div>
+                </form>
+
 
                 <!-- TOP CONTROL -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -446,7 +530,7 @@
                 <div id="releaseContainer" class="gridlist-view">
                     @foreach($releases as $release)
                         <div class="release-item" data-year="{{ $release->year }}">
-                            <img src="{{ $release->image ?? '/default.jpg'}}">
+                            <img src="{{ $release->image ?? '/default.jpg'}}" class="grid-image">
 
                             <!-- GRID VIEW -->
                             <div class="grid-info">
@@ -480,41 +564,6 @@
                         </div>
                     @endforeach
                 </div>
-
-
-                    <!-- ini kubikin buat ngecek tombol year aj -->
-                    <!-- <div class="release-item" data-year="2024">
-                            
-                        <img src="https://i.discogs.com/dftp2W1wk61cXlEdpBsPvsa4bqatbTgV0F5e2okcxK4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5OTcz/Mjc3LTE3MTAxMTEw/MjItMTQ3Ni5qcGVn.jpeg" width="150"> -->
-
-                        <!-- GRID VIEW -->
-                        <!-- <div class="grid-info">
-                            <div class="title"><a href="#">Eternal Sunshine</a></div>
-                            <div class="artist"><a href="#">Ariana Grande</a></div>
-                            <div class="year">2024</div>
-                        </div> -->
-
-                        <!-- GRIDLIST + LIST -->
-                        <!-- <div class="release-main">
-                            <div>
-                                <div class="title"><a href="#">Eternal Sunshine</a></div>
-                                <div class="versions">60 versions ▼</div>
-                            </div>
-                        </div>
-
-                        <div class="release-label">Republic Records</div>
-                        <div class="release-year">2024</div>
-                        <div class="dropdown" >
-                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
-                                •••
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Add to List</a></li>
-                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
-                            </ul>
-                        </div>
-
-                    </div> -->
 
                 </div>
 
