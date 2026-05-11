@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ShowReleaseController;
 use App\Http\Controllers\ShowAlbumController;
+use App\Http\Controllers\SearchController;
 
 
 // Route::get('/', function () {
@@ -109,7 +110,7 @@ Route::prefix('settings')->group(function () {
 });
 
 Route::get('/showArtist', function () {
-    return view('showArtist');
+    return view('showArtist' );
 });
 
 // Route::get('/showAlbum', function () {
@@ -141,5 +142,9 @@ Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.
 
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
+
+//route untuk SearchController.php
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+
 
 

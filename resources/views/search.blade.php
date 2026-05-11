@@ -12,7 +12,7 @@
     .sidebar-more { font-size: 13px; color: #2a5bd7; text-decoration: none; }
     /* Right */
     .discogs-nav { border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 15px; }
-    .discogs-nav a { color: #2a5bd7; text-decoration: none; margin-right: 15px; font-size: 14px; }
+    .discogs-nav a { color: #666; text-decoration: none; margin-right: 15px; font-size: 14px; }
     .discogs-nav a .count { color: #888; font-weight: normal; }
     .discogs-nav a.active { color: #000; font-weight: bold; border-bottom: 3px solid #000; padding-bottom: 7px; }
 
@@ -46,45 +46,324 @@
     .pagination-text a:hover {text-decoration: underline;}
     select.form-select-sm {border-radius: 4px;padding: 2px 6px;font-size: 13px;}
 
+    .artist-no-image {display: flex; align-items: center; justify-content: center; background: #e8e8e8; border-radius: 50%; aspect-ratio: 1/1;
+}
+
+    .artist-no-image svg { width: 45%; height: 45%; opacity: 1;
+}
+
 </style>
+
+<form method="GET" action="{{ route('search') }}" id="filterForm">
+<input type="hidden" name="type" value="{{ request('type') }}">
+<input type="hidden" name="q" value="{{ request('q') }}">
 
 <div class="container-fluid mt-4 px-3">
     <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 ">
-            <div class="sidebar">
-                <div class="sidebar-section">
-                    <h6 class="sidebar-title">Genre</h6>
-                    <div class="sidebar-item"><a href="#">Rock</a><span>7,058,948</span></div>
-                    <div class="sidebar-item"><a href="#">Electronic</a><span>5,633,745</span></div>
-                    <a href="#" class="sidebar-more">All ▾</a>
-                </div>
-                <div class="sidebar-section mt-4">
-                    <h6 class="sidebar-title">Style</h6>
-                    <div class="sidebar-item"><a href="#">Pop Rock</a><span>1,045,672</span></div>
-                    <div class="sidebar-item"><a href="#">House</a><span>815,720</span></div>
-                    <a href="#" class="sidebar-more">All ▾</a>
-                </div>
+
+    <div class="col-md-2">
+        <div class="sidebar-filters p-3">
+    
+   <!-- Bagian Genre -->
+<div class="filter-group mb-4">
+    <h6 class="fw-bold" style="font-size: 0.9rem;">Genre</h6>
+    <ul class="list-unstyled">
+        @foreach($Genre->take(5) as $g)
+        <li class="d-flex justify-content-between align-items-center mb-1">
+        <div class="form-check">
+            <input class="form-check-input filter-checkbox" type="checkbox" 
+                name="genre[]" 
+                value="{{ $g->genre_id }}" 
+                id="g{{ $g->genre_id }}"
+                {{ in_array($g->genre_id, request('genre', [])) ? 'checked' : '' }}>
+            <label class="form-check-label small ms-2" for="g{{ $g->genre_id }}">
+                {{ $g->name }}
+            </label>
+        </div>
+        <span class="text-muted small">{{ number_format($g->releases_count) }}</span>
+        </li>
+        @endforeach
+    </ul>
+    <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalGenre">+ View All</a>
+</div>
+
+    <!-- Bagian Style -->
+<div class="filter-group mb-4">
+    <h6 class="fw-bold" style="font-size: 0.9rem;">Style</h6>
+    <ul class="list-unstyled">
+        @foreach($Style->take(5) as $s)
+        <li class="d-flex justify-content-between align-items-center mb-1">
+            <div class="form-check">
+                <input class="form-check-input filter-checkbox" type="checkbox" 
+                    name="style[]" 
+                    value="{{ $s->style_id }}" 
+                    id="style{{ $s->style_id }}"
+                    {{ in_array($s->style_id, request('style', [])) ? 'checked' : '' }}>
+                <label class="form-check-label small" for="style{{ $s->style_id }}" style="cursor:pointer;">
+                    {{ $s->name }}
+                </label>
+            </div>
+            <span class="text-muted small" style="font-size: 0.75rem;">{{ number_format($s->releases_count) }}</span>
+        </li>
+        @endforeach
+    </ul>
+    <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalStyle">+ View All</a>
+</div>
+
+<!-- Bagian Format -->
+<div class="filter-group mb-4">
+    <h6 class="fw-bold" style="font-size: 0.9rem;">Format</h6>
+    <ul class="list-unstyled">
+        @foreach($Format->take(5) as $f)
+        <li class="d-flex justify-content-between align-items-center mb-1">
+            <div class="form-check">
+                <input class="form-check-input filter-checkbox" type="checkbox" 
+                    name="format[]" 
+                    value="{{ $f->format_id }}" 
+                    id="format{{ $f->format_id }}"
+                    {{ in_array($f->format_id, request('format', [])) ? 'checked' : '' }}>
+                <label class="form-check-label small" for="format{{ $f->format_id }}" style="cursor:pointer;">
+                    {{ $f->name }}
+                </label>
+            </div>
+            <span class="text-muted small" style="font-size: 0.75rem;">{{ number_format($f->releases_count) }}</span>
+        </li>
+        @endforeach
+    </ul>
+    <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalFormat">+ View All</a>
+</div>
+
+     <!-- Bagian Country -->
+<div class="filter-group mb-4">
+    <h6 class="fw-bold" style="font-size: 0.9rem;">Country</h6>
+    <ul class="list-unstyled">
+        @foreach($Country->take(5) as $c)
+        <li class="d-flex justify-content-between align-items-center mb-1">
+            <div class="form-check">
+                <input class="form-check-input filter-checkbox" type="checkbox" 
+                    name="country[]" 
+                    value="{{ $c->country }}" 
+                    id="country{{ $c->country }}"
+                    {{ in_array($c->country, request('country', [])) ? 'checked' : '' }}>
+                <label class="form-check-label small" for="country{{ $c->country }}" style="cursor:pointer;">
+                    {{ $c->country }}
+                </label>
+            </div>
+            <span class="text-muted small" style="font-size: 0.75rem;">{{ number_format($c->releases_count) }}</span>
+        </li>
+        @endforeach
+    </ul>
+    <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalCountry">+ View All</a>
+</div>
+
+     <!-- Bagian Decade -->
+<div class="filter-group mb-4">
+    <h6 class="fw-bold" style="font-size: 0.9rem;">Decade</h6>
+    <ul class="list-unstyled">
+        @foreach($Decade->take(5) as $d)
+        <li class="d-flex justify-content-between align-items-center mb-1">
+            <div class="form-check">
+                <input class="form-check-input filter-checkbox" type="checkbox" 
+                    name="decade[]" 
+                    value="{{ $d->decade }}" 
+                    id="dec{{ $d->decade }}"
+                    {{ in_array($d->decade, request('decade', [])) ? 'checked' : '' }}>
+                <label class="form-check-label small" for="dec{{ $d->decade }}" style="cursor:pointer;">
+                    {{ $d->decade }}
+                </label>
+            </div>
+            <span class="text-muted small" style="font-size: 0.75rem;">{{ number_format($d->releases_count) }}</span>
+        </li>
+        @endforeach
+    </ul>
+    <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalDecade">+ View All</a>
+</div>
+</div>
+</div>
+
+    <!-- === MODAL GENRE === -->
+<div class="modal fade" id="modalGenre" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow border-0">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Genre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0" style="max-height: 400px; overflow-y: auto;">
+                <ul class="list-unstyled pt-3 ">
+                    @foreach($Genre as $g)
+                    <li class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ $g->genre_id }}" id="mG{{ $g->genre_id }}">
+                            <label class="form-check-label" for="mG{{ $g->genre_id }}">{{ $g->name }}</label>
+                        </div>
+                        <span class="text-muted small" >{{ number_format($g->releases_count ?? 0) }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-dark fw-bold px-5" data-bs-dismiss="modal">Show Results</button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- === MODAL STYLE === -->
+<div class="modal fade" id="modalStyle" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Pakai modal-xl biar lebar -->
+        <div class="modal-content shadow border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Style</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0">
+                <!-- KUNCI UTAMA: style="column-count: 4" -->
+                <ul class="list-unstyled pt-3 discogs-multi-column">
+                    @foreach($Style as $s)
+                    <li class="d-flex justify-content-between align-items-center mb-2 pe-3" style="break-inside: avoid;">
+                        <div class="form-check p-0 d-flex align-items-center">
+                            <input class="form-check-input m-0 custom-check" type="checkbox" id="ms{{ $s->style_id }}">
+                            <label class="form-check-label ms-2 small text-truncate" for="ms{{ $s->style_id }}" style="max-width: 130px;">
+                                {{ $s->name }}
+                            </label>
+                        </div>
+                        <span class="text-muted" style="font-size: 11px;">{{ number_format($s->releases_count ?? 0) }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-dark fw-bold px-5" data-bs-dismiss="modal">Show Results</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- === MODAL FORMAT === -->
+<div class="modal fade" id="modalFormat" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Pakai modal-xl biar lebar -->
+        <div class="modal-content shadow border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Format</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0">
+                <!-- KUNCI UTAMA: style="column-count: 4" -->
+                <ul class="list-unstyled pt-3 discogs-multi-column">
+                    @foreach($Format as $f)
+                    <li class="d-flex justify-content-between align-items-center mb-2 pe-3" style="break-inside: avoid;">
+                        <div class="form-check p-0 d-flex align-items-center">
+                            <input class="form-check-input m-0 custom-check" type="checkbox" id="mF{{ $f->format_id }}">
+                            <label class="form-check-label ms-2 small text-truncate" for="mF{{ $f->format_id }}" style="max-width: 130px;">
+                                {{ $f->name }}
+                            </label>
+                        </div>
+                        <span class="text-muted" style="font-size: 11px;">{{ number_format($f->releases_count ?? 0) }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-dark fw-bold px-5" data-bs-dismiss="modal">Show Results</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- === MODAL Country === -->
+<div class="modal fade" id="modalCountry" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Pakai modal-xl biar lebar -->
+        <div class="modal-content shadow border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Country</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0">
+                <!-- KUNCI UTAMA: style="column-count: 4" -->
+                <ul class="list-unstyled pt-3 discogs-multi-column">
+                    @foreach($Country as $c)
+                    <li class="d-flex justify-content-between align-items-center mb-2 pe-3" style="break-inside: avoid;">
+                        <div class="form-check p-0 d-flex align-items-center">
+                            <input class="form-check-input m-0 custom-check" type="checkbox" id="mC{{ $c->country }}">
+                            <label class="form-check-label ms-2 small text-truncate" for="mC{{ $c->country }}" style="max-width: 130px;">
+                                {{ $c->country }}
+                            </label>
+                        </div>
+                        <span class="text-muted" style="font-size: 11px;">{{ number_format($c->releases_count ?? 0) }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-dark fw-bold px-5" data-bs-dismiss="modal">Show Results</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- === MODAL Decade === -->
+<div class="modal fade" id="modalDecade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> <!-- Pakai modal-xl biar lebar -->
+        <div class="modal-content shadow border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Decade</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0">
+                <!-- KUNCI UTAMA: style="column-count: 4" -->
+                <ul class="list-unstyled pt-3 discogs-multi-column">
+                    @foreach($Decade as $d)
+                    <li class="d-flex justify-content-between align-items-center mb-2 pe-3" style="break-inside: avoid;">
+                        <div class="form-check p-0 d-flex align-items-center">
+                            <input class="form-check-input m-0 custom-check" type="checkbox" id="mD{{ $d->decade }}">
+                            <label class="form-check-label ms-2 small text-truncate" for="mD{{ $d->decade }}" style="max-width: 130px;">
+                                {{ $d->decade }}
+                            </label>
+                        </div>
+                        <span class="text-muted" style="font-size: 11px;">{{ number_format($d->releases_count ?? 0) }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-dark fw-bold px-5" data-bs-dismiss="modal">Show Results</button>
+            </div>
+        </div>
+    </div>
+</div>
 
         <div class="col-md-10">
             <!-- Nav -->
-            <div class="discogs-nav">
-                <a href="#" class="active">All</a>
-                <a href="#">Release <span class="count">19,174,030</span></a>
-                <a href="#">Master <span class="count">2,595,262</span></a>
-                <a href="#">Artist <span class="count">9,973,140</span></a>
-                <a href="#">Label <span class="count">2,248,219</span></a>
-            </div>
+           {{-- SESUDAH --}}
+<div class="discogs-nav">
+    <a href="{{ route('search') }}" class="{{ !request('type') ? 'active' : '' }}">
+        All <span class="count">({{ number_format($countAll) }})</span>
+    </a>
+    <a href="{{ route('search', ['type' => 'release']) }}" class="{{ request('type') == 'release' ? 'active' : '' }}">
+        Release <span class="count">({{ number_format($countRelease) }})</span>
+    </a>
+    <a href="{{ route('search', ['type' => 'master']) }}" class="{{ request('type') == 'master' ? 'active' : '' }}">
+        Master <span class="count">({{ number_format($countMaster) }})</span>
+    </a>
+    <a href="{{ route('search', ['type' => 'artist']) }}" class="{{ request('type') == 'artist' ? 'active' : '' }}">
+        Artist <span class="count">({{ number_format($countArtist) }})</span>
+    </a>
+    <a href="{{ route('search', ['type' => 'label']) }}" class="{{ request('type') == 'label' ? 'active' : '' }}">
+        Label <span class="count">({{ number_format($countLabel) }})</span>
+    </a>
+</div>
 
             <!-- Top Nav -->
             <h4 class="fw-bold">Find Music on Discogs</h4>
 
             <div class="search-bar-row mt-3">
-                <div class="small">1 - 25 of 21,769,292  
-                    <a href="#" class="ms-2 text-decoration-none">❮ Prev</a> 
-                    <a href="#" class="ms-1 text-decoration-none">Next ❯</a>
+                <div class="small">
+                {{ $albums->firstItem() }} - {{ $albums->lastItem() }} of {{ number_format($albums->total()) }}
+ 
+                <a href="{{ $albums->previousPageUrl() ? $albums->previousPageUrl() . '&' . http_build_query(request()->except('page')) : '#' }}">❮ Prev</a>
+                <a href="{{ $albums->nextPageUrl() ? $albums->nextPageUrl() . '&' . http_build_query(request()->except('page')) : '#' }}">Next ❯</a>
+
                 </div>
                 <div class="d-flex align-items-center">
                     <span class="me-2 small text-muted">Sort</span>
@@ -121,135 +400,125 @@
                 </div>
             </div>
 
-            <!-- Right -->
-            <div id="albumContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+<div id="albumContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
 
-                <div class="col">
-                    <div class="album-card">
-                        <!-- Covers View. Kalau Master,CD, dll -->
-                        <div class="grid-view-content">
-                            <div class="album-cover-wrapper album-stack">
-                                <img src="https://i.discogs.com/Dbf-keTDtm2UEu6AWChTIEzE70P9OTzl0UwJg3Gelh8/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2Njk3/MzkzLTE3NzI4MjQw/NTAtMzk5OC5wbmc.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">MASTER RELEASE</p>
-                                <a href="#" class="album-title">Kiss All The Time. Disco, Occasionally.</a>
-                                <div class="album-artist">Harry Styles</div>
-                                <div class="album-meta">2026</div>
-                            </div>
-                        </div>
+    @foreach ($albums as $album)
+    <div class="col-6 col-md-4 col-lg-2">
+        <div class="album-card">
 
-                        <!-- LIst View. Kalau Master,CD, dll -->
-                        <div class="list-view-content">
-                            <div class="album-cover-wrapper album-stack">
-                                <img src="https://i.discogs.com/Dbf-keTDtm2UEu6AWChTIEzE70P9OTzl0UwJg3Gelh8/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2Njk3/MzkzLTE3NzI4MjQw/NTAtMzk5OC5wbmc.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">MASTER RELEASE</p>
-                                <a href="#" class="album-title">Kiss All The Time. Disco, Occasionally.</a>
-                                <a href="#" class="album-artist">Harry Styles</a>
-                                <div class="album-year">2026</div>
-                                <a href="#" class="album-meta">Erskine Records, Coulombia</a>
-                            </div>
-                        </div>
-                    </div>
+            {{-- GRID VIEW --}}
+            <div class="grid-view-content">
+                <div class="album-cover-wrapper {{ $album->format_name == 'MASTER RELEASE' ? 'album-stack' : ($album->format_name == 'ARTIST' ? 'artist-circle' : '') }}">
+                    @if($album->format_name == 'MASTER RELEASE')
+                        <a href="{{ route('album.versions', $album->master_id) }}">
+                            <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                        </a>
+                    @elseif($album->format_name == 'ARTIST')
+                        @if($album->foto)
+                            <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
+                        @else
+                            <div class="artist-no-image">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3d5a8a">
+        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm7 6a1 1 0 0 1 1 1 8 8 0 0 1-7 7.938V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 0 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
+    </svg>
+</div>
+                        @endif
+                    @elseif($album->format_name == 'LABEL')
+                        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                    @else
+                        <a href="{{ route('show.release', $album->release_id) }}">
+                            <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                        </a>
+                    @endif
                 </div>
-
-                <div class="col">
-                    <div class="album-card">
-                        <!-- Covers View. Kalau Vinyl -->
-                        <div class="grid-view-content">
-                            <div class="album-cover-wrapper">
-                                <img src="https://i.discogs.com/Dbf-keTDtm2UEu6AWChTIEzE70P9OTzl0UwJg3Gelh8/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2Njk3/MzkzLTE3NzI4MjQw/NTAtMzk5OC5wbmc.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">Vinyl • Ltd Edition</p>
-                                <a href="#" class="album-title">Kiss All The Time. Disco, Occasionally.</a>
-                                <a href="#" class="album-artist">Harry Styles</a>
-                                <div class="album-year">2026</div>
-                            </div>
-                        </div>
-
-                        <!-- List View. Kalau Vinyl -->
-                        <div class="list-view-content">
-                            <div class="album-cover-wrapper">
-                                <img src="https://i.discogs.com/Dbf-keTDtm2UEu6AWChTIEzE70P9OTzl0UwJg3Gelh8/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2Njk3/MzkzLTE3NzI4MjQw/NTAtMzk5OC5wbmc.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">Vinyl • Ltd Edition</p>
-                                <a href="#" class="album-title">Kiss All The Time. Disco, Occasionally.</a>
-                                <a href="#" class="album-artist">Harry Styles</a>
-                                <div class="album-meta">LP, Album, Stereo, Pink Opaque [Kiss Pink]</div>
-                                <div class="album-year">2026</div>
-                                <a href="#" class="album-meta">Erskine Records,</a> <a href="#" class="album-meta">Columbia</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="album-card">
-                        <!-- Covers View. Kalau Label -->
-                        <div class="grid-view-content">
-                            <div class="album-cover-wrapper">
-                               <img src="https://i.discogs.com/fS_pUY2lx9fkP5dLs2IBqzUUkdf2FF-nmvbIF_l_Qh8/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9MLTEwMDAt/MTY0NDg3NDIwMS01/ODI0LmpwZWc.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">Label</p>
-                                <a href="#" class="album-title">Warner Bros. Records</a>
-                            </div>
-                        </div>
-
-                        <!-- List View. Kalau Label -->
-                        <div class="list-view-content">
-                            <div class="album-cover-wrapper">
-                               <img src="https://i.discogs.com/fS_pUY2lx9fkP5dLs2IBqzUUkdf2FF-nmvbIF_l_Qh8/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9MLTEwMDAt/MTY0NDg3NDIwMS01/ODI0LmpwZWc.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">Label</p>
-                                <a href="#" class="album-title">Warner Bros. Records</a>
-                                <div class="album-meta">Label Code: LC 0392 / LC 00392</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="album-card">
-                        <!-- Covers View. Kalau Artist -->
-                        <div class="grid-view-content">
-                            <div class="album-cover-wrapper artist-circle">
-                                <img src="https://i.discogs.com/U4UHwrEeEFIae1O8VuoeKWE-9hNjqFISKHqDu2f4h-0/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTgyNzMw/LTE0MTk3MTQ5ODgt/OTY3NS5qcGVn.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">Artist</p>
-                                <a href="#" class="album-title">The Beatles</a>
-                            </div>
-                        </div>
-
-                        <!-- List View. Kalau Artist -->
-                        <div class="list-view-content">
-                            <div class="album-cover-wrapper artist-circle">
-                                <img src="https://i.discogs.com/U4UHwrEeEFIae1O8VuoeKWE-9hNjqFISKHqDu2f4h-0/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTgyNzMw/LTE0MTk3MTQ5ODgt/OTY3NS5qcGVn.jpeg" alt="Album Cover">
-                            </div>
-                            <div class="album-info">
-                                <p class="text-master mb-1">Artist</p>
-                                <a href="#" class="album-title">The Beatles</a>
-                                <div class="album-meta">Emerging from Liverpool, England in 1960, the Beatles were a seminal British group that evolved from rock/pop origins into pioneers of musical experimentation.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <div class="album-info">
+    <p class="text-master mb-1">
+        @if($album->format_name && $album->format_name != 'MASTER RELEASE')
+            {{ strtoupper($album->format_name) }}
+        @else
+            MASTER RELEASE
+        @endif
+    </p>
+    @if($album->format_name == 'MASTER RELEASE')
+        <a href="{{ route('album.versions', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+        <div class="album-artist">{{ $album->nama_artis }}</div>
+        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+    @elseif($album->format_name == 'ARTIST')
+    <a href="{{ route('artist.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+@elseif($album->format_name == 'LABEL')
+    <a href="{{ route('label.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+    @else
+        <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
+        <div class="album-artist">{{ $album->nama_artis }}</div>
+        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+    @endif
+</div>
             </div>
+
+            {{-- LIST VIEW --}}
+            <div class="list-view-content">
+                <div class="album-cover-wrapper {{ $album->format_name == 'MASTER RELEASE' ? 'album-stack' : ($album->format_name == 'ARTIST' ? 'artist-circle' : '') }}">
+                    @if($album->format_name == 'MASTER RELEASE')
+                        <a href="{{ route('album.versions', $album->master_id) }}">
+                            <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                        </a>
+                    @elseif($album->format_name == 'ARTIST')
+                        @if($album->foto)
+                            <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
+                        @else
+                            <div class="artist-no-image">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3d5a8a">
+        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm7 6a1 1 0 0 1 1 1 8 8 0 0 1-7 7.938V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 0 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
+    </svg>
+</div>
+                        @endif
+                    @elseif($album->format_name == 'LABEL')
+                        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                    @else
+                        <a href="{{ route('show.release', $album->release_id) }}">
+                            <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                        </a>
+                    @endif
+                </div>
+                <div class="album-info">
+    <p class="text-master mb-1">
+        @if($album->format_name && $album->format_name != 'MASTER RELEASE')
+            {{ strtoupper($album->format_name) }}
+        @else
+            MASTER RELEASE
+        @endif
+    </p>
+    @if($album->format_name == 'MASTER RELEASE')
+        <a href="{{ route('album.versions', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+        <div class="album-artist">{{ $album->nama_artis }}</div>
+        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+    @elseif($album->format_name == 'ARTIST')
+    <a href="{{ route('artist.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+@elseif($album->format_name == 'LABEL')
+    <a href="{{ route('label.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+    @else
+        <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
+        <div class="album-artist">{{ $album->nama_artis }}</div>
+        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+    @endif
+</div>
+            </div>
+
+        </div>
+    </div>
+    @endforeach
+
+</div>
+{{ $albums->links() }}
 
             <!-- Pagination -->
             <div class="d-flex justify-content-between align-items-center mt-4">
                 <div class="small">
-                    1 - 25 of 2,178,231
+                    {{ $albums->firstItem() }} - {{ $albums->lastItem() }} of {{ number_format($albums->total()) }}
 
-                    <a href="#" class="ms-2 text-decoration-none">❮ Prev</a>
-                    <a href="#" class="ms-1 text-decoration-none">Next ❯</a>
+                    <a href="{{ $albums->previousPageUrl() ? $albums->previousPageUrl() . '&' . http_build_query(request()->except('page')) : '#' }}">❮ Prev</a>
+                    <a href="{{ $albums->nextPageUrl() ? $albums->nextPageUrl() . '&' . http_build_query(request()->except('page')) : '#' }}">Next ❯</a>
+
                 </div>
 
                 <!-- RIGHT: Show dropdown -->
@@ -269,8 +538,9 @@
     </div>
 
 </div>
+</form>
 
-<script>
+<!-- <script>
     const tabs = document.querySelectorAll('.discogs-nav a');
 
     tabs.forEach(tab => {
@@ -281,6 +551,13 @@
             this.classList.add('active');
         });
     });
+</script> -->
+<script>
+document.querySelectorAll('.filter-checkbox').forEach(cb => {
+    cb.addEventListener('change', () => {
+        document.getElementById('filterForm').submit();
+    });
+});
 </script>
 
 <script>
@@ -312,5 +589,7 @@ listBtn.onclick = () => {
     );
 }
 </script>
+
+
 
 @endsection
