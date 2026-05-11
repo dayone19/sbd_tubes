@@ -214,60 +214,19 @@
                 </thead>
                 <tbody>
                     <!-- Row 1 -->
+                     @foreach($lists as $list)
                     <tr>
-                        <td><a href="#" class="list-link">all time favs</a></td>
+                        <td><a href="#" class="list-link">{{ $list->name }}</a></td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="#" class="user-avatar">
-                                <a href="#" class="user-link">fantasyuh</a>
+                                <img src="{{ asset($list->image) }}" class="user-avatar" alt="{{ $list->username }}">
+                                <a href="#" class="user-link">{{ $list->username }}</a>
                             </div>
                         </td>
-                        <td>hello</td>
-                        <td class="created-text">4 hours ago</td>
+                        <td>{{ $list->description }}</td>
+                        <td class="created-text">{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
                     </tr>
-                    
-                    <!-- Row 2 -->
-                    <tr>
-                        <td><a href="#" class="list-link fw-bold text-uppercase" style="font-size: 13px;">WANT</a></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="#" class="user-avatar">
-                                <a href="#" class="user-link">plattenyata</a>
-                            </div>
-                        </td>
-                        <td></td>
-                        <td class="created-text">5 hours ago</td>
-                    </tr>
-
-                    <!-- Row 3 -->
-                    <tr>
-                        <td><a href="#" class="list-link">Wantlist</a></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="https://i.pravatar.cc/32?img=3" class="user-avatar">
-                                <a href="#" class="user-link">KobeAmerijckx</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="small">
-                                <a href="#" class="user-link">https://recordsonvinyl.nl/</a>
-                            </div>
-                        </td>
-                        <td class="created-text">5 hours ago</td>
-                    </tr>
-
-                    <!-- Row 4  -->
-                    <tr>
-                        <td><a href="#" class="list-link">traditional music (non-classical)</a></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="#" class="user-avatar">
-                                <a href="#" class="user-link">timewind75</a>
-                            </div>
-                        </td>
-                        <td style="max-width: 400px;">traditional folk, medieval music, bard, ballads, nursery rhymes, anthems, etc.</td>
-                        <td class="created-text">19 hours ago</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

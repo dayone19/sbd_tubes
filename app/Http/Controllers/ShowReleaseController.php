@@ -77,16 +77,22 @@ class ShowReleaseController extends Controller
             if (!$release) {
                 abort(404, 'Release not found');
             }
+
+            if (empty($release->master_id)) {
+                abort(404, 'Master ID not found');
+            }
         
-            // SQL:
+        // SQL:
         // SELECT ar.name
         // FROM artist_release arl
         // JOIN artists ar ON arl.artist_id = ar.artist_id
-        // WHERE arl.release_id = ?
+        // WHERE arl.role = "Main" AND arl.release_id = ?
         $artists = DB::table('artist_release as arl')
             ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
+            ->where('arl.role', '=', 'Main')
             ->where('arl.release_id', $release->release_id)
-            ->pluck('ar.name');
+            ->select('ar.artist_id', 'ar.name')
+            ->get();
 
         // SQL:
         // SELECT g.name
@@ -190,6 +196,7 @@ class ShowReleaseController extends Controller
                     ->where('release_id', $release->release_id);
             })
 
+            ->where('arl.role', '=', 'Main')
             ->where('r.release_id', '!=', $release->release_id)
 
             ->select(
