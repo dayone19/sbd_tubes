@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ShowReleaseController;
 use App\Http\Controllers\ShowAlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ListController;
 
 
 // Route::get('/', function () {
@@ -159,5 +160,8 @@ Route::get('/preview', function () {
 Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
 Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
 Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('artist.addToList');
+
+//route untuk ListsController
+Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
 
 

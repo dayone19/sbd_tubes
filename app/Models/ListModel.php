@@ -13,6 +13,8 @@ class ListModel extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'description',
+        'comments',
     ];
 
     public function user()

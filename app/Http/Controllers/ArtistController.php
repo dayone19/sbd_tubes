@@ -589,6 +589,8 @@ class ArtistController extends Controller
             DB::table('list_release')->insert([
                 'list_id'   => $list->list_id,
                 'release_id'=> $release,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
             ]);
             
         } else {
