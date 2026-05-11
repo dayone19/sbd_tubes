@@ -1098,9 +1098,9 @@
             <div class="album-meta">
                 <div class="album-title">
                   @foreach($artists as $artis)
-                    <a href="#" class="artist-name">{{ $artis }}</a>@if(!$loop->last)@endif
+                    <a href="{{ route('show.artist', $artis->artist_id) }}" class="artist-name">{{ $artis->name }}</a>@if(!$loop->last), @endif
+                    @endforeach
                     &ndash; {{ $release->title }}
-                  @endforeach
                 </div>
                 <table class="album-info-table">
                     <tr>
@@ -1224,7 +1224,7 @@
  @foreach($otherVersions as $version)
 <div class="table-row">
   <div class="col-title">
-     <a href="{{ route('release.show', $version->release_id) }}">
+     <a href="{{ route('show.release', $version->release_id) }}">
             {{ $version->title }}
         </a>
   </div>
@@ -1286,7 +1286,7 @@
     @endfor
     <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
 </div>
-      <div class="review-text">T{{ $review->comment }}</div>
+      <div class="review-text">{{ $review->comment }}</div>
       <div class="review-actions">
         <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
         <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
@@ -1295,9 +1295,9 @@
     <div class="dropdown-arrow">▼</div>
   </div>
 
-   <div class="stars">
+   <!-- <div class="stars">
         <span class="star">{{ $review->rating }}</span>
-    </div>
+    </div> -->
  @endforeach
  </div>
  
@@ -1336,7 +1336,7 @@
             </div>
         </div>
 
-        <a href="#" class="btn-shop">{{ $productCount }} {{ strtoupper($formats->first()) }}</a>
+        <a href="#" class="btn-shop"> Shop {{ $productCount }} {{ strtoupper($formats->first()) }}</a>
 
         <!-- Statistics -->
         {{-- Statistics --}}
@@ -1459,7 +1459,9 @@
       <div>◇#．blue pressings！ by <span style="color: #0088cc; cursor: pointer;">healthyhabit</span></div>
       <div>pop by <span style="color: #0088cc; cursor: pointer;">amerella</span></div>
     </div>
+    <a href="/lists">
     <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">View More Lists →</div>
+    </a>
   </div>
 
     <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>

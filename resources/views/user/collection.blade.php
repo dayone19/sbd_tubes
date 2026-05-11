@@ -33,7 +33,6 @@ body{background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;}
     display:flex;
     gap:18px;
 }
-
 /* FILTER */
 .filter-bar{
     display:flex;
@@ -144,6 +143,13 @@ tbody td{
     padding:0 10px;
     font-size:14px;
 }
+.empty-state{
+    text-align:center;
+    padding:50px 20px;
+    font-size:14px;
+    color:#777;
+    background:#fafafa;
+}
 /* FOOT */
 .bottom-row{
     display:flex;
@@ -253,7 +259,6 @@ tbody td{
 
             <tbody>
                 <tr>
-
                     <td class="check-col">
                         <input type="checkbox">
                     </td>
@@ -331,8 +336,15 @@ tbody td{
                     <td>
                         <input type="text" class="notes-input" placeholder="Add notes...">
                     </td>
-
                 </tr>
+
+                <!-- Kalau blm ada -->
+                <tr>
+                    <td colspan="14" class="empty-state">
+                        No items found. Try different keywords or check your spelling.
+                    </td>
+                </tr>
+
             </tbody>
 
         </table>

@@ -1159,7 +1159,7 @@
             <div class="album-meta">
                 <div class="album-title">
                     @foreach($artists as $artist)
-                     <a href="#" class="artist-name">{{ $artist }}</a>@if(!$loop->last)@endif
+                     <a href="{{ route('show.artist', $artist->artist_id) }}" class="artist-name">{{ $artist->name }}</a>@if(!$loop->last), @endif
                     @endforeach
                     &ndash; {{ $album->title}}
                 </div>
@@ -1175,13 +1175,13 @@
                     <tr>
                         <td>Style:</td>
                         <td>
-                            <!-- @if(isset($album->styles)) -->
+                            @if($styles->isNotEmpty())
                                 @foreach($styles as $style)
                                     <a href="#">{{ $style }}</a>@if(!$loop->last), @endif
                                 @endforeach
-                            <!-- @else -->
+                            @else
                                 &nbsp;
-                            <!-- @endif -->
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -1513,7 +1513,7 @@
     <hr class="my-2">
 
     <!-- FOOTER -->
-    <a href="#" class="view-more-lists">View More List </a>
+    <a href="/lists" class="view-more-lists">View More List </a>
 </div>
 
         

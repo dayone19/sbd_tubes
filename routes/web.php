@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ShowReleaseController;
 use App\Http\Controllers\ShowAlbumController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\ListController;
+
 
 
 // Route::get('/', function () {
@@ -61,6 +64,10 @@ Route::get('/lists', function () {
     return view('lists');
 });
 
+Route::get('/submissions', function () {
+    return view('submissions');
+});
+
 Route::prefix('user')->group(function () {
 
     Route::get('/collection', function () {
@@ -79,6 +86,10 @@ Route::prefix('user')->group(function () {
         return view('user.profile');
     })->name('user.profile');
     
+});
+
+Route::get('no_list', function () {
+    return view('lists.no_list');
 });
 
 Route::prefix('sell')->group(function () {
@@ -108,9 +119,9 @@ Route::prefix('settings')->group(function () {
     
 });
 
-Route::get('/showArtist', function () {
-    return view('showArtist');
-});
+// Route::get('/showArtist', function () {
+//     return view('showArtist');
+// });
 
 // Route::get('/showAlbum', function () {
 //     return view('showAlbum');
@@ -133,7 +144,6 @@ Route::get('/showLabel', function () {
 
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
-
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
 
 //route untuk ShowReleaseController.php
@@ -141,5 +151,17 @@ Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.
 
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
+
+Route::get('/preview', function () {
+    return view('release.preview');
+});
+
+//route untuk ArtistController.php
+Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
+Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
+Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('artist.addToList');
+
+//route untuk ListsController
+Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
 
 
