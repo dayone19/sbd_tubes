@@ -1,0 +1,383 @@
+@extends('layouts.app')
+
+@section('content')
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {font-family: Arial, Helvetica, sans-serif;color: #222;background: #fff;font-size: 14px;}
+  /* LAYOUT */
+  .list-wrapper {max-width: 1400px;margin: 0 auto;padding: 32px 32px 80px;display: flex;gap: 40px;align-items: flex-start;}
+  .list-main { flex: 1; min-width: 0; }
+  /* TITLE */
+  .list-title {font-size: 22px;font-weight: 700;margin-bottom: 18px;}
+  .list-meta {display: flex;align-items: center;gap: 10px;margin-bottom: 22px;font-size: 13px;color: #444;}
+  .list-meta a { color: #a100a0; text-decoration: none; }
+  .list-meta a:hover { text-decoration: underline; }
+  .avatar {width: 28px;height: 28px;background: #ddd;border-radius: 3px;display: inline-block;}
+  /* DESCRIPTION */
+  .desc-display {border: 1px;min-height: 80px;padding: 10px 36px 10px 12px;font-size: 14px;margin-bottom: 18px;position: relative;cursor: pointer;transition: border-color .15s, background .15s;line-height: 1.5;}
+  .desc-display:hover {border-color: #888;background: #fafafa;}
+  .desc-display:hover .edit-icon { opacity: 1; }
+  .edit-icon {position: absolute;right: 10px;top: 10px;opacity: 0;font-size: 15px;color: #555;transition: opacity .15s;pointer-events: none;}
+  .desc-edit-area {display: none;margin-bottom: 18px;}
+  .desc-edit-area textarea {width: 100%;min-height: 80px;border: 1px solid #666;padding: 10px;font-size: 14px;font-family: inherit;resize: vertical;outline: none;line-height: 1.5;}
+  .desc-edit-area textarea:focus { border-color: #333; }
+  .action-row {display: flex;gap: 10px;margin-top: 10px;}
+  .btn-save {background: #222;color: #fff;border: none;padding: 10px 20px;font-size: 13px;cursor: pointer;border-radius: 2px;}
+  .btn-cancel {background: #f0f0f0;border: 1px solid #ccc;padding: 10px 20px;font-size: 13px;cursor: pointer;border-radius: 2px;}
+  /* TOOLBAR */
+  .list-toolbar {display: flex;justify-content: space-between;align-items: center;margin: 22px 0 0;padding-bottom: 12px;border-bottom: 1px solid #eee;}
+  .toolbar-left {display: flex;align-items: center;gap: 8px;font-size: 13px;}
+  .pager-btn {width: 40px;height: 40px;border: 1px solid #d2d2d2;background: #fff;font-size: 16px;color: #888;cursor: pointer;display: flex;align-items: center;justify-content: center;}
+  .pager-btn:hover { background: #f5f5f5; }
+  .toolbar-right {display: flex;align-items: center;gap: 8px;font-size: 13px;}
+  .show-select {
+    width: 80px;
+    height: 40px;
+    border: 1px solid #d2d2d2;
+    padding: 0 10px;
+    font-size: 14px;
+    background: #fff;
+    cursor: pointer;
+  }
+  /* ITEM */
+  .list-item {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    align-items: flex-start;
+  }
+  .item-number {
+    width: 28px;
+    font-size: 14px;
+    font-weight: 700;
+    padding-top: 96px;
+    flex-shrink: 0;
+    color: #444;}
+  .item-cover {flex-shrink: 0;}
+  .item-cover img {width: 116px; height: 116px;object-fit: cover;border: 1px solid #ccc;display: block;}
+  .item-content { flex: 1; min-width: 0; padding-top: 4px; }
+  .item-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #a100a0;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+  .item-title:hover { text-decoration: underline; }
+  .item-artist {font-size: 15px;color: #a100a0;margin-bottom: 16px;cursor: pointer;}
+  .item-artist:hover { text-decoration: underline; }
+  /* COMMENT */
+  .item-comment {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: border-color .15s, background .15s;
+    position: relative;
+    display: inline-block;
+    min-width: 60px;}
+  .item-comment:hover {border-color: #ccc;background: #fafafa;}
+  .item-comment:hover::after { content: ' ✎';color: #888; font-size: 12px;}
+  .comment-edit-area { display: none; margin-top: 10px; }
+  .comment-edit-area textarea {
+    width: 100%;
+    min-height: 80px;
+    border: 1px solid #666;
+    padding: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    outline: none;
+  }
+  .comment-edit-area textarea:focus { border-color: #333; }
+  .item-menu {
+    position: absolute;
+    right: 8px;
+    top: 40px;
+    font-size: 20px;
+    font-weight: 900;
+    color: #555;
+    cursor: pointer;
+    padding: 4px 8px;
+    letter-spacing: 1px;
+  }
+  .item-menu:hover { color: #111; }
+  /* BOTTOM TOOLBAR */
+  .list-toolbar-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+  /* SIDEBAR */
+  .sidebar { width: 440px; flex-shrink: 0; }
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 0;
+    cursor: pointer;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    user-select: none;}
+  .sidebar-chevron {font-size: 14px;transition: transform .25s; color: #555;}
+  .sidebar-chevron.open { transform: rotate(180deg); }
+  .sidebar-body {overflow: hidden;max-height: 0;transition: max-height .35s ease;}
+  .sidebar-body.open { max-height: 800px; }
+  .sidebar-body-inner { padding: 20px 0 10px; }
+  .manage-list {padding-left: 22px;margin-bottom: 22px;}
+  .manage-list li {margin-bottom: 14px;font-size: 13px;line-height: 1.55;color: #333;}
+  .sidebar-link {display: block;color: #a100a0;text-decoration: none;font-size: 13px;margin-bottom: 12px;}
+  .sidebar-link:hover { text-decoration: underline; }
+  .toggle-row {display: flex;align-items: center;gap: 14px;margin-bottom: 14px;}
+  /* Toggle switch */
+  .toggle-switch {position: relative;width: 44px;height: 24px;flex-shrink: 0;}
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  }
+  .toggle-switch input:checked + .toggle-track { background:green; }
+  .toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+  .toggle-label { font-size: 13px; line-height: 1.5; color: #222; }
+  .sidebar-btn {
+    width: 100%;
+    height: 48px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 2px;
+    transition: background .15s;
+  }
+  .sidebar-btn:hover { background: #ebebeb; }
+  .delete-btn { color: #c40000; }
+  .delete-btn:hover { background: #fff0f0; }
+  @media (max-width: 960px) {
+    .list-wrapper { flex-direction: column; }
+    .sidebar { width: 100%; }
+    .subnav { display: none; }
+  }
+</style>
+
+
+<!-- MAIN -->
+<div class="list-wrapper">
+
+  <!-- LEFT -->
+  <div class="list-main">
+
+    <div class="list-title">renz</div>
+
+    <div class="list-meta">
+      <span>By</span>
+      <span class="avatar"></span>
+      <a href="#">sirenzz</a>
+      <span>updated 63 minutes ago</span>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="desc-display" id="descDisplay" title="Click to edit">
+      <span id="descText">when yh</span>
+      <span class="edit-icon">✎</span>
+    </div>
+
+    <div class="desc-edit-area" id="descEditArea">
+      <textarea id="descTextarea">when yh</textarea>
+      <div class="action-row">
+        <button class="btn-save" id="saveDesc">Save</button>
+        <button class="btn-cancel" id="cancelDesc">Cancel</button>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="list-toolbar">
+      <div class="toolbar-left">
+        <span>Showing <b>1-1</b> of 1</span>
+        <button class="pager-btn">&#8592;</button>
+        <button class="pager-btn">&#8594;</button>
+      </div>
+      <div class="toolbar-right">
+        <span>Show</span>
+        <select class="show-select">
+          <option>25</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div class="list-item">
+      <div class="item-number">1</div>
+      <div class="item-cover">
+        <img src="https://i.discogs.com/FVXOgBYUAQXpI6QhkPe5cSEUl0OaglNmaxq0CZ_Vuzs/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzNTE3/OTMtMTcwMTQ3MzU3/Mi05MjkzLmpwZWc.jpeg"
+          onerror="this.style.background='#ddd';this.removeAttribute('src')" alt="The Romantic">
+      </div>
+      <div class="item-content">
+        <a href="#" class="item-title">The Romantic</a>
+        <div class="item-artist">Bruno Mars</div>
+
+        <!-- COMMENT -->
+        <div class="item-comment" id="commentDisplay" title="Click to edit comment">gud</div>
+
+        <div class="comment-edit-area" id="commentEditArea">
+          <textarea id="commentTextarea">gud</textarea>
+          <div class="action-row">
+            <button class="btn-save" id="saveComment">Save</button>
+            <button class="btn-cancel" id="cancelComment">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="item-menu">•••</div>
+    </div>
+
+    <!-- BOTTOM TOOLBAR -->
+    <div class="list-toolbar-bottom">
+      <div class="toolbar-left">
+        <span>Showing <b>1-1</b> of 1</span>
+        <button class="pager-btn">&#8592;</button>
+        <button class="pager-btn">&#8594;</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header" id="manageToggle">
+      <span>Manage List</span>
+      <span class="sidebar-chevron" id="sidebarChevron">&#8963;</span>
+    </div>
+
+    <div class="sidebar-body" id="sidebarBody">
+      <div class="sidebar-body-inner">
+
+        <ul class="manage-list">
+          <li>Hover on the title or description then click to edit.</li>
+          <li>Hover on an item's comments and click to edit, or click "remove" to remove.</li>
+          <li>Use drag and drop to re-order the items in your list, or click "move to," type a new position, and press enter.</li>
+        </ul>
+
+        <a href="#" class="sidebar-link">View all of my lists</a>
+        <a href="#" class="sidebar-link">View Submissions</a>
+
+        <div class="toggle-row">
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <div class="toggle-track"></div>
+          </label>
+          <span class="toggle-label">Notify me of new submissions related to this list.</span>
+        </div>
+
+        <div class="toggle-row">
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <div class="toggle-track"></div>
+          </label>
+          <span class="toggle-label">Public</span>
+        </div>
+
+        <button class="sidebar-btn">&#10010; Add List To Dashboard</button>
+        <button class="sidebar-btn delete-btn">🗑 Delete This List</button>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ---- DESCRIPTION INLINE EDIT ----
+  const descDisplay   = document.getElementById('descDisplay');
+  const descEditArea  = document.getElementById('descEditArea');
+  const descText      = document.getElementById('descText');
+  const descTextarea  = document.getElementById('descTextarea');
+  const saveDesc      = document.getElementById('saveDesc');
+  const cancelDesc    = document.getElementById('cancelDesc');
+
+  descDisplay.addEventListener('click', function () {
+    descTextarea.value = descText.textContent.trim();
+    descDisplay.style.display = 'none';
+    descEditArea.style.display = 'block';
+    descTextarea.focus();
+  });
+
+  cancelDesc.addEventListener('click', function () {
+    descEditArea.style.display = 'none';
+    descDisplay.style.display = 'block';
+  });
+
+  saveDesc.addEventListener('click', function () {
+    descText.textContent = descTextarea.value || '';
+    cancelDesc.click();
+  });
+
+  // ---- COMMENT INLINE EDIT ----
+  const commentDisplay  = document.getElementById('commentDisplay');
+  const commentEditArea = document.getElementById('commentEditArea');
+  const commentTextarea = document.getElementById('commentTextarea');
+  const saveComment     = document.getElementById('saveComment');
+  const cancelComment   = document.getElementById('cancelComment');
+
+  commentDisplay.addEventListener('click', function () {
+    commentTextarea.value = commentDisplay.textContent.trim();
+    commentDisplay.style.display = 'none';
+    commentEditArea.style.display = 'block';
+    commentTextarea.focus();
+  });
+
+  cancelComment.addEventListener('click', function () {
+    commentEditArea.style.display = 'none';
+    commentDisplay.style.display = 'inline-block';
+  });
+
+  saveComment.addEventListener('click', function () {
+    commentDisplay.textContent = commentTextarea.value || '';
+    cancelComment.click();
+  });
+
+  // ---- MANAGE LIST TOGGLE ----
+  const manageToggle  = document.getElementById('manageToggle');
+  const sidebarBody   = document.getElementById('sidebarBody');
+  const sidebarChevron = document.getElementById('sidebarChevron');
+
+  manageToggle.addEventListener('click', function () {
+    const isOpen = sidebarBody.classList.toggle('open');
+    sidebarChevron.classList.toggle('open', isOpen);
+  });
+
+  // Open by default
+  sidebarBody.classList.add('open');
+  sidebarChevron.classList.add('open');
+</script>
+
+@endsection

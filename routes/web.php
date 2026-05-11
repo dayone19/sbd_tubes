@@ -87,6 +87,10 @@ Route::prefix('user')->group(function () {
     
 });
 
+Route::get('no_list', function () {
+    return view('lists.no_list');
+});
+
 Route::prefix('sell')->group(function () {
 
     Route::get('/list', function () {

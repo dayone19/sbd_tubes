@@ -33,7 +33,6 @@ body{background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;}
     display:flex;
     gap:18px;
 }
-
 /* FILTER */
 .filter-bar{
     display:flex;
