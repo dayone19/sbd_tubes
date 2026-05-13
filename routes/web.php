@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ValuableController;
+use App\Http\Controllers\AdvancedSearchController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -40,9 +41,8 @@ Route::get('/signup', function () {
     return view('auth.signup');
 });
 
-Route::get('/search', function () {
-    return view('search');
-})->name('search');
+Route::get('/search', [AdvancedSearchController::class, 'search'])
+->name('search');
 
 Route::get('/resources', function () {
     return view('resources');
