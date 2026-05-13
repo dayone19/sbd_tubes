@@ -114,9 +114,8 @@ Route::prefix('settings')->group(function () {
     
 });
 
-Route::get('/showLabel', function () {
-    return view('showLabel');
-});
+
+Route::get('/showLabel/{id}', [SearchController::class, 'showLabel'])->name('show.label');
 
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);

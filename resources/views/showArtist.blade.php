@@ -254,7 +254,7 @@
 
         <!-- BUTTON BAWAH -->
         <button class="btn btn-light w-100 mt-2">
-            Shop All {{ $master->title }}
+            Shop All {{ $masters->first()->title ?? '' }}
         </button>
 
     </div>

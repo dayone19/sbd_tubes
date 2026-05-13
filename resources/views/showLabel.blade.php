@@ -172,43 +172,47 @@
 
     <!-- LEFT -->
     <div class="col-md-2">
-        <img src="https://i.discogs.com/fNKnV5ZMswwZSBYhqUDVMq13KIcT10dr2ILJMtwrITU/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9MLTQxMzIx/LTEzMzk3MTI3NzQt/MTIxMS5naWY.jpeg" class="label-img">
+        <img src="{{ $label->image ?? asset('images/no-image.png') }}" class="label-img">
     </div>
 
     <!-- MIDDLE -->
     <div class="col-md-6">
-        <div class="label-name">Warner Bros. Music</div>
+        <div class="label-name">{{ $label->name ?? 'Unknown Label' }}</div>
 
-        <div class="info-row">
-            <div class="label">Profile:</div>
-            <div class="content profile-text">
-                Publishing company affiliated with Warner Bros. Records. Use this entry if no further information is given. If a specific company/entity is mentioned such as
-                1) Wb Music Corp. (including variants such as Warner Bros. Music Corp., Warner Bros. Music Corporation etc.) or
-                2) Warner Bros. Music Ltd. (including variants such as Warner Bros. Music Ltd., Warner Brothers Music Ltd. etc.)
-                use these entries. First of these entites is since 2019 known as WC Music Corp., second of these is since 1988 known as Warner Chappell Music Ltd.
-            </div>
-        </div>
+        @if($label->profile ?? false)
+<div class="info-row">
+    <div class="label">Profile:</div>
+    <div class="content profile-text">{{ $label->profile }}</div>
+</div>
+@endif
 
-        <div class="info-row">
-            <div class="label">Parent Label:</div>
-            <div class="content"><a>Warner Chappell Music</a></div>
-        </div>
+@if($parentLabel)
+<div class="info-row">
+    <div class="label">Parent Label:</div>
+    <div class="content">
+        <a href="{{ route('show.label', $parentLabel->label_id) }}">{{ $parentLabel->name }}</a>
+    </div>
+</div>
+@endif
 
-        <div class="info-row">
-            <div class="label">Sublabels:</div>
-            <div class="content"><a>Warner Bros. Music, Inc., Warner Brothers Music, France</a></div>
-        </div>
+@if($sublabels->count() > 0)
+<div class="info-row">
+    <div class="label">Sublabels:</div>
+    <div class="content">
+        @foreach($sublabels as $sub)
+            <a href="{{ route('show.label', $sub->label_id) }}">{{ $sub->name }}</a>
+            @if(!$loop->last), @endif
+        @endforeach
+    </div>
+</div>
+@endif
 
-        <div class="info-row">
-            <div class="label">Contact Info:</div>
-            <div class="content">Manufacturer Contact<br>
-                Warner Bros. Music (obsolete)<br>
-                Warner/Chappell<br>
-                777 S. Santa Fe Avenue<br>
-                Los Angeles, CA 90021<br>
-                USA
-                https://warnerchappell.com/</div>
-        </div>
+@if($label->contact_info ?? false)
+<div class="info-row">
+    <div class="label">Contact Info:</div>
+    <div class="content">{{ $label->contact_info }}</div>
+</div>
+@endif
 
     </div>
 
@@ -219,7 +223,7 @@
             <span>Label</span>
             <span class="release-id">
                 <span class="release-icon"></span>
-                [l{{ $album->master_id ?? '138147' }}]
+                [l{{ $id }}]
             </span>
         </div>
         <div class="master-release-links">
@@ -238,48 +242,28 @@
         <div id="saleCarousel" class="carousel slide" data-bs-ride="carousel">
 
             <div class="carousel-inner">
-
-                <!-- ITEM 1 -->
+                @forelse($forSale as $index => $sale)
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <div class="d-flex mt-2">
+                        <img src="{{ $sale->foto ?? asset('images/no-image.png') }}" width="100" height="100" class="me-2">
+                        <div>
+                            <div class="small">MASTER RELEASE</div>
+                            <strong>{{ $sale->title }}</strong><br>
+                            <span class="small">{{ $sale->year ?? '-' }}</span><br>
+                            <span class="small">{{ $sale->format_name ?? '-' }}</span><br>
+                            <span class="small">From ${{ number_format($sale->min_price, 2) }} to ${{ number_format($sale->max_price, 2) }}</span>
+                        </div>
+                    </div>
+                    <a href="{{ route('show.album', $sale->master_id) }}" class="btn btn-green w-100 mt-3">
+                        Shop {{ $sale->total_listings }} Listings
+                    </a>
+                </div>
+                @empty
                 <div class="carousel-item active">
-                    <div class="d-flex mt-2">
-                        <img src=https://i.discogs.com/iIZ74y-SGUGNfUaccYF3zVP5gCj4j6u_6ht7M-SUiis/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTU0/NjUzLTE1MjE5MzA0/MjEtMjAxMC5qcGVn.jpeg width="100" height="100" class="me-2">
-
-                        <div>
-                            <div class="small">MASTER RELEASE</div>
-                            <strong>Les Mystérieuses Cités D'Or</strong><br>
-                            <span class="small">Apollo (18)</span><br>
-                            <span class="small">1983</span><br>
-                            <span class="small">Vinyl · CD</span><br>
-                            <span class="small">From $17 to $125</span>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-green w-100 mt-3">
-                        Shop 23 Listings
-                    </button>
+                    <div class="text-center py-3 text-muted">No listings available</div>
                 </div>
-
-                <!-- ITEM 2 -->
-                <div class="carousel-item">
-                    <div class="d-flex mt-2">
-                        <img src="https://via.placeholder.com/90" width="90" class="me-2">
-
-                        <div>
-                            <div class="small">MASTER RELEASE</div>
-                            <strong>Goldorak</strong><br>
-                            <span class="small">Various</span><br>
-                            <span class="small">2018</span><br>
-                            <span class="small">Vinyl</span><br>
-                            <span class="small">France</span>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-green w-100 mt-3">
-                        Shop 120 Listings
-                    </button>
-                </div>
-
-            </div>
+                @endforelse
+        </div>
 
             <!-- PANAH -->
             <button class="carousel-control-prev" type="button" data-bs-target="#saleCarousel" data-bs-slide="prev">
@@ -292,15 +276,17 @@
 
             <!-- DOT -->
             <div class="carousel-indicators">
-                <button data-bs-target="#saleCarousel" data-bs-slide-to="0" class="active"></button>
-                <button data-bs-target="#saleCarousel" data-bs-slide-to="1"></button>
-            </div>
+    @foreach($forSale as $index => $sale)
+    <button data-bs-target="#saleCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></button>
+    @endforeach
+</div>
+
 
         </div>
 
         <!-- BUTTON BAWAH -->
         <button class="btn btn-light w-100 mt-2">
-            Shop All Warner Brothers Music, France
+            Shop All {{ $label->name }}
         </button>
 
     </div>
@@ -341,10 +327,14 @@
                 <!-- TOP CONTROL -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="small">
-                        Showing 1–25 of 88
-                        <a href="#" class="ms-2">Next ›</a>
-                    </div>
-
+    Showing {{ $releases->firstItem() }}–{{ $releases->lastItem() }} of {{ $releases->total() }}
+    @if($releases->previousPageUrl())
+        <a href="{{ $releases->previousPageUrl() }}" class="ms-2">‹ Prev</a>
+    @endif
+    @if($releases->nextPageUrl())
+        <a href="{{ $releases->nextPageUrl() }}" class="ms-2">Next ›</a>
+    @endif
+</div>
                     <div class="d-flex align-items-center gap-2">
                         <button id="toggleFilter" class="btn btn-dark rounded-pill px-3" style="width:170px;">
                             <div class="d-flex justify-content-between align-items-center">
@@ -377,12 +367,12 @@
                             </svg>
                         </button>
 
-                        <select class="form-select form-select-sm" style="width:70px;">
-                            <option>25</option>
-                            <option>50</option>
-                            <option>100</option>
-                            <option>250</option>
-                            <option>500</option>
+                        <select class="form-select form-select-sm" style="width:70px;" onchange="changePerPage(this.value)">
+                            <option value="25" {{ request('per_page') == 25 || !request('per_page') ? 'selected' : '' }}>25</option>
+                            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                            <option value="250" {{ request('per_page') == 250 ? 'selected' : '' }}>250</option>
+                            <option value="500" {{ request('per_page') == 500 ? 'selected' : '' }}>500</option>
                         </select>
                     </div>
 
@@ -400,39 +390,38 @@
                         <div></div>
                     </div>
 
-                    <div class="release-item" data-year="2020">
-                        <img src=https://i.discogs.com/7BI3dmn1urMQJPrC_M72b2IVa8BX3PDK8u4FDFo9XhE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0OTA0/MzczLTE1OTAxNjc5/NzAtNjA2OS5qcGVn.jpeg>
+                    @forelse($releases as $release)
+                    <div class="release-item" data-year="{{ $release->year }}">
+                        <img src="{{ asset('images/no-image.png') }}">
 
-                        <!-- GRID VIEW -->
                         <div class="grid-info">
-                            <div class="title"><a href="#">Yours Truly</a></div>
-                            <div class="artist"><a href="#">Ariana Grande</a></div>
-                            <div class="year">2013</div>
+                            <div class="title"><a href="{{ route('show.release', $release->release_id) }}">{{ $release->title }}</a></div>
+                            <div class="year">{{ $release->year ?? '-' }}</div>
                         </div>
 
-                        <!-- GRIDLIST + LIST -->
                         <div class="release-main">
                             <div>
-                                <div class="title"><a href="#">Various</a> – <a href="#">Goldorak</a></div>
-                                <div class="format-text">(LP, Pic, RE)</div>
+                                <div class="title">
+                                    <a href="{{ route('show.release', $release->release_id) }}">{{ $release->title }}</a>
+                                </div>
+                                <div class="format-text">({{ $release->format_name ?? '-' }})</div>
                             </div>
                         </div>
 
-                        <div class="release-catalog">3374786</div>
+                        <div class="release-catalog">{{ $release->catalog_number ?? '-' }}</div>
+                        <div class="release-year">{{ $release->year ?? '-' }}</div>
 
-                        <div class="release-year">2020</div>
-                        
                         <div class="dropdown">
-                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">
-                                •••
-                            </div>
-                            <ul class="dropdown-menu" style="color: black; background: white; border: 1px solid #ddd;">
+                            <div class="release-more" data-bs-toggle="dropdown" style="cursor:pointer;">•••</div>
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Add to List</a></li>
-                                <li><a class="dropdown-item" href="#">Edit Master Release</a></li>
+                                <li><a class="dropdown-item" href="#">Edit Release</a></li>
                             </ul>
                         </div>
-
                     </div>
+                    @empty
+                        <div class="text-center py-4">No releases found</div>
+                    @endforelse
 
                     <!-- ini kubikin buat ngecek tombol year aj-->
                     
@@ -558,6 +547,15 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 
 
+</script>
+
+<script>
+function changePerPage(value) {
+    let url = new URL(window.location.href);
+    url.searchParams.set('per_page', value);
+    url.searchParams.set('page', 1);
+    window.location.href = url.href;
+}
 </script>
 
 @endsection

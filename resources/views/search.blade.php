@@ -46,11 +46,9 @@
     .pagination-text a:hover {text-decoration: underline;}
     select.form-select-sm {border-radius: 4px;padding: 2px 6px;font-size: 13px;}
 
-    .artist-no-image {display: flex; align-items: center; justify-content: center; background: #e8e8e8; border-radius: 50%; aspect-ratio: 1/1;
-}
-
-    .artist-no-image svg { width: 45%; height: 45%; opacity: 1;
-}
+    .artist-no-image {display: flex; align-items: center; justify-content: center; background: #e8e8e8; border-radius: 50%; aspect-ratio: 1/1;}
+    .artist-no-image svg { width: 45%; height: 45%; opacity: 1;}
+    .album-title:hover { color: #2a5bd7; text-decoration: underline; }
 
 </style>
 
@@ -367,19 +365,18 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <span class="me-2 small text-muted">Sort</span>
-                    <select class="form-select form-select-sm" style="width: 150px;">
-                    <option>Relevance</option>    
-                    <option>Latest Additions</option>
-                    <option>Latest Edits</option>
-                    <option>Title, A-Z</option>
-                    <option>Title, Z-A</option>
-                    <option>Most Collected</option>
-                    <option>Most Wanted</option>
-                    <option>Trending</option>
+                    <select class="form-select form-select-sm" style="width: 150px;" onchange="submitSort(this.value)">
+                        <option value="relevance" {{ request('sort','relevance')=='relevance' ? 'selected' : '' }}>Relevance</option>
+                        <option value="title_az" {{ request('sort')=='title_az' ? 'selected' : '' }}>Title, A-Z</option>
+                        <option value="title_za" {{ request('sort')=='title_za' ? 'selected' : '' }}>Title, Z-A</option>
+                        <option value="latest" {{ request('sort')=='latest' ? 'selected' : '' }}>Latest Additions</option>
+                        <option value="most_collected" {{ request('sort')=='most_collected' ? 'selected' : '' }}>Most Collected</option>
+                        <option value="most_wanted" {{ request('sort')=='most_wanted' ? 'selected' : '' }}>Most Wanted</option>
+                        <option value="trending" {{ request('sort')=='trending' ? 'selected' : '' }}>Trending</option>
                     </select>
 
                     <div class="btn-group ms-2">
-                        <button id="gridBtn" class="btn btn-sm btn-outline-black">
+                        <button id="gridBtn" class="btn btn-sm btn-outline-black active">
                             <i class="bi bi-grid-3x3-gap-fill">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/>
@@ -414,6 +411,7 @@
                             <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
                         </a>
                     @elseif($album->format_name == 'ARTIST')
+                        <a href="{{ route('show.artist', $album->master_id) }}">
                         @if($album->foto)
                             <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
                         @else
@@ -424,7 +422,9 @@
 </div>
                         @endif
                     @elseif($album->format_name == 'LABEL')
-                        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                        <a href="{{ route('show.label', $album->master_id) }}">
+        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+    </a>
                     @else
                         <a href="{{ route('show.release', $album->release_id) }}">
                             <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
@@ -444,9 +444,9 @@
         <div class="album-artist">{{ $album->nama_artis }}</div>
         <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
     @elseif($album->format_name == 'ARTIST')
-    <a href="{{ route('artist.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+    <a href="{{ route('show.artist', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
 @elseif($album->format_name == 'LABEL')
-    <a href="{{ route('label.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+    <a href="{{ route('show.label', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
     @else
         <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
         <div class="album-artist">{{ $album->nama_artis }}</div>
@@ -463,6 +463,7 @@
                             <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
                         </a>
                     @elseif($album->format_name == 'ARTIST')
+                        <a href="{{ route('show.artist', $album->master_id) }}">
                         @if($album->foto)
                             <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
                         @else
@@ -473,7 +474,9 @@
 </div>
                         @endif
                     @elseif($album->format_name == 'LABEL')
-                        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+                        <a href="{{ route('show.label', $album->master_id) }}">
+        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
+    </a>
                     @else
                         <a href="{{ route('show.release', $album->release_id) }}">
                             <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
@@ -493,9 +496,9 @@
         <div class="album-artist">{{ $album->nama_artis }}</div>
         <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
     @elseif($album->format_name == 'ARTIST')
-    <a href="{{ route('artist.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+    <a href="{{ route('show.artist', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
 @elseif($album->format_name == 'LABEL')
-    <a href="{{ route('label.show', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+    <a href="{{ route('show.label', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
     @else
         <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
         <div class="album-artist">{{ $album->nama_artis }}</div>
@@ -509,7 +512,7 @@
     @endforeach
 
 </div>
-{{ $albums->links() }}
+{{ $albums->appends(request()->except('page'))->links() }}
 
             <!-- Pagination -->
             <div class="d-flex justify-content-between align-items-center mt-4">
@@ -525,11 +528,11 @@
                 <div class="d-flex align-items-center">
                     <span class="me-2 small text-muted">Show</span>
 
-                    <select class="form-select form-select-sm" style="width: 80px;">
-                        <option>10</option>
-                        <option selected>25</option>
-                        <option>50</option>
-                        <option>100</option>
+                    <select class="form-select form-select-sm" style="width:70px;" onchange="changePerPage(this.value)">
+                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                        <option value="25" {{ request('per_page') == 25 || !request('per_page') ? 'selected' : '' }}>25</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
                     </select>
                 </div>
             </div>
@@ -587,6 +590,31 @@ listBtn.onclick = () => {
         'row-cols-md-3',
         'row-cols-lg-5'
     );
+}
+</script>
+
+<script>
+function changePerPage(value) {
+    // Ambil URL saat ini
+    let url = new URL(window.location.href);
+    
+    // Set atau update parameter 'per_page' di URL
+    url.searchParams.set('per_page', value);
+    
+    // Reset halaman ke page 1 lagi supaya tidak error kalau datanya berkurang
+    url.searchParams.set('page', 1);
+    
+    // Pindah ke URL baru
+    window.location.href = url.href;
+}
+</script>
+
+<script>
+function submitSort(value) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', value);
+    url.searchParams.delete('page');
+    window.location.href = url.toString();
 }
 </script>
 

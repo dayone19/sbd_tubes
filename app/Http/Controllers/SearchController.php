@@ -16,6 +16,8 @@ class SearchController extends Controller
     
     
 public function index() {
+        $perPage = request('per_page', 25);
+
     //  1. Ambil Data Genre + Count query sql
     //     SELECT 
     //     g.genre_id, 
@@ -153,6 +155,7 @@ $filterStyle = request('style', []);
 $filterFormat = request('format', []);
 $filterCountry = request('country', []);
 $filterDecade = request('decade', []);
+$sort = request('sort', 'relevance');
 
 $masterRelease = DB::table('master_albums as ma')
     ->select(
@@ -234,14 +237,20 @@ $releases = DB::table('master_albums as ma')
 if ($type == 'master') {
     $albums = DB::table(DB::raw("({$masterRelease->toSql()}) as combined"))
         ->mergeBindings($masterRelease)
-        ->orderByRaw('RAND()')
-        ->paginate(25);
+        ->when($sort == 'title_az', fn($q) => $q->orderBy('judul', 'asc'))   
+        ->when($sort == 'title_za', fn($q) => $q->orderBy('judul', 'desc'))  
+        ->when($sort == 'latest', fn($q) => $q->orderBy('master_id', 'desc'))
+        ->when($sort == 'relevance', fn($q) => $q->orderByRaw('RAND()'))
+        ->paginate($perPage);
 
 } elseif ($type == 'release') {
     $albums = DB::table(DB::raw("({$releases->toSql()}) as combined"))
         ->mergeBindings($releases)
-        ->orderByRaw('RAND()')
-        ->paginate(25);
+          ->when($sort == 'title_az', fn($q) => $q->orderBy('judul', 'asc'))   
+        ->when($sort == 'title_za', fn($q) => $q->orderBy('judul', 'desc'))  
+        ->when($sort == 'latest', fn($q) => $q->orderBy('master_id', 'desc'))
+        ->when($sort == 'relevance', fn($q) => $q->orderByRaw('RAND()'))
+        ->paginate($perPage);
 
 }  elseif ($type == 'artist') {
     $albums = DB::table('artists')
@@ -254,14 +263,16 @@ if ($type == 'master') {
             'image as foto',  // ← tambah ini
             DB::raw("'ARTIST' as format_name")
         )
-        ->orderByRaw('RAND()')
-        ->paginate(25);
+        ->when($sort == 'title_az', fn($q) => $q->orderBy('name', 'asc'))   
+        ->when($sort == 'title_za', fn($q) => $q->orderBy('name', 'desc'))
+        ->when($sort == 'relevance', fn($q) => $q->orderByRaw('RAND()'))
+        ->paginate($perPage);
 
 
 } elseif ($type == 'label') {
     $albums = DB::table('labels')
         ->select(
-            DB::raw('NULL as master_id'),
+            'label_id as master_id', 
             DB::raw('NULL as release_id'),
             'name as judul',
             DB::raw('NULL as tahun'),
@@ -269,14 +280,43 @@ if ($type == 'master') {
             DB::raw('NULL as foto'),
             DB::raw("'LABEL' as format_name")
         )
-        ->orderByRaw('RAND()')
-        ->paginate(25);
+        ->when($sort == 'title_az', fn($q) => $q->orderBy('name', 'asc'))  
+        ->when($sort == 'title_za', fn($q) => $q->orderBy('name', 'desc'))
+        ->when($sort == 'relevance', fn($q) => $q->orderByRaw('RAND()'))
+        ->paginate($perPage);
 
 } else {
-    $albums = DB::table(DB::raw("({$masterRelease->unionAll($releases)->toSql()}) as combined"))
-        ->mergeBindings($masterRelease->unionAll($releases))
-        ->orderByRaw('RAND()')
-        ->paginate(25);
+    $artists = DB::table('artists')
+        ->select(
+            'artist_id as master_id',
+            DB::raw('NULL as release_id'),
+            'name as judul',
+            DB::raw('NULL as tahun'),
+            'name as nama_artis',
+            'image as foto',
+            DB::raw("'ARTIST' as format_name")
+        );
+
+    $labelQuery = DB::table('labels')
+        ->select(
+            'label_id as master_id',
+            DB::raw('NULL as release_id'),
+            'name as judul',
+            DB::raw('NULL as tahun'),
+            'name as nama_artis',
+            DB::raw('NULL as foto'),
+            DB::raw("'LABEL' as format_name")
+        );
+
+    $union = $masterRelease->unionAll($releases)->unionAll($artists)->unionAll($labelQuery);
+
+    $albums = DB::table(DB::raw("({$union->toSql()}) as combined"))
+        ->mergeBindings($union)
+        ->when($sort == 'title_az', fn($q) => $q->orderBy('judul', 'asc'))
+        ->when($sort == 'title_za', fn($q) => $q->orderBy('judul', 'desc'))
+        ->when($sort == 'latest', fn($q) => $q->orderBy('master_id', 'desc'))
+        ->when($sort == 'relevance', fn($q) => $q->orderByRaw('RAND()'))
+        ->paginate($perPage);
 }
 
 // 7. Count untuk Nav
@@ -291,6 +331,65 @@ return view('search', compact(
     'Genre', 'Style', 'Format', 'Country', 'Decade', 'albums',
     'countAll', 'countRelease', 'countMaster', 'countArtist', 'countLabel'
 ));
+}
+
+public function showLabel($id)
+{
+    $perPage = request('per_page', 25);
+
+    $label = DB::table('labels')->where('label_id', $id)->first();
+
+    $parentLabel = null;
+    // if($label && $label->parent_label_id) {
+    //     $parentLabel = DB::table('labels')->where('label_id', $label->parent_label_id)->first();
+    // }
+
+    // $sublabels = DB::table('labels')->where('parent_label_id', $id)->get();
+    $sublabels = collect();
+
+    $forSale = DB::table('label_release as lr')
+        ->join('releases as r', 'lr.release_id', '=', 'r.release_id')
+        ->join('master_albums as ma', 'r.master_id', '=', 'ma.master_id')
+        ->join('products as p', 'r.release_id', '=', 'p.release_id')
+        ->leftJoin('images as img', 'r.release_id', '=', 'img.release_id')
+        ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+        ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
+        ->select(
+            'ma.master_id',
+            'ma.title',
+            'ma.year',
+            DB::raw('MIN(img.url) as foto'),
+            DB::raw('GROUP_CONCAT(DISTINCT f.name SEPARATOR " · ") as format_name'),
+            DB::raw('MIN(p.price) as min_price'),
+            DB::raw('MAX(p.price) as max_price'),
+            DB::raw('COUNT(p.product_id) as total_listings')
+        )
+        ->where('lr.label_id', $id)
+        ->where('p.status', 'tersedia')
+        ->groupBy('ma.master_id', 'ma.title', 'ma.year')
+        ->limit(5)
+        ->get();
+
+    $releases = DB::table('label_release as lr')
+        ->join('releases as r', 'lr.release_id', '=', 'r.release_id')
+        ->join('master_albums as ma', 'r.master_id', '=', 'ma.master_id')
+        ->leftJoin('images as img', 'r.release_id', '=', 'img.release_id')
+        ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+        ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
+        ->select(
+            'r.release_id',
+            'ma.title',
+            'ma.year',
+            'lr.catalog_number',
+            DB::raw('MIN(img.url) as foto'),
+            DB::raw('GROUP_CONCAT(DISTINCT f.name SEPARATOR ", ") as format_name')
+        )
+        ->where('lr.label_id', $id)
+        ->groupBy('r.release_id', 'ma.title', 'ma.year', 'lr.catalog_number')
+        ->orderBy('ma.year', 'asc')
+        ->paginate($perPage);
+
+    return view('showLabel', compact('label', 'releases', 'id', 'sublabels', 'parentLabel', 'forSale'));
 }
 
     
