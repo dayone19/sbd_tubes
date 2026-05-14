@@ -511,11 +511,14 @@ class ArtistController extends Controller
         // SELECT DISTINCT l.list_id, 
         //                 l.name,
         //                 u.username,
+        //                 l.comments,
+        //                 l.description,
         // FROM lists l
         // LEFT JOIN list_release lr ON l.list_id = lr.list_id
         // LEFT JOIN releases r ON lr.release_id = r.release_id
         // LEFT JOIN artist_release ar ON r.release_id = ar.release_id
         // LEFT JOIN users ar u l.user_id = l.user_id_id
+        // ORDER BY l.created_at desc
         // WHERE ar.artist_id = ?
 
         $lists = DB::table('lists as l')
@@ -526,8 +529,11 @@ class ArtistController extends Controller
             ->select('l.list_id', 
                      'l.name',
                      'u.username',
+                     'l.comments',
+                     'l.description',
                      )
             ->where('ar.artist_id', $id)
+            ->orderBy('l.created_at', 'desc')
             ->distinct()
             ->get();
 
@@ -580,6 +586,8 @@ class ArtistController extends Controller
                 'user_id' => 1,
                 // 'user_id' => auth()->id(),
                 'name'    => $request->name,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
             ]);
 
             $release = DB::table('artist_release')
@@ -589,8 +597,6 @@ class ArtistController extends Controller
             DB::table('list_release')->insert([
                 'list_id'   => $list->list_id,
                 'release_id'=> $release,
-                'description'=> $request->description,
-                'comments'=> $request->comments,
             ]);
             
         } else {
@@ -598,7 +604,7 @@ class ArtistController extends Controller
             $list = ListModel::findOrFail($request->list_id);
         }
 
-        $comment = $request->comments;
+        // $comment = $request->comments;
 
         return redirect()->route('show.artist', $artist->artist_id)
                         ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);

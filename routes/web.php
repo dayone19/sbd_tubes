@@ -8,6 +8,7 @@ use App\Http\Controllers\ShowAlbumController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\UserListController;
 
 
 Route::get('/selling', function () {
@@ -55,9 +56,9 @@ Route::get('/mywants', function () {
     return view('mywants');
 })->name('mywants');
 
-Route::get('/lists', function () {
-    return view('lists');
-});
+// Route::get('/lists', function () {
+//     return view('lists');
+// });
 
 Route::get('/submissions', function () {
     return view('submissions');
@@ -69,9 +70,9 @@ Route::prefix('user')->group(function () {
         return view('user.collection');
     })->name('user.collection');
 
-    Route::get('/lists', function () {
-        return view('user.lists');
-    })->name('user.lists');
+    // Route::get('/lists', function () {
+    //     return view('user.lists');
+    // })->name('user.lists');
 
     Route::get('/drafts', function () {
         return view('user.drafts');
@@ -141,3 +142,14 @@ Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])
 
 //route untuk ListsController
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
+
+//route untuk UseListController
+Route::get('/user/{user_id}/lists', [UserListController::class, 'showList'])->name('user.lists');
+Route::get('/lists/{list_id}/edit', [UserListController::class, 'edit'])->name('lists.edit');
+Route::put('/lists/{list_id}', [UserListController::class, 'update'])->name('lists.update');
+Route::get('/lists/{list_id}', [UserListController::class, 'show'])->name('lists.show');
+Route::put('/lists/{list_id}/release/{release_id}', [UserListController::class, 'updateComment'])->name('lists.updateComment');
+Route::delete('/lists/{id}', [UserListController::class, 'destroy'])->name('lists.destroy');
+
+
+

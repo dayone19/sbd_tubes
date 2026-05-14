@@ -144,7 +144,7 @@
         <div class="title">This Week's Collected Vinyl Records & CDs</div>
     </div>
 
-    <div class="carousel-wrapper">
+    <!-- <div class="carousel-wrapper">
         <button class="carousel-btn prev" onclick="scrollCarousel('collected', -1)">&#8249;</button>
 
         <div class="album-row" id="collected">
@@ -167,21 +167,21 @@
                     {{$collected->tahun}} 
                 </div>
 
-                <!-- style -->
-                <div class="year">
+                style -->
+                <!-- <div class="year">
                     {{$collected->style}}, {{$collected->genre}}
                     <br>{{$collected->format}}
-                </div>
+                </div> -->
 
-                <div class="year">
+                <!-- <div class="year">
                     {{$collected->total_copies ?? 0 }} copies from ${{number_format($collected->lowest_price ?? 0, 2)}}
                 </div>
-            </div>
-            @endforeach
+            </div> -->
+            <!-- @endforeach
             @endif
         </div>
         <button class="carousel-btn next" onclick="scrollCarousel('collected', 1)">&#8250;</button>
-    </div>
+    </div> -->
 </div>
 
 <script>
