@@ -1319,6 +1319,29 @@
   font-size: 10px;
   color: #aaa;
 }
+
+/* 1. Kondisi Normal (Ikon Merah Sembunyi) */
+.track .play-icon-hover {
+    display: none; /* WAJIB ADA: Biar pas kursor nggak lewat, dia sembunyi */
+    color: #FC3C44;
+    font-size: 10px;
+    width: 25px;
+    text-align: center;
+}
+
+/* 2. Kondisi Hover (Kursor Lewat) */
+.track:hover {
+    background-color: #efefef; /* Biar baris jadi abu-abu */
+    cursor: pointer;
+}
+
+.track:hover .track-num {
+    display: none; /* Nomor hilang pas kursor lewat */
+}
+
+.track:hover .play-icon-hover {
+    display: inline-block; /* ✅ INI DIA: Ikon merah muncul pas kursor lewat */
+}
  
 
     /* Responsive */
@@ -1522,6 +1545,8 @@
  
 <div class="reviews-title">Reviews</div>
 
+<form action="{{ route('release.review', $release->release_id) }}" method="POST">
+    @csrf
 <div id="reviewForm" class="review-form-wrap" style="display:block;">
 
   <textarea
@@ -1529,6 +1554,7 @@
     class="review-textarea"
     placeholder="Enter your comment"
     oninput="handleReviewInput()"
+    name="comment"
   ></textarea>
 
   <div id="previewBox" class="review-preview-box">
@@ -1542,10 +1568,11 @@
   </div>
 
   <div class="review-form-footer">
-    <button id="submitBtn" class="review-submit-btn" disabled>Submit</button>
+    <button type="submit" id="submitBtn" class="review-submit-btn" disabled>Submit</button>
     <a href="#" class="review-help-link">View Help</a>
   </div>
 </div>
+</form>
  
   <!-- Review 1 -->
    @foreach($reviews as $review)
@@ -1584,6 +1611,7 @@
     </div> -->
  @endforeach
  </div>
+
  
  
     <!-- end .album-left -->
@@ -1603,7 +1631,7 @@
             <a href="#">Edit Release</a>
             <a href="{{route('album.versions', $release->master_id)}}">See all versions</a>
             <span style="color:black;">Recently Edited</span> 
-        </div>
+        <!-- </div> -->
 
         <!-- For Sale -->
         <div class="for-sale-header">
@@ -1725,16 +1753,15 @@
   </div>
  
   <!-- Album Info -->
-  <div class="album-info">
-    <div class="album-info-left">
+    <div class="album-info">
       <div class="album-art">
-        <img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/45/11/64/451164b6-41f7-3d3a-5a68-7fb4adf5a0e0/source/100x100bb.jpg" alt="Album Art">
+        <img src="{{ $release->image }}" alt="Album Art">
       </div>
       <div>
-        <div class="album-title">Changin' Times</div>
-        <div class="album-artist">Ike White</div>
+        <div class="album-title">{{ $release->title }}</div>
+        <div class="album-artist">{{ $artis->name }}</div>
       </div>
-    </div>
+    
     <button class="btn-dots">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
         <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
@@ -1743,34 +1770,27 @@
       </svg>
     </button>
   </div>
+
+  <!-- Hidden audio player -->
+<audio id="player" style="display:none;"></audio>
  
   <!-- Track List -->
-  <div class="track-list">
-    <div class="track">
-      <span class="track-num">1</span>
-      <span class="track-name">Changin' Times</span>
-    </div>
-    <div class="track">
-      <span class="track-num">2</span>
-      <span class="track-name">Antoinette</span>
-    </div>
-    <div class="track">
-      <span class="track-num">3</span>
-      <span class="track-name">Comin' Home</span>
-    </div>
-    <div class="track">
-      <span class="track-num">4</span>
-      <span class="track-name">Happy Face</span>
-    </div>
-    <div class="track">
-      <span class="track-num">5</span>
-      <span class="track-name">I Remember George</span>
-    </div>
-    <div class="track dimmed">
-      <span class="track-num">6</span>
-      <span class="track-name">Love And Affection</span>
-    </div>
+<div class="track-list">
+  @foreach($tracks as $i => $track)
+  <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
+    
+    <span class="track-num">{{ $i+1 }}</span>
+    
+    <span class="play-icon-hover">▶</span>
+    
+    <span class="track-name">{{ $track->title }}</span>
   </div>
+  @endforeach
+</div>
+  <!-- Custom Play Button -->
+<button id="playBtn">Play</button>
+<button id="pauseBtn">Pause</button>
+
  
   <!-- Play Button -->
   <div class="play-wrap">
@@ -1782,17 +1802,13 @@
     </button>
   </div>
  
-  <!-- View in App -->
+  View in App
   <div class="view-app">
     <a href="#">View in App ↗</a>
-  </div>
-
-  <div class="footer">
     <span>See how your data is managed...</span>
   </div>
-</div>
 
- 
+</div>
 </div>
 
         
@@ -1829,19 +1845,22 @@
       <span style="color: #0088cc; font-size: 12px; cursor: pointer;">Add to List</span>
     </div>
     <div style="font-size: 12px; line-height: 1.8;">
-      <div>Sabrina Carpenter by <span style="color: #0088cc; cursor: pointer;">musiccouple25</span></div>
-      <div>◇#．blue pressings！ by <span style="color: #0088cc; cursor: pointer;">healthyhabit</span></div>
-      <div>pop by <span style="color: #0088cc; cursor: pointer;">amerella</span></div>
+      @foreach($lists as $list)
+      <div>{{ $list->username }} by <span style="color: #0088cc; cursor: pointer;">{{ $list->username }}</span></div>
+      @endforeach
     </div>
     <a href="/lists">
     <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">View More Lists →</div>
     </a>
   </div>
+  </div>
 
     <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
+    @foreach($contributors as $contributor)
     <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
-      tonevendor, reunov, tji, myvinyldiscography, soldoutvinylrecords, IanMeetsMcEnroe, melodramarecords, beebotjean, SP_Vinyl, _DjRay1967_, Killerian123333, Nicolas-1223, timohanen
+      {{ $contributor->username }}
   </div>
+  @endforeach
 
   
     <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">Report Suspicious Activity</div>
@@ -1855,6 +1874,14 @@
      
 
 <script>
+
+  function playTrack(el) {
+    const url = el.getAttribute('data-audio');
+    const player = document.getElementById('player');
+    player.src = url;
+    player.play();
+  }
+
 let visible = true;
 let showing = false;
 

@@ -123,6 +123,7 @@ Route::get('/', [AlbumController::class, 'index']);
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
 
 //route untuk ShowReleaseController.php
+Route::post('/release/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('release.review');
 Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
 
 //route untuk ShowAlbumController.php
