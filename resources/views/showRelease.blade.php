@@ -910,38 +910,7 @@
   .nav-arrows a { color: #0070c0; text-decoration: none; font-size: 18px; }
   .nav-arrows a:hover { color: #004a99; }
 
-  .reviews-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #000;
 
-    margin-top: 25px; /* jarak dari rekomendasi */
-
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 16px;
-}
- 
-   .add-review-btn {
-    display: inline-block;
-
-    padding: 4px 10px;
-    font-size: 12px;
-
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-
-    cursor: pointer;
-    color: #333;
-
-    margin-bottom: 20px;
-}
- 
-    .add-review-btn:hover {
-      background-color: #e8e8e8;
-    }
- 
     .review-item {
     border-top: 1px solid #e0e0e0;
     padding: 10px 0;
@@ -1059,6 +1028,298 @@
       font-size: 12px;
       cursor: pointer;
     }
+
+    .reviews-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+    margin-top: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+
+  .add-review-btn {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .add-review-btn:hover {
+    background-color: #e8e8e8;
+  }
+
+  .review-form-wrap {
+    display: none;
+    margin-bottom: 20px;
+  }
+
+  .review-form-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .review-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 2px solid #4a90d9;
+    border-radius: 8px;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .review-preview-box {
+    display: none;
+    margin-top: 6px;
+  }
+
+  .review-preview-label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .review-preview-text {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+    min-height: 30px;
+  }
+
+  .review-word-warning {
+    display: none;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+
+  .review-word-warning em {
+    font-style: italic;
+  }
+
+  .review-form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .review-submit-btn {
+    padding: 6px 16px;
+    font-size: 13px;
+    background: #ccc;
+    color: #888;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    cursor: not-allowed;
+  }
+
+  .review-submit-btn.active {
+    background: #e8e8e8;
+    color: #333;
+    border-color: #ccc;
+    cursor: pointer;
+  }
+
+  .review-help-link {
+    color: #7b2d8b;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .review-help-link:hover {
+    text-decoration: underline;
+  }
+
+    .widget {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        background: #fff;
+        width: 285px; 
+        border-radius: 0;
+        box-shadow: none; 
+        overflow: hidden;
+    }
+ 
+    /* Header */
+    .header {
+      padding: 5px 10px 2px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .header span {
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .music-content {
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+ 
+    /* Apple Music Bar */
+.music-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+  padding: 7px 10px;
+  background: #f9f9f9;
+}
+
+    .music-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .music-bar-left span {
+      font-size: 12px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.2px;
+      margin-bottom: 4px;
+    }
+    .btn-signin {
+      background: #f0f0f0;
+      border: none;
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 400;
+      color: #333;
+      cursor: pointer;
+    }
+ 
+    /* Album Info */
+    .album-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .album-info-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .album-art {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #3a3a3a;
+    }
+    .album-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .album-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+      line-height: 1.3;
+    }
+    .album-artist {
+      font-size: 11px;
+      color: #888;
+      margin-top: 1px;
+    }
+    .btn-dots {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    /* Track List */
+    .track {
+      display: flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .track-num {
+      font-size: 11px;
+      color: #aaa;
+      width: 18px;
+      text-align: right;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .track-name {
+      font-size: 12px;
+      color: #000;
+    }
+    .track.dimmed .track-num,
+    .track.dimmed .track-name {
+      color: #ccc;
+    }
+ 
+    /* Play Button */
+    .play-wrap {
+      padding: 10px;
+    }
+
+    .btn-play {
+      width: 100%;
+      background: #FC3C44;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-play span {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+ 
+    /* View in App */
+    .view-app {
+      text-align: center;
+      padding: 0px 10px 10px;
+    }
+    .view-app a {
+      color: #FC3C44;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .footer {
+  padding: 6px 10px 10px;
+  text-align: right;
+  background: #f9f9f9;
+}
+
+.footer span {
+  font-size: 10px;
+  color: #aaa;
+}
+ 
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -1260,8 +1521,31 @@
   </div>
  
 <div class="reviews-title">Reviews</div>
- 
-  <button class="add-review-btn">Add Review</button>
+
+<div id="reviewForm" class="review-form-wrap" style="display:block;">
+
+  <textarea
+    id="reviewInput"
+    class="review-textarea"
+    placeholder="Enter your comment"
+    oninput="handleReviewInput()"
+  ></textarea>
+
+  <div id="previewBox" class="review-preview-box">
+    <div class="review-preview-label">Preview</div>
+    <div id="previewText" class="review-preview-text"></div>
+  </div>
+
+  <div id="wordWarning" class="review-word-warning">
+    <span style="color:#cc0000; font-weight:bold;">&#9432;</span>
+    <em id="warningText">At least 10 words must be entered.</em>
+  </div>
+
+  <div class="review-form-footer">
+    <button id="submitBtn" class="review-submit-btn" disabled>Submit</button>
+    <a href="#" class="review-help-link">View Help</a>
+  </div>
+</div>
  
   <!-- Review 1 -->
    @foreach($reviews as $review)
@@ -1421,6 +1705,96 @@
     </button>
   </div>
 
+  <div class="widget">
+ 
+  <!-- Header -->
+  <div class="header">
+    <span>Audio</span>
+  </div>
+ 
+  <div class="music-content">
+  <!-- Apple Music Bar -->
+  <div class="music-bar">
+    <div class="music-bar-left">
+      <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
+        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
+      </svg>
+      <span>Music</span>
+    </div>
+    <button class="btn-signin">Sign In</button>
+  </div>
+ 
+  <!-- Album Info -->
+  <div class="album-info">
+    <div class="album-info-left">
+      <div class="album-art">
+        <img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/45/11/64/451164b6-41f7-3d3a-5a68-7fb4adf5a0e0/source/100x100bb.jpg" alt="Album Art">
+      </div>
+      <div>
+        <div class="album-title">Changin' Times</div>
+        <div class="album-artist">Ike White</div>
+      </div>
+    </div>
+    <button class="btn-dots">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
+        <circle cx="12" cy="12" r="2" fill="#FF3B5C"/>
+        <circle cx="19" cy="12" r="2" fill="#FF3B5C"/>
+      </svg>
+    </button>
+  </div>
+ 
+  <!-- Track List -->
+  <div class="track-list">
+    <div class="track">
+      <span class="track-num">1</span>
+      <span class="track-name">Changin' Times</span>
+    </div>
+    <div class="track">
+      <span class="track-num">2</span>
+      <span class="track-name">Antoinette</span>
+    </div>
+    <div class="track">
+      <span class="track-num">3</span>
+      <span class="track-name">Comin' Home</span>
+    </div>
+    <div class="track">
+      <span class="track-num">4</span>
+      <span class="track-name">Happy Face</span>
+    </div>
+    <div class="track">
+      <span class="track-num">5</span>
+      <span class="track-name">I Remember George</span>
+    </div>
+    <div class="track dimmed">
+      <span class="track-num">6</span>
+      <span class="track-name">Love And Affection</span>
+    </div>
+  </div>
+ 
+  <!-- Play Button -->
+  <div class="play-wrap">
+    <button class="btn-play">
+      <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
+        <polygon points="0,0 14,8 0,16"/>
+      </svg>
+      <span>Play</span>
+    </button>
+  </div>
+ 
+  <!-- View in App -->
+  <div class="view-app">
+    <a href="#">View in App ↗</a>
+  </div>
+
+  <div class="footer">
+    <span>See how your data is managed...</span>
+  </div>
+</div>
+
+ 
+</div>
+
         
               <div id="video-sidebar-section">
                 <div class="v-header">
@@ -1515,6 +1889,55 @@ function toggleAll() {
     } else {
         icon.className = 'ti ti-eye'; // mata terbuka
         label.textContent = 'Show Credits';
+    }
+}
+
+function handleReviewInput() {
+    const input = document.getElementById("reviewInput");
+    const submitBtn = document.getElementById("submitBtn");
+    const previewBox = document.getElementById("previewBox");
+    const previewText = document.getElementById("previewText");
+    const warning = document.getElementById("wordWarning");
+
+    const text = input.value.trim();
+
+    // preview
+    if (text.length > 0) {
+        previewBox.style.display = "block";
+        previewText.textContent = text;
+    } else {
+        previewBox.style.display = "none";
+    }
+
+    // hitung jumlah kata
+    const wordCount = text
+        .split(/\s+/)
+        .filter(word => word.length > 0).length;
+
+    // minimal 10 kata
+    if (wordCount >= 10) {
+        submitBtn.disabled = false;
+
+        submitBtn.style.background = "#000";
+        submitBtn.style.color = "#fff";
+        submitBtn.style.border = "1px solid #000";
+        submitBtn.style.cursor = "pointer";
+
+        warning.style.display = "none";
+    } else {
+        submitBtn.disabled = true;
+
+        submitBtn.style.background = "#ccc";
+        submitBtn.style.color = "#888";
+        submitBtn.style.border = "1px solid #bbb";
+        submitBtn.style.cursor = "not-allowed";
+
+    // warning hanya muncul kalau sudah mulai ngetik
+        if (text.length > 0) {
+            warning.style.display = "block";
+        } else {
+            warning.style.display = "none";
+        }
     }
 }
 </script>
