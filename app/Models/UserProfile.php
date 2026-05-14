@@ -15,7 +15,6 @@ class UserProfile extends Model
         'profile',
         'geographic_location',
         'home_page',
-        'password',
     ];
 
     public function user()

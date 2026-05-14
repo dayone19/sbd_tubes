@@ -730,7 +730,7 @@
           <!-- Common Field: Comments -->
           <div class="mb-3">
             <label class="form-label">Comments on this item <span class="text-muted fst-italic ms-1">Optional</span></label>
-            <textarea class="form-control" rows="2" style="resize: vertical;" name="comments"></textarea>
+            <textarea class="form-control" rows="2" style="resize: vertical;" name="comments">{{ $list->comments }}</textarea>
           </div>
 
           <!-- Buttons -->

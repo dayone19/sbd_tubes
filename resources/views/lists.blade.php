@@ -129,6 +129,20 @@
         font-size: 14px;
     }
 
+    /* tambahan yoan */
+    .page-btn {
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        padding: 6px 12px;
+        margin: 0 2px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .page-btn:hover {
+        background-color: #e0e0e0;
+    }
+
+
 </style>
 
 <div class="container-fluid p-0">
@@ -142,7 +156,10 @@
                     <p class="mb-0">Explore lists from the Discogs community. Lists can be about anything—notable album covers, prolific producers, your favorite holiday albums. The possibilities are endless! Lists can contain artists, releases, labels, or even other lists.</p>
                 </div>
                 <div class="col-md-4 text-md-end text-start mt-3 mt-md-0">
-                    <button class="btn btn-manage">Manage My Lists</button>
+                    <a href="{{ route('user.lists', ['user_id' => 1]) }}">
+                        <button class="btn btn-manage">Manage My Lists</button>
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -203,33 +220,93 @@
 
         <!-- Table -->
         <div class="table-responsive">
-            <table class="table table-lists">
-                <thead>
+    <table class="table table-lists">
+        <thead>
+            <tr>
+                <th>List</th>
+                <th>User</th>
+                <th>Description</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($lists as $list)
                     <tr>
-                        <th>List</th>
-                        <th>User</th>
-                        <th>Description</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Row 1 -->
-                     @foreach($lists as $list)
-                    <tr>
-                        <td><a href="#" class="list-link">{{ $list->name }}</a></td>
+                        <td>
+                            <a href="{{ route('user.lists', ['user_id' => $list->user_id]) }}" class="list-link">
+                                {{ $list->name }}
+                            </a>
+                        </td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <img src="{{ asset($list->image) }}" class="user-avatar" alt="{{ $list->username }}">
-                                <a href="#" class="user-link">{{ $list->username }}</a>
+                                <a href="{{ route('user.lists', ['user_id' => $list->user_id]) }}" class="user-link">
+                                    {{ $list->username }}
+                                </a>
                             </div>
                         </td>
                         <td>{{ $list->description }}</td>
                         <td class="created-text">{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
                     </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+                @endforeach
+        </tbody>
+    </table>
 </div>
+
+<!-- Footer -->
+@php
+    $start = ($page - 1) * $perPage + 1;
+    $end = min($start + $lists->count() - 1, $total);
+
+    $prevPage = $page > 1 ? $page - 1 : null;
+    $nextPage = $end < $total ? $page + 1 : null;
+@endphp
+
+<div class="d-flex justify-content-between mt-3">
+
+    <div class="footer-left">
+        <span>Showing <b>{{ $start }}-{{ $end }}</b> of {{ $total }}</span>
+    </div>
+
+    <div class="footer-right d-flex flex-row align-items-center">
+
+    <!-- Tombol Previous -->
+    @if($prevPage)
+        <form method="GET" action="{{ route('lists.index') }}" class="me-1">
+            <input type="hidden" name="show" value="{{ $perPage }}">
+            <input type="hidden" name="page" value="{{ $prevPage }}">
+
+            <button type="submit" class="page-btn">&#8592;</button>
+        </form>
+    @endif
+
+    <!-- Tombol Next -->
+    @if($nextPage)
+        <form method="GET" action="{{ route('lists.index') }}" class="me-3">
+            <input type="hidden" name="show" value="{{ $perPage }}">
+            <input type="hidden" name="page" value="{{ $nextPage }}">
+
+            <button type="submit" class="page-btn">&#8594;</button>
+        </form>
+    @endif
+
+    <!-- Dropdown Show -->
+    <form method="GET" action="{{ route('lists.index') }}" class="d-flex align-items-center">
+        <span class="me-1">Show</span>
+
+        <select name="show" class="show-select" onchange="this.form.submit()">
+            <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+            <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+            <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+        </select>
+
+        <input type="hidden" name="page" value="{{ $page }}">
+    </form>
+
+</div>
+
+</div>
+
+</div>
+
 @endsection
