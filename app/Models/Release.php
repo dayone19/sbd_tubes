@@ -60,12 +60,12 @@ class Release extends Model
 
     public function images()
     {
-        return $this->hasMany(Image::class, 'release_id');
+        return $this->hasMany(Image::class, 'release_id', 'release_id');
     }
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'release_Id');
+        return $this->hasMany(Product::class, 'release_id');
     }
 
     public function formats()

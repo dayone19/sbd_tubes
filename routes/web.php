@@ -9,15 +9,16 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\UserListController;
+use App\Http\Controllers\NavbarSearchController;
 
 
 Route::get('/selling', function () {
     return view('selling');
 });
 
-Route::get('/search/advanced', function () {
-    return view('search.advanced');
-});
+// Route::get('/search/advanced', function () {
+//     return view('search.advanced');
+// });
 
 Route::get('/release/add', function () {
     return view('release.add');
@@ -152,5 +153,7 @@ Route::get('/lists/{list_id}', [UserListController::class, 'show'])->name('lists
 Route::put('/lists/{list_id}/release/{release_id}', [UserListController::class, 'updateComment'])->name('lists.updateComment');
 Route::delete('/lists/{id}', [UserListController::class, 'destroy'])->name('lists.destroy');
 
+//route untuk NavbarSearchController
+Route::get('/api/search', [NavbarSearchController::class, 'search'])->name('api.search');
 
 
