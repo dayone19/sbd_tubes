@@ -73,7 +73,7 @@
                 name="genre[]" 
                 value="{{ $g->genre_id }}" 
                 id="g{{ $g->genre_id }}"
-                {{ in_array($g->genre_id, request('genre', [])) ? 'checked' : '' }}>
+              {{ in_array($g->genre_id, (array) request('genre', [])) ? 'checked' : '' }}
             <label class="form-check-label small ms-2" for="g{{ $g->genre_id }}">
                 {{ $g->name }}
             </label>
@@ -96,7 +96,9 @@
                     name="style[]" 
                     value="{{ $s->style_id }}" 
                     id="style{{ $s->style_id }}"
-                    {{ in_array($s->style_id, request('style', [])) ? 'checked' : '' }}>
+                  {{-- Perbaikan Baris 99 --}}
+{{ in_array($s->style_id, (array) request('style', [])) ? 'checked' : '' }}
+
                 <label class="form-check-label small" for="style{{ $s->style_id }}" style="cursor:pointer;">
                     {{ $s->name }}
                 </label>
@@ -119,7 +121,9 @@
                     name="format[]" 
                     value="{{ $f->format_id }}" 
                     id="format{{ $f->format_id }}"
-                    {{ in_array($f->format_id, request('format', [])) ? 'checked' : '' }}>
+                {{-- Perbaikan Baris 122 --}}
+{{ in_array($f->format_id, (array) request('format', [])) ? 'checked' : '' }}
+
                 <label class="form-check-label small" for="format{{ $f->format_id }}" style="cursor:pointer;">
                     {{ $f->name }}
                 </label>
@@ -142,7 +146,7 @@
                     name="country[]" 
                     value="{{ $c->country }}" 
                     id="country{{ $c->country }}"
-                    {{ in_array($c->country, request('country', [])) ? 'checked' : '' }}>
+                  {{ in_array($c->country, (array) request('country', [])) ? 'checked' : '' }}
                 <label class="form-check-label small" for="country{{ $c->country }}" style="cursor:pointer;">
                     {{ $c->country }}
                 </label>
@@ -165,7 +169,7 @@
                     name="decade[]" 
                     value="{{ $d->decade }}" 
                     id="dec{{ $d->decade }}"
-                    {{ in_array($d->decade, request('decade', [])) ? 'checked' : '' }}>
+                  {{ in_array($d->decade, (array) request('decade', [])) ? 'checked' : '' }}
                 <label class="form-check-label small" for="dec{{ $d->decade }}" style="cursor:pointer;">
                     {{ $d->decade }}
                 </label>
@@ -358,7 +362,63 @@
             <div class="search-bar-row mt-3">
                 <div class="small">
                 {{ $albums->firstItem() }} - {{ $albums->lastItem() }} of {{ number_format($albums->total()) }}
- 
+
+                <div class="active-filters" style="display: flex; gap: 10px; align-items: center; justify-content: flex-start; margin: 15px 0; flex-wrap: wrap;">
+    
+            @php
+        // Daftar semua kolom yang ingin kita buatkan Chip-nya
+        $filterFields = [
+            'title' => 'Title',
+            'credit' => 'Credit',
+            'artist' => 'Artist',
+            'genre' => 'Genre',
+            'label' => 'Label',
+            'style' => 'Style',
+            'track' => 'Track',
+            'country' => 'Country',
+            'catno' => 'Cat #',
+            'year' => 'Year',
+            'barcode' => 'Barcode',
+            'submitter' => 'Submitter',
+            'anv' => 'ANV',
+            'contributor' => 'Contributor',
+            'format' => 'Format',
+            'matrix' => 'Matrix'
+        ];
+         @endphp
+
+    {{-- Looping untuk kolom teks --}}
+    @foreach($filterFields as $field => $label)
+        @if(request($field))
+            <div class="chip" style="background: #f0f0f0; border: 1px solid #ddd; padding: 4px 10px; border-radius: 4px; font-size: 12px; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #666;">{{ $label }}:</span>
+                <span style="font-weight: bold;">{{ request($field) }}</span>
+                <a href="{{ request()->fullUrlWithQuery([$field => null]) }}" style="text-decoration: none; color: #999; font-size: 16px; line-height: 1;">&times;</a>
+            </div>
+        @endif
+    @endforeach
+
+    {{-- Chip Khusus Checkbox --}}
+    @if(request('need_votes'))
+        <div class="chip" style="background: #f0f0f0; border: 1px solid #ddd; padding: 4px 10px; border-radius: 4px; font-size: 12px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: bold;">Needs Vote</span>
+            <a href="{{ request()->fullUrlWithQuery(['need_votes' => null]) }}" style="text-decoration: none; color: #999; font-size: 16px; line-height: 1;">&times;</a>
+        </div>
+    @endif
+
+    @if(request('need_changes'))
+        <div class="chip" style="background: #f0f0f0; border: 1px solid #ddd; padding: 4px 10px; border-radius: 4px; font-size: 12px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: bold;">Needs Changes</span>
+            <a href="{{ request()->fullUrlWithQuery(['need_changes' => null]) }}" style="text-decoration: none; color: #999; font-size: 16px; line-height: 1;">&times;</a>
+        </div>
+    @endif
+
+    {{-- Tombol Clear All --}}
+    @if(count(request()->except(['type', 'per_page', 'sort', 'page', 'q'])) > 0)
+        <a href="{{ route('advanced.results', ['type' => request('type', 'all')]) }}" style="font-size: 12px; color: #d32f2f; text-decoration: none; font-weight: bold; margin-left: 10px;">Clear All</a>
+    @endif
+   </div>
+
                 <a href="{{ $albums->previousPageUrl() ? $albums->previousPageUrl() . '&' . http_build_query(request()->except('page')) : '#' }}">❮ Prev</a>
                 <a href="{{ $albums->nextPageUrl() ? $albums->nextPageUrl() . '&' . http_build_query(request()->except('page')) : '#' }}">Next ❯</a>
 

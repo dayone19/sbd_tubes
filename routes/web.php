@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\ValuableController;
+use App\Http\Controllers\AdvancedSearchController;
+
 use App\Http\Controllers\ShowReleaseController;
 use App\Http\Controllers\ShowAlbumController;
 use App\Http\Controllers\SearchController;
@@ -15,6 +18,18 @@ use App\Http\Controllers\NavbarSearchController;
 Route::get('/selling', function () {
     return view('selling');
 });
+
+
+
+// Route untuk menampilkan form advanced search
+Route::get('/search/advanced', [AdvancedSearchController::class, 'index'])->name('advanced.search');
+
+// Route untuk memproses hasil pencarian dari form
+Route::get('/search/advanced/results', [AdvancedSearchController::class, 'search'])->name('advanced.results');
+
+
+
+
 
 // Route::get('/search/advanced', function () {
 //     return view('search.advanced');
@@ -43,6 +58,7 @@ Route::get('/login', function () {
 Route::get('/signup', function () {
     return view('auth.signup');
 });
+
 
 
 Route::get('/resources', function () {
@@ -148,6 +164,8 @@ Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])
 
 //route untuk ListsController
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
+
+
 
 //route untuk UseListController
 Route::get('/user/{user_id}/lists', [UserListController::class, 'showList'])->name('user.lists');
