@@ -13,6 +13,10 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\NavbarSearchController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ShopController;
+
 
 
 Route::get('/selling', function () {
@@ -107,17 +111,32 @@ Route::get('no_list', function () {
 
 Route::prefix('sell')->group(function () {
 
-    Route::get('/list', function () {
-        return view('sell.list');
-    })->name('sell.list');
+    // Route::get('/list', function () {
+    //     return view('sell.list');
+    // })->name('sell.list');
 
-    Route::get('/cart', function () {
-        return view('sell.cart');
-    })->name('sell.cart');
+    Route::get('/list', [ShopController::class, 'index'])->name('sell.list');
+
+    Route::get('/release/{id}', [\App\Http\Controllers\ShowReleaseController::class, 'show'])->name('release.show');
+
+    // Route::get('/cart', function () {
+    //     return view('sell.cart');
+    // })->name('sell.cart');
+        
+        Route::get('/cart', [CartController::class, 'index'])->name('sell.cart');
+        Route::delete('/cart/item/{id}',         [CartController::class, 'removeItem'])->name('cart.removeItem');
+        Route::delete('/cart/seller/{sellerId}', [CartController::class, 'removeSeller'])->name('cart.removeSeller');
+        Route::post('/cart/add-back', [CartController::class, 'addBack'])->name('cart.addBack');
+        Route::post('/cart/place-order',         [CartController::class, 'placeOrder'])->name('cart.placeOrder');
+
+         Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
     
-    Route::get('/purchases', function () {
-        return view('sell.purchases');
-    })->name('sell.purchases');
+    // Route::get('/purchases', function () {
+    //     return view('sell.purchases');
+    // })->name('sell.purchases');
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('sell.purchases');
+    Route::get('/purchases/{id}', [PurchaseController::class, 'show'])->name('sell.purchases.show');
 });
 
 Route::prefix('settings')->group(function () {
@@ -132,8 +151,11 @@ Route::prefix('settings')->group(function () {
     
 });
 
-
+//route untuk ShowLabelController.php
 Route::get('/showLabel/{id}', [SearchController::class, 'showLabel'])->name('show.label');
+
+//route untuk review label
+Route::post('/showLabel/{id}/review', [SearchController::class, 'storeReview'])->name('label.review.store');
 
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);

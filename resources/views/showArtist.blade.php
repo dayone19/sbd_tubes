@@ -224,9 +224,10 @@
                             <span class="small">From {{ $master->lowest_price }} to {{ $master->highest_price }}</span>
                         </div>
                     </div>
-                    <button class="btn btn-green w-100 mt-3">
+                    <a href="{{ route('sell.list', ['master_id' => $master->master_id]) }}" 
+                    class="btn btn-green w-100 mt-3" style="text-decoration:none; display:block; text-align:center;">
                         Shop {{ $master->listing_count }} Listings
-                    </button>
+                    </a>
                 </div>
             @endforeach
 

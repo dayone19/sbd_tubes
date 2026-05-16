@@ -1659,7 +1659,9 @@
             </div>
         </div>
 
-        <a href="#" class="btn-shop">Shop {{ $listing_count }} Listings</a>
+        <a href="{{ route('sell.list', ['master_id' => $album->master_id]) }}" class="btn-shop">
+    Shop {{ $listing_count }} Listings
+        </a>
 
         <!-- Statistics -->
         <div class="statistics-header">Statistics</div>
