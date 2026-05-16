@@ -262,6 +262,7 @@ class ShowAlbumController extends Controller
                 'i.url as photo'
             )
             ->get();
+            $credits_count = $credits->count();
 
         // SQL:
         // SELECT SUM(td.quantity), SUM(ct.quantity), AVG(rw.rating), COUNT(rw.rating),
@@ -342,20 +343,22 @@ class ShowAlbumController extends Controller
             // WHERE p.release_id = ?
 
             $reviews = DB::table('reviews as rw')
-                ->join('users as u', 'rw.user_id', '=', 'u.user_id')
-                ->join('products as p', 'rw.product_id', '=', 'p.product_id')
+            ->join('users as u', 'rw.user_id', '=', 'u.user_id')
+            ->join('products as p', 'rw.product_id', '=', 'p.product_id')
 
-                ->where('p.release_id', $album->release_id)
+            ->where('p.release_id', $album->release_id)
 
-                ->select(
-                    'rw.comment',
-                    'rw.rating',
-                    'rw.created_at',
-                    'u.username'
-                )
+            ->select(
+                'rw.review_id', // TAMBAH INI
+                'rw.comment',
+                'rw.rating',
+                'rw.created_at',
+                'u.username'
+            )
 
-                ->orderBy('rw.created_at', 'desc')
-                ->get();
+            ->orderBy('rw.created_at', 'desc')
+            ->get();
+
 
         return view('showAlbum', compact(
             'album',
@@ -372,7 +375,8 @@ class ShowAlbumController extends Controller
             'listing_count',
             'lists',
             'videos',
-            'reviews'
+            'reviews',
+            'credits_count'
         ));
     }
 
@@ -553,12 +557,20 @@ class ShowAlbumController extends Controller
             ->get();
 
         $reviews = DB::table('reviews as rw')
-            ->join('users as u', 'rw.user_id', '=', 'u.user_id')
-            ->join('products as p', 'rw.product_id', '=', 'p.product_id')
-            ->where('p.release_id', $album->release_id)
-            ->select('rw.comment', 'rw.rating', 'rw.created_at', 'u.username')
-            ->orderBy('rw.created_at', 'desc')
-            ->get();
+        ->join('users as u', 'rw.user_id', '=', 'u.user_id')
+        ->join('products as p', 'rw.product_id', '=', 'p.product_id')
+        ->where('p.release_id', $album->release_id)
+
+        ->select(
+            'rw.review_id', // TAMBAH INI
+            'rw.comment',
+            'rw.rating',
+            'rw.created_at',
+            'u.username'
+        )
+
+        ->orderBy('rw.created_at', 'desc')
+        ->get();
 
     // Hitung listing_count untuk sidebar
     $listing_count = DB::table('products')->where('release_id', $album->release_id)->count();
@@ -612,6 +624,64 @@ class ShowAlbumController extends Controller
             'listing_count',
             'styles',
         ));
+    }
+
+   public function storeReview(Request $request, $release_id)
+    {
+        $request->validate([
+            'comment' => 'required|min:10',
+        ]);
+
+        // cari product berdasarkan release
+        $product = DB::table('products')
+            ->where('release_id', $release_id)
+            ->first();
+
+        if (!$product) {
+            return back()->with('error', 'Product tidak ditemukan');
+        }
+
+        DB::table('reviews')->insert([
+            'product_id' => $product->product_id,
+
+            // sementara hardcode dulu
+            'user_id' => 1,
+
+            'comment' => $request->comment,
+
+            // default rating sementara
+            'rating' => 5,
+
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return back()->with('success', 'Review berhasil ditambahkan!');
+    }
+
+
+    public function updateReview(Request $request, $id)
+    {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
+        DB::table('reviews')
+            ->where('review_id', $id)
+            ->update([
+                'comment' => $request->comment,
+            ]);
+
+        return redirect()->back()->with('success', 'Review berhasil diupdate!');
+    }
+
+    public function destroyReview($id)
+    {
+        DB::table('reviews')
+            ->where('review_id', $id)
+            ->delete();
+
+        return redirect()->back()->with('success', 'Review berhasil dihapus!');
     }
     /**
      * Show the form for editing the specified resource.
