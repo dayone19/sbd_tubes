@@ -419,26 +419,30 @@ class ArtistController extends Controller
 
         // Credits
         elseif ($filter === 'credit_featuring') {
-            $query->where('ar.role', 'Featuring')
-                ->where('ar.role', '!=', 'Main');
+            $query->where('ar.role', 'Featuring');
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_writing') {
-            $query->whereIn('ar.role', ['Written By','Composed By','Lyrics By','Arranged By'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Written By','Composed By','Lyrics By','Arranged By']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_production') {
-            $query->whereIn('ar.role', ['Producer','Executive Producer','Co-Producer'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Producer','Executive Producer','Co-Producer']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_vocals') {
-            $query->whereIn('ar.role', ['Vocals','Backing Vocals','Choir'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Vocals','Backing Vocals','Choir']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_technical') {
-            $query->whereIn('ar.role', ['Engineer','Recording Engineer','Mixing','Mastered By','Edited By','Programmed By'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Engineer','Recording Engineer','Mixing','Mastered By','Edited By','Programmed By']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_instruments') {
-            $query->whereIn('ar.role', ['Guitar','Bass','Drums','Percussion','Piano','Keyboards','Synthesizer','Cello','Violin','Saxophone','Trumpet','Conductor','Orchestra'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Guitar','Bass','Drums','Percussion','Piano','Keyboards','Synthesizer','Cello','Violin','Saxophone','Trumpet','Conductor','Orchestra']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_visual') {
-            $query->whereIn('ar.role', ['Artwork','Design','Photography'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Artwork','Design','Photography']);
+                // ->where('ar.role', '!=', 'Main');
+        }
+
+        if (str_starts_with($filter, 'credit_')) {
+            $query->where('ar.role', '!=', 'Main');
         }
 
         $format = $request->get('format');
@@ -511,11 +515,14 @@ class ArtistController extends Controller
         // SELECT DISTINCT l.list_id, 
         //                 l.name,
         //                 u.username,
+        //                 l.comments,
+        //                 l.description,
         // FROM lists l
         // LEFT JOIN list_release lr ON l.list_id = lr.list_id
         // LEFT JOIN releases r ON lr.release_id = r.release_id
         // LEFT JOIN artist_release ar ON r.release_id = ar.release_id
         // LEFT JOIN users ar u l.user_id = l.user_id_id
+        // ORDER BY l.created_at desc
         // WHERE ar.artist_id = ?
 
         $lists = DB::table('lists as l')
@@ -526,8 +533,11 @@ class ArtistController extends Controller
             ->select('l.list_id', 
                      'l.name',
                      'u.username',
+                     'l.comments',
+                     'l.description',
                      )
             ->where('ar.artist_id', $id)
+            ->orderBy('l.created_at', 'desc')
             ->distinct()
             ->get();
 
@@ -556,18 +566,24 @@ class ArtistController extends Controller
             ->select('p.product_id')
             ->first();
 
+        if (!$product) {
+            return redirect()->route('show.artist', $id)
+                             ->with('error', 'Gagal menambah review. Artis ini belum memiliki rilisan produk komersial di marketplace.');
+        }
+
         // dd(session()->all());
         DB::table('reviews')
         ->insert([
             'user_id' => 1,
             // 'user_id' => session('user.user_id'),
             'product_id' => $product->product_id,
-            'rating' => 5,
+            'rating' => $request->rating,
             'comment' => $request->comment,
             'created_at' => now(),
         ]);
 
-        return back()->with('success', 'Review submitted!');
+       return redirect()->route('show.artist', $id)
+                         ->with('success', 'Review submitted!');
     }
 
      public function addToList(Request $request, $id)
@@ -580,6 +596,8 @@ class ArtistController extends Controller
                 'user_id' => 1,
                 // 'user_id' => auth()->id(),
                 'name'    => $request->name,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
             ]);
 
             $release = DB::table('artist_release')
@@ -589,8 +607,6 @@ class ArtistController extends Controller
             DB::table('list_release')->insert([
                 'list_id'   => $list->list_id,
                 'release_id'=> $release,
-                'description'=> $request->description,
-                'comments'=> $request->comments,
             ]);
             
         } else {
@@ -598,7 +614,7 @@ class ArtistController extends Controller
             $list = ListModel::findOrFail($request->list_id);
         }
 
-        $comment = $request->comments;
+        // $comment = $request->comments;
 
         return redirect()->route('show.artist', $artist->artist_id)
                         ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);

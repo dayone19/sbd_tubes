@@ -33,7 +33,7 @@
     </div>
 
     <div class="list-title">
-        Lists by gweh
+        Lists by {{ $lists->first()->username }}
     </div>
 
     <table class="list-table">
@@ -45,32 +45,36 @@
         </thead>
 
         <tbody>
+    @foreach($lists as $list)
             <tr>
-                <td><a href="/no_list">nama listnya</a></td>
-                <td>2 days ago</td>
+            <td> <a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a></td>
+                <td>{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
             </tr>
+    @endforeach
         </tbody>
     </table>
+    
 
     <div class="table-line"></div>
 
     <div class="list-footer">
 
         <div class="footer-left">
-            <span>Showing <b>1-1</b> of 1</span>
+            <span>Showing <b>1-{{ $total }}</b> of {{ $total }}</span>
 
             <button class="page-btn">&#8592;</button>
             <button class="page-btn">&#8594;</button>
         </div>
 
         <div class="footer-right">
-            <span>Show</span>
-
-            <select class="show-select">
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
-            </select>
+            <form method="GET" action="{{ route('user.lists', ['user_id' => $user_id]) }}">
+                <span>Show</span>
+                <select name="show" class="show-select" onchange="this.form.submit()">
+                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                </select>
+            </form>
         </div>
 
     </div>

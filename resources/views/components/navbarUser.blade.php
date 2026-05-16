@@ -10,10 +10,31 @@ a {text-decoration: none !important;}
 .tab {cursor: pointer;color: #555;}
 .tab.active {color: black;border-bottom: 2px solid black;}
 /* item */
-.search-item {display: flex;align-items: center;gap: 15px;padding: 15px 20px;border-bottom: 1px solid #ddd;cursor: pointer;}
-.search-item:hover {background: #ddd;}
-.search-img {width: 50px;height: 50px;border-radius: 50%;object-fit: cover;}
-.search-text {display: flex; flex-direction: column; color: black;}
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 20px; /* Sedikit lebih rapat agar rapi */
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.search-item:hover {
+    background: #f8f8f8; /* Warna hover Discogs lebih soft */
+}
+.search-img {
+    width: 60px; /* Ukuran sedikit lebih besar agar jelas */
+    height: 60px;
+    object-fit: cover;
+    flex-shrink: 0; /* Mencegah gambar gepeng */
+    /* Hapus border-radius dari sini karena akan diatur oleh JS */
+}
+.search-text {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    line-height: 1.3;
+}
 .search-title {font-weight: 600;}
 .search-sub {font-size: 13px;color: #666;}
 .hidden {display: none;}
@@ -240,60 +261,114 @@ a {text-decoration: none !important;}
     </div>
 </div>
 
-
 <script>
-const input = document.querySelector('input[type="text"]');
-const dropdown = document.getElementById('search-dropdown');
-const resultsBox = document.getElementById('search-results');
+    const input = document.querySelector('input[type="text"]');
+    const dropdown = document.getElementById('search-dropdown');
+    const resultsBox = document.getElementById('search-results');
+    const tabs = document.querySelectorAll('.tab');
+    
+    let currentTab = 'all';
 
-const data = [
-    {
-        name: "Ariana Grande",
-        type: "Artist",
-        img: "https://i.scdn.co/image/ab6761610000e5ebcdce7620dc940db079bf4952"
-    },
-];
+    function performSearch() {
+        let keyword = input.value.trim();
 
-input.addEventListener("keyup", function() {
-    let keyword = this.value.toLowerCase();
+        if (keyword.length === 0) {
+            dropdown.classList.add("hidden");
+            resultsBox.innerHTML = "";
+            return;
+        }
 
-    if (keyword.length === 0) {
-        dropdown.classList.add("hidden");
-        return;
+        fetch(`/api/search?query=${encodeURIComponent(keyword)}&type=${currentTab}`)
+            .then(response => response.json())
+            .then(data => {
+                resultsBox.innerHTML = ""; 
+
+                if (data.length === 0) {
+                    resultsBox.innerHTML = `<div class="p-6 text-black text-sm text-center">No results found for "<b>${keyword}</b>"</div>`;
+                    dropdown.classList.remove("hidden");
+                    return;
+                }
+
+                data.forEach(item => {
+                    let div = document.createElement("div");
+                    div.classList.add("search-item");
+
+                    const imgStyle = item.category === 'artists' ? 'border-radius: 50%;' : 'border-radius: 4px;';
+                    const titleColor = (item.category === 'artists' || item.category === 'master') ? 'color: #5e2d91;' : 'color: black;';
+                    const src = (item.img && item.img !== '') ? item.img : 'https://via.placeholder.com/150';
+
+                    div.innerHTML = `
+                        <div style="width: 60px; height: 60px; flex-shrink: 0; overflow: hidden; ${imgStyle} border: 1px solid #eee;">
+                            <img src="${src}" style="width: 100%; height: 100%; object-fit: cover; ${imgStyle}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/150';">
+                        </div>
+                        <div class="search-text" style="display: flex; flex-direction: column; gap: 2px;">
+                            <div style="font-size: 10px; font-weight: bold; text-transform: uppercase; color: #888; letter-spacing: 0.5px;">
+                                ${item.type}
+                            </div>
+                            <div class="search-title" style="${titleColor} font-size: 15px; font-weight: 700; line-height: 1.2;">
+                                ${item.name}
+                            </div>
+                            ${item.artist ? `<div style="font-size: 13px; color: black; font-weight: 500;">${item.artist}</div>` : ''}
+                            ${item.meta ? `<div style="font-size: 12px; color: #666;">${item.meta}</div>` : ''}
+                            ${item.year ? `<div style="font-size: 12px; color: #666;">${item.year}</div>` : ''}
+                            ${item.price ? `<div style="font-size: 12px; color: #444; font-weight: bold;">${item.price}</div>` : ''}
+                        </div>
+                    `;
+
+                    // ✅ pakai item.url dari backend
+                    div.onclick = () => {
+                        if (item.url) {
+                            window.location.href = item.url;
+                        }
+                    };
+
+                    resultsBox.appendChild(div);
+                });
+
+                dropdown.classList.remove("hidden");
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }
 
-    let filtered = data.filter(item =>
-        item.name.toLowerCase().includes(keyword)
-    );
+    input.addEventListener("keyup", performSearch);
 
-    resultsBox.innerHTML = "";
-
-    filtered.forEach(item => {
-        let div = document.createElement("div");
-        div.classList.add("search-item");
-
-        div.innerHTML = `
-            <img src="${item.img}" class="search-img">
-            <div class="search-text">
-                <div class="search-title">${item.name}</div>
-                <div class="search-sub">${item.type}</div>
-            </div>
-        `;
-
-        resultsBox.appendChild(div);
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            currentTab = this.innerText.toLowerCase();
+            if (input.value.trim().length > 0) {
+                performSearch();
+            }
+        });
     });
 
-    dropdown.classList.remove("hidden");
-});
-</script>
-<script>
-function openSidebar() {
-    document.getElementById("sidebar").style.right = "0";
-    document.getElementById("overlay").style.display = "block";
-}
+    document.addEventListener("click", function(e) {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add("hidden");
+        }
+    });
 
-function closeSidebar() {
-    document.getElementById("sidebar").style.right = "-420px";
-    document.getElementById("overlay").style.display = "none";
-}
+    input.addEventListener("focus", function() {
+        if (this.value.trim().length > 0) {
+            dropdown.classList.remove("hidden");
+        }
+    });
+</script>
+
+
+
+<script>
+    
+    function openSidebar() {
+        document.getElementById("sidebar").style.right = "0";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function closeSidebar() {
+        document.getElementById("sidebar").style.right = "-420px";
+        document.getElementById("overlay").style.display = "none";
+    }
 </script>

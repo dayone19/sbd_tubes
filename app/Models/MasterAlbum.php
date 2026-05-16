@@ -19,4 +19,8 @@ class MasterAlbum extends Model
     {
         return $this->hasMany(Release::class, 'master_id');
     }
+
+    public function artist() {
+        return $this->belongsTo(Artist::class);
+    }
 }

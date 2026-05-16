@@ -195,33 +195,37 @@
   <!-- LEFT -->
   <div class="list-main">
 
-    <div class="list-title">renz</div>
+    <div class="list-title">{{ $list->name }}</div>
 
     <div class="list-meta">
       <span>By</span>
       <span class="avatar"></span>
-      <a href="#">sirenzz</a>
-      <span>updated 63 minutes ago</span>
+      <a href="#">{{ $list->username }}</a>
+      <span>updated {{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</span>
     </div>
 
     <!-- DESCRIPTION -->
     <div class="desc-display" id="descDisplay" title="Click to edit">
-      <span id="descText">when yh</span>
+      <span id="descText">{{ $list->description }}</span>
       <span class="edit-icon">✎</span>
     </div>
 
-    <div class="desc-edit-area" id="descEditArea">
-      <textarea id="descTextarea">when yh</textarea>
-      <div class="action-row">
-        <button class="btn-save" id="saveDesc">Save</button>
-        <button class="btn-cancel" id="cancelDesc">Cancel</button>
+    <form action="{{ route('lists.update', $list->list_id) }}" method="POST">
+      @csrf
+      @method('PUT')
+      <div class="desc-edit-area" id="descEditArea">
+        <textarea id="descTextarea" name="description">{{ $list->description }}</textarea>
+        <div class="action-row">
+          <button class="btn-save" id="saveDesc" type="submit">Save</button>
+          <button class="btn-cancel" id="cancelDesc">Cancel</button>
+        </div>
       </div>
-    </div>
+    </form>
 
     <!-- TOOLBAR -->
     <div class="list-toolbar">
       <div class="toolbar-left">
-        <span>Showing <b>1-1</b> of 1</span>
+        <span>Showing <b>1-{{ $items->count() }}</b> of {{ $items->count() }}</span>
         <button class="pager-btn">&#8592;</button>
         <button class="pager-btn">&#8594;</button>
       </div>
@@ -236,34 +240,40 @@
     </div>
 
     <!-- ITEM -->
+    @foreach($items as $i => $item)
     <div class="list-item">
-      <div class="item-number">1</div>
+      <div class="item-number">{{ $i+1 }}</div>
       <div class="item-cover">
-        <img src="https://i.discogs.com/FVXOgBYUAQXpI6QhkPe5cSEUl0OaglNmaxq0CZ_Vuzs/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzNTE3/OTMtMTcwMTQ3MzU3/Mi05MjkzLmpwZWc.jpeg"
-          onerror="this.style.background='#ddd';this.removeAttribute('src')" alt="The Romantic">
+        <img src="{{ $item->image_url }}"
+          onerror="this.style.background='#ddd';this.removeAttribute('src')" alt="{{ $item->title }}">
       </div>
       <div class="item-content">
-        <a href="#" class="item-title">The Romantic</a>
-        <div class="item-artist">Bruno Mars</div>
-
+        <a href="{{ route('show.release', $item->release_id) }}" class="item-title">{{ $item->title }}</a>
+        <div class="item-artist">{{ $item->artist }}</div>
+        
         <!-- COMMENT -->
-        <div class="item-comment" id="commentDisplay" title="Click to edit comment">gud</div>
+        <div class="item-comment" id="commentDisplay" title="Click to edit comment">{{ $itemComments[$item->release_id] ?? '' }}</div>
 
+        <form action="{{ route('lists.updateComment', [$list->list_id, $item->release_id]) }}" method="POST">
+          @csrf
+          @method('PUT')
         <div class="comment-edit-area" id="commentEditArea">
-          <textarea id="commentTextarea">gud</textarea>
+          <textarea id="commentTextarea" name="comments">{{ $itemComments[$item->release_id] ?? '' }}</textarea>
           <div class="action-row">
-            <button class="btn-save" id="saveComment">Save</button>
-            <button class="btn-cancel" id="cancelComment">Cancel</button>
+            <button class="btn-save" id="saveComment" type="submit">Save</button>
+            <button class="btn-cancel" onclick="window.location.reload()" id="cancelComment">Cancel</button>
+          </form>
           </div>
         </div>
       </div>
       <div class="item-menu">•••</div>
     </div>
+@endforeach
 
     <!-- BOTTOM TOOLBAR -->
     <div class="list-toolbar-bottom">
       <div class="toolbar-left">
-        <span>Showing <b>1-1</b> of 1</span>
+        <span>Showing <b>1-{{ $items->count() }}</b> of {{ $items->count() }}</span>
         <button class="pager-btn">&#8592;</button>
         <button class="pager-btn">&#8594;</button>
       </div>
@@ -307,7 +317,12 @@
         </div>
 
         <button class="sidebar-btn">&#10010; Add List To Dashboard</button>
-        <button class="sidebar-btn delete-btn">🗑 Delete This List</button>
+
+      <form action="{{ route('lists.destroy', $list->list_id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus list ini?')">
+          @csrf
+          @method('DELETE')
+        <button type="submit" class="sidebar-btn delete-btn">🗑 Delete This List</button>
+      </form>
 
       </div>
     </div>

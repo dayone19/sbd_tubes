@@ -11,6 +11,8 @@ use App\Http\Controllers\ShowAlbumController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\UserListController;
+use App\Http\Controllers\NavbarSearchController;
 
 
 Route::get('/selling', function () {
@@ -18,11 +20,14 @@ Route::get('/selling', function () {
 });
 
 
+
 // Route untuk menampilkan form advanced search
 Route::get('/search/advanced', [AdvancedSearchController::class, 'index'])->name('advanced.search');
 
 // Route untuk memproses hasil pencarian dari form
 Route::get('/search/advanced/results', [AdvancedSearchController::class, 'search'])->name('advanced.results');
+
+
 
 
 
@@ -68,9 +73,9 @@ Route::get('/mywants', function () {
     return view('mywants');
 })->name('mywants');
 
-Route::get('/lists', function () {
-    return view('lists');
-});
+// Route::get('/lists', function () {
+//     return view('lists');
+// });
 
 Route::get('/submissions', function () {
     return view('submissions');
@@ -82,9 +87,9 @@ Route::prefix('user')->group(function () {
         return view('user.collection');
     })->name('user.collection');
 
-    Route::get('/lists', function () {
-        return view('user.lists');
-    })->name('user.lists');
+    // Route::get('/lists', function () {
+    //     return view('user.lists');
+    // })->name('user.lists');
 
     Route::get('/drafts', function () {
         return view('user.drafts');
@@ -135,10 +140,15 @@ Route::get('/', [AlbumController::class, 'index']);
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
 
 //route untuk ShowReleaseController.php
+Route::post('/release/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('release.review');
 Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
 
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
+Route::post('/album/{master_id}/review', [ShowAlbumController::class, 'storeReview'])
+    ->name('album.review');
+Route::put('/review/{id}/update', [ShowAlbumController::class, 'updateReview'])->name('review.update');
+Route::delete('/review/{id}/delete', [ShowAlbumController::class, 'destroyReview'])->name('review.delete');
 
 //route untuk SearchController.php
 Route::get('/search', [SearchController::class, 'index'])->name('search');
@@ -154,3 +164,18 @@ Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])
 
 //route untuk ListsController
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
+
+
+
+//route untuk UseListController
+Route::get('/user/{user_id}/lists', [UserListController::class, 'showList'])->name('user.lists');
+Route::get('/lists/{list_id}/edit', [UserListController::class, 'edit'])->name('lists.edit');
+Route::put('/lists/{list_id}', [UserListController::class, 'update'])->name('lists.update');
+Route::get('/lists/{list_id}', [UserListController::class, 'show'])->name('lists.show');
+Route::put('/lists/{list_id}/release/{release_id}', [UserListController::class, 'updateComment'])->name('lists.updateComment');
+Route::delete('/lists/{id}', [UserListController::class, 'destroy'])->name('lists.destroy');
+
+//route untuk NavbarSearchController
+Route::get('/api/search', [NavbarSearchController::class, 'search'])->name('api.search');
+
+

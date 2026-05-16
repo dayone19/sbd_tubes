@@ -246,7 +246,7 @@ class ShowReleaseController extends Controller
             ->leftJoin('user_profiles as urp', 'ur.user_id', '=', 'urp.user_id')
             ->join('products as p', 're.product_id', '=', 'p.product_id')
 
-            ->where('p.release_id', $release->release_id)
+            ->where('p.release_id', $id)
 
             ->select(
                 're.review_id',
@@ -308,6 +308,7 @@ class ShowReleaseController extends Controller
         // WHERE release_id = ?
         $videos = DB::table('videos')
         ->where('release_id', $release->release_id)
+        ->distinct()
         ->get();
         
         // SELECT l.name AS list_name, 
@@ -463,6 +464,34 @@ class ShowReleaseController extends Controller
                     'formats',
         ));
     }
+
+   public function storeReview(Request $request, $id)
+{
+    // 1. Validasi input comment
+    $request->validate([
+        'comment' => 'required',
+        'rating'  => 'nullable|integer|between:1,5',
+    ]);
+
+    // Cari product_id yang memiliki release_id sesuai dengan ID di URL
+    $product = DB::table('products')->where('release_id', $id)->first();
+
+    if (!$product) {
+        return redirect()->back()->with('error', 'Produk tidak ditemukan!');
+    }
+
+    // 2. Simpan ke database
+    // Gunakan 'product_id' karena tabel 'reviews' tidak punya kolom 'release_id'
+    DB::table('reviews')->insert([
+        'product_id' => $product->product_id, // Ambil ID asli produk
+        'user_id'    => 1,                    // Sementara dummy
+        'comment'    => $request->comment,
+        'rating'     => $request->rating ?? null,
+        'created_at' => now(),
+    ]);
+
+    return redirect()->back()->with('success', 'Review berhasil ditambah!');
+}
 
     /**
      * Show the form for editing the specified resource.
