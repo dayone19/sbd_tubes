@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Product;
 
-class Riview extends Model
+class Review extends Model
 {
     protected $primaryKey = 'review_id';
     public $timestamps = false;

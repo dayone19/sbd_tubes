@@ -18,7 +18,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     //penanda PK
-    protected $primarykey = 'user_id';
+    protected $primaryKey = 'user_id';
     
     //mematikan perubahan waktu update
     public $timestamps = false;

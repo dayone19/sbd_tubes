@@ -254,7 +254,7 @@
                             <span class="small">From ${{ number_format($sale->min_price, 2) }} to ${{ number_format($sale->max_price, 2) }}</span>
                         </div>
                     </div>
-                    <a href="{{ route('show.album', $sale->master_id) }}" class="btn btn-green w-100 mt-3">
+                    <a href="{{ route('album.versions', $sale->master_id) }}" class="btn btn-green w-100 mt-3">
                         Shop {{ $sale->total_listings }} Listings
                     </a>
                 </div>
@@ -276,10 +276,10 @@
 
             <!-- DOT -->
             <div class="carousel-indicators">
-    @foreach($forSale as $index => $sale)
-    <button data-bs-target="#saleCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></button>
-    @endforeach
-</div>
+                @foreach($forSale as $index => $sale)
+                <button data-bs-target="#saleCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></button>
+                @endforeach
+            </div>
 
 
         </div>
@@ -295,7 +295,6 @@
 
 <div class="container mt-4">
 
-
     <!-- RELEASES -->
     <div id="tab-discography" class="tab-content">
         <div class="mt-4">
@@ -305,36 +304,35 @@
                 <h5 class="fw-bold">Release</h5>
 
                 <!-- FILTER BAR (hidden) -->
-                <div id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
+                <form method="GET" action="{{ route('show.label', $id) }}" id="filterBar" class="bg-light p-3 rounded mb-3 d-none">
                     <div class="row g-2">
                         <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a format">
+                            <input type="text" name="format" class="form-control" placeholder="Find a format" value="{{ request('format') }}">
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a label">
+                            <input type="text" name="country" class="form-control" placeholder="Find a country" value="{{ request('country') }}">
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a country">
+                            <input type="text" name="year" class="form-control" placeholder="Find a year" value="{{ request('year') }}">
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Find a year">
+                            <input type="text" name="q" class="form-control" placeholder="Search Discography" value="{{ request('q') }}">
                         </div>
                     </div>
-
-                    <input type="text" class="form-control mt-2" placeholder="Search Discography">
-                </div>
+                    <button type="submit" class="btn btn-dark mt-2">Apply Filter</button>
+                </form>
 
                 <!-- TOP CONTROL -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="small">
-    Showing {{ $releases->firstItem() }}–{{ $releases->lastItem() }} of {{ $releases->total() }}
-    @if($releases->previousPageUrl())
-        <a href="{{ $releases->previousPageUrl() }}" class="ms-2">‹ Prev</a>
-    @endif
-    @if($releases->nextPageUrl())
-        <a href="{{ $releases->nextPageUrl() }}" class="ms-2">Next ›</a>
-    @endif
-</div>
+                    Showing {{ $releases->firstItem() }}–{{ $releases->lastItem() }} of {{ $releases->total() }}
+                    @if($releases->previousPageUrl())
+                        <a href="{{ $releases->previousPageUrl() }}" class="ms-2">‹ Prev</a>
+                    @endif
+                    @if($releases->nextPageUrl())
+                        <a href="{{ $releases->nextPageUrl() }}" class="ms-2">Next ›</a>
+                    @endif
+                </div>
                     <div class="d-flex align-items-center gap-2">
                         <button id="toggleFilter" class="btn btn-dark rounded-pill px-3" style="width:170px;">
                             <div class="d-flex justify-content-between align-items-center">
@@ -433,13 +431,62 @@
 
     </div>
 
-    <!-- REVIEWS -->
-    <div id="tab-reviews" class="tab-content d-none">
-        <h4>Reviews</h4>
-        <textarea class="form-control" placeholder="Enter your comment"></textarea>
-        <button class="btn btn-secondary mt-2 mb-4">Submit</button>
-    </div>
+<div id="tab-reviews" class="tab-content">
+    <h4 class="fw-bold mt-4">Reviews</h4>
 
+    @forelse($reviews as $review)
+    <div class="border-bottom py-3">
+        <div class="d-flex justify-content-between">
+            <strong>{{ $review->user_name }}</strong>
+            <span class="text-muted small">{{ $review->created_at }}</span>
+        </div>
+        
+        {{-- KONDISI 1: TAMPILAN REVIEW (Hanya muncul jika rating diisi/tidak null) --}}
+        @if($review->rating && $review->rating > 0)
+            <div class="my-1" style="color: #f5a623;">
+                @for($i = 1; $i <= 5; $i++)
+                    {{ $i <= $review->rating ? '★' : '☆' }}
+                @endfor
+            </div>
+        @endif
+
+        <div>{{ $review->comment }}</div>
+    </div>
+    @empty
+        <div class="text-muted py-3">No reviews yet.</div>
+    @endforelse
+
+    <div class="mt-3 mb-5">
+        <form method="POST" action="{{ route('label.review.store', $id) }}">
+            @csrf
+            @if($forSale->count() > 0)
+                <select name="product_id" class="form-select mt-2 mb-2" style="width:200px;">
+                    @foreach($forSale as $sale)
+                    <option value="{{ $sale->product_id }}">{{ $sale->title }}</option>
+                    @endforeach
+                </select>
+            @else
+                <p class="text-muted small">No products available to review</p>
+            @endif
+            
+            {{-- KONDISI 2: INPUT FORM RATING (Sekarang bebas, ada opsi kosong) --}}
+            <select name="rating" class="form-select mt-2 mb-2" style="width:180px;">
+                <option value="">-- No Rating (Comment Only) --</option>
+                <option value="1">★ 1</option>
+                <option value="2">★★ 2</option>
+                <option value="3">★★★ 3</option>
+                <option value="4">★★★★ 4</option>
+                <option value="5">★★★★★ 5</option>
+            </select>
+
+            <textarea name="comment" class="form-control mt-2" id="reviewComment" placeholder="Enter your comment" rows="3"></textarea>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <button type="submit" class="btn btn-secondary" id="submitReview" disabled>Submit</button>
+                <a href="#" class="text-muted small">View Help</a>
+            </div>
+        </form>
+    </div>
+</div>
 
     <!-- LISTS -->
     <div id="tab-lists" class="tab-content d-none">
@@ -556,6 +603,22 @@ function changePerPage(value) {
     url.searchParams.set('page', 1);
     window.location.href = url.href;
 }
+</script>
+
+<script>
+// Submit button disable/enable
+document.getElementById('reviewComment').addEventListener('input', function() {
+    const btn = document.getElementById('submitReview');
+    if(this.value.trim() != '') {
+        btn.disabled = false;
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-dark');
+    } else {
+        btn.disabled = true;
+        btn.classList.remove('btn-dark');
+        btn.classList.add('btn-secondary');
+    }
+});
 </script>
 
 @endsection

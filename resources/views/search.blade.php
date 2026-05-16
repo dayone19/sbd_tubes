@@ -49,6 +49,10 @@
     .artist-no-image {display: flex; align-items: center; justify-content: center; background: #e8e8e8; border-radius: 50%; aspect-ratio: 1/1;}
     .artist-no-image svg { width: 45%; height: 45%; opacity: 1;}
     .album-title:hover { color: #2a5bd7; text-decoration: underline; }
+    .label-no-image {
+    display: flex; align-items: center; justify-content: center; background: #e8e8e8; aspect-ratio: 1/1; border-radius: 3%; }
+.label-no-image svg {
+    width: 80%; height: 80%; }
 
 </style>
 
@@ -176,6 +180,34 @@
     </ul>
     <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalDecade">+ View All</a>
 </div>
+
+@if(!empty(request('decade')))
+<div class="filter-group mb-4">
+    <h6 class="fw-bold" style="font-size: 0.9rem;">Year</h6>
+    <ul class="list-unstyled">
+        @foreach($Years->take(5) as $y)
+        <li class="d-flex justify-content-between align-items-center mb-1">
+            <div class="form-check">
+                <input class="form-check-input filter-checkbox" type="checkbox" 
+                    name="year[]" 
+                    value="{{ $y->year }}" 
+                    id="year{{ $y->year }}"
+                    {{ in_array($y->year, request('year', [])) ? 'checked' : '' }}
+                    onchange="this.form.submit()">
+                <label class="form-check-label small" for="year{{ $y->year }}" style="cursor:pointer;">
+                    {{ $y->year }}
+                </label>
+            </div>
+            <span class="text-muted small" style="font-size: 0.75rem;">{{ number_format($y->releases_count) }}</span>
+        </li>
+        @endforeach
+    </ul>
+    
+    @if($Years->count() > 5)
+        <a href="#" class="text-decoration-none small fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#modalYear">+ View All</a>
+    @endif
+</div>
+@endif
 </div>
 </div>
 
@@ -331,6 +363,42 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalYear" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Year</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                <div class="row">
+                    @if(!empty($Years))
+                        @foreach($Years as $y)
+                        <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                    name="year[]" 
+                                    value="{{ $y->year }}" 
+                                    id="m_year{{ $y->year }}"
+                                    {{ in_array($y->year, request('year', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="m_year{{ $y->year }}">
+                                    {{ $y->year }}
+                                </label>
+                            </div>
+                            <span class="text-muted small">{{ number_format($y->releases_count) }}</span>
+                        </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                {{-- Ganti 'filterForm' dengan ID <form> utama kamu --}}
+                <button type="submit" form="filterForm" class="btn btn-dark w-100 fw-bold">Show Results</button>
+            </div>
+        </div>
+    </div>
+</div>
+
         <div class="col-md-10">
             <!-- Nav -->
            {{-- SESUDAH --}}
@@ -412,19 +480,38 @@
                         </a>
                     @elseif($album->format_name == 'ARTIST')
                         <a href="{{ route('show.artist', $album->master_id) }}">
-                        @if($album->foto)
-                            <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
-                        @else
-                            <div class="artist-no-image">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3d5a8a">
-        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm7 6a1 1 0 0 1 1 1 8 8 0 0 1-7 7.938V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 0 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
-    </svg>
-</div>
-                        @endif
+                            @if($album->foto)
+                                <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
+                            @else
+                                <div class="artist-no-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3d5a8a">
+                                        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm7 6a1 1 0 0 1 1 1 8 8 0 0 1-7 7.938V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 0 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
+                                    </svg>
+                                </div>
+                            @endif
+                        </a>
                     @elseif($album->format_name == 'LABEL')
                         <a href="{{ route('show.label', $album->master_id) }}">
-        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
-    </a>
+                            @if($album->foto)
+                                <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
+                            @else
+                                <div class="label-no-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="48" fill="#3b4a6b"/>
+                                        <circle cx="50" cy="50" r="44" fill="#c8d0e0"/>
+                                        <path d="M6 50 A44 44 0 0 1 94 50 Z" fill="#c8d0e0"/>
+                                        <path d="M6 50 A44 44 0 0 0 94 50 Z" fill="#3b4a6b"/>
+                                        <rect x="28" y="26" width="44" height="7" rx="2" fill="#3b4a6b"/>
+                                        <rect x="22" y="36" width="56" height="7" rx="2" fill="#3b4a6b"/>
+                                        <ellipse cx="50" cy="52" rx="14" ry="9" fill="#3b4a6b"/>
+                                        <circle cx="50" cy="52" r="6" fill="#c8d0e0"/>
+                                        <rect x="22" y="62" width="56" height="8" rx="2" fill="#c8d0e0"/>
+                                        <rect x="26" y="73" width="48" height="6" rx="2" fill="#c8d0e0"/>
+                                        <rect x="22" y="82" width="56" height="7" rx="2" fill="#c8d0e0"/>
+                                    </svg>
+                                </div>
+                            @endif
+                        </a>
                     @else
                         <a href="{{ route('show.release', $album->release_id) }}">
                             <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
@@ -432,27 +519,27 @@
                     @endif
                 </div>
                 <div class="album-info">
-    <p class="text-master mb-1">
-        @if($album->format_name && $album->format_name != 'MASTER RELEASE')
-            {{ strtoupper($album->format_name) }}
-        @else
-            MASTER RELEASE
-        @endif
-    </p>
-    @if($album->format_name == 'MASTER RELEASE')
-        <a href="{{ route('album.versions', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
-        <div class="album-artist">{{ $album->nama_artis }}</div>
-        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
-    @elseif($album->format_name == 'ARTIST')
-    <a href="{{ route('show.artist', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
-@elseif($album->format_name == 'LABEL')
-    <a href="{{ route('show.label', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
-    @else
-        <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
-        <div class="album-artist">{{ $album->nama_artis }}</div>
-        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
-    @endif
-</div>
+                    <p class="text-master mb-1">
+                        @if($album->format_name && $album->format_name != 'MASTER RELEASE')
+                            {{ strtoupper($album->format_name) }}
+                        @else
+                            MASTER RELEASE
+                        @endif
+                    </p>
+                    @if($album->format_name == 'MASTER RELEASE')
+                        <a href="{{ route('album.versions', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+                        <div class="album-artist">{{ $album->nama_artis }}</div>
+                        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+                    @elseif($album->format_name == 'ARTIST')
+                        <a href="{{ route('show.artist', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+                    @elseif($album->format_name == 'LABEL')
+                        <a href="{{ route('show.label', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+                    @else
+                        <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
+                        <div class="album-artist">{{ $album->nama_artis }}</div>
+                        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+                    @endif
+                </div>
             </div>
 
             {{-- LIST VIEW --}}
@@ -464,19 +551,38 @@
                         </a>
                     @elseif($album->format_name == 'ARTIST')
                         <a href="{{ route('show.artist', $album->master_id) }}">
-                        @if($album->foto)
-                            <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
-                        @else
-                            <div class="artist-no-image">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3d5a8a">
-        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm7 6a1 1 0 0 1 1 1 8 8 0 0 1-7 7.938V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 0 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
-    </svg>
-</div>
-                        @endif
+                            @if($album->foto)
+                                <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
+                            @else
+                                <div class="artist-no-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3d5a8a">
+                                        <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v6a2 2 0 0 0 4 0V5a2 2 0 0 0-2-2zm7 6a1 1 0 0 1 1 1 8 8 0 0 1-7 7.938V20h2a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2h2v-2.062A8 8 0 0 1 4 10a1 1 0 0 1 2 0 6 6 0 0 0 12 0 1 1 0 0 1 1-1z"/>
+                                    </svg>
+                                </div>
+                            @endif
+                        </a>
                     @elseif($album->format_name == 'LABEL')
                         <a href="{{ route('show.label', $album->master_id) }}">
-        <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
-    </a>
+                            @if($album->foto)
+                                <img src="{{ $album->foto }}" alt="{{ $album->judul }}">
+                            @else
+                                <div class="label-no-image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="48" fill="#3b4a6b"/>
+                                        <circle cx="50" cy="50" r="44" fill="#c8d0e0"/>
+                                        <path d="M6 50 A44 44 0 0 1 94 50 Z" fill="#c8d0e0"/>
+                                        <path d="M6 50 A44 44 0 0 0 94 50 Z" fill="#3b4a6b"/>
+                                        <rect x="28" y="26" width="44" height="7" rx="2" fill="#3b4a6b"/>
+                                        <rect x="22" y="36" width="56" height="7" rx="2" fill="#3b4a6b"/>
+                                        <ellipse cx="50" cy="52" rx="14" ry="9" fill="#3b4a6b"/>
+                                        <circle cx="50" cy="52" r="6" fill="#c8d0e0"/>
+                                        <rect x="22" y="62" width="56" height="8" rx="2" fill="#c8d0e0"/>
+                                        <rect x="26" y="73" width="48" height="6" rx="2" fill="#c8d0e0"/>
+                                        <rect x="22" y="82" width="56" height="7" rx="2" fill="#c8d0e0"/>
+                                    </svg>
+                                </div>
+                            @endif
+                        </a>
                     @else
                         <a href="{{ route('show.release', $album->release_id) }}">
                             <img src="{{ $album->foto ?? asset('images/no-image.png') }}" alt="{{ $album->judul }}">
@@ -484,27 +590,27 @@
                     @endif
                 </div>
                 <div class="album-info">
-    <p class="text-master mb-1">
-        @if($album->format_name && $album->format_name != 'MASTER RELEASE')
-            {{ strtoupper($album->format_name) }}
-        @else
-            MASTER RELEASE
-        @endif
-    </p>
-    @if($album->format_name == 'MASTER RELEASE')
-        <a href="{{ route('album.versions', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
-        <div class="album-artist">{{ $album->nama_artis }}</div>
-        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
-    @elseif($album->format_name == 'ARTIST')
-    <a href="{{ route('show.artist', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
-@elseif($album->format_name == 'LABEL')
-    <a href="{{ route('show.label', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
-    @else
-        <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
-        <div class="album-artist">{{ $album->nama_artis }}</div>
-        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
-    @endif
-</div>
+                    <p class="text-master mb-1">
+                        @if($album->format_name && $album->format_name != 'MASTER RELEASE')
+                            {{ strtoupper($album->format_name) }}
+                        @else
+                            MASTER RELEASE
+                        @endif
+                    </p>
+                    @if($album->format_name == 'MASTER RELEASE')
+                        <a href="{{ route('album.versions', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+                        <div class="album-artist">{{ $album->nama_artis }}</div>
+                        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+                    @elseif($album->format_name == 'ARTIST')
+                        <a href="{{ route('show.artist', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+                    @elseif($album->format_name == 'LABEL')
+                        <a href="{{ route('show.label', $album->master_id) }}" class="album-title">{{ $album->judul }}</a>
+                    @else
+                        <a href="{{ route('show.release', $album->release_id) }}" class="album-title">{{ $album->judul }}</a>
+                        <div class="album-artist">{{ $album->nama_artis }}</div>
+                        <div class="album-meta">{{ $album->tahun ?? '-'}}</div>
+                    @endif
+                </div>
             </div>
 
         </div>

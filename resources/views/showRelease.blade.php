@@ -1336,7 +1336,9 @@
             </div>
         </div>
 
-        <a href="#" class="btn-shop"> Shop {{ $productCount }} {{ strtoupper($formats->first()) }}</a>
+        <a href="{{ route('sell.list', ['release_id' => $release->release_id]) }}" class="btn-shop">
+    Shop {{ $productCount }} {{ strtoupper($formats->first()) }}
+        </a>
 
         <!-- Statistics -->
         {{-- Statistics --}}
