@@ -419,26 +419,30 @@ class ArtistController extends Controller
 
         // Credits
         elseif ($filter === 'credit_featuring') {
-            $query->where('ar.role', 'Featuring')
-                ->where('ar.role', '!=', 'Main');
+            $query->where('ar.role', 'Featuring');
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_writing') {
-            $query->whereIn('ar.role', ['Written By','Composed By','Lyrics By','Arranged By'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Written By','Composed By','Lyrics By','Arranged By']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_production') {
-            $query->whereIn('ar.role', ['Producer','Executive Producer','Co-Producer'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Producer','Executive Producer','Co-Producer']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_vocals') {
-            $query->whereIn('ar.role', ['Vocals','Backing Vocals','Choir'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Vocals','Backing Vocals','Choir']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_technical') {
-            $query->whereIn('ar.role', ['Engineer','Recording Engineer','Mixing','Mastered By','Edited By','Programmed By'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Engineer','Recording Engineer','Mixing','Mastered By','Edited By','Programmed By']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_instruments') {
-            $query->whereIn('ar.role', ['Guitar','Bass','Drums','Percussion','Piano','Keyboards','Synthesizer','Cello','Violin','Saxophone','Trumpet','Conductor','Orchestra'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Guitar','Bass','Drums','Percussion','Piano','Keyboards','Synthesizer','Cello','Violin','Saxophone','Trumpet','Conductor','Orchestra']);
+                // ->where('ar.role', '!=', 'Main');
         } elseif ($filter === 'credit_visual') {
-            $query->whereIn('ar.role', ['Artwork','Design','Photography'])
-                ->where('ar.role', '!=', 'Main');
+            $query->whereIn('ar.role', ['Artwork','Design','Photography']);
+                // ->where('ar.role', '!=', 'Main');
+        }
+
+        if (str_starts_with($filter, 'credit_')) {
+            $query->where('ar.role', '!=', 'Main');
         }
 
         $format = $request->get('format');
@@ -562,18 +566,24 @@ class ArtistController extends Controller
             ->select('p.product_id')
             ->first();
 
+        if (!$product) {
+            return redirect()->route('show.artist', $id)
+                             ->with('error', 'Gagal menambah review. Artis ini belum memiliki rilisan produk komersial di marketplace.');
+        }
+
         // dd(session()->all());
         DB::table('reviews')
         ->insert([
             'user_id' => 1,
             // 'user_id' => session('user.user_id'),
             'product_id' => $product->product_id,
-            'rating' => 5,
+            'rating' => $request->rating,
             'comment' => $request->comment,
             'created_at' => now(),
         ]);
 
-        return back()->with('success', 'Review submitted!');
+       return redirect()->route('show.artist', $id)
+                         ->with('success', 'Review submitted!');
     }
 
      public function addToList(Request $request, $id)

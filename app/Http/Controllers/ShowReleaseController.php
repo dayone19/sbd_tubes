@@ -474,7 +474,6 @@ class ShowReleaseController extends Controller
     ]);
 
     // Cari product_id yang memiliki release_id sesuai dengan ID di URL
-    // Pastikan menggunakan tabel 'products' (dengan s) sesuai query kamu yang lain
     $product = DB::table('products')->where('release_id', $id)->first();
 
     if (!$product) {
