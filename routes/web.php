@@ -129,8 +129,8 @@ Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.
 
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
-Route::post('/release/{master_id}/review', [ShowAlbumController::class, 'storeReview'])
-    ->name('release.review');
+Route::post('/album/{master_id}/review', [ShowAlbumController::class, 'storeReview'])
+    ->name('album.review');
 Route::put('/review/{id}/update', [ShowAlbumController::class, 'updateReview'])->name('review.update');
 Route::delete('/review/{id}/delete', [ShowAlbumController::class, 'destroyReview'])->name('review.delete');
 

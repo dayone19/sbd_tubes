@@ -1472,7 +1472,7 @@
     </div>
 
     <div class="reviews-title">Reviews</div>
-    <form action="{{ route('release.review', $album->master_id) }}" method="POST">
+    <form action="{{ route('album.review', $album->master_id) }}" method="POST">
     @csrf
     <div id="reviewForm" class="review-form-wrap" style="display:block;">
 
@@ -1480,7 +1480,7 @@
         id="reviewInput"
         class="review-textarea"
         placeholder="Enter your comment"
-        oninput="handleReviewInput()"
+        oninput="validasiReview(submit)"
         name="comment"
     ></textarea>
 
@@ -1527,6 +1527,15 @@
         <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
         </div>
 
+        <div class="review-reference">
+            <em>
+                referencing 
+                <a href="{{ route('show.release', $review->release_id) }}">
+                    {{ $review->release_title }}
+                </a>
+            </em>
+        </div>
+
         <div class="review-actions">
             <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
             <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
@@ -1535,13 +1544,19 @@
         <div class="review-text" id="reviewText{{ $review->review_id }}">
             {{ $review->comment }}
         </div>
+
         <!-- EDIT FORM -->
         <div id="editForm{{ $review->review_id }}" style="display:none; margin-top:10px;">
             <form action="{{ route('review.update', $review->review_id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
-                <textarea name="comment" class="review-textarea">{{ $review->comment }}</textarea>
+                <textarea 
+                    id="editInput{{ $review->review_id }}" 
+                    name="comment" 
+                    class="review-textarea" 
+                    oninput="validasiReview('edit', {{ $review->review_id }})"
+                >{{ $review->comment }}</textarea>
 
                 <div class="review-preview-box" style="display:block; margin-top:10px;">
                     <div class="review-preview-label">Preview</div>
@@ -1741,53 +1756,68 @@
         document.getElementById('currentThumb').src = thumbnail;
     }
 
-    function handleReviewInput() {
-        const input = document.getElementById("reviewInput");
-        const submitBtn = document.getElementById("submitBtn");
-        const previewBox = document.getElementById("previewBox");
-        const previewText = document.getElementById("previewText");
-        const warning = document.getElementById("wordWarning");
+    function validasiReview(type, id = '') {
+        // Pemetaan Selector Elemen secara Dinamis
+        const input = document.getElementById(type === 'edit' ? "editInput" + id : "reviewInput");
+        const submitBtn = document.getElementById(type === 'edit' ? "editSubmitBtn" + id : "submitBtn");
+        const previewBox = document.getElementById(type === 'edit' ? "editPreviewBox" + id : "previewBox");
+        const previewText = document.getElementById(type === 'edit' ? "editPreviewText" + id : "previewText");
+        const warning = document.getElementById(type === 'edit' ? "editWordWarning" + id : "wordWarning");
+
+        // Keamanan tambahan: Jika elemen input tidak ditemukan, hentikan fungsi agar tidak crash
+        if (!input) return;
 
         const text = input.value.trim();
 
-        // preview
-        if (text.length > 0) {
-            previewBox.style.display = "block";
-            previewText.textContent = text;
-        } else {
-            previewBox.style.display = "none";
+        // 1. Kontrol Tampilan Preview
+        if (previewBox && previewText) {
+            if (text.length > 0) {
+                previewBox.style.display = "block";
+                previewText.textContent = text;
+            } else {
+                previewBox.style.display = "none";
+            }
         }
 
-        // hitung jumlah kata
+        // 2. Hitung jumlah kata
         const wordCount = text
             .split(/\s+/)
             .filter(word => word.length > 0).length;
 
-        // minimal 10 kata
-        if (wordCount >= 10) {
-            submitBtn.disabled = false;
+        // 3. Validasi Minimal 10 Kata & Styling Tombol
+        if (submitBtn) {
+            if (wordCount >= 10) {
+                submitBtn.disabled = false;
+                submitBtn.style.background = "#000";
+                submitBtn.style.color = "#fff";
+                submitBtn.style.border = "1px solid #000";
+                submitBtn.style.cursor = "pointer";
 
-            submitBtn.style.background = "#000";
-            submitBtn.style.color = "#fff";
-            submitBtn.style.border = "1px solid #000";
-            submitBtn.style.cursor = "pointer";
-
-            warning.style.display = "none";
-        } else {
-            submitBtn.disabled = true;
-
-            submitBtn.style.background = "#ccc";
-            submitBtn.style.color = "#888";
-            submitBtn.style.border = "1px solid #bbb";
-            submitBtn.style.cursor = "not-allowed";
-
-        // warning hanya muncul kalau sudah mulai ngetik
-            if (text.length > 0) {
-                warning.style.display = "block";
+                if (warning) warning.style.display = "none";
             } else {
-                warning.style.display = "none";
+                submitBtn.disabled = true;
+                submitBtn.style.background = "#ccc";
+                submitBtn.style.color = "#888";
+                submitBtn.style.border = "1px solid #bbb";
+                submitBtn.style.cursor = "not-allowed";
+
+                if (warning) {
+                    if (text.length > 0) {
+                        warning.style.display = "block";
+                    } else {
+                        warning.style.display = "none";
+                    }
+                }
             }
         }
+    }
+
+    function showEditForm(id) {
+        document.getElementById('editForm' + id).style.display = 'block';
+        document.getElementById('reviewText' + id).style.display = 'none';
+        
+        // Jalankan fungsi validasi tunggal saat form edit dibuka
+        validasiReview('edit', id); 
     }
 
     function toggleMenu(button) {
@@ -1815,11 +1845,6 @@
             });
         }
     });
-
-    function showEditForm(id) {
-        document.getElementById('editForm' + id).style.display = 'block';
-        document.getElementById('reviewText' + id).style.display = 'none';
-    }
 
     function hideEditForm(id) {
         document.getElementById('editForm' + id).style.display = 'none';

@@ -345,6 +345,7 @@ class ShowAlbumController extends Controller
             $reviews = DB::table('reviews as rw')
             ->join('users as u', 'rw.user_id', '=', 'u.user_id')
             ->join('products as p', 'rw.product_id', '=', 'p.product_id')
+            ->join('releases as r', 'p.release_id', '=', 'r.release_id')
 
             ->where('p.release_id', $album->release_id)
 
@@ -353,7 +354,9 @@ class ShowAlbumController extends Controller
                 'rw.comment',
                 'rw.rating',
                 'rw.created_at',
-                'u.username'
+                'u.username',
+                'r.title as release_title', //tmbhn
+                'r.release_id as release_id' //tmbhn
             )
 
             ->orderBy('rw.created_at', 'desc')
@@ -559,14 +562,17 @@ class ShowAlbumController extends Controller
         $reviews = DB::table('reviews as rw')
         ->join('users as u', 'rw.user_id', '=', 'u.user_id')
         ->join('products as p', 'rw.product_id', '=', 'p.product_id')
-        ->where('p.release_id', $album->release_id)
+        ->join('releases as r', 'p.release_id', '=', 'r.release_id') //tmbhn
 
+        ->where('p.release_id', $album->release_id)
         ->select(
             'rw.review_id', // TAMBAH INI
             'rw.comment',
             'rw.rating',
             'rw.created_at',
-            'u.username'
+            'u.username',
+            'r.title as release_title',     //tmbhn
+            'r.release_id as release_id'    //tmbhn
         )
 
         ->orderBy('rw.created_at', 'desc')
@@ -626,20 +632,29 @@ class ShowAlbumController extends Controller
         ));
     }
 
-   public function storeReview(Request $request, $release_id)
+   public function storeReview(Request $request, $master_id)
     {
         $request->validate([
             'comment' => 'required|min:10',
         ]);
 
+        // cari release pertama dari album/master
+        $release = DB::table('releases')
+            ->where('master_id', $master_id)
+            ->first();
+
+        if (!$release) {
+            return back()->with('error', 'Release tidak ditemukan');
+        }
+
         // cari product berdasarkan release
         $product = DB::table('products')
-            ->where('release_id', $release_id)
+            ->where('release_id', $release->release_id)
             ->first();
 
         if (!$product) {
             return back()->with('error', 'Product tidak ditemukan');
-        }
+        }  
 
         DB::table('reviews')->insert([
             'product_id' => $product->product_id,
@@ -650,10 +665,10 @@ class ShowAlbumController extends Controller
             'comment' => $request->comment,
 
             // default rating sementara
-            'rating' => 5,
+            'rating'     => $request->rating ?? null,
 
             'created_at' => now(),
-            'updated_at' => now(),
+
         ]);
 
         return back()->with('success', 'Review berhasil ditambahkan!');
