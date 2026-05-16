@@ -33,7 +33,6 @@ body{background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;}
     display:flex;
     gap:18px;
 }
-
 /* FILTER */
 .filter-bar{
     display:flex;
@@ -140,9 +139,16 @@ tbody td{
 .notes-input{
     width:100%;
     height:32px;
-    border:1px solid #ccc;
+    border:1px solid #ffffff;
     padding:0 10px;
     font-size:14px;
+}
+.empty-state{
+    text-align:center;
+    padding:50px 20px;
+    font-size:14px;
+    color:#777;
+    background:#fafafa;
 }
 /* FOOT */
 .bottom-row{
@@ -159,6 +165,16 @@ tbody td{
     background:#fff;
     font-size:20px;
     color:#999;
+}
+.condition {
+    color:#555;
+    font-size: 12px;
+}
+.condition-select{
+    width:120px;
+    height:30px;
+    border: none;
+    font-size:13px;
 }
 </style>
 
@@ -243,7 +259,6 @@ tbody td{
 
             <tbody>
                 <tr>
-
                     <td class="check-col">
                         <input type="checkbox">
                     </td>
@@ -288,13 +303,48 @@ tbody td{
                             <span data-star="4">☆</span>
                             <span data-star="5">☆</span>
                         </div>
+                        <div class="condition"> 
+                            <span>Media Condition</span>
+                            <select class="condition-select">
+                                <option></option>
+                                <option>Mint (M)</option>
+                                <option>Near Mint (NM or M-)</option>
+                                <option>Very Good Plus (VG+)</option>
+                                <option>Very Good (VG)</option>
+                                <option>Good Plus (G+)</option>
+                                <option>Good (G)</option>
+                                <option>Poor (P)</option>
+                            </select>
+                        </div>
+                        <div class="condition"> 
+                            <span>Sleeve Condition</span>
+                            <select class="condition-select">
+                                <option></option>
+                                <option>Generic</option>
+                                <option>No Cover</option>
+                                <option>Mint (M)</option>
+                                <option>Near Mint (NM or M-)</option>
+                                <option>Very Good Plus (VG+)</option>
+                                <option>Very Good (VG)</option>
+                                <option>Good Plus (G+)</option>
+                                <option>Good (G)</option>
+                                <option>Poor (P)</option>
+                            </select>
+                        </div>
                     </td>
 
                     <td>
                         <input type="text" class="notes-input" placeholder="Add notes...">
                     </td>
-
                 </tr>
+
+                <!-- Kalau blm ada -->
+                <tr>
+                    <td colspan="14" class="empty-state">
+                        No items found. Try different keywords or check your spelling.
+                    </td>
+                </tr>
+
             </tbody>
 
         </table>

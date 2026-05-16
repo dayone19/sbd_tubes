@@ -23,6 +23,7 @@ class Release extends Model
         'release_date',
         'notes',
         'catalog_number',
+        'barcode',
     ];
 
     // RELASI TABEL
@@ -66,4 +67,41 @@ class Release extends Model
     {
         return $this->hasMany(Product::class, 'release_Id');
     }
+
+    public function formats()
+    {
+        return $this->belongsToMany(Format::class, 'format_release', 'release_id', 'format_id')
+        ->withPivot('is_limited');
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Companie::class, 'companies_release',  'format_id','release_id',);
+    }
+
+    public function discogsLists()
+    {
+        return $this->belongsToMany(DiscogsList::class, 'list_release',  'release_id', 'list_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class,  'contributor_release', 'release_id', 'user_id');
+    }
+
+    public function contributorRelease()
+    {
+        return $this->hasMany(ContributorRelease::class, 'release_id');
+    }
+
+    public function video()
+    {
+        return $this->belongsTo(Video::class, 'release_id');
+    }
+
+    public function identifiers()
+    {
+        return $this->hasMany(Identifier::class, 'release_id');
+    }
+
 }

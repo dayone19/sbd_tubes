@@ -3,23 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Release;
 
-class Track extends Model
+class CompeniesRelease extends Model
 {
-    protected $primaryKey = 'track_id';
+    protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
         'release_id',
-        'title',
-        'duration',
-        'position',
-        'audio_url',
+        'company_id',
+        'role',
     ];
 
-    // RELASI TABEL
     public function release()
     {
         return $this->belongsTo(Release::class, 'release_id');
+    }
+
+    public function companie()
+    {
+        return $this->belongsTo(Companie::class, 'company_id');
     }
 }

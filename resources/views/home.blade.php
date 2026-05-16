@@ -61,8 +61,9 @@
             @foreach($albums as $album)
             <div class="album-card">
 
+            <a href="{{route('show.release', $album->release_id)}}">
                 <img src="{{$album->image ?? 'https://via.placeholder.com/200'}}">
-
+            </a>
                 <div class="album-title">
                     {{$album->title}}
                 </div>
@@ -105,8 +106,9 @@
             @foreach($valuables as $x)
             <div class="album-card">
 
+            <a href="{{route('show.release', $x->release_id)}}">
                 <img src="{{$x->image ?? 'https://via.placeholder.com/200'}}">
-
+            </a>
                 <div class="album-title">
                     {{$x->title}}
                 </div>
@@ -150,8 +152,9 @@
             @foreach($collecteds as $collected)
             <div class="album-card">
 
+            <a href="{{route('show.release', $collected->release_id)}}">
                 <img src="{{$collected->image ?? 'https://via.placeholder.com/200'}}">
-
+            </a>
                 <div class="album-title">
                     {{$collected->title}}
                 </div>
@@ -171,7 +174,7 @@
                 </div>
 
                 <div class="year">
-                    {{$collected->total_copies ?? 0 }} copies from ${{number_format($collected->total_lowest ?? 0, 2)}}
+                    {{$collected->total_copies ?? 0 }} copies from ${{number_format($collected->lowest_price ?? 0, 2)}}
                 </div>
             </div>
             @endforeach

@@ -40,6 +40,7 @@
     .price{color:#d64500; font-weight:bold;}
     .stars{ color:#f0c000; font-size:18px; letter-spacing:2px;}
     .notes-input{width:80%; height:32px; border:1px solid #ccc;padding:0 10px;font-size:14px;}
+    .empty-wantlist{ text-align:center;padding:25px 20px;font-size:14px;font-weight:bold;background:#efefef;color:#555;}
     /* FOOTER */
     .bottom-bar{margin-top:18px;display:flex;justify-content:space-between;align-items:center;font-size:18px; font-weight:bold;}
 </style>
@@ -149,8 +150,17 @@
                         <input type="text" class="notes-input" placeholder="Edit">
                     </td>
                 </tr>
+
+                <!-- Klo blm ada -->
+                <tr>
+                    <td colspan="7" class="empty-wantlist">
+                        You haven't added anything to your Wantlist yet.
+                    </td>
+                </tr>
+                
             </tbody>
         </table>
+        
 
         <!-- bottom -->
         <div class="action-bar" style="margin-top:18px;">
@@ -174,7 +184,7 @@
 </div>
 
 <script>
-document.querySelectorAll('.rating span').forEach(star => {
+document.querySelectorAll('.stars span').forEach(star => {
     star.addEventListener('click', function () {
         let value = this.getAttribute('data-star');
         let parent = this.parentElement;

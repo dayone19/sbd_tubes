@@ -7,115 +7,159 @@ use Illuminate\Support\Facades\DB;
 
 class AdvancedSearchController extends Controller
 {
+    public function index()
+    {
+        return view('search.advanced');
+    }
+
     public function search(Request $request)
     {
-        // 1. Ambil semua input dari form
-        $type       = $request->input('type', 'all');
-        $title      = $request->input('title');
-        $artist     = $request->input('artist');
-        $label      = $request->input('label');
-        $genre      = $request->input('genre');
-        $style      = $request->input('style');
-        $track      = $request->input('track');
-        $country    = $request->input('country');
-        $catalog    = $request->input('catalog');
-        $year       = $request->input('year');
-        $format     = $request->input('format');
-        $credit     = $request->input('credit');
-        $sort       = $request->input('sort', 'relevance');
-        $perPage    = (int) $request->input('per_page', 25);
-        $page       = (int) $request->input('page', 1);
+        $perPage = $request->get('per_page', 25);
+        $type = $request->get('type', 'all');
+        
+        // --- DATA SIDEBAR UNTUK HASIL PENCARIAN ---
+        $Genre = DB::table('genres')
+            ->leftJoin('genre_release', 'genres.genre_id', '=', 'genre_release.genre_id')
+            ->select('genres.genre_id', 'genres.name', DB::raw('count(genre_release.release_id) as releases_count'))
+            ->groupBy('genres.genre_id', 'genres.name')->orderBy('releases_count', 'desc')->get();
 
-        // 2. Inisialisasi variabel hasil
-        $releases = collect();
-        $artists  = collect();
-        $labels   = collect();
-        $masters  = collect();
+        $Style = DB::table('styles')
+            ->leftJoin('release_style', 'styles.style_id', '=', 'release_style.style_id')
+            ->select('styles.style_id', 'styles.name', DB::raw('count(release_style.release_id) as releases_count'))
+            ->groupBy('styles.style_id', 'styles.name')->orderBy('releases_count', 'desc')->get();
 
-        $releaseCount = 0;
-        $artistCount  = 0;
-        $labelCount   = 0;
-        $masterCount  = 0;
+        $Format = DB::table('formats')
+            ->leftJoin('format_release', 'formats.format_id', '=', 'format_release.format_id')
+            ->select('formats.format_id', 'formats.name', DB::raw('count(format_release.format_id) as releases_count'))
+            ->groupBy('formats.format_id', 'formats.name')->orderBy('releases_count', 'desc')->get();
 
-        // --- A. QUERY RELEASES ---
-        if ($type === 'all' || $type === 'release') {
-            $qRelease = DB::table('releases as r')
-                ->leftJoin('images as i', function ($join) {
-                    $join->on('r.release_id', '=', 'i.release_id')
-                         ->where('i.type', '=', 'primary');
-                })
-                ->leftJoin('artist_release as arl', 'r.release_id', '=', 'arl.release_id')
-                ->leftJoin('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
-                ->leftJoin('master_albums as m', 'r.master_id', '=', 'm.master_id')
-                ->leftJoin('genre_release as gr', 'r.release_id', '=', 'gr.release_id')
-                ->leftJoin('genres as g', 'gr.genre_id', '=', 'g.genre_id')
-                ->leftJoin('release_style as sr', 'r.release_id', '=', 'sr.release_id')
-                ->leftJoin('styles as s', 'sr.style_id', '=', 's.style_id')
-                ->leftJoin('label_release as lr', 'r.release_id', '=', 'lr.release_id')
-                ->leftJoin('labels as l', 'lr.label_id', '=', 'l.label_id')
-                ->leftJoin('products as p', 'r.release_id', '=', 'p.release_id');
+        $Country = DB::table('releases')
+            ->select('country', DB::raw('count(release_id) as releases_count'))
+            ->whereNotNull('country')->where('country', '!=', '')
+            ->groupBy('country')->orderBy('releases_count', 'desc')->get();
 
-            if ($title)   $qRelease->where('r.title', 'LIKE', "%{$title}%");
-            if ($artist)  $qRelease->where('ar.name', 'LIKE', "%{$artist}%");
-            if ($genre)   $qRelease->where('g.name', 'LIKE', "%{$genre}%");
-            if ($style)   $qRelease->where('s.name', 'LIKE', "%{$style}%");
-            if ($label)   $qRelease->where('l.name', 'LIKE', "%{$label}%");
-            if ($country) $qRelease->where('r.country', 'LIKE', "%{$country}%");
-            if ($catalog) $qRelease->where('r.catalog_number', 'LIKE', "%{$catalog}%");
-            if ($year)    $qRelease->where('m.year', '=', $year);
-            if ($format)  $qRelease->where('p.format', 'LIKE', "%{$format}%");
-            if ($credit)  $qRelease->where('arl.role', 'LIKE', "%{$credit}%");
-            if ($track) {
-                $qRelease->leftJoin('tracks as t', 'r.release_id', '=', 't.release_id')
-                         ->where('t.title', 'LIKE', "%{$track}%");
+        $Decade = DB::table('master_albums')
+            ->select(DB::raw('FLOOR(year / 10) * 10 AS decade'), DB::raw('count(master_id) as releases_count'))
+            ->whereNotNull('year')->where('year', '>', 0)
+            ->groupBy('decade')->orderBy('releases_count', 'desc')->get();
+
+        // --- 1. QUERY MASTER ---
+        $masterQuery = DB::table('master_albums as ma')
+            ->select('ma.master_id', DB::raw('NULL as release_id'), 'ma.title as judul', 'ma.year as tahun', 
+                     DB::raw('MIN(ar.name) as nama_artis'), DB::raw('MIN(img.url) as foto'), DB::raw("'MASTER RELEASE' as format_name"))
+            ->leftJoin('releases as r', 'ma.master_id', '=', 'r.master_id')
+            ->leftJoin('artist_release as art_rel', 'r.release_id', '=', 'art_rel.release_id')
+            ->leftJoin('artists as ar', 'art_rel.artist_id', '=', 'ar.artist_id')
+            ->leftJoin('images as img', 'r.release_id', '=', 'img.release_id')
+            ->groupBy('ma.master_id', 'ma.title', 'ma.year');
+
+        // --- 2. QUERY RELEASE ---
+        $releaseQuery = DB::table('releases as r')
+            ->select('ma.master_id', 'r.release_id', 'r.title as judul', 'ma.year as tahun',
+                     DB::raw('MIN(ar.name) as nama_artis'), DB::raw('MIN(img.url) as foto'), 
+                     DB::raw('MIN(f.name) as format_name'))
+            ->leftJoin('master_albums as ma', 'r.master_id', '=', 'ma.master_id')
+            ->leftJoin('artist_release as art_rel', 'r.release_id', '=', 'art_rel.release_id')
+            ->leftJoin('artists as ar', 'art_rel.artist_id', '=', 'ar.artist_id')
+            ->leftJoin('images as img', 'r.release_id', '=', 'img.release_id')
+            ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
+            ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
+            ->groupBy('ma.master_id', 'r.release_id', 'r.title', 'ma.year');
+
+        // --- 3. QUERY ARTIST ---
+        $artistQuery = DB::table('artists as a')
+            ->select('a.artist_id as master_id', DB::raw('NULL as release_id'), 'a.name as judul', DB::raw('NULL as tahun'),
+                     'a.name as nama_artis', 'a.image as foto', DB::raw("'ARTIST' as format_name"))
+            ->groupBy('a.artist_id', 'a.name', 'a.image');
+
+        // --- 4. QUERY LABEL ---
+        $labelQuery = DB::table('labels as l')
+            ->select('l.label_id as master_id', DB::raw('NULL as release_id'), 'l.name as judul', DB::raw('NULL as tahun'),
+                     'l.name as nama_artis', DB::raw('NULL as foto'), DB::raw("'LABEL' as format_name"))
+            ->groupBy('l.label_id', 'l.name');
+
+
+        $applyFilters = function($q) use ($request) {
+            if ($request->filled('title')) $q->where('ma.title', 'like', '%' . $request->title . '%');
+            if ($request->filled('artist')) $q->where('ar.name', 'like', '%' . $request->artist . '%');
+            if ($request->filled('year')) $q->where('ma.year', 'like', $request->year . '%');
+            if ($request->filled('country')) $q->where('r.country', 'like', '%' . $request->country . '%');
+            if ($request->filled('catno')) $q->where('r.catalog_number', 'like', '%' . $request->catno . '%');
+            if ($request->filled('barcode')) $q->where('r.barcode', 'like', '%' . $request->barcode . '%');
+            if ($request->filled('genre')) {
+                $q->join('genre_release as gr_f', 'r.release_id', '=', 'gr_f.release_id')
+                  ->join('genres as g_f', 'gr_f.genre_id', '=', 'g_f.genre_id')
+                  ->where('g_f.name', 'like', '%' . $request->genre . '%');
             }
+            if ($request->filled('style')) {
+                $q->join('release_style as rs_f', 'r.release_id', '=', 'rs_f.release_id')
+                  ->join('styles as s_f', 'rs_f.style_id', '=', 's_f.style_id')
+                  ->where('s_f.name', 'like', '%' . $request->style . '%');
+            }
+            if ($request->filled('label')) {
+                $q->join('label_release as lr_f', 'r.release_id', '=', 'lr_f.release_id')
+                  ->join('labels as l_f', 'lr_f.label_id', '=', 'l_f.label_id')
+                  ->where('l_f.name', 'like', '%' . $request->label . '%');
+            }
+            if ($request->filled('format')) {
+                $q->join('format_release as fr_f', 'r.release_id', '=', 'fr_f.release_id')
+                  ->join('formats as f_f', 'fr_f.format_id', '=', 'f_f.format_id')
+                  ->where('f_f.name', 'like', '%' . $request->format . '%');
+            }
+            if ($request->filled('track')) {
+                $q->join('tracks as t_f', 'r.release_id', '=', 't_f.release_id')
+                  ->where('t_f.title', 'like', '%' . $request->track . '%');
+            }
+            if ($request->filled('credit')) {
+                $q->where('art_rel.role', 'like', '%' . $request->credit . '%');
+            }
+            if ($request->filled('anv')) {
+                $q->join('artist_variations as av_f', 'ar.artist_id', '=', 'av_f.artist_id')
+                  ->where('av_f.variation_name', 'like', '%' . $request->anv . '%');
+            }
+        };
 
-            $qRelease->select(
-                'r.release_id', 'r.title', 'r.country', 'r.catalog_number', 'i.url as image',
-                DB::raw("GROUP_CONCAT(DISTINCT ar.name SEPARATOR ', ') as artis"),
-                DB::raw("GROUP_CONCAT(DISTINCT l.name SEPARATOR ', ') as label_name"),
-                DB::raw("GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') as genre"),
-                DB::raw("GROUP_CONCAT(DISTINCT s.name SEPARATOR ', ') as style"),
-                'm.year as tahun'
-            )->groupBy('r.release_id', 'r.title', 'r.country', 'r.catalog_number', 'i.url', 'm.year');
+        $applyFilters($masterQuery);
+        $applyFilters($releaseQuery);
 
-            $releaseCount = $qRelease->get()->count();
-            $releases = $qRelease->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        // --- FUNGSI FILTER UNTUK ARTIST & LABEL ---
+        if ($request->filled('title') || $request->filled('artist')) {
+            $keyword = $request->title ?: $request->artist;
+            $artistQuery->where('a.name', 'like', '%' . $keyword . '%');
+        }
+        if ($request->filled('title') || $request->filled('label')) {
+            $keyword = $request->title ?: $request->label;
+            $labelQuery->where('l.name', 'like', '%' . $keyword . '%');
         }
 
-        // --- B. QUERY ARTISTS ---
-        if ($type === 'all' || $type === 'artist') {
-            $qArtist = DB::table('artists as ar');
-            if ($title)  $qArtist->where('ar.name', 'LIKE', "%{$title}%");
-            if ($artist) $qArtist->where('ar.name', 'LIKE', "%{$artist}%");
-            $artistCount = $qArtist->count();
-            $artists = $qArtist->orderBy('ar.name')->offset(($page - 1) * $perPage)->limit($perPage)->get();
+        // --- GABUNGKAN / FILTER BERDASARKAN TIPE ---
+        if ($type == 'all') {
+            $union = $masterQuery->unionAll($releaseQuery)->unionAll($artistQuery)->unionAll($labelQuery);
+            $albums = DB::table(DB::raw("({$union->toSql()}) as combined"))
+                ->mergeBindings($union)->paginate($perPage);
+        } elseif ($type == 'master') {
+            $albums = $masterQuery->paginate($perPage);
+        } elseif ($type == 'artist') {
+            $albums = $artistQuery->paginate($perPage);
+        } elseif ($type == 'label') {
+            $albums = $labelQuery->paginate($perPage);
+        } else {
+            $albums = $releaseQuery->paginate($perPage);
         }
 
-        // --- C. QUERY LABELS ---
-        if ($type === 'all' || $type === 'label') {
-            $qLabel = DB::table('labels as l');
-            if ($title) $qLabel->where('l.name', 'LIKE', "%{$title}%");
-            if ($label) $qLabel->where('l.name', 'LIKE', "%{$label}%");
-            $labelCount = $qLabel->count();
-            $labels = $qLabel->orderBy('l.name')->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        }
+        // --- COUNT UNTUK SIDEBAR/NAV ---
+        $countRelease = DB::table('releases')->count();
+        $countMaster = DB::table('master_albums')->count();
+        $countArtist = DB::table('artists')->count();
+        $countLabel = DB::table('labels')->count();
+        $countAll = $countRelease + $countMaster + $countArtist + $countLabel;
 
-        // --- D. QUERY MASTER RELEASES ---
-        if ($type === 'all' || $type === 'master') {
-            $qMaster = DB::table('master_albums as m');
-            if ($title) $qMaster->where('m.title', 'LIKE', "%{$title}%");
-            if ($year)  $qMaster->where('m.year', '=', $year);
-            $masterCount = $qMaster->count();
-            $masters = $qMaster->orderBy('m.title')->offset(($page - 1) * $perPage)->limit($perPage)->get();
-        }
-
-        $totalAll = $releaseCount + $artistCount + $labelCount + $masterCount;
+        // Bawa data query string agar pagination tidak hilang pas pindah halaman
+        $albums->appends($request->all());
 
         return view('search', compact(
-            'releases', 'artists', 'labels', 'masters',
-            'releaseCount', 'artistCount', 'labelCount', 'masterCount',
-            'totalAll', 'type', 'perPage', 'page'
-        ))->withInput($request->all());
+            'Genre', 'Style', 'Format', 'Country', 'Decade', 'albums',
+            'countAll', 'countRelease', 'countMaster', 'countArtist', 'countLabel'
+        ));
     }
 }

@@ -29,7 +29,7 @@
 
     <div class="community-text">
         Want to see other lists from the Discogs Community?
-        Check out <a href="#">Recent Lists</a>.
+        Check out <a href="/lists">Recent Lists</a>.
     </div>
 
     <div class="list-title">
@@ -46,7 +46,7 @@
 
         <tbody>
             <tr>
-                <td><a href="#">nama listnya</a></td>
+                <td><a href="/no_list">nama listnya</a></td>
                 <td>2 days ago</td>
             </tr>
         </tbody>

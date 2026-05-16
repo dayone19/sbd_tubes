@@ -142,6 +142,8 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/showArtist">Essentials</a></li>
                         <li><a class="dropdown-item" href="/showAlbum">Features</a></li>
+                        <li><a class="dropdown-item" href="/showRelease">Most Valuable</a></li>
+                        <li><a class="dropdown-item" href="#">Collecting</a></li>
                         <li><a class="dropdown-item" href="#">Most Valuable</a></li>
                         <li><a class="dropdown-item" href="/showLabel">Collecting</a></li>
                         <li><a class="dropdown-item" href="#">Audio Gear</a></li>
