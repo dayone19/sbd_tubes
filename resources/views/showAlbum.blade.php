@@ -5,17 +5,13 @@
 @section('content')
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
+    * {box-sizing: border-box;}
     body {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 13px;
         color: #333;
         background: #fff;
     }
-
     .album-wrapper {
         max-width: 1100px;
         margin: 20px auto;
@@ -23,13 +19,11 @@
         display: flex;
         gap: 24px;
     }
-
     /* ── LEFT COLUMN ── */
     .album-left {
         flex: 1 1 0;
         min-width: 0;
     }
-
     /* Header */
     .album-header {
         display: flex;
@@ -37,12 +31,10 @@
         align-items: flex-start;
         margin-bottom: 20px;
     }
-
     .album-cover-wrap {
         flex-shrink: 0;
         text-align: center;
     }
-
     .album-cover-wrap img {
         width: 160px;
         height: 160px;
@@ -976,9 +968,7 @@
     font-size: 15px;
     font-weight: bold;
     color: #000;
-
-    margin-top: 25px; /* jarak dari rekomendasi */
-
+    margin-top: 25px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ccc;
     margin-bottom: 16px;
@@ -1122,7 +1112,141 @@
       cursor: pointer;
     }
         
+    .review-form-wrap {
+    display: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
 
+  .review-form-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .review-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 2px solid #4a90d9;
+    border-radius: 8px;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .review-preview-box {
+    display: none;
+    margin-top: 6px;
+  }
+
+  .review-preview-label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .review-preview-text {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+    min-height: 30px;
+  }
+
+  .review-word-warning {
+    display: none;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+
+  .review-word-warning em {
+    font-style: italic;
+  }
+
+  .review-form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .review-submit-btn {
+    padding: 6px 16px;
+    font-size: 13px;
+    background: #ccc;
+    color: #888;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    cursor: not-allowed;
+  }
+
+  .review-submit-btn.active {
+    background: #e8e8e8;
+    color: #333;
+    border-color: #ccc;
+    cursor: pointer;
+  }
+
+  .review-help-link {
+    color: #7b2d8b;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .review-help-link:hover {
+    text-decoration: underline;
+  }
+  .review-menu {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 22px;
+    width: 110px;
+    background: #f3f3f3;
+    border: 1px solid #cfcfcf;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 999;
+}
+
+.menu-dropdown a {
+    display: block;
+    padding: 10px 12px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.menu-dropdown a:hover {
+    background: #e8e8e8;
+}
+
+.delete-link {
+    color: #000;
+}
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1348,41 +1472,130 @@
     </div>
 
     <div class="reviews-title">Reviews</div>
- 
-  <button class="add-review-btn">Add Review</button>
- 
-  @foreach($reviews as $review)
-  <!-- Review 1 -->
-  <div class="review-item">
-    <div class="avatar">
-      <div class="avatar-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-        </svg>
-      </div>
+    <form action="{{ route('release.review', $album->master_id) }}" method="POST">
+    @csrf
+    <div id="reviewForm" class="review-form-wrap" style="display:block;">
+
+    <textarea
+        id="reviewInput"
+        class="review-textarea"
+        placeholder="Enter your comment"
+        oninput="handleReviewInput()"
+        name="comment"
+    ></textarea>
+
+    <div id="previewBox" class="review-preview-box">
+        <div class="review-preview-label">Preview</div>
+        <div id="previewText" class="review-preview-text"></div>
     </div>
-    <div class="review-content">
-      <div class="review-header">
-        <a href="#" class="review-username">{{ $review->username }}</a>
-        <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
-      </div>
-      <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
-    @for ($i = 1; $i <= 5; $i++)
-        @if ($i <= $review->rating)
-            <span>★</span> {{-- Bintang isi --}}
-        @else
-            <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
-        @endif
-    @endfor
-    <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
-</div>
-      <div class="review-text">{{ $review->comment }}</div>
-      <div class="review-actions">
-        <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
-        <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
-      </div>
+
+    <div id="wordWarning" class="review-word-warning">
+        <span style="color:#cc0000; font-weight:bold;">&#9432;</span>
+        <em id="warningText">At least 10 words must be entered.</em>
     </div>
-    <div class="dropdown-arrow">▼</div>
+
+    <div class="review-form-footer">
+        <button type="submit" id="submitBtn" class="review-submit-btn" disabled>Submit</button>
+        <a href="#" class="review-help-link">View Help</a>
+    </div>
+    </div>
+    </form>
+ 
+    @foreach($reviews as $review)
+    <!-- Review 1 -->
+    <div class="review-item">
+        <div class="avatar">
+        <div class="avatar-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+        </div>
+        </div>
+        <div class="review-content">
+        <div class="review-header">
+            <a href="#" class="review-username">{{ $review->username }}</a>
+            <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
+        </div>
+        <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
+        @for ($i = 1; $i <= 5; $i++)
+            @if ($i <= $review->rating)
+                <span>★</span> {{-- Bintang isi --}}
+            @else
+                <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
+            @endif
+        @endfor
+        <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
+        </div>
+
+        <div class="review-actions">
+            <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+            <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+        </div>
+
+        <div class="review-text" id="reviewText{{ $review->review_id }}">
+            {{ $review->comment }}
+        </div>
+        <!-- EDIT FORM -->
+        <div id="editForm{{ $review->review_id }}" style="display:none; margin-top:10px;">
+            <form action="{{ route('review.update', $review->review_id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <textarea name="comment" class="review-textarea">{{ $review->comment }}</textarea>
+
+                <div class="review-preview-box" style="display:block; margin-top:10px;">
+                    <div class="review-preview-label">Preview</div>
+                    <div class="review-preview-text">
+                        {{ $review->comment }}
+                    </div>
+                </div>
+
+                <div class="review-form-footer">
+                    <button type="submit" class="review-submit-btn active">
+                        Save Changes
+                    </button>
+
+                    <a href="#" onclick="hideEditForm({{ $review->review_id }}); return false;" class="action-link">
+                        Cancel
+                    </a>
+
+                    <a href="#" class="review-help-link">View Help</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="review-menu">
+        <button class="menu-btn" onclick="toggleMenu(this)">
+            ▼
+        </button>
+
+        <div class="menu-dropdown">
+            <a href="#" onclick="showEditForm({{ $review->review_id }}); return false;">✎ Edit</a>
+            <a href="#">⊘ Report</a>
+            <form action="{{ route('review.delete', $review->review_id) }}"
+                method="POST" onsubmit="return confirm('Delete this review?')">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit"
+                        class="delete-link"
+                        style="
+                            background:none;
+                            border:none;
+                            width:100%;
+                            text-align:left;
+                            padding:10px 12px;
+                            cursor:pointer;
+                            font-size:14px;
+                        ">
+                    🗑 Delete
+                </button>
+            </form>
+        </div>
+    </div>
+
   </div>
   @endforeach
  
@@ -1481,7 +1694,7 @@
 
                 <div class="v-list">
                     @foreach($videos as $video)
-                    <div class="v-item" onclick="changevideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}') ">
+                    <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
                         <div class="v-thumb">
                             <img src="{{ $video->thumbnail }}">
                             <span class="v-time"> {{ $video->duration }} </span>
@@ -1527,6 +1740,92 @@
     function changeVideo(thumbnail, youtube_url) {
         document.getElementById('currentThumb').src = thumbnail;
     }
+
+    function handleReviewInput() {
+        const input = document.getElementById("reviewInput");
+        const submitBtn = document.getElementById("submitBtn");
+        const previewBox = document.getElementById("previewBox");
+        const previewText = document.getElementById("previewText");
+        const warning = document.getElementById("wordWarning");
+
+        const text = input.value.trim();
+
+        // preview
+        if (text.length > 0) {
+            previewBox.style.display = "block";
+            previewText.textContent = text;
+        } else {
+            previewBox.style.display = "none";
+        }
+
+        // hitung jumlah kata
+        const wordCount = text
+            .split(/\s+/)
+            .filter(word => word.length > 0).length;
+
+        // minimal 10 kata
+        if (wordCount >= 10) {
+            submitBtn.disabled = false;
+
+            submitBtn.style.background = "#000";
+            submitBtn.style.color = "#fff";
+            submitBtn.style.border = "1px solid #000";
+            submitBtn.style.cursor = "pointer";
+
+            warning.style.display = "none";
+        } else {
+            submitBtn.disabled = true;
+
+            submitBtn.style.background = "#ccc";
+            submitBtn.style.color = "#888";
+            submitBtn.style.border = "1px solid #bbb";
+            submitBtn.style.cursor = "not-allowed";
+
+        // warning hanya muncul kalau sudah mulai ngetik
+            if (text.length > 0) {
+                warning.style.display = "block";
+            } else {
+                warning.style.display = "none";
+            }
+        }
+    }
+
+    function toggleMenu(button) {
+        const dropdown = button.nextElementSibling;
+
+        // tutup semua dropdown lain
+        document.querySelectorAll('.menu-dropdown').forEach(menu => {
+            if (menu !== dropdown) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // toggle current
+        dropdown.style.display =
+            dropdown.style.display === 'block'
+                ? 'none'
+                : 'block';
+    }
+
+    // klik luar = close
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.review-menu')) {
+            document.querySelectorAll('.menu-dropdown').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        }
+    });
+
+    function showEditForm(id) {
+        document.getElementById('editForm' + id).style.display = 'block';
+        document.getElementById('reviewText' + id).style.display = 'none';
+    }
+
+    function hideEditForm(id) {
+        document.getElementById('editForm' + id).style.display = 'none';
+        document.getElementById('reviewText' + id).style.display = 'block';
+    }
+
 </script>
 
 @endsection

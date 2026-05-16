@@ -6,94 +6,26 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-    * {
-        box-sizing: border-box;
-    }
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 13px;
-        color: #333;
-        background: #fff;
-    }
-    .album-wrapper {
-        max-width: 1100px;
-        margin: 20px auto;
-        padding: 0 16px;
-        display: flex;
-        gap: 24px;
-    }
+    * {box-sizing: border-box;}
+    body {font-family: Arial, Helvetica, sans-serif;font-size: 13px;color: #333;background: #fff;}
+    .album-wrapper {max-width: 1100px;margin: 20px auto;padding: 0 16px;display: flex;gap: 24px;}
     /* ── LEFT COLUMN ── */
-    .album-left {
-        flex: 1 1 0;
-        min-width: 0;
-    }
+    .album-left {flex: 1 1 0;min-width: 0;}
     /* Header */
-    .album-header {
-        display: flex;
-        gap: 16px;
-        align-items: flex-start;
-        margin-bottom: 20px;
-    }
-    .album-cover-wrap {
-        flex-shrink: 0;
-        text-align: center;
-    }
-    .album-cover-wrap img {
-        width: 160px;
-        height: 160px;
-        object-fit: cover;
-        display: block;
-        border: 1px solid #ccc;
-    }
-    .album-cover-wrap a {
-        display: block;
-        font-size: 11px;
-        color: #0a71b3;
-        margin-top: 4px;
-        text-decoration: none;
-    }
-    .album-cover-wrap a:hover {
-        text-decoration: underline;
-    }
-    .album-meta {
-        flex: 1;
-        padding-top: 4px;
-    }
-    .album-title {
-        font-size: 22px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-        line-height: 1.2;
-    }
-    .album-title .artist-name {
-        color: #0a71b3;
-        text-decoration: none;
-    }
-    .album-title .artist-name:hover {
-        text-decoration: underline;
-    }
-    .album-info-table {
-        border: none;
-        border-collapse: collapse;
-    }
-    .album-info-table td {
-        padding: 2px 8px 2px 0;
-        vertical-align: top;
-        font-size: 13px;
-    }
-    .album-info-table td:first-child {
-        color: #333;
-        font-weight: normal;
-        white-space: nowrap;
-    }
-    .album-info-table td a {
-        color: #0a71b3;
-        text-decoration: none;
-    }
-    .album-info-table td a:hover {
-        text-decoration: underline;
-    }
+    .album-header {display: flex;gap: 16px;align-items: flex-start;margin-bottom: 20px;}
+    .album-cover-wrap {flex-shrink: 0;text-align: center;}
+    .album-cover-wrap img {width: 160px;height: 160px;object-fit: cover;display: block;border: 1px solid #ccc;}
+    .album-cover-wrap a {display: block;font-size: 11px;color: #0a71b3;margin-top: 4px;text-decoration: none;}
+    .album-cover-wrap a:hover {text-decoration: underline;}
+    .album-meta {flex: 1;padding-top: 4px;}
+    .album-title {font-size: 22px;font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.2;}
+    .album-title .artist-name {color: #0a71b3;text-decoration: none;}
+    .album-title .artist-name:hover {text-decoration: underline;}
+    .album-info-table {border: none;border-collapse: collapse;}
+    .album-info-table td {padding: 2px 8px 2px 0;vertical-align: top;font-size: 13px;}
+    .album-info-table td:first-child {color: #333; font-weight: normal; white-space: nowrap;}
+    .album-info-table td a { color: #0a71b3; text-decoration: none; }
+    .album-info-table td a:hover {text-decoration: underline;}
     /* Section divider */
     .section-title {
         font-size: 14px;
@@ -105,22 +37,10 @@
         margin-top: 20px;
     }
     /* Tracklist */
-    .tracklist {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 0;
-    }
-    .tracklist tr {
-        border-bottom: 1px solid #e8e8e8;
-    }
-    .tracklist tr:last-child {
-        border-bottom: none;
-    }
-    .tracklist td {
-        padding: 3px 4px;
-        font-size: 13px;
-        color: #333;
-    }
+    .tracklist {width: 100%;border-collapse: collapse;margin-top: 0;}
+    .tracklist tr {border-bottom: 1px solid #e8e8e8;}
+    .tracklist tr:last-child {border-bottom: none;}
+    .tracklist td {padding: 3px 4px;font-size: 13px;color: #333;}
     /* Credits */
     .credits-grid {
         display: grid;
@@ -135,10 +55,7 @@
         padding: 10px 8px;
         border-bottom: none;
     }
-    .credit-item img {
-        width: 60px;
-        height: auto;
-    }
+    .credit-item img {width: 60px;height: auto;}
     .credit-info a {
         color: #0a71b3;
         text-decoration: none;
@@ -146,20 +63,10 @@
         font-weight: bold;
         display: block;
     }
-    .credit-info a:hover {
-        text-decoration: underline;
-    }
-    .credit-info span {
-        font-size: 12px;
-        color: #666;
-        display: block;
-    }
+    .credit-info a:hover {text-decoration: underline;}
+    .credit-info span {font-size: 12px;color: #666;display: block;}
     /* ── RIGHT COLUMN ── */
-    .album-right {
-        width: 280px;
-        flex-shrink: 0;
-    }
-
+    .album-right {width: 280px;flex-shrink: 0;}
     /* Master Release box */
     .master-release-header {
         display: flex;
@@ -172,7 +79,6 @@
         padding-bottom: 6px;
         margin-bottom: 8px;
     }
-
     .master-release-header .release-id {
         font-size: 12px;
         font-weight: normal;
@@ -181,7 +87,6 @@
         align-items: center;
         gap: 4px;
     }
-
     .release-icon {
         width: 12px;
         height: 12px;
@@ -190,7 +95,6 @@
         display: inline-block;
         position: relative;
     }
-
     .release-icon::after {
         content: '';
         width: 4px;
@@ -202,22 +106,14 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    .master-release-links {
-        font-size: 12px;
-        margin-bottom: 12px;
-    }
-
+    .master-release-links {font-size: 12px;margin-bottom: 12px;}
     .master-release-links a {
         color: #0a71b3;
         text-decoration: none;
         display: block;
         margin-bottom: 2px;
     }
-
-    .master-release-links a:hover {
-        text-decoration: underline;
-    }
-
+    .master-release-links a:hover {text-decoration: underline;}
     /* For Sale */
     .for-sale-header {
         display: flex;
@@ -227,23 +123,17 @@
         padding-bottom: 6px;
         margin-bottom: 10px;
     }
-
     .for-sale-header span {
         font-size: 14px;
         font-weight: bold;
         color: #333;
     }
-
     .for-sale-header a {
         color: #0a71b3;
         font-size: 12px;
         text-decoration: none;
     }
-
-    .for-sale-header a:hover {
-        text-decoration: underline;
-    }
-
+    .for-sale-header a:hover {text-decoration: underline;}
     /* Release card */
     .release-card {
         display: flex;
@@ -257,10 +147,7 @@
         border: 1px solid #ccc;
         flex-shrink: 0;
     }
-    .release-card-info {
-        font-size: 12px;
-        line-height: 1.5;
-    }
+    .release-card-info {font-size: 12px;line-height: 1.5;}
     .release-card-info .label {
         font-size: 10px;
         color: #888;
@@ -272,24 +159,15 @@
         font-weight: bold;
         color: #333;
     }
-    .release-card-info .year {
-        color: #555;
-    }
+    .release-card-info .year { color: #555;}
     .release-card-info .formats a {
         color: black;
         text-decoration: none;
         font-size: 12px;
     }
-    .release-card-info .formats a:hover {
-        text-decoration: underline;
-    }
-    .release-card-info .formats span {
-        color: #666;
-    }
-    .release-card-info .price-range {
-        color: #333;
-        font-size: 12px;
-    }
+    .release-card-info .formats a:hover {text-decoration: underline;}
+    .release-card-info .formats span {color: #666;}
+    .release-card-info .price-range {color: #333;font-size: 12px;}
     .btn {
         display: flex;
         align-items: center;
@@ -313,17 +191,9 @@
         margin-bottom: 16px;
         border-radius: 2px;
     }
-
-    .btn-shop:hover {
-        background: #257025;
-    }
-
-    
+    .btn-shop:hover { background: #257025;}
     /* STATISTICS */
-    .stats-box {
-        margin-bottom: 16px;
-    }
-
+    .stats-box { margin-bottom: 16px;}
     .stats-box h3 {
         font-size: 15px;
         font-weight: bold;
@@ -332,7 +202,6 @@
         border-bottom: 1px solid #ddd;
         padding-bottom: 4px;
     }
-
     .stats-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -340,7 +209,6 @@
         row-gap: 2px;
         position: relative;
     }
-
     .stats-grid::after {
         content: "";
         position: absolute;
@@ -349,41 +217,18 @@
         width: 100%;
         border-bottom: 1px solid #ddd;
     }
-
-    .stats-grid .stat-pair:nth-last-child(-n+2) {
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 6px;
-    }
-
+    .stats-grid .stat-pair:nth-last-child(-n+2) {border-bottom: 1px solid #ddd;padding-bottom: 6px;}
     .stat-pair {
         display: flex;
         justify-content: space-between;
         white-space: nowrap;
-        gap: 7px; /* dari 6 → 12 biar agak lega */
+        gap: 7px;
     }
-
-    .stat-row {
-        display: contents;
-    }
-
-    .stat-label {
-        color: #000;
-    }
-
-    .stat-value {
-        color: #000;
-        text-align: right;
-    }
-
-    .stat-value a {
-        color: #4b75b9;
-        text-decoration: none;
-    }
-
-    .stat-value a:hover {
-        text-decoration: underline;
-    }
-
+    .stat-row {display: contents;}
+    .stat-label {  color: #000;}
+    .stat-value {color: #000;text-align: right;}
+    .stat-value a {color: #4b75b9;text-decoration: none; }
+    .stat-value a:hover { text-decoration: underline; }
     /* Share */
     .share-btn {
         display: inline-flex;
@@ -396,20 +241,14 @@
         background: none;
         cursor: pointer;
         padding: 0;
-
         margin-top: 10px; 
     }
-
-    .share-btn:hover {
-        text-decoration: underline;
-    }
-
+    .share-btn:hover {text-decoration: underline;}
     .share-icon {
         width: 14px;
         height: 14px;
         fill: #0a71b3;
     }
-
     /* Videos */
     .videos-header {
         display: flex;
@@ -422,7 +261,6 @@
         padding-bottom: 6px;
         margin-bottom: 8px;
     }
-
     .videos-header .info-icon {
         width: 14px;
         height: 14px;
@@ -436,7 +274,6 @@
         font-weight: bold;
         cursor: pointer;
     }
-
     .videos-header .edit-link {
         color: #0a71b3;
         font-size: 12px;
@@ -444,27 +281,15 @@
         text-decoration: none;
         margin-left: 0;
     }
-
-    .videos-header .edit-link:hover {
-        text-decoration: underline;
-    }
-
-    .versions-header {
-        padding: 16px 0 8px 0;
-    }
-
+    .videos-header .edit-link:hover {text-decoration: underline;}
+    .versions-header {padding: 16px 0 8px 0;}
     .versions-header h2 {
         font-size: 16px;
         font-weight: bold;
         color: #333;
         margin-bottom: 12px;
     }
-
-    .barcode-search {
-        margin-top: 10px;
-        position: relative;
-    }
-
+    .barcode-search {margin-top: 10px;position: relative;}
     .barcode-search input {
         width: 100%;
         padding: 7px 36px 7px 10px;
@@ -474,15 +299,8 @@
         outline: none;
         color: #555;
     }
-
-    .barcode-search input:focus {
-        border-color: #aaa;
-    }
-
-    .barcode-search input::placeholder {
-        color: #999;
-    }
-
+    .barcode-search input:focus {border-color: #aaa;}
+    .barcode-search input::placeholder {color: #999; }
     .barcode-search .search-btn {
         position: absolute;
         right: 0;
@@ -498,11 +316,7 @@
         color: #555;
         font-size: 14px;
     }
-
-    .barcode-search .search-btn:hover {
-        color: #333;
-    }
-
+    .barcode-search .search-btn:hover {color: #333;}
     #video-sidebar-section {
         margin-top: 10px;
         border-top: none;
@@ -511,7 +325,6 @@
         flex-direction: column;
         max-height: 200px;
     }
-
     #video-sidebar-section .v-header {
         display: flex;
         gap: 8px; 
@@ -519,13 +332,11 @@
         margin-bottom: 10px;
         border-bottom: 1px solid #ddd; 
     }
-
     #video-sidebar-section h2 { 
         font-size: 13px; 
         font-weight: bold; 
         margin: 0; 
     }
-    
     .main-player {
         width: 100%;
         background-color: #000;
@@ -535,8 +346,7 @@
         align-items: center;
         margin-bottom: 10px;
         height: 350px;
-    }
-    
+    }  
     .player img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
     .play-btn-overlay {
         position: absolute;
@@ -548,42 +358,30 @@
         justify-content: center;
         align-items: center;
     }
-
     .play-btn-overlay::after {
         content: '';
         border-style: solid;
         border-width: 7px 0 7px 12px;
         border-color: transparent transparent transparent #fff;
     }
-
-    .v-list {
-        max-height: 120px;
-        overflow-y: auto;
-        flex: 1;         
-        min-height: 0;    
-    }
-
+    .v-list {max-height: 120px;overflow-y: auto;flex: 1;min-height: 0; }
     .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .v-item:hover { background: #f9f9f9; }
     .v-thumb { width: 100px; height: 60px; position: relative; flex-shrink: 0; }
     .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .v-time { position: absolute; bottom: 2px; right: 2px; background: #000; color: #fff; font-size: 10px; padding: 0 3px; }
     .v-title { font-size: 13px; color: #2a5bd7; line-height: 1.2; }
-
     /* Custom scrollbar untuk list video */
     .v-list::-webkit-scrollbar {width: 6px;}
     .v-list::-webkit-scrollbar-thumb {background: #ccc;border-radius: 10px;}
     .v-list::-webkit-scrollbar-thumb:hover {background: #999;}
     .l-section { border-top: none; padding-top: 0px; }
     .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-
     .tracklist-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
-
 /* Container bintang + share */
 .middle-row {
   display: flex;
@@ -591,103 +389,58 @@
   justify-content: space-between;
   position: relative;
   margin: 10px 0;
-  padding: 0 20px; /* biar ada ruang kiri kanan */
+  padding: 0 20px;
+  flex-direction: row; 
+  flex-wrap: nowrap;  
 }
-
+.star-rating-v2 {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  gap: 2px; 
+}
 .middle-row::before {
   content: "";
   position: absolute;
-  height: 20px;
+  height: 24px;
   width: 1px;
   background: #ccc;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 48%; 
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
-
-/* Bintang */
-.stars {
-  display: flex;
-  gap: 3px;
-  margin-left: auto;
-  margin-right: 8px; /* jarak ke garis */
-}
-
-.star {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.star.filled {
-  color: #f5a623; /* kuning */
-}
-
-.star.empty {
-  color: #ccc; /* abu */
-}
-
 /* Share button */
- .share-btn {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: #0a71b3;
-        font-size: 13px;
-        text-decoration: none;
-        border: none;
-        background: none;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 70px;
-        margin-right: 70px;
-        top: -5px;
-    }
-
-    .share-btn:hover {
-        text-decoration: underline;
-    }
-
-    .share-icon {
-        width: 14px;
-        height: 14px;
-        fill: #0a71b3;
-    }
+.share-btn {display: flex;align-items: center;gap: 5px;color: #0a71b3; font-size: 13px;text-decoration: none;border: none;
+  background: none;cursor: pointer;padding: 0;margin-left: 70px;margin-right: 70px;top: -5px;}
+.share-btn:hover {text-decoration: underline;}
+.share-icon { width: 14px;height: 14px;fill: #0a71b3;}
 /* Divider */
 .divider {
   border: none;
   border-top: 1px solid #ccc;
   margin: 10px 0;
 }
-
 /* Button group */
 .btn-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-
 /* Button */
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 4px;              /* ⬅️ jarak icon & teks diperkecil */
-  padding: 6px 10px;     /* ⬅️ dalam tombol diperkecil */
-
-  font-size: 12px;       /* opsional biar lebih compact */
-
+  gap: 4px;              
+  padding: 6px 10px; 
+  font-size: 12px;
   background: #f2f2e8;
   border: 1px solid #ccc;
   border-radius: 0px;
-
   cursor: pointer;
   white-space: nowrap;
 }
-
-.btn:hover {
-  background: #f2f2e8;
-}
-
+.btn:hover {background: #f2f2e8;}
  .tl-header {
       display: flex;
       justify-content: space-between;
@@ -731,14 +484,8 @@
       font-size: 13px;
       color: #000;
     }
-    .track-dur {
-      font-size: 13px;
-      color: #000;
-    }
-    .track-credits {
-      padding: 0 0 10px 38px;
-      display: none;
-    }
+    .track-dur {font-size: 13px;color: #000;}
+    .track-credits {padding: 0 0 10px 38px;display: none;}
     .track-credits.open { display: block; }
     .credit-line {
       font-size: 12px;
@@ -746,31 +493,21 @@
       line-height: 1.3;
       padding-left: 12px;
     }
-    .credit-line a {
-      color: #1a6bbf;
-      text-decoration: none;
-    }
-    .credit-line a:hover { text-decoration: underline; }
-        
+    .credit-line a {color: #1a6bbf;text-decoration: none;}
+    .credit-line a:hover { text-decoration: underline; }  
     .companies-section {
-    border-top: 1px solid #ccc;   /* garis di atas */
-    padding-top: 5px;
-    margin-top: 3px;
-}
+        border-top: 1px solid #ccc;
+        padding-top: 5px;
+        margin-top: 3px;
+    }
     .companies-section p {
-      line-height: 1.3;   /* dari 1.7 → lebih rapat */
-      margin-bottom: 2px; /* kecilin jarak bawah */
+      line-height: 1.3;
+      margin-bottom: 2px; 
       font-size: 12px; 
       color: #000; 
     }
-
-    .companies-section a {
-    color: #0070c0;
-    text-decoration: none;
-    }
-    
+    .companies-section a {color: #0070c0;text-decoration: none;}
     .companies-section a:hover { text-decoration: underline; }
-
     h2 {
     font-size: 14px;
     font-weight: bold;
@@ -783,18 +520,14 @@
   .credits-section {
     border-top: 1px solid #ccc;
     padding-top: 5px;
-    margin-top: 3px;
-}
+    margin-top: 3px;}
   .credits-section p {
-    line-height: 1.3;   /* dari 1.7 → lebih rapat */
-    margin-bottom: 2px; /* kecilin jarak bawah */
+    line-height: 1.3;
+    margin-bottom: 2px;
     font-size: 12px; 
     color: #000;
   }
-  .credits-section a {
-    color: #0070c0;
-    text-decoration: none;
-  }
+  .credits-section a {color: #0070c0;text-decoration: none;}
   .credits-section a:hover { text-decoration: underline; }
   .notes-section p {
     margin-bottom: 6px;
@@ -802,92 +535,72 @@
     color: #000;
     font-size: 12px;
   }
-  .notes-section a {
-    color: #0070c0;
-    text-decoration: none;
-  }
+  .notes-section a {color: #0070c0;text-decoration: none;}
   .notes-section,
   .identifiers-section {
     border-top: 1px solid #ccc;
     padding-top: 5px;
-    margin-top: 3px;
-}
+    margin-top: 3px;}
   .notes-section a:hover { text-decoration: underline; }
   .identifiers-section p {
-    line-height: 1.2;   /* kecilin tinggi baris */
-    margin: 0;          /* hilangin jarak atas bawah */
+    line-height: 1.2; 
+    margin: 0; 
     font-size: 12px;
     color: #000;
   }
-
   /* OTHER VERSIONS */
   .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; margin-top: 18px; padding-bottom: 6px; border-bottom: 1px solid #ccc; }
   .section-header span { font-size: 13px; font-weight: bold; }
   .section-header a { font-size: 12px; color: #0070c0; text-decoration: none; }
   .section-header a:hover { text-decoration: underline; }
- 
   /* TABLE HEADER */
   .table-head { display: grid; grid-template-columns: 1fr 140px 160px 90px 50px; border-bottom: 1px solid #ccc; padding: 6px 4px; font-weight: bold; font-size: 12px; color: #333; }
- 
   /* TABLE ROWS */
-.table-row { 
-    display: grid; 
-    grid-template-columns: 1fr 140px 160px 90px 50px; 
-    border-bottom: 1px solid #e0e0e0; 
-    padding: 5px 4px; 
-    align-items: start; 
-    position: relative; 
-    line-height: 1.2;
-}
+  .table-row { 
+      display: grid; 
+      grid-template-columns: 1fr 140px 160px 90px 50px; 
+      border-bottom: 1px solid #e0e0e0; 
+      padding: 5px 4px; 
+      align-items: start; 
+      position: relative; 
+      line-height: 1.2;
+  }
   .table-row.highlighted { border-left: 6px solid #e8a000; padding-left: 6px; background: #fff; }
- 
   .col-title a { color: #0070c0; text-decoration: none; font-size: 13px; }
   .col-title a:hover { text-decoration: underline; }
   .col-title span { font-style: italic; }
- 
   .col-label a { color: #0070c0; text-decoration: none; font-size: 13px; }
   .col-label a:hover { text-decoration: underline; }
- 
   .col-cat { font-size: 12px; color: #333; }
   .col-country { font-size: 12px; color: #333; }
   .col-year { font-size: 12px; color: #333; }
- 
   /* RECOMMENDATIONS */
   .rec-header { 
     font-size: 14px; 
     font-weight: bold; 
     margin: 20px 0 12px 0; 
-
     border-bottom: 1px solid #ccc;
     padding-bottom: 6px;
-}
- 
+  }
   .rec-list { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
- 
  .rec-card { 
     min-width: 140px; 
     max-width: 150px; 
     flex-shrink: 0; 
-
     border: 1px solid #ddd;
     border-radius: 4px;
-
     padding: 8px;
     display: flex;
     flex-direction: column;
     gap: 6px;
-
-    background: #fff;
-}
+    background: #fff;}
   .rec-card img { width: 100%; height: 130px; object-fit: cover; display: block; }
   .rec-card .img-placeholder { width: 100%; height: 130px; background: #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #666; }
- 
   .rec-card .rec-title { font-size: 13px; font-weight: bold; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rec-card .rec-artist { font-size: 10px; color: #555; }
   .rec-card .rec-year { font-size: 10px; color: #555; }
   .rec-card .rec-format { font-size: 11px; color: #555; display: flex; align-items: center; gap: 4px; }
   .rec-card .rec-format::before { content: "⊙"; font-size: 12px; }
- 
   .rec-card .btn-shop,
   .rec-card .btn-want {
     width: 100%;
@@ -896,51 +609,38 @@
     font-size: 12px;
     color: #333;
     text-align: center;
-
     background: #f2f2e8;
     border: 1px solid #ccc;
     border-radius: 2px;
-
     cursor: pointer;
 }
   .rec-card .btn-shop:hover, .rec-card .btn-want:hover { background: #e8e8e8; }
- 
   /* NAVIGATION ARROWS */
   .nav-arrows { display: flex; justify-content: space-between; margin-top: 12px; }
   .nav-arrows a { color: #0070c0; text-decoration: none; font-size: 18px; }
   .nav-arrows a:hover { color: #004a99; }
-
-
     .review-item {
     border-top: 1px solid #e0e0e0;
     padding: 10px 0;
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    position: relative;
-}
- 
+    position: relative;}
     .avatar {
     width: 48px;
     height: 48px;
-
     border-radius: 0;
-
     background-color: #c8c8c8;
     flex-shrink: 0;
     overflow: hidden;
-
     display: flex;
     align-items: center;
-    justify-content: center;
-}
- 
+    justify-content: center;}
     .avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
- 
     .avatar-icon {
       width: 100%;
       height: 100%;
@@ -949,59 +649,38 @@
       align-items: center;
       justify-content: center;
     }
- 
     .avatar-icon svg {
       width: 30px;
       height: 30px;
       fill: #888;
     }
- 
-    .review-content {
-      flex: 1;
-    }
- 
+    .review-content {flex: 1;}
     .review-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 1px;
-}
- 
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1px;}
     .review-username {
       color: #1a73e8;
       font-weight: bold;
       font-size: 14px;
       text-decoration: none;
     }
- 
-    .review-date {
-      color: #666;
-      font-size: 13px;
-    }
- 
-    .stars {
-      display: flex;
-      gap: 1px;
-      margin-bottom: 6px;
-    }
- 
-    .star {
-      color: #e67e22;
-      font-size: 18px;
-    }
- 
+    .review-date {color: #666;font-size: 13px;}
+    .reviews-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #000;
+      margin-top: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 16px;}
     .review-text {
-    color: #333;
-    font-size: 12px;
-    line-height: 1.3;
-    margin-bottom: 5px;
-}
- 
-    .review-actions {
-      display: flex;
-      gap: 16px;
-    }
- 
+      color: #333;
+      font-size: 12px;
+      line-height: 1.3;
+      margin-bottom: 5px; }
+    .review-actions {display: flex;gap: 16px;}
     .action-link {
       color: #1a73e8;
       font-size: 13px;
@@ -1011,15 +690,8 @@
       gap: 4px;
       cursor: pointer;
     }
- 
-    .action-link:hover {
-      text-decoration: underline;
-    }
- 
-    .action-icon {
-      font-size: 13px;
-    }
- 
+    .action-link:hover {text-decoration: underline;}
+    .action-icon {font-size: 13px;}
     .dropdown-arrow {
       position: absolute;
       right: 0;
@@ -1028,44 +700,12 @@
       font-size: 12px;
       cursor: pointer;
     }
-
-    .reviews-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #000;
-    margin-top: 25px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 16px;
-  }
-
-  .add-review-btn {
-    display: inline-block;
-    padding: 4px 10px;
-    font-size: 12px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    cursor: pointer;
-    color: #333;
-    margin-bottom: 20px;
-  }
-
-  .add-review-btn:hover {
-    background-color: #e8e8e8;
-  }
-
-  .review-form-wrap {
-    display: none;
-    margin-bottom: 20px;
-  }
-
+  .review-form-wrap {display: none;margin-bottom: 20px;}
   .review-form-title {
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 10px;
   }
-
   .review-textarea {
     width: 100%;
     height: 100px;
@@ -1078,18 +718,12 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
   }
-
-  .review-preview-box {
-    display: none;
-    margin-top: 6px;
-  }
-
+  .review-preview-box {display: none;margin-top: 6px;}
   .review-preview-label {
     font-size: 13px;
     font-weight: bold;
     margin-bottom: 4px;
   }
-
   .review-preview-text {
     border: 1px solid #ccc;
     padding: 8px 10px;
@@ -1098,25 +732,19 @@
     background: #fff;
     min-height: 30px;
   }
-
   .review-word-warning {
     display: none;
     margin-top: 6px;
     font-size: 12px;
     color: #555;
   }
-
-  .review-word-warning em {
-    font-style: italic;
-  }
-
+  .review-word-warning em {font-style: italic;}
   .review-form-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
   }
-
   .review-submit-btn {
     padding: 6px 16px;
     font-size: 13px;
@@ -1126,24 +754,48 @@
     border-radius: 2px;
     cursor: not-allowed;
   }
-
   .review-submit-btn.active {
     background: #e8e8e8;
     color: #333;
     border-color: #ccc;
     cursor: pointer;
   }
-
   .review-help-link {
     color: #7b2d8b;
     font-size: 13px;
     text-decoration: none;
   }
-
-  .review-help-link:hover {
-    text-decoration: underline;
+  .review-help-link:hover {text-decoration: underline;}
+  .review-menu {position: absolute;top: 10px;right: 0;}
+  .menu-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
   }
-
+  .menu-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 22px;
+      width: 110px;
+      background: #f3f3f3;
+      border: 1px solid #cfcfcf;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 999;
+  }
+    .menu-dropdown a {
+        display: block;
+        padding: 10px 12px;
+        color: #000;
+        text-decoration: none;
+        font-size: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+    .menu-dropdown a:last-child {border-bottom: none;}
+    .menu-dropdown a:hover {background: #e8e8e8;}
+    .delete-link {color: #000;}
     .widget {
         font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
         background: #fff;
@@ -1152,33 +804,19 @@
         box-shadow: none; 
         overflow: hidden;
     }
- 
     /* Header */
-    .header {
-      padding: 5px 10px 2px;
-      border-bottom: 1px solid #e5e5e5;
-    }
-    .header span {
-      font-size: 11px;
-      font-weight: 600;
-      color: #000;
-    }
-
-    .music-content {
-        background: #f9f9f9;
-        border-radius: 8px;
-    }
- 
+    .header {padding: 5px 10px 2px;border-bottom: 1px solid #e5e5e5;}
+    .header span {font-size: 11px;font-weight: 600;color: #000;}
+    .music-content {background: #f9f9f9;border-radius: 8px;}
     /* Apple Music Bar */
-.music-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 5px;
-  padding: 7px 10px;
-  background: #f9f9f9;
-}
-
+    .music-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+      padding: 7px 10px;
+      background: #f9f9f9;
+    }
     .music-bar-left {
       display: flex;
       align-items: center;
@@ -1201,7 +839,6 @@
       color: #333;
       cursor: pointer;
     }
- 
     /* Album Info */
     .album-info {
       display: flex;
@@ -1248,7 +885,6 @@
       align-items: center;
       justify-content: center;
     }
- 
     /* Track List */
     .track {
       display: flex;
@@ -1269,15 +905,9 @@
       color: #000;
     }
     .track.dimmed .track-num,
-    .track.dimmed .track-name {
-      color: #ccc;
-    }
- 
+    .track.dimmed .track-name { color: #ccc;}
     /* Play Button */
-    .play-wrap {
-      padding: 10px;
-    }
-
+    .play-wrap {padding: 10px;}
     .btn-play {
       width: 100%;
       background: #FC3C44;
@@ -1296,54 +926,29 @@
       font-weight: 600;
       letter-spacing: -0.2px;
     }
- 
     /* View in App */
-    .view-app {
-      text-align: center;
-      padding: 0px 10px 10px;
-    }
+    .view-app {text-align: center;padding: 0px 10px 10px;}
     .view-app a {
       color: #FC3C44;
       font-size: 12px;
       font-weight: 600;
       text-decoration: none;
     }
-
     .footer {
   padding: 6px 10px 10px;
-  text-align: right;
+  text-align: left;
   background: #f9f9f9;
 }
-
-.footer span {
-  font-size: 10px;
-  color: #aaa;
-}
-
-/* 1. Kondisi Normal (Ikon Merah Sembunyi) */
+.footer span {font-size: 10px;color: #aaa;}
 .track .play-icon-hover {
-    display: none; /* WAJIB ADA: Biar pas kursor nggak lewat, dia sembunyi */
+    display: none;
     color: #FC3C44;
     font-size: 10px;
     width: 25px;
-    text-align: center;
-}
-
-/* 2. Kondisi Hover (Kursor Lewat) */
-.track:hover {
-    background-color: #efefef; /* Biar baris jadi abu-abu */
-    cursor: pointer;
-}
-
-.track:hover .track-num {
-    display: none; /* Nomor hilang pas kursor lewat */
-}
-
-.track:hover .play-icon-hover {
-    display: inline-block; /* ✅ INI DIA: Ikon merah muncul pas kursor lewat */
-}
- 
-
+    text-align: center;}
+.track:hover {background-color: #efefef; cursor: pointer;}
+.track:hover .track-num { display: none;}
+.track:hover .play-icon-hover { display: inline-block; }
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1428,96 +1033,96 @@
             </div>
         </div>
 
-        <!-- Tracklist -->
+      <!-- Tracklist -->
        <div class="tl-wrap">
-  <div class="tl-header">
-    <h2>Tracklist</h2>
-    <button class="show-credits-btn" id="toggleBtn" onclick="toggleAll()">
-        <i id="btnIcon" class="ti ti-eye"></i>
-        <span id="btnLabel">Show Credits</span>
-    </button>
-  </div>
+      <div class="tl-header">
+        <h2>Tracklist</h2>
+        <button class="show-credits-btn" id="toggleBtn" onclick="toggleAll()">
+            <i id="btnIcon" class="ti ti-eye"></i>
+            <span id="btnLabel">Show Credits</span>
+        </button>
+      </div>
  
-  @foreach($tracks as $track)
-  <!-- A1 -->
-  <div class="track-row">
-    <div class="track-main">
-      
-      <span class="track-num">{{ $track->position }}</span>
-      <span class="track-title">{{ $track->title }}</span>
-      <span class="track-dur">{{ $track->duration }}</span>
-      
+      @foreach($tracks as $track)
+      <!-- A1 -->
+      <div class="track-row">
+        <div class="track-main">
+          
+          <span class="track-num">{{ $track->position }}</span>
+          <span class="track-title">{{ $track->title }}</span>
+          <span class="track-dur">{{ $track->duration }}</span>
+          
+        </div>
+        <div class="track-credits" id="c0">
+          @foreach($credits as $credit)
+          <div class="credit-line">{{ $credit->role }} – 
+            <a href="#">{{ $credit->name }}</a></div>
+          @endforeach 
+        </div>
+      </div>
+    @endforeach 
     </div>
-    <div class="track-credits" id="c0">
+
+    <!-- Companies -->
+    <h2>Companies, etc.</h2>
+    <div class="companies-section">
+      @foreach($companies as $companie)
+        <p>{{ $companie->role }}–
+          <a href="#"> {{ $companie->name }}</a>
+        </p>
+      @endforeach
+    </div>
+
+    <h2>Credits</h2>
+    <div class="credits-section">
       @foreach($credits as $credit)
-      <div class="credit-line">{{ $credit->role }} – 
-        <a href="#">{{ $credit->name }}</a></div>
-       @endforeach 
+      <p>{{ $credit->role }} 
+        <a href="#">{{ $credit->name }}</a>
+      </p>
+      @endforeach
     </div>
-  </div>
-@endforeach 
-</div>
+ 
+    <h2>Notes</h2>
+    <div class="notes-section">
+      <p> {{ $release->notes }} </p>
+    </div>
+ 
+    <h2>Barcode and Other Identifiers</h2>
+    <div class="identifiers-section">
+      @foreach($barcodes as $barcode)
+      <p>{{ $barcode->type }} {{ $barcode->description }}: {{ $barcode->value }}</p>
+      @endforeach
+    </div>
 
-        <!-- Companies -->
-<h2>Companies, etc.</h2>
-<div class="companies-section">
-  @foreach($companies as $companie)
-    <p>{{ $companie->role }}–
-      <a href="#"> {{ $companie->name }}</a>
-    </p>
-  @endforeach
-</div>
-
-<h2>Credits</h2>
-<div class="credits-section">
-  @foreach($credits as $credit)
-  <p>{{ $credit->role }} – 
-    <a href="#">{{ $credit->name }}</a>
-  </p>
-  @endforeach
-</div>
+    <!-- OTHER VERSIONS -->
+    <div class="section-header">
+      <span>Other Versions ({{ $otherVersions->count() }} of {{ $totalVersions }})</span>
+      <a href="#">View All</a>
+    </div>
+    
+    <!-- Table Header -->
+    <div class="table-head">
+      <div>Title (Format)</div>
+      <div>Label</div>
+      <div>Cat#</div>
+      <div>Country</div>
+      <div>Year</div>
+    </div>
  
-<h2>Notes</h2>
-<div class="notes-section">
-  <p> {{ $release->notes }} </p>
-</div>
- 
-<h2>Barcode and Other Identifiers</h2>
-<div class="identifiers-section">
-  @foreach($barcodes as $barcode)
-  <p>{{ $barcode->type }} {{ $barcode->description }}: {{ $barcode->value }}</p>
-  @endforeach
-</div>
-
-<!-- OTHER VERSIONS -->
-<div class="section-header">
-  <span>Other Versions ({{ $otherVersions->count() }} of {{ $totalVersions }})</span>
-  <a href="#">View All</a>
-</div>
- 
-<!-- Table Header -->
-<div class="table-head">
-  <div>Title (Format)</div>
-  <div>Label</div>
-  <div>Cat#</div>
-  <div>Country</div>
-  <div>Year</div>
-</div>
- 
-<!-- Row 1 -->
- @foreach($otherVersions as $version)
-<div class="table-row">
-  <div class="col-title">
-     <a href="{{ route('show.release', $version->release_id) }}">
-            {{ $version->title }}
-        </a>
-  </div>
-  <div class="col-label"><a href="#">{{ $version->labels }} ,</a></div>
-  <div class="col-cat">{{ $version->catno }} ,<br></div>
-  <div class="col-country">{{ $version->country }}</div>
-  <div class="col-year"> {{ \Carbon\Carbon::parse($version->release_date)->format('Y') }}</div>
-</div>
-@endforeach
+    <!-- Row 1 -->
+    @foreach($otherVersions as $version)
+    <div class="table-row">
+      <div class="col-title">
+        <a href="{{ route('show.release', $version->release_id) }}">
+                {{ $version->title }}
+            </a>
+      </div>
+      <div class="col-label"><a href="#">{{ $version->labels }} ,</a></div>
+      <div class="col-cat">{{ $version->catno }} ,<br></div>
+      <div class="col-country">{{ $version->country }}</div>
+      <div class="col-year"> {{ \Carbon\Carbon::parse($version->release_date)->format('Y') }}</div>
+    </div>
+    @endforeach
  
 <!-- RECOMMENDATIONS -->
 <div class="rec-header">Recommendations</div>
@@ -1531,8 +1136,9 @@
 
     <!-- <div class="img-placeholder" style="background:#222;color:#fff;font-size:10px;text-align:center;padding:4px;">{{ $recommendation->title }}<br>
     <small>{{ $recommendation->artist }}</small>
-  </div> -->
-  </a>
+    </div> -->
+    </a>
+
     <div class="rec-title">{{ $recommendation->title }}</div>
     <div class="rec-artist">{{ $recommendation->artist }}</div>
     <div class="rec-year">  {{ \Carbon\Carbon::parse($release->release_date)->format('Y') }} &amp; {{ $recommendation->country }}</div>
@@ -1545,17 +1151,16 @@
  
 <div class="reviews-title">Reviews</div>
 
-<form action="{{ route('release.review', $release->release_id) }}" method="POST">
+<form action="{{ route('release.review', $release->release_id) }}" method="POST" id="reviewStoreForm">
     @csrf
-<div id="reviewForm" class="review-form-wrap" style="display:block;">
-
-  <textarea
-    id="reviewInput"
-    class="review-textarea"
-    placeholder="Enter your comment"
-    oninput="handleReviewInput()"
-    name="comment"
-  ></textarea>
+    <div id="reviewForm" class="review-form-wrap" style="display:block;">
+        <textarea
+            id="reviewInput"
+            class="review-textarea"
+            placeholder="Enter your comment"
+            name="comment"
+            oninput="validasiReview('submit')" 
+        ></textarea>
 
   <div id="previewBox" class="review-preview-box">
     <div class="review-preview-label">Preview</div>
@@ -1575,35 +1180,105 @@
 </form>
  
   <!-- Review 1 -->
-   @foreach($reviews as $review)
+  @foreach($reviews as $review)
   <div class="review-item">
     <div class="avatar">
-        <div class="avatar">
-          <img src="{{ $review->image }}" alt="{{ $review->username }}" />
-        </div>
+      <img src="{{ $review->image }}" alt="{{ $review->username }}" />
     </div>
+
     <div class="review-content">
       <div class="review-header">
         <a href="#" class="review-username">{{ $review->username }}</a>
         <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
       </div>
+
+      @if(!empty($review->rating) && $review->rating > 0)
       <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
-    @for ($i = 1; $i <= 5; $i++)
-        @if ($i <= $review->rating)
-            <span>★</span> {{-- Bintang isi --}}
-        @else
-            <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
-        @endif
-    @endfor
-    <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
-</div>
-      <div class="review-text">{{ $review->comment }}</div>
+          @for ($i = 1; $i <= 5; $i++)
+              @if ($i <= $review->rating)
+                  <span>★</span> {{-- Bintang isi --}}
+              @else
+                  <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
+              @endif
+          @endfor
+          <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
+      </div>
+      @endif
+
       <div class="review-actions">
         <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
         <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
       </div>
+
+      <div class="review-text" id="reviewText{{ $review->review_id }}">
+        {{ $review->comment }}
+      </div>
+
+      <!-- EDIT FORM -->
+      <div id="editForm{{ $review->review_id }}" style="display:none; margin-top:10px;">
+        <form action="{{ route('review.update', $review->review_id) }}" method="POST">
+          @csrf
+          @method('PUT')
+                    
+          <textarea 
+            id="editInput{{ $review->review_id }}" 
+            name="comment" 
+            class="review-textarea" 
+            oninput="validasiReview('edit', {{ $review->review_id }})"
+          >{{ $review->comment }}</textarea>
+
+          <div id="editPreviewBox{{ $review->review_id }}" class="review-preview-box" style="display:block; margin-top:10px;">
+            <div class="review-preview-label">Preview</div>
+            <div id="editPreviewText{{ $review->review_id }}" class="review-preview-text">
+              {{ $review->comment }}
+            </div>
+          </div>
+
+          <div id="editWordWarning{{ $review->review_id }}" class="review-word-warning" style="display:none; margin-top:5px;">
+            <span style="color:#cc0000; font-weight:bold;">&#9432;</span>
+            <em>At least 10 words must be entered.</em>
+          </div>
+
+          <div class="review-form-footer">
+            <button type="submit" id="editSubmitBtn{{ $review->review_id }}" class="review-submit-btn active">
+              Save Changes
+            </button>
+
+            <a href="#" onclick="hideEditForm({{ $review->review_id }}); return false;" class="action-link">
+              Cancel
+            </a>
+
+            <a href="#" class="review-help-link">View Help</a>
+          </div>
+        </form>
+      </div>
+    
     </div>
-    <div class="dropdown-arrow">▼</div>
+    <div class="review-menu">
+        <button class="menu-btn" onclick="toggleMenu(this)">
+          ▼
+        </button>
+          <div class="menu-dropdown">
+            <a href="#" onclick="showEditForm({{ $review->review_id }}); return false;">✎ Edit</a>
+            <a href="#">⊘ Report</a>
+            <form action="{{ route('review.delete', $review->review_id) }}"
+              method="POST" onsubmit="return confirm('Delete this review?')">
+              @csrf
+              @method('DELETE')
+
+                <button type="submit" class="delete-link" style="
+                  background:none;
+                  border:none;
+                  width:100%;
+                  text-align:left;
+                  padding:10px 12px;
+                  cursor:pointer;
+                  font-size:14px;">
+                    🗑 Delete
+                </button>
+            </form>
+          </div>
+    </div>
   </div>
 
    <!-- <div class="stars">
@@ -1651,7 +1326,6 @@
         <a href="#" class="btn-shop"> Shop {{ $productCount }} {{ strtoupper($formats->first()) }}</a>
 
         <!-- Statistics -->
-        {{-- Statistics --}}
         <div class="stats-box">
             <h3>Statistics</h3>
             <div class="stats-grid">
@@ -1700,20 +1374,30 @@
         </div>
 
         <div class="middle-row">
-    <div class="stars">
-      <span class="star filled">★</span>
-      <span class="star filled">★</span>
-      <span class="star filled">★</span>
-      <span class="star empty">★</span>
-      <span class="star empty">★</span>
-    </div>
-    <button class="share-btn">
-        <svg class="share-icon" viewBox="0 0 24 24">
-        <path path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path>
-        <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
-        </svg>Share
-    </button>
-  </div>
+        <div class="star-rating-v2">
+            <input type="radio" id="star5" name="rating" value="5" form="reviewStoreForm" style="display:none;" />
+            <label for="star5" class="star-label" onclick="setRating(5)" style="font-size: 24px; cursor: pointer; color: #ccc;">★</label>
+
+            <input type="radio" id="star4" name="rating" value="4" form="reviewStoreForm" style="display:none;" />
+            <label for="star4" class="star-label" onclick="setRating(4)" style="font-size: 24px; cursor: pointer; color: #ccc;">★</label>
+
+            <input type="radio" id="star3" name="rating" value="3" form="reviewStoreForm" style="display:none;" />
+            <label for="star3" class="star-label" onclick="setRating(3)" style="font-size: 24px; cursor: pointer; color: #ccc;">★</label>
+
+            <input type="radio" id="star2" name="rating" value="2" form="reviewStoreForm" style="display:none;" />
+            <label for="star2" class="star-label" onclick="setRating(2)" style="font-size: 24px; cursor: pointer; color: #ccc;">★</label>
+
+            <input type="radio" id="star1" name="rating" value="1" form="reviewStoreForm" style="display:none;" />
+            <label for="star1" class="star-label" onclick="setRating(1)" style="font-size: 24px; cursor: pointer; color: #ccc;">★</label>
+        </div>
+
+        <button class="share-btn">
+            <svg class="share-icon" viewBox="0 0 24 24">
+                <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path>
+                <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
+            </svg>Share
+        </button>
+        </div>
  
   <div class="btn-group">
     <button class="btn">
@@ -1919,54 +1603,116 @@ function toggleAll() {
     }
 }
 
-function handleReviewInput() {
-    const input = document.getElementById("reviewInput");
-    const submitBtn = document.getElementById("submitBtn");
-    const previewBox = document.getElementById("previewBox");
-    const previewText = document.getElementById("previewText");
-    const warning = document.getElementById("wordWarning");
+function setRating(ratingValue) {
+    const labels = document.querySelectorAll('.star-rating-v2 .star-label');
+    
+    labels.forEach((label) => {
+        // Mengambil nilai value dari atribut 'for' label (contoh: 'star5' diambil angka 5 nya)
+        const htmlFor = label.getAttribute('for');
+        const starValue = parseInt(htmlFor.replace('star', ''));
+
+        if (starValue <= ratingValue) {
+            label.style.color = '#e67e22'; // Warna orange/emas jika terpilih
+        } else {
+            label.style.color = '#ccc'; // Abu-abu jika tidak terpilih
+        }
+    });
+}
+
+function validasiReview(type, id = '') {
+    // Pemetaan Selector Elemen secara Dinamis
+    const input = document.getElementById(type === 'edit' ? "editInput" + id : "reviewInput");
+    const submitBtn = document.getElementById(type === 'edit' ? "editSubmitBtn" + id : "submitBtn");
+    const previewBox = document.getElementById(type === 'edit' ? "editPreviewBox" + id : "previewBox");
+    const previewText = document.getElementById(type === 'edit' ? "editPreviewText" + id : "previewText");
+    const warning = document.getElementById(type === 'edit' ? "editWordWarning" + id : "wordWarning");
+
+    // Keamanan tambahan: Jika elemen input tidak ditemukan, hentikan fungsi agar tidak crash
+    if (!input) return;
 
     const text = input.value.trim();
 
-    // preview
-    if (text.length > 0) {
-        previewBox.style.display = "block";
-        previewText.textContent = text;
-    } else {
-        previewBox.style.display = "none";
+    // 1. Kontrol Tampilan Preview
+    if (previewBox && previewText) {
+        if (text.length > 0) {
+            previewBox.style.display = "block";
+            previewText.textContent = text;
+        } else {
+            previewBox.style.display = "none";
+        }
     }
 
-    // hitung jumlah kata
+    // 2. Hitung jumlah kata
     const wordCount = text
         .split(/\s+/)
         .filter(word => word.length > 0).length;
 
-    // minimal 10 kata
-    if (wordCount >= 10) {
-        submitBtn.disabled = false;
+    // 3. Validasi Minimal 10 Kata & Styling Tombol
+    if (submitBtn) {
+        if (wordCount >= 10) {
+            submitBtn.disabled = false;
+            submitBtn.style.background = "#000";
+            submitBtn.style.color = "#fff";
+            submitBtn.style.border = "1px solid #000";
+            submitBtn.style.cursor = "pointer";
 
-        submitBtn.style.background = "#000";
-        submitBtn.style.color = "#fff";
-        submitBtn.style.border = "1px solid #000";
-        submitBtn.style.cursor = "pointer";
-
-        warning.style.display = "none";
-    } else {
-        submitBtn.disabled = true;
-
-        submitBtn.style.background = "#ccc";
-        submitBtn.style.color = "#888";
-        submitBtn.style.border = "1px solid #bbb";
-        submitBtn.style.cursor = "not-allowed";
-
-    // warning hanya muncul kalau sudah mulai ngetik
-        if (text.length > 0) {
-            warning.style.display = "block";
+            if (warning) warning.style.display = "none";
         } else {
-            warning.style.display = "none";
+            submitBtn.disabled = true;
+            submitBtn.style.background = "#ccc";
+            submitBtn.style.color = "#888";
+            submitBtn.style.border = "1px solid #bbb";
+            submitBtn.style.cursor = "not-allowed";
+
+            if (warning) {
+                if (text.length > 0) {
+                    warning.style.display = "block";
+                } else {
+                    warning.style.display = "none";
+                }
+            }
         }
     }
 }
+
+function showEditForm(id) {
+    document.getElementById('editForm' + id).style.display = 'block';
+    document.getElementById('reviewText' + id).style.display = 'none';
+    
+    // Jalankan fungsi validasi tunggal saat form edit dibuka
+    validasiReview('edit', id); 
+}
+
+    function toggleMenu(button) {
+        const dropdown = button.nextElementSibling;
+
+        // tutup semua dropdown lain
+        document.querySelectorAll('.menu-dropdown').forEach(menu => {
+            if (menu !== dropdown) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // toggle current
+        dropdown.style.display =
+            dropdown.style.display === 'block'
+                ? 'none'
+                : 'block';
+    }
+
+    // klik luar = close
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.review-menu')) {
+            document.querySelectorAll('.menu-dropdown').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        }
+    });
+
+    function hideEditForm(id) {
+        document.getElementById('editForm' + id).style.display = 'none';
+        document.getElementById('reviewText' + id).style.display = 'block';
+    }
 </script>
 </div>
 @endsection

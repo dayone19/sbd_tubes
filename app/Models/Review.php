@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Product;
 
-class Riview extends Model
+class Review extends Model
 {
+    protected $table = 'reviews';
     protected $primaryKey = 'review_id';
+
     public $timestamps = false;
+
     protected $fillable = [
         'user_id',
         'product_id',
@@ -18,7 +21,6 @@ class Riview extends Model
         'created_at',
     ];
 
-    // RELASI TABEL
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

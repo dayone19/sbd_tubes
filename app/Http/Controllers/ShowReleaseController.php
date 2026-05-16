@@ -470,6 +470,7 @@ class ShowReleaseController extends Controller
     // 1. Validasi input comment
     $request->validate([
         'comment' => 'required',
+        'rating'  => 'nullable|integer|between:1,5',
     ]);
 
     // Cari product_id yang memiliki release_id sesuai dengan ID di URL
@@ -486,7 +487,7 @@ class ShowReleaseController extends Controller
         'product_id' => $product->product_id, // Ambil ID asli produk
         'user_id'    => 1,                    // Sementara dummy
         'comment'    => $request->comment,
-        'rating'     => 5,                    // Default rating
+        'rating'     => $request->rating ?? null,
         'created_at' => now(),
     ]);
 
