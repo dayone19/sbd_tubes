@@ -994,18 +994,33 @@
                 <table class="album-info-table">
                     <tr>
                         <td>Label:</td>
-                        <td>
-                          @foreach($labels as $label)
-                              <a href="#">{{ $label }}</a> – {{ $release->barcode }}
-                              @if(!$loop->last), @endif
-                          @endforeach
-                        </td>
+                          <td>
+                            @foreach($labels as $label)
+                                {{-- Cek jika ada catalog_number --}}
+                                @if(!empty($release->catalog_number))
+                                    <a href="#">{{ $label }}</a> – {{ $release->catalog_number }}
+                                    {{-- Jika catalog_number ada DAN barcode juga ada, berikan koma pemisah di antaranya --}}
+                                    @if(!empty($release->barcode)), @endif
+                                @endif
+
+                                {{-- Cek jika ada barcode --}}
+                                @if(!empty($release->barcode))
+                                    <a href="#">{{ $label }}</a> – {{ $release->barcode }}
+                                @endif
+
+                                {{-- Koma pemisah antar iterasi label (hanya muncul jika ini bukan data terakhir) --}}
+                                @if(!$loop->last && (!empty($release->catalog_number) || !empty($release->barcode))), @endif
+                            @endforeach
+                          </td>
                     </tr>
                     <tr>
                         <td>Format:</td>
                         <td>
                           @foreach($formats as $format)
-                           <a href="#">{{ $format }}</a>@if(!$loop->last), @endif
+                           {{ $format->name }}
+                            @if($format->size), {{ $format->size }}@endif
+                            @if($format->speed), {{ $format->speed }}@endif
+                            @if(!$loop->last)<br>@endif
                            @endforeach
                         </td>
                     </tr>
@@ -1026,7 +1041,7 @@
                     <tr>
                         <td>Style:</td>
                         @foreach($styles as $style)
-                        <td><a href="#">{{ $style }}</a>@if(!$loop->last), @endif</td>
+                        <td><a href="#">{{ $style }} </a>@if(!$loop->last), @endif</td>
                         @endforeach
                     </tr>
                 </table>
@@ -1050,7 +1065,7 @@
           
           <span class="track-num">{{ $track->position }}</span>
           <span class="track-title">{{ $track->title }}</span>
-          <span class="track-dur">{{ $track->duration }}</span>
+          <span class="track-dur">{{ \Carbon\Carbon::parse($track->duration)->format('i:s') ? ltrim(\Carbon\Carbon::parse($track->duration)->format('i:s'), '0') : '0:00' }}</span>
           
         </div>
         <div class="track-credits" id="c0">
@@ -1120,7 +1135,7 @@
       <div class="col-label"><a href="#">{{ $version->labels }} ,</a></div>
       <div class="col-cat">{{ $version->catno }} ,<br></div>
       <div class="col-country">{{ $version->country }}</div>
-      <div class="col-year"> {{ \Carbon\Carbon::parse($version->release_date)->format('Y') }}</div>
+      <div class="col-year"> {{ \Carbon\Carbon::parse($release->release_date)->format('F d, Y') }}</div>
     </div>
     @endforeach
  
@@ -1192,18 +1207,9 @@
         <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
       </div>
 
-      @if(!empty($review->rating) && $review->rating > 0)
-      <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
-          @for ($i = 1; $i <= 5; $i++)
-              @if ($i <= $review->rating)
-                  <span>★</span> {{-- Bintang isi --}}
-              @else
-                  <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
-              @endif
-          @endfor
-          <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
-      </div>
-      @endif
+
+          <button type="submit" class="btn btn-primary">Kirim</button>
+      </form>
 
       <div class="review-actions">
         <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
@@ -1317,14 +1323,14 @@
         <div class="release-card">
             <img src="{{ $release->image }}" alt="{{ $release->title }}" width="150" height="150">
             <div class="release-card-info">
-                <div class="label">{{ strtoupper($formats->first() ?? '-') }}</div>
+                <div class="label">{{ strtoupper($formats2->first() ?? '-') }}</div>
                 <div class="title">{{ $release->title }}</div>
                 <div class="price-range">From {{ $stats->lowest_price }} to {{ $stats->highest_price }}</div>
             </div>
         </div>
 
         <a href="{{ route('sell.list', ['release_id' => $release->release_id]) }}" class="btn-shop">
-    Shop {{ $productCount }} {{ strtoupper($formats->first()) }}
+    Shop {{ $productCount }} {{ strtoupper($formats2->first()) }}
         </a>
 
         <!-- Statistics -->
@@ -1500,21 +1506,26 @@
         
               <div id="video-sidebar-section">
                 <div class="v-header">
-                    <h2>Videos ({{ $videos->count() }})</h2>
+                    {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
+                    <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
                     <a href="#" class="small">Edit</a>
                 </div>
 
                 @if($videos->count() > 0)
                 <div class="main-player" id="mainPlayer">
-                    <img src="{{ $videos[0]->thumbnail }}" id="currentThumb">
+                    {{-- Ambil thumbnail dari video pertama yang unik --}}
+                    <img src="{{ $videos->unique('youtube_url')->first()->thumbnail }}" id="currentThumb">
                     <div class="play-btn-overlay"></div>
                 </div>
                 @endif
-                <!-- </div> -->
 
                 <div class="v-list">
-                    @foreach($videos as $video)
-                    <div class="v-item" onclick="changevideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}') ">
+                    {{-- 
+                     Tambahkan ->unique('youtube_url') sebelum @foreach 
+                    Ini akan menyaring daftar video berdasarkan URL YouTube-nya di level Blade secara instan.
+                    --}}
+                    @foreach($videos->unique('youtube_url') as $video)
+                    <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
                         <div class="v-thumb">
                             <img src="{{ $video->thumbnail }}">
                             <span class="v-time"> {{ $video->duration }} </span>
@@ -1532,7 +1543,9 @@
     </div>
     <div style="font-size: 12px; line-height: 1.8;">
       @foreach($lists as $list)
-      <div>{{ $list->username }} by <span style="color: #0088cc; cursor: pointer;">{{ $list->username }}</span></div>
+      <a href="">
+      <div>{{ $list->username }} </a>
+      by <span style="color: #0088cc; cursor: pointer;">{{ $list->username }}</span></div>
       @endforeach
     </div>
     <a href="/lists">

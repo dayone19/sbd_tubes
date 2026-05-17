@@ -234,11 +234,22 @@ class ShowAlbumController extends Controller
             ->pluck('s.name');
 
         // SQL:
-        // SELECT *
+        // SELECT track_id,
+        //        title,
+        //        duration,
+        //        position,
+        //        audio_url,
         // FROM tracks
         // WHERE release_id = ?
         $tracks = DB::table('tracks')
-            ->where('release_id', $album->release_id)
+            ->where('release_id', $release->release_id)
+            ->select(
+                'track_id',
+                'title',
+                'duration',
+                'position',
+                'audio_url'
+            )
             ->get();
 
         // SQL:
@@ -330,6 +341,7 @@ class ShowAlbumController extends Controller
             // WHERE release_id = ?
             $videos = DB::table('videos')
             ->where('release_id', $album->release_id)
+            ->distinct()
             ->get();
 
             // SQL:
@@ -534,6 +546,38 @@ class ShowAlbumController extends Controller
 
         $versions = $query->get();
 
+        foreach ($versions as $v) {
+            $v->dropdown_stats = DB::table('products as p')
+                ->leftJoin('transaction_details as td', 'p.product_id', '=', 'td.product_id')
+                ->leftJoin('cart_items as ct', 'p.product_id', '=', 'ct.product_id')
+                ->leftJoin('reviews as rw', 'p.product_id', '=', 'rw.product_id')
+                ->where('p.release_id', $v->release_id)
+                ->select(
+                    DB::raw("IFNULL(SUM(td.quantity), 0) as have"),
+                    DB::raw("IFNULL(SUM(ct.quantity), 0) as want"),
+                    DB::raw("ROUND(IFNULL(AVG(rw.rating), 0), 1) as avg_rating"),
+                    DB::raw("COUNT(rw.rating) as total_rating"),
+                    DB::raw("IFNULL(MIN(p.price), 0) as lowest_price"),
+                    DB::raw("IFNULL(MAX(p.price), 0) as highest_price"),
+                    DB::raw("IFNULL(AVG(p.price), 0) as median_price"),
+                )
+                ->first();
+
+                $v->dropdown_stats->listing_count = DB::table('products')
+                ->where('release_id', $v->release_id)
+                ->count();
+
+                $lastSales = DB::table('transaction_details as td')
+                ->join('transactions as t', 'td.transaction_id', '=', 't.transaction_id')
+                ->join('products as p', 'td.product_id', '=', 'p.product_id')
+                ->where('p.release_id', $v->release_id)
+                ->orderBy('t.created_at', 'desc') // Urutkan dari yang paling baru
+                ->value('t.created_at');
+
+                $v->dropdown_stats->last_sold = $lastSales ? date('M j, Y', strtotime($lastSales)) : 'Never';
+                
+        }
+
         // DATA UNTUK DROPDOWN
 
         $tracks = DB::table('tracks')->where('release_id', $album->release_id)->get();
@@ -698,27 +742,5 @@ class ShowAlbumController extends Controller
 
         return redirect()->back()->with('success', 'Review berhasil dihapus!');
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
