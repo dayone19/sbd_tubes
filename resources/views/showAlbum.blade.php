@@ -1247,6 +1247,199 @@
 .delete-link {
     color: #000;
 }
+
+.widget {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        background: #fff;
+        width: 285px; 
+        border-radius: 0;
+        box-shadow: none; 
+        overflow: hidden;
+    }
+ 
+    /* Header */
+    .header {
+      padding: 5px 10px 2px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .header span {
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .music-content {
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+ 
+    /* Apple Music Bar */
+.music-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+  padding: 7px 10px;
+  background: #f9f9f9;
+}
+
+    .music-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .music-bar-left span {
+      font-size: 12px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.2px;
+      margin-bottom: 4px;
+    }
+    .btn-signin {
+      background: #f0f0f0;
+      border: none;
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 400;
+      color: #333;
+      cursor: pointer;
+    }
+ 
+    /* Album Info */
+    .album-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .album-info-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .album-art {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #3a3a3a;
+    }
+    .album-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .album-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #000;
+      line-height: 1.3;
+    }
+    .album-artist {
+      font-size: 11px;
+      color: #888;
+      margin-top: 1px;
+    }
+    .btn-dots {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    /* Track List */
+    .track {
+      display: flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .track-num {
+      font-size: 11px;
+      color: #aaa;
+      width: 18px;
+      text-align: right;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .track-name {
+      font-size: 12px;
+      color: #000;
+    }
+    .track.dimmed .track-num,
+    .track.dimmed .track-name {
+      color: #ccc;
+    }
+ 
+    /* Play Button */
+    .play-wrap {
+      padding: 10px;
+    }
+
+    .btn-play {
+      width: 100%;
+      background: #FC3C44;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-play span {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+ 
+    /* View in App */
+    .view-app {
+      text-align: center;
+      padding: 0px 10px 10px;
+    }
+    .view-app a {
+      color: #FC3C44;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .see {
+      text-align: right;
+      padding: 6px 0px 0px 0px;
+      font-size: 9px ;
+    }
+
+    .footer {
+  padding: 6px 10px 10px;
+  text-align: right;
+  background: #f9f9f9;
+}
+
+.footer span {
+  font-size: 10px;
+  color: #aaa;
+}
+
+.custom-btn{
+    background:#e8e5dd !important;
+    color:#000 !important;
+    text-align:center;
+    transition:0.2s;
+}
+
+.custom-btn:hover{
+    background:#000 !important;
+    color:#fff !important;
+}
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1323,6 +1516,9 @@
                 @foreach($tracks as $track)
                     <tr>
                         <td>{{ $track->title }}</td>
+                        <td style="text-align:right; width:60px; color:#555;">
+                            4:14
+                        </td>
                     </tr>
                 @endforeach
 
@@ -1429,46 +1625,149 @@
             <span>Country</span>
             <span class="col-year">Year <span class="sort-arrow">▾</span></span>
             <span class="col-view-toggle">
-                <button class="view-btn">&#9783;</button>
-                <button class="view-btn active">&#9776;</button>
+                <!-- GRID VIEW -->
+                 <button class="view-btn" id="gridBtn"onclick="setGridView()">&#9783;</button>
+                <!-- LIST VIEW -->
+                 <button class="view-btn active"id="listBtn"onclick="setListView()">&#9776;</button>
             </span>
         </div>
 
 
     <div class="version-list">
         <!-- Version Row 1 -->
-         @foreach($versions as $v)
-        <div class="version-row-wrapper">
-            <div class="version-row">
+        @foreach($versions as $index => $v)
 
-            <!-- title & format-->
-                <div class="version-title-col">
-                    <div>
-                        <a href="#" class="version-title">{{ $v->title }}
+<div class="version-row-wrapper">
 
-                        </a>
-                    </div>
-                    <div class="version-format">{{ $v->format }}</div>
+    <!-- ROW -->
+    <div class="version-row">
+
+        <!-- TITLE -->
+        <div class="version-title-col" style="display:flex; gap:12px; align-items:flex-start;">
+
+            <!-- GAMBAR -->
+            <img src="{{ $album->image }}" alt="{{ $v->title }}" class="version-image" style="width:80px;height:80px;object-fit:cover;border:1px solid #ccc;display:none;">
+
+            <div>
+                <div>
+                    <a href="#" class="version-title">
+                        {{ $v->title }}
+                    </a>
                 </div>
 
-                <!-- label -->
-                <div class="version-label">
-                    <a href="#">{{ $v->label }}</a> – {{ $v->catalog_number }}
+                <div class="version-format">
+                    {{ $v->format }}
                 </div>
-
-                <!-- country -->
-                <div class="version-country">
-                    {{ $v->country }}
-                </div>
-
-                <!-- year -->
-                <div class="version-year">
-                    {{ $v->year }}
-                </div>
-                <button class="version-expand">▾</button>
             </div>
+
         </div>
-        @endforeach
+
+        <!-- LABEL -->
+        <div class="version-label">
+            <a href="#">{{ $v->label }}</a>
+            – {{ $v->catalog_number }}
+        </div>
+
+        <!-- COUNTRY -->
+        <div class="version-country">
+            {{ $v->country }}
+        </div>
+
+        <!-- YEAR -->
+        <div class="version-year">
+            {{ $v->year }}
+        </div>
+
+        <!-- TOGGLE -->
+        <button class="version-expand"
+                onclick="toggleVersion({{ $index }})"
+                id="btn{{ $index }}">
+            ▾
+        </button>
+
+    </div>
+
+    <!-- DETAIL -->
+    <div class="version-detail"
+         id="detail{{ $index }}"
+         style="
+            display:none;
+            background:#f7f7f7;
+            border-top:1px solid #ddd;
+            padding:20px;
+         ">
+
+        <div style="display:grid;grid-template-columns: 1fr 1fr 250px;gap:20px;align-items:start;">
+            <!-- LEFT -->
+            <div>
+                <div>
+                    <b>14 for sale</b> from €61.92
+                </div>
+                <button style="width:100%;background:#000;color:#fff;border:none;padding:14px;cursor:pointer;font-size:14px;border-radius: 8px;">
+                    Shop this version
+                </button>
+
+                <div style="margin-top:20px; font-size:13px; color:#555;">
+                    <div>Last Sold May 5, 2026</div>
+
+                    <div style="display:flex;justify-content:space-between;margin-top:15px;">
+                        <div>
+                            <div>€43.00</div>
+                            <div>Lowest</div>
+                        </div>
+
+                        <div>
+                            <div>€61.92</div>
+                            <div>Median</div>
+                        </div>
+
+                        <div>
+                            <div>€85.00</div>
+                            <div>Highest</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CENTER -->
+            <div style="font-size:14px;">
+
+                <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:20px;">
+                    <div>
+                        <div>Collected</div>
+                        <b>0</b>
+                    </div>
+
+                    <div>
+                        <div>Wanted</div>
+                        <b>8</b>
+                    </div>
+                </div>
+
+                <div style="text-align:center;">
+                    Ratings <b>5 / 5</b> (1)
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button class="add-wantlist-btn custom-btn">Add to Collection</button>
+                <button class="add-wantlist-btn custom-btn">Add to Wantlist</button>
+                <button class="add-wantlist-btn custom-btn">Add to List</button>
+                
+                <div style="margin-top: 20px;">Discogs ID: r843126 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Recently Edited</div> 
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endforeach
     </div>
 
     <div class="reviews-title">Reviews</div>
@@ -1695,6 +1994,113 @@
             </svg>Share
         </button>
 
+        <div class="widget">
+
+  <!-- Header -->
+  <div class="header">
+    <span>Audio</span>
+  </div>
+
+  <div class="music-content">
+
+    <!-- Apple Music Bar -->
+    <div class="music-bar">
+      <div class="music-bar-left">
+        <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000">
+          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
+        </svg>
+
+        <span>Music</span>
+      </div>
+
+      <button class="btn-signin">Sign In</button>
+    </div>
+
+    <!-- Album Info -->
+    <div class="album-info">
+
+      <div class="album-info-left">
+
+        <div class="album-art">
+          <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Random_Access_Memories.jpg" alt="Album Art">
+        </div>
+
+        <div>
+          <div class="album-title">Random Access Memories</div>
+          <div class="album-artist">Daft Punk</div>
+        </div>
+
+      </div>
+
+      <button class="btn-dots">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
+          <circle cx="12" cy="12" r="2" fill="#FF3B5C"/>
+          <circle cx="19" cy="12" r="2" fill="#FF3B5C"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- Hidden audio player -->
+    <audio id="player" style="display:none;"></audio>
+
+    <!-- Track List -->
+    <div class="track-list">
+
+      <div class="track"
+           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+           onclick="playTrack(this)">
+
+        <span class="track-num">1</span>
+
+
+        <span class="track-name">Give Life Back to Music</span>
+      </div>
+
+      <div class="track"
+           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+           onclick="playTrack(this)">
+
+        <span class="track-num">2</span>
+
+        <span class="track-name">Get Lucky</span>
+      </div>
+
+      <div class="track"
+           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+           onclick="playTrack(this)">
+
+        <span class="track-num">3</span>
+
+        <span class="track-name">Instant Crush</span>
+      </div>
+
+    </div>
+
+    <!-- Play Button -->
+    <div class="play-wrap">
+      <button class="btn-play" onclick="playFirstTrack()">
+
+        <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
+          <polygon points="0,0 14,8 0,16"/>
+        </svg>
+
+        <span>Play</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="view-app">
+      <a href="#">View in App ↗</a>
+
+      <div class="see">
+        <span>See how your data is managed...</span>
+      </div>
+    </div>
+
+  </div>
+
         <!-- VIDEO -->
                     <div id="video-sidebar-section">
                 <div class="v-header">
@@ -1852,6 +2258,54 @@
         document.getElementById('editForm' + id).style.display = 'none';
         document.getElementById('reviewText' + id).style.display = 'block';
     }
+
+function setGridView() {
+
+    document.getElementById('gridBtn').classList.add('active');
+    document.getElementById('listBtn').classList.remove('active');
+
+    document.querySelectorAll('.version-row').forEach(row => {
+
+        row.style.gridTemplateColumns =
+            '1fr 220px 120px 80px 40px';
+
+        // tampilkan gambar
+        row.querySelector('.version-image').style.display = 'block';
+    });
+}
+
+function setListView() {
+
+    document.getElementById('listBtn').classList.add('active');
+    document.getElementById('gridBtn').classList.remove('active');
+
+    document.querySelectorAll('.version-row').forEach(row => {
+
+        row.style.gridTemplateColumns =
+            '1fr 220px 120px 80px 40px';
+
+        // sembunyikan gambar
+        row.querySelector('.version-image').style.display = 'none';
+    });
+}
+
+
+function toggleVersion(index) {
+
+    const detail = document.getElementById('detail' + index);
+    const btn = document.getElementById('btn' + index);
+
+    if(detail.style.display === 'none') {
+
+        detail.style.display = 'block';
+        btn.innerHTML = '▴';
+
+    } else {
+
+        detail.style.display = 'none';
+        btn.innerHTML = '▾';
+    }
+}
 
 </script>
 
