@@ -934,6 +934,9 @@
       font-weight: 600;
       text-decoration: none;
     }
+    .see {
+      text-align: right; font-size: 9px; padding: 6px 0px 0px 0px;
+    }
     .footer {
   padding: 6px 10px 10px;
   text-align: left;
@@ -1473,10 +1476,6 @@
   </div>
   @endforeach
 </div>
-  <!-- Custom Play Button -->
-<button id="playBtn">Play</button>
-<button id="pauseBtn">Pause</button>
-
  
   <!-- Play Button -->
   <div class="play-wrap">
@@ -1487,11 +1486,13 @@
       <span>Play</span>
     </button>
   </div>
- 
-  View in App
+
   <div class="view-app">
     <a href="#">View in App ↗</a>
-    <span>See how your data is managed...</span>
+    <div class="see">
+      <span>See how your data is managed...</span>
+    </div>
+    
   </div>
 
 </div>
@@ -1528,8 +1529,165 @@
       <div style="margin-bottom: 10px;">
     <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
       <span style="font-weight: bold; font-size: 13px;">Lists</span>
-      <span style="color: #0088cc; font-size: 12px; cursor: pointer;">Add to List</span>
+      <span data-bs-toggle="modal" data-bs-target="#addToListModal" style="color:#0070c0; cursor:pointer;">Add to List</span>
     </div>
+    <!-- MODAL -->
+<div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+
+    <div class="modal-content">
+
+      <!-- HEADER -->
+      <div class="modal-header border-0 pb-2">
+
+        <h5 class="modal-title fw-bold">
+          Add Artist to List
+        </h5>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal">
+        </button>
+
+      </div>
+
+      <hr class="m-0" style="color:#eee; opacity:1;">
+
+      <!-- BODY -->
+      <div class="modal-body p-3">
+
+        <form>
+
+          <!-- RADIO -->
+          <div class="mb-3 mt-1">
+
+            <div class="form-check form-check-inline">
+
+              <input class="form-check-input"
+                     type="radio"
+                     name="listOption"
+                     id="radioExisting"
+                     checked>
+
+              <label class="form-check-label" for="radioExisting">
+                Existing List
+              </label>
+
+            </div>
+
+            <div class="form-check form-check-inline">
+
+              <input class="form-check-input"
+                     type="radio"
+                     name="listOption"
+                     id="radioNew">
+
+              <label class="form-check-label" for="radioNew">
+                New List
+              </label>
+
+            </div>
+
+          </div>
+
+          <!-- NEW LIST -->
+          <div id="new-list-fields" class="d-none">
+
+            <div class="mb-3">
+
+              <label class="form-label">
+                Title
+              </label>
+
+              <input type="text"
+                     class="form-control"
+                     placeholder="Enter list title">
+
+            </div>
+
+            <div class="mb-3">
+
+              <label class="form-label">
+                Description
+                <span class="text-muted fst-italic">
+                  Optional
+                </span>
+              </label>
+
+              <textarea class="form-control"
+                        rows="2"
+                        style="resize:vertical;"
+                        placeholder="Write description">
+              </textarea>
+
+            </div>
+
+          </div>
+
+          <!-- EXISTING LIST -->
+          <div id="existing-list-fields">
+
+            <div class="mb-3">
+
+              <label class="form-label">
+                List
+              </label>
+
+              <select class="form-select">
+
+                <option>Favorite Artists</option>
+                <option>Best Rock Albums</option>
+                <option>Vinyl Collection</option>
+                <option>My Playlist</option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+          <!-- COMMENTS -->
+          <div class="mb-3">
+
+            <label class="form-label">
+              Comments on this item
+              <span class="text-muted fst-italic">
+                Optional
+              </span>
+            </label>
+
+            <textarea class="form-control"
+                      rows="2"
+                      style="resize:vertical;"
+                      placeholder="Write comments">
+            </textarea>
+
+          </div>
+
+          <!-- BUTTON -->
+          <div class="d-flex gap-2 pt-2">
+
+            <button type="button"
+                    class="btn btn-success">
+              Save
+            </button>
+
+            <button type="button"
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
+              Cancel
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
     <div style="font-size: 12px; line-height: 1.8;">
       @foreach($lists as $list)
       <div>{{ $list->username }} by <span style="color: #0088cc; cursor: pointer;">{{ $list->username }}</span></div>
@@ -1715,6 +1873,34 @@ function showEditForm(id) {
         document.getElementById('editForm' + id).style.display = 'none';
         document.getElementById('reviewText' + id).style.display = 'block';
     }
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
 </script>
 </div>
 @endsection
