@@ -93,6 +93,7 @@ class ArtistController extends Controller
 
         // SELECT r.release_id,
         //        r.title,
+        //        r.master_id,
         //        i.url AS image,
         //        m.year,
         //        GROUP_CONCAT(DISTINCT f.name SEPARATOR ' · ') AS formats,
@@ -133,6 +134,7 @@ class ArtistController extends Controller
             ->select(
                 'r.release_id',
                 'r.title',
+                'r.master_id',
                 'i.url as image',
                 'm.year',
                 DB::raw("GROUP_CONCAT(DISTINCT f.name SEPARATOR ' · ') as formats"),
@@ -146,6 +148,7 @@ class ArtistController extends Controller
             ->groupBy(
                 'r.release_id',
                 'r.title',
+                'r.master_id',
                 'i.url',
                 'm.year'
             )
