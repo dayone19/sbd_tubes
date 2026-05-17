@@ -1440,6 +1440,50 @@
     background:#000 !important;
     color:#fff !important;
 }
+
+  /* Play Button */
+    .play-wrap {padding: 10px;}
+    .btn-play {
+      width: 100%;
+      background: #FC3C44;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-play span {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+    /* View in App */
+    .view-app {text-align: center;padding: 0px 10px 10px;}
+    .view-app a {
+      color: #FC3C44;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .footer {
+  padding: 6px 10px 10px;
+  text-align: left;
+  background: #f9f9f9;
+}
+.footer span {font-size: 10px;color: #aaa;}
+.track .play-icon-hover {
+    display: none;
+    color: #FC3C44;
+    font-size: 10px;
+    width: 25px;
+    text-align: center;}
+.track:hover {background-color: #efefef; cursor: pointer;}
+.track:hover .track-num { display: none;}
+.track:hover .play-icon-hover { display: inline-block; }
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1517,7 +1561,7 @@
                     <tr>
                         <td>{{ $track->title }}</td>
                         <td style="text-align:right; width:60px; color:#555;">
-                            4:14
+                           {{ \Carbon\Carbon::parse($track->duration)->format('i:s') ? ltrim(\Carbon\Carbon::parse($track->duration)->format('i:s'), '0') : '0:00' }}
                         </td>
                     </tr>
                 @endforeach
@@ -1635,140 +1679,57 @@
 
     <div class="version-list">
         <!-- Version Row 1 -->
-        @foreach($versions as $index => $v)
+@foreach($versions as $index => $v)
 
 <div class="version-row-wrapper">
 
-    <!-- ROW -->
     <div class="version-row">
-
-        <!-- TITLE -->
         <div class="version-title-col" style="display:flex; gap:12px; align-items:flex-start;">
-
-            <!-- GAMBAR -->
             <img src="{{ $album->image }}" alt="{{ $v->title }}" class="version-image" style="width:80px;height:80px;object-fit:cover;border:1px solid #ccc;display:none;">
-
             <div>
-                <div>
-                    <a href="#" class="version-title">
-                        {{ $v->title }}
-                    </a>
-                </div>
-
-                <div class="version-format">
-                    {{ $v->format }}
-                </div>
+                <div><a href="#" class="version-title">{{ $v->title }}</a></div>
+                <div class="version-format">{{ $v->format }}</div>
             </div>
-
         </div>
 
-        <!-- LABEL -->
-        <div class="version-label">
-            <a href="#">{{ $v->label }}</a>
-            – {{ $v->catalog_number }}
-        </div>
+        <div class="version-label"><a href="#">{{ $v->label }}</a> – {{ $v->catalog_number }}</div>
+        <div class="version-country">{{ $v->country }}</div>
+        <div class="version-year">{{ $v->year }}</div>
 
-        <!-- COUNTRY -->
-        <div class="version-country">
-            {{ $v->country }}
-        </div>
-
-        <!-- YEAR -->
-        <div class="version-year">
-            {{ $v->year }}
-        </div>
-
-        <!-- TOGGLE -->
-        <button class="version-expand"
-                onclick="toggleVersion({{ $index }})"
-                id="btn{{ $index }}">
-            ▾
-        </button>
-
-    </div>
-
-    <!-- DETAIL -->
-    <div class="version-detail"
-         id="detail{{ $index }}"
-         style="
-            display:none;
-            background:#f7f7f7;
-            border-top:1px solid #ddd;
-            padding:20px;
-         ">
-
-        <div style="display:grid;grid-template-columns: 1fr 1fr 250px;gap:20px;align-items:start;">
-            <!-- LEFT -->
+        <button class="version-expand" onclick="toggleVersion({{ $index }})" id="btn{{ $index }}">▾</button>
+    </div> <div class="version-detail" id="detail{{ $index }}" style="display:none; background:#f7f7f7; border-top:1px solid #ddd; padding:20px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr 250px; gap:20px; align-items:start;">
+            
             <div>
-                <div>
-                    <b>14 for sale</b> from €61.92
-                </div>
-                <button style="width:100%;background:#000;color:#fff;border:none;padding:14px;cursor:pointer;font-size:14px;border-radius: 8px;">
-                    Shop this version
-                </button>
-
+                <div><b>{{ $v->dropdown_stats->listing_count ?? 0 }} for sale</b> from €{{ number_format($v->dropdown_stats->lowest_price ?? 0, 2) }}</div>
+                <button style="width:100%; background:#000; color:#fff; border:none; padding:14px; cursor:pointer; font-size:14px; border-radius:8px; margin-top:10px;">Shop this version</button>
                 <div style="margin-top:20px; font-size:13px; color:#555;">
-                    <div>Last Sold May 5, 2026</div>
-
-                    <div style="display:flex;justify-content:space-between;margin-top:15px;">
-                        <div>
-                            <div>€43.00</div>
-                            <div>Lowest</div>
-                        </div>
-
-                        <div>
-                            <div>€61.92</div>
-                            <div>Median</div>
-                        </div>
-
-                        <div>
-                            <div>€85.00</div>
-                            <div>Highest</div>
-                        </div>
+                    <div>Last Sold: <b>{{ $v->dropdown_stats->last_sold }}</b></div>
+                    <div style="display:flex; justify-content:space-between; margin-top:15px;">
+                        <div><div>€{{ number_format($v->dropdown_stats->lowest_price ?? 0, 2) }}</div><div style="color:#888; font-size:11px;">Lowest</div></div>
+                        <div><div>€{{ number_format($v->dropdown_stats->median_price ?? 0, 2) }}</div><div style="color:#888; font-size:11px;">Median</div></div>
+                        <div><div>€{{ number_format($v->dropdown_stats->highest_price ?? 0, 2) }}</div><div style="color:#888; font-size:11px;">Highest</div></div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- CENTER -->
             <div style="font-size:14px;">
-
-                <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:20px;">
-                    <div>
-                        <div>Collected</div>
-                        <b>0</b>
-                    </div>
-
-                    <div>
-                        <div>Wanted</div>
-                        <b>8</b>
-                    </div>
+                <div style="display:flex; justify-content:space-around; text-align:center; margin-bottom:20px;">
+                    <div><div style="color:#666; margin-bottom:5px;">Collected</div><b>{{ $v->dropdown_stats->have ?? 0 }}</b></div>
+                    <div><div style="color:#666; margin-bottom:5px;">Wanted</div><b>{{ $v->dropdown_stats->want ?? 0 }}</b></div>
                 </div>
-
-                <div style="text-align:center;">
-                    Ratings <b>5 / 5</b> (1)
-                </div>
-
+                <div style="text-align:center; margin-top:25px;">Ratings <b>{{ $v->dropdown_stats->avg_rating ?? 0 }} / 5</b> ({{ $v->dropdown_stats->total_rating ?? 0 }})</div>
             </div>
 
-            <!-- RIGHT -->
             <div style="display:flex; flex-direction:column; gap:10px;">
                 <button class="add-wantlist-btn custom-btn">Add to Collection</button>
                 <button class="add-wantlist-btn custom-btn">Add to Wantlist</button>
                 <button class="add-wantlist-btn custom-btn">Add to List</button>
-                
-                <div style="margin-top: 20px;">Discogs ID: r843126 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Recently Edited</div> 
-
+                <div style="margin-top:20px; font-size:12px; color:#666;">Discogs ID: r{{ $v->release_id }} &nbsp; &nbsp;&nbsp; &nbsp; Recently Edited</div> 
             </div>
 
+        </div> </div> </div> @endforeach
         </div>
-
-    </div>
-
-</div>
-
-@endforeach
-    </div>
 
     <div class="reviews-title">Reviews</div>
     <form action="{{ route('album.review', $album->master_id) }}" method="POST">
@@ -1996,127 +1957,102 @@
 
         <div class="widget">
 
-  <!-- Header -->
+    <!-- Header -->
   <div class="header">
     <span>Audio</span>
   </div>
-
+ 
   <div class="music-content">
-
-    <!-- Apple Music Bar -->
-    <div class="music-bar">
-      <div class="music-bar-left">
-        <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000">
-          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
-        </svg>
-
-        <span>Music</span>
-      </div>
-
-      <button class="btn-signin">Sign In</button>
+  <!-- Apple Music Bar -->
+  <div class="music-bar">
+    <div class="music-bar-left">
+      <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
+        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
+      </svg>
+      <span>Music</span>
     </div>
-
-    <!-- Album Info -->
+    <button class="btn-signin">Sign In</button>
+  </div>
+ 
+  <!-- Album Info -->
     <div class="album-info">
-
-      <div class="album-info-left">
-
-        <div class="album-art">
-          <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Random_Access_Memories.jpg" alt="Album Art">
-        </div>
-
-        <div>
-          <div class="album-title">Random Access Memories</div>
-          <div class="album-artist">Daft Punk</div>
-        </div>
-
+      <div class="album-art">
+        <img src="{{ $album->image }}" alt="Album Art">
       </div>
-
-      <button class="btn-dots">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
-          <circle cx="12" cy="12" r="2" fill="#FF3B5C"/>
-          <circle cx="19" cy="12" r="2" fill="#FF3B5C"/>
-        </svg>
-      </button>
-
-    </div>
-
+      <div>
+        <div class="album-title">{{ $album->title }}</div>
+        <div class="album-artist">{{ $artist->name }}</div>
+      </div>
+    
+    <button class="btn-dots">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
+        <circle cx="12" cy="12" r="2" fill="#FF3B5C"/>
+        <circle cx="19" cy="12" r="2" fill="#FF3B5C"/>
+      </svg>
+    </button>
+  </div>
+  
     <!-- Hidden audio player -->
-    <audio id="player" style="display:none;"></audio>
+<audio id="player" style="display:none;"></audio>
+ 
+  <!-- Track List -->
+<div class="track-list">
+  @foreach($tracks as $i => $track)
+  <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
+    
+    <span class="track-num">{{ $i+1 }}</span>
+    
+    <span class="play-icon-hover">▶</span>
+    
+    <span class="track-name">{{ $track->title }}</span>
+  </div>
+  @endforeach
+</div>
+  <!-- Custom Play Button -->
+<button id="playBtn">Play</button>
+<button id="pauseBtn">Pause</button>
 
-    <!-- Track List -->
-    <div class="track-list">
-
-      <div class="track"
-           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-           onclick="playTrack(this)">
-
-        <span class="track-num">1</span>
-
-
-        <span class="track-name">Give Life Back to Music</span>
-      </div>
-
-      <div class="track"
-           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-           onclick="playTrack(this)">
-
-        <span class="track-num">2</span>
-
-        <span class="track-name">Get Lucky</span>
-      </div>
-
-      <div class="track"
-           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-           onclick="playTrack(this)">
-
-        <span class="track-num">3</span>
-
-        <span class="track-name">Instant Crush</span>
-      </div>
-
-    </div>
-
-    <!-- Play Button -->
-    <div class="play-wrap">
-      <button class="btn-play" onclick="playFirstTrack()">
-
-        <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
-          <polygon points="0,0 14,8 0,16"/>
-        </svg>
-
-        <span>Play</span>
-      </button>
-    </div>
-
-    <!-- Footer -->
-    <div class="view-app">
-      <a href="#">View in App ↗</a>
-
-      <div class="see">
-        <span>See how your data is managed...</span>
-      </div>
-    </div>
-
+ 
+  <!-- Play Button -->
+  <div class="play-wrap">
+    <button class="btn-play">
+      <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
+        <polygon points="0,0 14,8 0,16"/>
+      </svg>
+      <span>Play</span>
+    </button>
+  </div>
+ 
+  View in App
+  <div class="view-app">
+    <a href="#">View in App ↗</a>
+    <span>See how your data is managed...</span>
+  </div>
   </div>
 
         <!-- VIDEO -->
-                    <div id="video-sidebar-section">
+             <div id="video-sidebar-section">
                 <div class="v-header">
-                    <h2>Videos ({{ $videos->count() }})</h2>
+                    {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
+                    <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
                     <a href="#" class="small">Edit</a>
                 </div>
 
                 @if($videos->count() > 0)
                 <div class="main-player" id="mainPlayer">
-                    <img src="{{ $videos[0]->thumbnail }}" id="currentThumb">
+                    {{-- Ambil thumbnail dari video pertama yang unik --}}
+                    <img src="{{ $videos->unique('youtube_url')->first()->thumbnail }}" id="currentThumb">
                     <div class="play-btn-overlay"></div>
                 </div>
                 @endif
 
                 <div class="v-list">
-                    @foreach($videos as $video)
+                    {{-- 
+                     Tambahkan ->unique('youtube_url') sebelum @foreach 
+                    Ini akan menyaring daftar video berdasarkan URL YouTube-nya di level Blade secara instan.
+                    --}}
+                    @foreach($videos->unique('youtube_url') as $video)
                     <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
                         <div class="v-thumb">
                             <img src="{{ $video->thumbnail }}">
@@ -2127,7 +2063,7 @@
                     @endforeach
                 </div>
 
-                <div class="l-section">
+            <div class="l-section">
 
     <!-- HEADER -->
     <div class="d-flex align-items-center mb-2">
