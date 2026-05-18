@@ -364,8 +364,7 @@
         border-width: 7px 0 7px 12px;
         border-color: transparent transparent transparent #fff;
     }
-    .v-list {max-height: 120px;overflow-y: auto;flex: 1;min-height: 0; }
-    .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+    .v-list {max-height: 400px;overflow-y: auto;flex: 1; min-height: 200px;}    .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .v-item:hover { background: #f9f9f9; }
     .v-thumb { width: 100px; height: 60px; position: relative; flex-shrink: 0; }
     .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -375,13 +374,17 @@
     .v-list::-webkit-scrollbar {width: 6px;}
     .v-list::-webkit-scrollbar-thumb {background: #ccc;border-radius: 10px;}
     .v-list::-webkit-scrollbar-thumb:hover {background: #999;}
-    .l-section { border-top: none; padding-top: 0px; }
     .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-    .tracklist-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    .l-section { margin-top: 20px;font-size: 13px; margin bottom:10px}
+    .l-header {display: flex;align-items: center;margin-bottom: 8px;}
+    .l-header h2 {font-size: 14px;margin: 0;}
+    .l-list {display: flex; flex-direction: column;gap: 8px;}
+    .l-item {padding: 6px 0;border-bottom: 1px solid #eee;}
+    .l-item a {color: #2a5bd7;text-decoration: none;font-weight: 500;}
+    .l-item a:hover {text-decoration: underline;}
+    .l-meta {font-size: 12px;color: #777;}
+    .l-footer {margin-top: 8px;}
+    .tracklist-header {display: flex;justify-content: space-between;align-items: center;}
 /* Container bintang + share */
 .middle-row {
   display: flex;
@@ -420,6 +423,7 @@
   border-top: 1px solid #ccc;
   margin: 10px 0;
 }
+.album-wrapper {padding-bottom:80px}
 /* Button group */
 .btn-group {
   display: grid;
@@ -1210,10 +1214,6 @@
         <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
       </div>
 
-
-          <button type="submit" class="btn btn-primary">Kirim</button>
-      </form>
-
       <div class="review-actions">
         <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
         <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
@@ -1536,17 +1536,11 @@
                     @endforeach
                 </div>
 
-                <div class="l-section">
-      <div style="margin-bottom: 10px;">
-    <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
-      <span style="font-weight: bold; font-size: 13px;">Lists</span>
-      <span data-bs-toggle="modal" data-bs-target="#addToListModal" style="color:#0070c0; cursor:pointer;">Add to List</span>
-    </div>
+    
+
     <!-- MODAL -->
 <div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
-
   <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
-
     <div class="modal-content">
 
       <!-- HEADER -->
@@ -1699,18 +1693,33 @@
   </div>
 </div>
 
-    <div style="font-size: 12px; line-height: 1.8;">
-      @foreach($lists as $list)
-      <a href="">
-      <div>{{ $list->username }} </a>
-      by <span style="color: #0088cc; cursor: pointer;">{{ $list->username }}</span></div>
-      @endforeach
+  <!-- HEADER -->
+    <div class="l-section">
+        <div class="l-header">
+            <h2>Lists</h2>
+            <a href="#"> Add to List</a>
+        </div>
+
+        <div class="l-list">
+            @forelse($lists as $list)
+                <div class="l-item">
+                    <div>
+                        <a href="#">{{ $list->list_name }}</a>
+                    </div>
+                    <div class="l-meta">
+                        by <a href="#">{{ $list->username }}</a>
+                    </div>
+                </div>
+            @empty
+                <div class="l-meta">No lists yet</div>
+            @endforelse
+        </div>
+
+        <div class="l-footer">
+            <a href="/lists" class="view-more-lists">View more lists</a>
+        </div>
+
     </div>
-    <a href="/lists">
-    <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">View More Lists →</div>
-    </a>
-  </div>
-  </div>
 
     <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
     @foreach($contributors as $contributor)

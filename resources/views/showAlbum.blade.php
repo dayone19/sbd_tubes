@@ -50,16 +50,8 @@
         margin-top: 4px;
         text-decoration: none;
     }
-
-    .album-cover-wrap a:hover {
-        text-decoration: underline;
-    }
-
-    .album-meta {
-        flex: 1;
-        padding-top: 4px;
-    }
-
+    .album-cover-wrap a:hover {text-decoration: underline;}
+    .album-meta {flex: 1;padding-top: 4px;}
     .album-title {
         font-size: 22px;
         font-weight: bold;
@@ -179,7 +171,6 @@
         width: 280px;
         flex-shrink: 0;
     }
-
     /* Master Release box */
     .master-release-header {
         display: flex;
@@ -682,11 +673,7 @@
         align-items: center;
         gap: 5px;
     }
-
-    .add-wantlist-btn:hover {
-        background: #555;
-    }
-
+    .add-wantlist-btn:hover {background: #555;}
     .add-wantlist-btn .btn-arrow {
         font-size: 10px;
         border-left: 1px solid #666;
@@ -785,27 +772,20 @@
             font-style: italic;
             color: #c00;
         }
-
-
-
         .version-label {
             font-size: 13px;
         }
-
         .version-label a {
             color: #0000ff;
             text-decoration: none;
         }
-
         .version-label a:hover {
             text-decoration: underline;
         }
-
         .version-country {
             font-size: 13px;
             color: #333;
         }
-
         .version-year {
             font-size: 13px;
             color: #333;
@@ -931,13 +911,12 @@
         border-width: 7px 0 7px 12px;
         border-color: transparent transparent transparent #fff;
     }
-
     .v-list {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
-
     flex: 1;          /* penting */
-    min-height: 0;    /* SUPER penting buat scroll di flex */
+    min-height: 150px; 
+    margin-bottom:20px;   /* SUPER penting buat scroll di flex */
 }
     .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .v-item:hover { background: #f9f9f9; }
@@ -945,24 +924,26 @@
     .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .v-time { position: absolute; bottom: 2px; right: 2px; background: #000; color: #fff; font-size: 10px; padding: 0 3px; }
     .v-title { font-size: 13px; color: #2a5bd7; line-height: 1.2; }
-
-    /* Custom scrollbar untuk list video */
     .v-list::-webkit-scrollbar {
     width: 6px;
 }
-
 .v-list::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 10px;
 }
-
 .v-list::-webkit-scrollbar-thumb:hover {
     background: #999;
 }
-
-    .l-section { border-top: none; padding-top: 0px; }
-    .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-
+.l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
+.l-section { margin-top: 20px;font-size: 13px;}
+.l-header {display: flex;align-items: center;margin-bottom: 8px;}
+.l-header h2 {font-size: 14px;margin: 0;}
+.l-list {display: flex; flex-direction: column;gap: 8px;}
+.l-item {padding: 6px 0;border-bottom: 1px solid #eee;}
+.l-item a {color: #2a5bd7;text-decoration: none;font-weight: 500;}
+.l-item a:hover {text-decoration: underline;}
+.l-meta {font-size: 12px;color: #777;}
+.l-footer {margin-top: 8px;}
 /* Reviews Section */
 .reviews-title {
     font-size: 15px;
@@ -973,7 +954,6 @@
     border-bottom: 1px solid #ccc;
     margin-bottom: 16px;
 }
- 
    .add-review-btn {
     display: inline-block;
 
@@ -989,11 +969,7 @@
 
     margin-bottom: 20px;
 }
- 
-    .add-review-btn:hover {
-      background-color: #e8e8e8;
-    }
- 
+    .add-review-btn:hover {background-color: #e8e8e8;}
     .review-item {
     border-top: 1px solid #e0e0e0;
     padding: 10px 0;
@@ -1002,28 +978,22 @@
     gap: 10px;
     position: relative;
 }
- 
     .avatar {
     width: 48px;
     height: 48px;
-
     border-radius: 0;
-
     background-color: #c8c8c8;
     flex-shrink: 0;
     overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
 }
- 
     .avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
- 
     .avatar-icon {
       width: 100%;
       height: 100%;
@@ -2032,67 +2002,76 @@
   </div>
 
         <!-- VIDEO -->
-             <div id="video-sidebar-section">
-                <div class="v-header">
-                    {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
-                    <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
-                    <a href="#" class="small">Edit</a>
-                </div>
+        <div id="video-sidebar-section" style="margin-bottom:10px">
+            <div class="v-header">
+                {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
+                <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
+                <a href="#" class="small">Edit</a>
+            </div>
 
-                @if($videos->count() > 0)
-                <div class="main-player" id="mainPlayer">
-                    {{-- Ambil thumbnail dari video pertama yang unik --}}
-                    <img src="{{ $videos->unique('youtube_url')->first()->thumbnail }}" id="currentThumb">
-                    <div class="play-btn-overlay"></div>
-                </div>
-                @endif
+            @if($videos->count() > 0)
+            <div class="main-player" id="mainPlayer">
+                {{-- Ambil thumbnail dari video pertama yang unik --}}
+                <img src="{{ $videos->unique('youtube_url')->first()->thumbnail }}" id="currentThumb">
+                <div class="play-btn-overlay"></div>
+            </div>
+            @endif
 
-                <div class="v-list">
-                    {{-- 
-                     Tambahkan ->unique('youtube_url') sebelum @foreach 
-                    Ini akan menyaring daftar video berdasarkan URL YouTube-nya di level Blade secara instan.
-                    --}}
-                    @foreach($videos->unique('youtube_url') as $video)
-                    <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
-                        <div class="v-thumb">
-                            <img src="{{ $video->thumbnail }}">
-                            <span class="v-time"> {{ $video->duration }} </span>
-                        </div>
-                        <div class="v-title"><b> {{ $video->title }} </b></div>
+            <div class="v-list">
+                {{-- 
+                Tambahkan ->unique('youtube_url') sebelum @foreach 
+                Ini akan menyaring daftar video berdasarkan URL YouTube-nya di level Blade secara instan.
+                --}}
+                @foreach($videos->unique('youtube_url') as $video)
+                <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
+                    <div class="v-thumb">
+                        <img src="{{ $video->thumbnail }}">
+                        <span class="v-time"> {{ $video->duration }} </span>
                     </div>
-                    @endforeach
+                    <div class="v-title"><b> {{ $video->title }} </b></div>
                 </div>
+                @endforeach
+            </div>
+        </div>
+  
 
-            <div class="l-section">
+    <!-- LISTS -->
+    <div class="l-section">
+        <div class="l-header">
+            <h2>Lists</h2>
+            <a href="#" class="small text-decoration-none" 
+                data-bs-toggle="modal" 
+                data-bs-target="#addToListModal" 
+                style="color: #2a5bd7;">Add to List</a>
+        </div>
 
-    <!-- HEADER -->
-    <div class="d-flex align-items-center mb-2">
-        <h2 class="mb-0 me-2" style="font-size: 15px;">Lists</h2>
-        <a href="#" class="small text-decoration-none" style="position: relative; top: 4px;">
-            Add to List
-        </a>
+        <div class="l-list">
+            @forelse($lists as $list)
+                <div class="l-item">
+                    <div>
+                        <a href="#">{{ $list->list_name }}</a>
+                    </div>
+                    <div class="l-meta">
+                        by <a href="#">{{ $list->username }}</a>
+                    </div>
+                </div>
+            @empty
+                <div class="l-meta">No lists yet</div>
+            @endforelse
+        </div>
+
+        <div class="l-footer">
+            <a href="/lists" class="view-more-lists">View more lists</a>
+        </div>
+
     </div>
-
-    <hr class="my-2">
-
-    <!-- LIST -->
-    <div>
-        @foreach($lists as $list)
-            <div><a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a></div>
-        @endforeach
-    </div>
-
-    <hr class="my-2">
-
-    <!-- FOOTER -->
-    <a href="/lists" class="view-more-lists">View More List </a>
-</div>
 
         
     </div>
     <!-- end .album-right -->
 
 </div>
+
 
 <!-- UNTUK KLIK VIDEO -->
 <script>

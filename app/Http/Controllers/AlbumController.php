@@ -258,6 +258,35 @@ class AlbumController extends Controller
         ));
     }
 
+    public function addToList(Request $request, $id)
+    {
+        $master = Master::findOrFail($id);
+
+        $release = Release::where('master_id', $id)->first();
+
+        if (!$release) {
+            return back()->with('error', 'Tidak ada release untuk album ini');
+        }
+
+        if ($request->listOption === 'new') {
+            $list = ListModel::create([
+                'user_id' => 1,
+                'name' => $request->name,
+                'description' => $request->description,
+                'comments' => $request->comments,
+            ]);
+        } else {
+            $list = ListModel::findOrFail($request->list_id);
+        }
+
+        DB::table('list_release')->insert([
+            'list_id' => $list->list_id,
+            'release_id' => $release->release_id,
+        ]);
+
+        return back()->with('success', 'Berhasil ditambahkan ke list');
+    }
+
     public function create()
     {
         //

@@ -160,6 +160,7 @@ Route::post('/showLabel/{id}/review', [SearchController::class, 'storeReview'])-
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
+Route::post('/album/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('album.addToList');
 
 //route untuk ShowReleaseController.php
 Route::post('/release/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('release.review');
@@ -167,8 +168,7 @@ Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.
 
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
-Route::post('/album/{master_id}/review', [ShowAlbumController::class, 'storeReview'])
-    ->name('album.review');
+Route::post('/album/{master_id}/review', [ShowAlbumController::class, 'storeReview'])->name('album.review');
 Route::put('/review/{id}/update', [ShowAlbumController::class, 'updateReview'])->name('review.update');
 Route::delete('/review/{id}/delete', [ShowAlbumController::class, 'destroyReview'])->name('review.delete');
 
@@ -183,6 +183,8 @@ Route::get('/preview', function () {
 Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
 Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
 Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('artist.addToList');
+Route::post('/artist/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('artist.review');
+
 
 //route untuk ListsController
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');

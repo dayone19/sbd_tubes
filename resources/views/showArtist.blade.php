@@ -108,24 +108,189 @@
 /* Radio Button Custom */
 #addToListModal .form-check-label {font-size: 15px;margin-left: 5px;}
 /* Tombol */
-#addToListModal .btn-success { background-color: #008000 !important;
-        border: 1px solid #006400 !important;
-        border-radius: 4px;
-        font-weight: normal;
-        padding: 5px 20px;}
-    #addToListModal .btn-light {
-        background-color: #f1f1f1 !important;
-        border: 1px solid #ccc !important;
-        border-radius: 4px;
-        color: #333;
-        padding: 5px 20px;
+#addToListModal .btn-success { background-color: #008000 !important;border: 1px solid #006400 !important;
+border-radius: 4px;font-weight: normal;padding: 5px 20px;}
+#addToListModal .btn-light {background-color: #f1f1f1 !important;border: 1px solid #ccc !important;
+border-radius: 4px;color: #333;padding: 5px 20px;}
+/* Close Button */
+#addToListModal .btn-close {background-size: 10px;opacity: 0.8;}
+.review-item {
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;}
+    .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 0;
+    background-color: #c8c8c8;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;}
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-
-    /* Close Button */
-    #addToListModal .btn-close {
-        background-size: 10px;
-        opacity: 0.8;
+    .avatar-icon {
+      width: 100%;
+      height: 100%;
+      background: #bbb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+    .avatar-icon svg {
+      width: 30px;
+      height: 30px;
+      fill: #888;
+    }
+    .review-content {flex: 1;}
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1px;}
+    .review-username {
+      color: #1a73e8;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .review-date {color: #666;font-size: 13px;}
+    .reviews-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #000;
+      margin-top: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 16px;}
+    .review-text {
+      color: #333;
+      font-size: 12px;
+      line-height: 1.3;
+      margin-bottom: 5px; }
+    .review-actions {display: flex;gap: 16px;}
+    .action-link {
+      color: #1a73e8;
+      font-size: 13px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .action-link:hover {text-decoration: underline;}
+    .action-icon {font-size: 13px;}
+    .dropdown-arrow {
+      position: absolute;
+      right: 0;
+      top: 20px;
+      color: #555;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  .review-form-wrap {display: none;margin-bottom: 20px;}
+  .review-form-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .review-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px 10px;
+    font-size: 13px;
+    border: 2px solid #4a90d9;
+    border-radius: 8px;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .review-preview-box {display: none;margin-top: 6px;}
+  .review-preview-label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .review-preview-text {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+    min-height: 30px;
+  }
+  .review-word-warning {
+    display: none;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+  .review-word-warning em {font-style: italic;}
+  .review-form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .review-submit-btn {
+    padding: 6px 16px;
+    font-size: 13px;
+    background: #ccc;
+    color: #888;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    cursor: not-allowed;
+  }
+  .review-submit-btn.active {
+    background: #e8e8e8;
+    color: #333;
+    border-color: #ccc;
+    cursor: pointer;
+  }
+  .review-help-link {
+    color: #7b2d8b;
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .review-help-link:hover {text-decoration: underline;}
+  .review-menu {position: absolute;top: 10px;right: 0;}
+  .menu-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+  }
+  .menu-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 22px;
+      width: 110px;
+      background: #f3f3f3;
+      border: 1px solid #cfcfcf;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 999;
+  }
+    .menu-dropdown a {
+        display: block;
+        padding: 10px 12px;
+        color: #000;
+        text-decoration: none;
+        font-size: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+    .menu-dropdown a:last-child {border-bottom: none;}
+    .menu-dropdown a:hover {background: #e8e8e8;}
+    .delete-link {color: #000;}
 </style>
 
 
@@ -574,13 +739,125 @@
 
     <!-- REVIEWS -->
     <div id="tab-reviews" class="tab-content d-none">
-         <form action="{{ route('artist.review', $artis->artist_id) }}" method="POST">
-        @csrf
+    <div class="reviews-title">Reviews</div>
 
-                <h4>Reviews</h4>
-                <textarea name="comment" class="form-control" placeholder="Enter your comment"></textarea>
-                <button type="submit" class="btn btn-secondary mt-2 mb-4">Submit</button>
-        </form>
+    <form action="{{ route('artist.review', $artis->artist_id) }}" method="POST" id="reviewStoreForm">
+        @csrf
+        <div id="reviewForm" class="review-form-wrap" style="display:block;">
+            <textarea
+                id="reviewInput"
+                class="review-textarea"
+                placeholder="Enter your comment"
+                name="comment"
+                oninput="validasiReview('submit')" 
+            ></textarea>
+
+    <div id="previewBox" class="review-preview-box">
+        <div class="review-preview-label">Preview</div>
+        <div id="previewText" class="review-preview-text"></div>
+    </div>
+
+    <div id="wordWarning" class="review-word-warning">
+        <span style="color:#cc0000; font-weight:bold;">&#9432;</span>
+        <em id="warningText">At least 10 words must be entered.</em>
+    </div>
+
+    <div class="review-form-footer">
+        <button type="submit" id="submitBtn" class="review-submit-btn" disabled>Submit</button>
+        <a href="#" class="review-help-link">View Help</a>
+    </div>
+    </div>
+    </form>
+
+    <!-- Review 1 -->
+    @foreach($reviews as $review)
+    <div class="review-item">
+        <div class="avatar">
+        <img src="{{ $review->image }}" alt="{{ $review->username }}" />
+        </div>
+
+        <div class="review-content">
+        <div class="review-header">
+            <a href="#" class="review-username">{{ $review->username }}</a>
+            <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
+        </div>
+
+        <div class="review-actions">
+            <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
+            <a href="#" class="action-link"><span class="action-icon">🏷</span> Helpful</a>
+        </div>
+
+        <div class="review-text" id="reviewText{{ $review->review_id }}">
+            {{ $review->comment }}
+        </div>
+
+        <!-- EDIT FORM -->
+        <div id="editForm{{ $review->review_id }}" style="display:none; margin-top:10px;">
+            <form action="{{ route('review.update', $review->review_id) }}" method="POST">
+            @csrf
+            @method('PUT')
+                        
+            <textarea 
+                id="editInput{{ $review->review_id }}" 
+                name="comment" 
+                class="review-textarea" 
+                oninput="validasiReview('edit', {{ $review->review_id }})"
+            >{{ $review->comment }}</textarea>
+
+            <div id="editPreviewBox{{ $review->review_id }}" class="review-preview-box" style="display:block; margin-top:10px;">
+                <div class="review-preview-label">Preview</div>
+                <div id="editPreviewText{{ $review->review_id }}" class="review-preview-text">
+                {{ $review->comment }}
+                </div>
+            </div>
+
+            <div id="editWordWarning{{ $review->review_id }}" class="review-word-warning" style="display:none; margin-top:5px;">
+                <span style="color:#cc0000; font-weight:bold;">&#9432;</span>
+                <em>At least 10 words must be entered.</em>
+            </div>
+
+            <div class="review-form-footer">
+                <button type="submit" id="editSubmitBtn{{ $review->review_id }}" class="review-submit-btn active">
+                Save Changes
+                </button>
+
+                <a href="#" onclick="hideEditForm({{ $review->review_id }}); return false;" class="action-link">
+                Cancel
+                </a>
+
+                <a href="#" class="review-help-link">View Help</a>
+            </div>
+            </form>
+        </div>
+        
+        </div>
+        <div class="review-menu">
+        <button class="menu-btn" onclick="toggleReviewMenu(this)">
+            ▼
+        </button>
+            <div class="menu-dropdown">
+                <a href="#" onclick="showEditForm({{ $review->review_id }}); return false;">✎ Edit</a>
+                <a href="#">⊘ Report</a>
+                <form action="{{ route('review.delete', $review->review_id) }}"
+                method="POST" onsubmit="return confirm('Delete this review?')">
+                @csrf
+                @method('DELETE')
+
+                    <button type="submit" class="delete-link" style="
+                    background:none;
+                    border:none;
+                    width:100%;
+                    text-align:left;
+                    padding:10px 12px;
+                    cursor:pointer;
+                    font-size:14px;">
+                        🗑 Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
     </div>
 
     <!-- VIDEOS -->
@@ -860,6 +1137,107 @@ document.addEventListener('DOMContentLoaded', function() {
     radioNew.addEventListener('change', toggleFields);
 });
 
+function validasiReview(type, id = '') {
+    // Pemetaan Selector Elemen secara Dinamis
+    const input = document.getElementById(type === 'edit' ? "editInput" + id : "reviewInput");
+    const submitBtn = document.getElementById(type === 'edit' ? "editSubmitBtn" + id : "submitBtn");
+    const previewBox = document.getElementById(type === 'edit' ? "editPreviewBox" + id : "previewBox");
+    const previewText = document.getElementById(type === 'edit' ? "editPreviewText" + id : "previewText");
+    const warning = document.getElementById(type === 'edit' ? "editWordWarning" + id : "wordWarning");
+
+    // Keamanan tambahan: Jika elemen input tidak ditemukan, hentikan fungsi agar tidak crash
+    if (!input) return;
+
+    const text = input.value.trim();
+
+    // 1. Kontrol Tampilan Preview
+    if (previewBox && previewText) {
+        if (text.length > 0) {
+            previewBox.style.display = "block";
+            previewText.textContent = text;
+        } else {
+            previewBox.style.display = "none";
+        }
+    }
+
+    // 2. Hitung jumlah kata
+    const wordCount = text
+        .split(/\s+/)
+        .filter(word => word.length > 0).length;
+
+    // 3. Validasi Minimal 10 Kata & Styling Tombol
+    if (submitBtn) {
+        if (wordCount >= 10) {
+            submitBtn.disabled = false;
+            submitBtn.style.background = "#000";
+            submitBtn.style.color = "#fff";
+            submitBtn.style.border = "1px solid #000";
+            submitBtn.style.cursor = "pointer";
+
+            if (warning) warning.style.display = "none";
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.style.background = "#ccc";
+            submitBtn.style.color = "#888";
+            submitBtn.style.border = "1px solid #bbb";
+            submitBtn.style.cursor = "not-allowed";
+
+            if (warning) {
+                if (text.length > 0) {
+                    warning.style.display = "block";
+                } else {
+                    warning.style.display = "none";
+                }
+            }
+        }
+    }
+}
+
+function showEditForm(id) {
+    document.getElementById('editForm' + id).style.display = 'block';
+    document.getElementById('reviewText' + id).style.display = 'none';
+    
+    // Jalankan fungsi validasi tunggal saat form edit dibuka
+    validasiReview('edit', id); 
+}
+
+function hideEditForm(id) {
+        document.getElementById('editForm' + id).style.display = 'none';
+        document.getElementById('reviewText' + id).style.display = 'block';
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
+
+function toggleReviewMenu(btn) {
+    const menu = btn.nextElementSibling;
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
 </script>
 
 @endsection
