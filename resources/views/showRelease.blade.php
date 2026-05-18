@@ -956,6 +956,17 @@
 .track:hover {background-color: #efefef; cursor: pointer;}
 .track:hover .track-num { display: none;}
 .track:hover .play-icon-hover { display: inline-block; }
+
+.modal-save-btn{
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #fff !important;
+}
+
+.modal-save-btn:hover{
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1536,169 +1547,154 @@
                     @endforeach
                 </div>
 
-    
-
-    <!-- MODAL -->
-<div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
-    <div class="modal-content">
-
-      <!-- HEADER -->
-      <div class="modal-header border-0 pb-2">
-
-        <h5 class="modal-title fw-bold">
-          Add Artist to List
-        </h5>
-
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="modal">
-        </button>
-
-      </div>
-
-      <hr class="m-0" style="color:#eee; opacity:1;">
-
-      <!-- BODY -->
-      <div class="modal-body p-3">
-
-        <form>
-
-          <!-- RADIO -->
-          <div class="mb-3 mt-1">
-
-            <div class="form-check form-check-inline">
-
-              <input class="form-check-input"
-                     type="radio"
-                     name="listOption"
-                     id="radioExisting"
-                     checked>
-
-              <label class="form-check-label" for="radioExisting">
-                Existing List
-              </label>
-
-            </div>
-
-            <div class="form-check form-check-inline">
-
-              <input class="form-check-input"
-                     type="radio"
-                     name="listOption"
-                     id="radioNew">
-
-              <label class="form-check-label" for="radioNew">
-                New List
-              </label>
-
-            </div>
-
-          </div>
-
-          <!-- NEW LIST -->
-          <div id="new-list-fields" class="d-none">
-
-            <div class="mb-3">
-
-              <label class="form-label">
-                Title
-              </label>
-
-              <input type="text"
-                     class="form-control"
-                     placeholder="Enter list title">
-
-            </div>
-
-            <div class="mb-3">
-
-              <label class="form-label">
-                Description
-                <span class="text-muted fst-italic">
-                  Optional
-                </span>
-              </label>
-
-              <textarea class="form-control"
-                        rows="2"
-                        style="resize:vertical;"
-                        placeholder="Write description">
-              </textarea>
-
-            </div>
-
-          </div>
-
-          <!-- EXISTING LIST -->
-          <div id="existing-list-fields">
-
-            <div class="mb-3">
-
-              <label class="form-label">
-                List
-              </label>
-
-              <select class="form-select">
-
-                <option>Favorite Artists</option>
-                <option>Best Rock Albums</option>
-                <option>Vinyl Collection</option>
-                <option>My Playlist</option>
-
-              </select>
-
-            </div>
-
-          </div>
-
-          <!-- COMMENTS -->
-          <div class="mb-3">
-
-            <label class="form-label">
-              Comments on this item
-              <span class="text-muted fst-italic">
-                Optional
-              </span>
-            </label>
-
-            <textarea class="form-control"
-                      rows="2"
-                      style="resize:vertical;"
-                      placeholder="Write comments">
-            </textarea>
-
-          </div>
-
-          <!-- BUTTON -->
-          <div class="d-flex gap-2 pt-2">
-
-            <button type="button"
-                    class="btn btn-success">
-              Save
-            </button>
-
-            <button type="button"
-                    class="btn btn-light"
-                    data-bs-dismiss="modal">
-              Cancel
-            </button>
-
-          </div>
-
-        </form>
-
-      </div>
-    </div>
-  </div>
-</div>
 
   <!-- HEADER -->
     <div class="l-section">
         <div class="l-header">
             <h2>Lists</h2>
-            <a href="#"> Add to List</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#addToListModal" style="color:#2a5bd7; text-decoration:none;">
+              Add to List
+            </a>
         </div>
+
+         <!-- MODAL POPUP -->
+<div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header border-0 pb-2">
+                <h5 class="modal-title fw-bold">
+                    Add Release to List
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <hr class="m-0">
+
+            <!-- BODY -->
+            <div class="modal-body p-3">
+
+                <form action="" method="POST">
+                    @csrf
+
+                    <!-- RADIO -->
+                    <div class="mb-3 mt-1">
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="listOption"
+                                   id="radioExisting"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Existing List
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="listOption"
+                                   id="radioNew">
+
+                            <label class="form-check-label">
+                                New List
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- EXISTING LIST -->
+                    <div id="existing-list-fields">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                List
+                            </label>
+
+                            <select class="form-select">
+
+                                <optgroup label="Recently Used">
+                                    <option></option>
+                                </optgroup>
+
+                                <optgroup label="All Lists">
+                                    <option></option>
+                                    <option></option>
+                                    <option></option>
+                                </optgroup>
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- NEW LIST -->
+                    <div id="new-list-fields" class="d-none">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Title
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Enter list title">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description
+                                <span class="text-muted"><i>optional</i></span>
+                            </label>
+
+                            <textarea class="form-control"
+                                      rows="2"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- COMMENTS -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Comments on this item
+                            <span class="text-muted"><i>optional</i></span>
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="2"></textarea>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="d-flex gap-2 pt-2">
+
+                        <button type="submit" class="btn btn-success modal-save-btn">
+                          Save
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
 
         <div class="l-list">
             @forelse($lists as $list)

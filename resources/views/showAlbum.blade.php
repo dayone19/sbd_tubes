@@ -1439,6 +1439,9 @@
       font-weight: 600;
       text-decoration: none;
     }
+    .see {
+      text-align: right; font-size: 9px; padding: 6px 0px 0px 0px;
+    }
     .footer {
   padding: 6px 10px 10px;
   text-align: left;
@@ -1979,10 +1982,6 @@
   </div>
   @endforeach
 </div>
-  <!-- Custom Play Button -->
-<button id="playBtn">Play</button>
-<button id="pauseBtn">Pause</button>
-
  
   <!-- Play Button -->
   <div class="play-wrap">
@@ -1994,10 +1993,11 @@
     </button>
   </div>
  
-  View in App
   <div class="view-app">
     <a href="#">View in App ↗</a>
-    <span>See how your data is managed...</span>
+    <div class="see">
+      <span>See how your data is managed...</span>
+    </div>
   </div>
   </div>
 
@@ -2039,11 +2039,148 @@
     <div class="l-section">
         <div class="l-header">
             <h2>Lists</h2>
-            <a href="#" class="small text-decoration-none" 
-                data-bs-toggle="modal" 
-                data-bs-target="#addToListModal" 
-                style="color: #2a5bd7;">Add to List</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#addToListModal" style="color:#2a5bd7; text-decoration:none;">
+                Add to List
+            </a>
         </div>
+
+        <!-- MODAL POPUP -->
+<div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header border-0 pb-2">
+                <h5 class="modal-title fw-bold">
+                    Add Master to List
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <hr class="m-0">
+
+            <!-- BODY -->
+            <div class="modal-body p-3">
+
+                <form action="" method="POST">
+                    @csrf
+
+                    <!-- RADIO -->
+                    <div class="mb-3 mt-1">
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="listOption"
+                                   id="radioExisting"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Existing List
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="listOption"
+                                   id="radioNew">
+
+                            <label class="form-check-label">
+                                New List
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- EXISTING LIST -->
+                    <div id="existing-list-fields">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                List
+                            </label>
+
+                            <select class="form-select">
+
+                                <optgroup label="Recently Used">
+                                    <option></option>
+                                </optgroup>
+
+                                <optgroup label="All Lists">
+                                    <option></option>
+                                    <option></option>
+                                    <option></option>
+                                </optgroup>
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- NEW LIST -->
+                    <div id="new-list-fields" class="d-none">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Title
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Enter list title">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description
+                                <span class="text-muted"><i>optional</i></span>
+                            </label>
+
+                            <textarea class="form-control"
+                                      rows="2"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- COMMENTS -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Comments on this item
+                            <span class="text-muted"><i>optional</i></span>
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="2"></textarea>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="d-flex gap-2 pt-2">
+
+                        <button type="submit"
+                                class="btn btn-success">
+                            Save
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
         <div class="l-list">
             @forelse($lists as $list)
@@ -2221,6 +2358,64 @@ function toggleVersion(index) {
         btn.innerHTML = '▾';
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
 
 </script>
 
