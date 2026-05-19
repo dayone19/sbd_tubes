@@ -178,32 +178,38 @@ body{
 
 <div class="subtitle">Sign up to Discogs to continue</div>
 
-<form method="POST" action="/login">
+<form method="POST" action="/signup">
 @csrf
 
-<input class="input" type="text" placeholder="Username*">
+@if ($errors->any())
+    <div style="color: #ff4d4d; font-size: 14px; margin-bottom: 15px; text-align: left;">
+        <ul style="padding-left: 15px; margin: 0; list-style-type: disc;">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-<input class="input" type="text" placeholder="Email Address*">
+<input class="input" type="text" name="username" value="{{ old('username') }}" placeholder="Username*" required>
+
+<input class="input" type="email" name="email" value="{{ old('email', request('email')) }}" placeholder="Email Address*" required>
 
 <div class="password-box">
-<input class="input" id="password" type="password" placeholder="Password *">
+<input class="input" id="password" type="password" name="password" placeholder="Password *" required>
 <span class="eye" onclick="togglePassword()">👁</span>
 </div>
 
 <div class="captcha">
-<input type="checkbox">
+<input type="checkbox" required>
 <span>I'm not a robot</span>
 </div>
 
-<div class="forgot">
-<a href="#">Forgot password?</a>
-</div>
-
-<button class="continue">Continue</button>
+<button type="submit" class="continue">Continue</button>
 </form>
 
 <div class="signup">
-Already have an account? <a href="/signup">Log in</a>
+Already have an account? <a href="/login">Log in</a>
 </div>
 
 <div class="divider">

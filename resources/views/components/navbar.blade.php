@@ -67,12 +67,18 @@ a {text-decoration: none !important;}
             </a>
 
             @guest
-            <a href="/login" 
-            class="border border-white px-3 py-1 rounded-5 hover:bg-white hover:text-black transition no-underline text-white">
-                Sign Up / Log In
-            </a>
+                <a href="/login" 
+                class="border border-white px-3 py-1 rounded-5 hover:bg-white hover:text-black transition no-underline text-white">
+                    Sign Up / Log In
+                </a>
             @else
-                <span>{{ auth()->user()->name }}</span>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm font-semibold text-gray-300"> {{ auth()->user()->username }}</span>
+                    <a href="{{ url('/logout') }}" 
+                    class="border border-red-500 bg-red-600 hover:bg-red-700 px-3 py-1 rounded-5 transition no-underline text-white text-xs font-bold">
+                        Log Out
+                    </a>
+                </div>
             @endguest
         </div>
     </div>

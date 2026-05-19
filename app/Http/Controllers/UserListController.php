@@ -39,6 +39,30 @@ class UserListController extends Controller
         return view('lists.no_list', compact('lists', 'total', 'perPage', 'page'));
     }
 
+
+    public function create() { /* kosong */ }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $userId = auth()->id();
+
+        // SQL: INSERT INTO lists (user_id, name, description, created_at) VALUES (...);
+        $listId = DB::table('lists')->insertGetId([
+            'user_id' => $userId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description', ''),
+        ]);
+
+        return redirect()->route('lists.show', $listId)->with('success', 'List berhasil dibuat!');
+    }
+
+
+
     /**
      * Display the specified resource.
      */
@@ -117,8 +141,12 @@ class UserListController extends Controller
             ->leftJoin('list_release as lr', 'l.list_id', '=', 'lr.list_id')
             ->select('u.username','l.name','l.created_at','up.image','l.description','l.user_id','l.list_id')
             ->orderBy('l.created_at', 'desc')
+
+            ->where('l.user_id', $user_id)
+
             // ->where('l.user_id', $user_id)
             ->where('l.user_id', 1) // nanti diganti $user_id
+
             ->distinct()
             ->limit($perPage)
             ->get();

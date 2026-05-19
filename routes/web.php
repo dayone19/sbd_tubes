@@ -16,7 +16,13 @@ use App\Http\Controllers\NavbarSearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShopController;
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SettingsController;
+
+
 use App\Http\Controllers\SubmitReleaseController;
+
 
 
 
@@ -56,13 +62,22 @@ Route::get('/htg', function () {
     return view('htg');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
 
-Route::get('/signup', function () {
-    return view('auth.signup');
-});
+
+// Route Authentication (Login, Signup, Logout)
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup');
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route::get('/login', function () {
+//     return view('auth.login');
+// });
+
+// Route::get('/signup', function () {
+//     return view('auth.signup');
+// });
 
 
 Route::get('/resources', function () {
@@ -132,17 +147,19 @@ Route::prefix('sell')->group(function () {
     Route::get('/purchases/{id}', [PurchaseController::class, 'show'])->name('sell.purchases.show');
 });
 
-Route::prefix('settings')->group(function () {
 
-    Route::get('/user', function () {
-        return view('settings.user');
-    })->name('settings.user');
+Route::middleware('auth')->prefix('settings')->group(function () {
+    Route::get('/user', [SettingsController::class, 'index'])->name('settings.user');
+    Route::post('/user/profile', [SettingsController::class, 'updateProfile'])->name('settings.user.profile');
+    Route::post('/user/email', [SettingsController::class, 'updateEmail'])->name('settings.user.email');
+    Route::post('/user/password', [SettingsController::class, 'updatePassword'])->name('settings.user.password');
+    Route::post('/user/username', [SettingsController::class, 'updateUsername'])->name('settings.user.username');
 
-    Route::get('/buyer', function () {
-        return view('settings.buyer');
-    })->name('settings.buyer');
-    
+    Route::get('/buyer', [SettingsController::class, 'buyerIndex'])->name('settings.buyer');
+    Route::post('/buyer/currency', [SettingsController::class, 'updateBuyerCurrency'])->name('settings.buyer.currency');
+    Route::post('/buyer/shipping', [SettingsController::class, 'updateBuyerShipping'])->name('settings.buyer.shipping');
 });
+
 
 //route untuk ShowLabelController.php
 Route::get('/showLabel/{id}', [SearchController::class, 'showLabel'])->name('show.label');

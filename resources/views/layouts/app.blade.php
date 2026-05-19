@@ -14,7 +14,11 @@
 
 <body class="bg-gray-100 font-[Inter]">
 
-    @include('components.navbarUser')
+    @auth
+        @include('components.navbarUser')
+    @else
+        @include('components.navbar')
+    @endauth
 
     <main>
         @yield('content')

@@ -537,6 +537,7 @@ class ArtistController extends Controller
             ->select('l.list_id', 
                      'l.name',
                      'u.username',
+                     'u.user_id',
                      'l.comments',
                      'l.description',
                      'l.created_at'
@@ -611,6 +612,45 @@ class ArtistController extends Controller
                          ->with('success', 'Review submitted!');
     }
 
+
+     public function addToList(Request $request, $id)
+    {
+        $artist = Artist::findOrFail($id);
+
+        // Cari release_id milik artis ini
+        $release = DB::table('artist_release')
+            ->where('artist_id', $id)
+            ->value('release_id');
+
+        if ($request->listOption === 'new') {
+            // buat list baru dengan user yang sedang login
+            $list = ListModel::create([
+                'user_id' => auth()->id(),
+                'name'    => $request->name,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
+            ]);
+
+            // Masukkan release ke list jika ada
+            if ($release) {
+                DB::table('list_release')->insert([
+                    'list_id'   => $list->list_id,
+                    'release_id'=> $release,
+                ]);
+            }
+            
+        } else {
+            // Menambahkan release ke list yang sudah ada
+            $list = ListModel::findOrFail($request->list_id);
+
+            if ($release) {
+                DB::table('list_release')->insert([
+                    'list_id'   => $list->list_id,
+                    'release_id'=> $release,
+                ]);
+            }
+        }
+
     public function addToList(Request $request, $id)
 {
     $artist = Artist::findOrFail($id);
@@ -619,6 +659,7 @@ class ArtistController extends Controller
     $release = DB::table('artist_release')
         ->where('artist_id', $id)
         ->value('release_id');
+
 
     if ($request->listOption === 'new') {
         // buat list baru
