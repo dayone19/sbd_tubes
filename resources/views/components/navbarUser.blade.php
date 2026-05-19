@@ -91,31 +91,13 @@ a {text-decoration: none !important;}
 
         <!-- RIGHT -->
         <div class="flex items-center gap-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
-            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z"/>
-            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3"/>
-            </svg>
-
-            <a href="{{ route('user.collection') }}" class="{{ request()->routeIs('user.collection') ? 'active' : '' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" alt="Collection">
-                <path d="M19.5846 20.5964C18.8055 20.5964 18.1719 19.9628 18.1719 19.1837V4.41267C18.1719 3.63359 18.8055 3 19.5846 3C20.3636 3 20.9972 3.63359 20.9972 4.41267V19.1837C20.9972 19.9628 20.3636 20.5964 19.5846 20.5964Z" fill="#FEFEFE"></path>
-                <path d="M15.858 20.5964C15.0789 20.5964 14.4453 19.9628 14.4453 19.1837V4.41267C14.4453 3.63359 15.0789 3 15.858 3C16.6371 3 17.2707 3.63359 17.2707 4.41267V19.1837C17.2707 19.9628 16.6371 20.5964 15.858 20.5964Z" fill="#FEFEFE"></path>
-                <path d="M12.1236 20.5964C11.3445 20.5964 10.7109 19.9628 10.7109 19.1837V4.41267C10.7109 3.63359 11.3445 3 12.1236 3C12.9027 3 13.5363 3.63359 13.5363 4.41267V19.1837C13.5363 19.9628 12.9027 20.5964 12.1236 20.5964Z" fill="#FEFEFE"></path>
-                <path d="M3.41022 20.1624C3.25167 20.1624 3.09016 20.1369 2.93517 20.0799C2.20063 19.8168 1.82059 19.0092 2.08305 18.2747L7.06454 4.36827C7.3276 3.63373 8.13518 3.25369 8.86973 3.51616C9.60427 3.77862 9.98431 4.5868 9.72185 5.32134L4.74036 19.2278C4.53134 19.8044 3.98978 20.1618 3.41022 20.1618V20.1624Z" fill="#FEFEFE"></path>
-                </svg>
-            </a>
-
-            <a href="/mywantlist">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
-                    <path d="M607.5-372.5Q660-425 660-500t-52.5-127.5Q555-680 480-680t-127.5 52.5Q300-575 300-500t52.5 127.5Q405-320 480-320t127.5-52.5Zm-204-51Q372-455 372-500t31.5-76.5Q435-608 480-608t76.5 31.5Q588-545 588-500t-31.5 76.5Q525-392 480-392t-76.5-31.5ZM214-281.5Q94-363 40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200q-146 0-266-81.5ZM480-500Zm207.5 160.5Q782-399 832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280q113 0 207.5-59.5Z"/>
-                </svg>
-            </a>
 
             <a href="{{ route('sell.cart') }}" class="{{ request()->routeIs('sell.cart') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                 </svg>
             </a>
+
 
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
             <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
@@ -133,6 +115,12 @@ a {text-decoration: none !important;}
                     <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm146.5-204.5Q340-521 340-580t40.5-99.5Q421-720 480-720t99.5 40.5Q620-639 620-580t-40.5 99.5Q539-440 480-440t-99.5-40.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm100-95.5q47-15.5 86-44.5-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160q53 0 100-15.5ZM523-537q17-17 17-43t-17-43q-17-17-43-17t-43 17q-17 17-17 43t17 43q17 17 43 17t43-17Zm-43-43Zm0 360Z"/>
                     </svg>
                 @endif
+
+            <div onclick="openSidebar()" style="cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#e3e3e3">
+                <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm146.5-204.5Q340-521 340-580t40.5-99.5Q421-720 480-720t99.5 40.5Q620-639 620-580t-40.5 99.5Q539-440 480-440t-99.5-40.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm100-95.5q47-15.5 86-44.5-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160q53 0 100-15.5ZM523-537q17-17 17-43t-17-43q-17-17-43-17t-43 17q-17 17-17 43t17 43q17 17 43 17t43-17Zm-43-43Zm0 360Z"/>
+                </svg>
+
             </div>
         </div>
     </div>
@@ -148,9 +136,8 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/search">Explore All</a></li>
                         <li><a class="dropdown-item" href="/search/advanced">Advanced Search</a></li>
-                        <li><a class="dropdown-item" href="#">Most Collected</a></li>
-                        <li><a class="dropdown-item" href="/release/add">Submit a Release</a></li>
-                        <li><a class="dropdown-item" href="#">Submission Guidelines</a></li>
+                        <li><a class="dropdown-item" >Most Collected</a></li>
+                        <li><a class="dropdown-item" href="{{ route('releases.create') }}">Submit a Release</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -159,8 +146,7 @@ a {text-decoration: none !important;}
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/mywants">Shop My Wants</a></li>
-                        <li><a class="dropdown-item" href="#">New & Upcoming</a></li>
-                        <li><a class="dropdown-item" href="sell/list">Vinyl</a></li>
+                        <li><a class="dropdown-item" href="#">Vinyl</a></li>
                         <li><a class="dropdown-item" href="#">CD</a></li>
                         <li><a class="dropdown-item" href="#">Cassette</a></li>
                         <li><a class="dropdown-item" href="#">All Formats</a></li>
@@ -174,40 +160,10 @@ a {text-decoration: none !important;}
                         <li><a class="dropdown-item" href="#">List Item For Sale</a></li>
                         <li><a class="dropdown-item" href="/selling">Start Selling</a></li>
                         <li><a class="dropdown-item" href="/htg">How To Grade</a></li>
-                        <li><a class="dropdown-item" href="#">How To Price</a></li>
-                        <li><a class="dropdown-item" href="#">How To Pack & Ship</a></li>
                         <li><a class="dropdown-item" href="/resources">More Seller Resources</a></li>
                         <li><a class="dropdown-item" href="/updates">Seller News & Updates</a></li>
                     </ul>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Community
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Forum</a></li>
-                        <li><a class="dropdown-item" href="#">Groups</a></li>
-                        <li><a class="dropdown-item" href="#">List Explorer</a></li>
-                        <li><a class="dropdown-item" href="#">Discography Contributors</a></li>
-                        <li><a class="dropdown-item" href="#">Monthly Leaderboard</a></li>
-                        <li><a class="dropdown-item" href="#">Community Guidelines</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Digs
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/showArtist">Essentials</a></li>
-                        <li><a class="dropdown-item" href="/showAlbum">Features</a></li>
-                        <li><a class="dropdown-item" href="/showRelease">Most Valuable</a></li>
-                        <li><a class="dropdown-item" href="/preview">Collecting</a></li>
-                        <li><a class="dropdown-item" href="#">Most Valuable</a></li>
-                        <li><a class="dropdown-item" href="/showLabel">Collecting</a></li>
-                        <li><a class="dropdown-item" href="#">Audio Gear</a></li>
-                    </ul>
             </div>
 
         </div>

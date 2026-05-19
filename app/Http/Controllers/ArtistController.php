@@ -75,7 +75,7 @@ class ArtistController extends Controller
                 'ar.image',
                 DB::raw("GROUP_CONCAT(DISTINCT ars.url SEPARATOR ', ') as sites"),
                 DB::raw("GROUP_CONCAT(DISTINCT arv.variation_name SEPARATOR ', ') as variations"),
-                DB::raw("GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') as groups")
+                DB::raw("GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') as 'groups'")
             )
 
             ->where('ar.artist_id', $id)
@@ -520,6 +520,7 @@ class ArtistController extends Controller
         //                 u.username,
         //                 l.comments,
         //                 l.description,
+        //                 l.created_at,
         // FROM lists l
         // LEFT JOIN list_release lr ON l.list_id = lr.list_id
         // LEFT JOIN releases r ON lr.release_id = r.release_id
@@ -539,12 +540,30 @@ class ArtistController extends Controller
                      'u.user_id',
                      'l.comments',
                      'l.description',
+                     'l.created_at'
                      )
             ->where('ar.artist_id', $id)
             ->orderBy('l.created_at', 'desc')
             ->distinct()
             ->get();
 
+            $reviews = DB::table('reviews as re')
+            ->join('users as ur', 're.user_id', '=', 'ur.user_id')
+            ->leftJoin('user_profiles as urp', 'ur.user_id', '=', 'urp.user_id')
+            ->join('products as p', 're.product_id', '=', 'p.product_id')
+            ->join('releases as r', 'p.release_id', '=', 'r.release_id')
+            ->join('artist_release as ar', 'r.release_id', '=', 'ar.release_id')
+            ->where('ar.artist_id', $id)
+            ->select(
+                're.review_id',
+                'urp.image',
+                'ur.username',
+                're.created_at',
+                're.rating',
+                're.comment'
+            )
+            ->latest('re.created_at')
+            ->get();
 
         return view('showArtist', compact(
             'artis',
@@ -558,7 +577,10 @@ class ArtistController extends Controller
             'videos',
             'totalVideos',
             'lists',
+            'reviews'
         ));
+
+
     }
 
     public function storeReview(Request $request, string $id)
@@ -572,7 +594,7 @@ class ArtistController extends Controller
 
         if (!$product) {
             return redirect()->route('show.artist', $id)
-                             ->with('error', 'Gagal menambah review. Artis ini belum memiliki rilisan produk komersial di marketplace.');
+                ->with('error', 'Gagal menambah review. Artis ini belum memiliki rilisan produk komersial di marketplace.');
         }
 
         // dd(session()->all());
@@ -589,6 +611,7 @@ class ArtistController extends Controller
        return redirect()->route('show.artist', $id)
                          ->with('success', 'Review submitted!');
     }
+
 
      public function addToList(Request $request, $id)
     {
@@ -628,32 +651,43 @@ class ArtistController extends Controller
             }
         }
 
-        return redirect()->route('show.artist', $artist->artist_id)
-                        ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
-    }
+    public function addToList(Request $request, $id)
+{
+    $artist = Artist::findOrFail($id);
+
+    // 1. PINDAHKAN QUERY INI KE PALING ATAS
+    $release = DB::table('artist_release')
+        ->where('artist_id', $id)
+        ->value('release_id');
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    if ($request->listOption === 'new') {
+        // buat list baru
+        $list = ListModel::create([
+            'user_id' => 1,
+            // 'user_id' => auth()->id(),
+            'name'    => $request->name,
+            'description'=> $request->description,
+            'comments'=> $request->comments,
+        ]);
+
+        DB::table('list_release')->insert([
+            'list_id'   => $list->list_id,
+            'release_id'=> $release,
+            'comments'  => $request->comments, // Tambahkan ini agar komentar tersimpan ke database
+        ]);
+        
+    } else {
+        $list = ListModel::findOrFail($request->list_id);
+
+        DB::table('list_release')->insert([
+            'list_id'    => $list->list_id,
+            'release_id' => $release, // HAPUS '->release_id' karena $release sudah berupa ID langsung
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    return redirect()->route('show.artist', $artist->artist_id)
+                    ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
+}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

@@ -16,8 +16,12 @@ use App\Http\Controllers\NavbarSearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShopController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SettingsController;
+
+
+use App\Http\Controllers\SubmitReleaseController;
 
 
 
@@ -42,9 +46,9 @@ Route::get('/search/advanced/results', [AdvancedSearchController::class, 'search
 //     return view('search.advanced');
 // });
 
-Route::get('/release/add', function () {
-    return view('release.add');
-});
+// Route::get('/release/add', function () {
+//     return view('release.add');
+// });
 
 Route::get('/start', function () {
     return view('start');
@@ -76,14 +80,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // });
 
 
-
 Route::get('/resources', function () {
     return view('resources');
 });
 
-Route::get('/mywantlist', function () {
-    return view('mywantlist');
-});
 
 Route::get('/mywants', function () {
     return view('mywants');
@@ -98,10 +98,6 @@ Route::get('/submissions', function () {
 });
 
 Route::prefix('user')->group(function () {
-
-    Route::get('/collection', function () {
-        return view('user.collection');
-    })->name('user.collection');
 
     // Route::get('/lists', function () {
     //     return view('user.lists');
@@ -174,34 +170,38 @@ Route::post('/showLabel/{id}/review', [SearchController::class, 'storeReview'])-
 //route untuk controller AlbumController.php
 Route::get('/', [AlbumController::class, 'index']);
 Route::get('/album/{master_id}/versions', [ShowAlbumController::class, 'versions'])->name('album.versions');
+Route::post('/album/{id}/add-to-list', [ShowAlbumController::class, 'addToList'])->name('album.addToList');
 
 //route untuk ShowReleaseController.php
 Route::post('/release/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('release.review');
 Route::get('/release/{id}', [ShowReleaseController::class, 'show'])->name('show.release');
+Route::post('/release/{id}/add-to-list', [ShowReleaseController::class, 'addToList'])->name('release.addToList');
 
 //route untuk ShowAlbumController.php
 Route::get('/albums/{master_id}', [ShowAlbumController::class, 'show'])->name('show.album');
-Route::post('/album/{master_id}/review', [ShowAlbumController::class, 'storeReview'])
-    ->name('album.review');
+Route::post('/album/{master_id}/review', [ShowAlbumController::class, 'storeReview'])->name('album.review');
 Route::put('/review/{id}/update', [ShowAlbumController::class, 'updateReview'])->name('review.update');
 Route::delete('/review/{id}/delete', [ShowAlbumController::class, 'destroyReview'])->name('review.delete');
 
 //route untuk SearchController.php
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-Route::get('/preview', function () {
-    return view('release.preview');
-});
+// Route::get('/preview', function () {
+//     return view('release.preview');
+// });
+
+Route::get('/releases/preview/{id}', [SubmitReleaseController::class, 'preview'])
+    ->name('releases.preview');
 
 //route untuk ArtistController.php
 Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
 Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
 Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('artist.addToList');
+Route::post('/artist/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('artist.review');
+
 
 //route untuk ListsController
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
-
-
 
 //route untuk UseListController
 Route::get('/user/{user_id}/lists', [UserListController::class, 'showList'])->name('user.lists');
@@ -210,8 +210,12 @@ Route::put('/lists/{list_id}', [UserListController::class, 'update'])->name('lis
 Route::get('/lists/{list_id}', [UserListController::class, 'show'])->name('lists.show');
 Route::put('/lists/{list_id}/release/{release_id}', [UserListController::class, 'updateComment'])->name('lists.updateComment');
 Route::delete('/lists/{id}', [UserListController::class, 'destroy'])->name('lists.destroy');
+Route::delete('/lists/{list_id}/remove-release/{release_id}', [UserListController::class, 'removeRelease'])->name('lists.removeRelease');
 
 //route untuk NavbarSearchController
 Route::get('/api/search', [NavbarSearchController::class, 'search'])->name('api.search');
 
+//route untuk SubmitReleaseController
+Route::get('/releases/add', [SubmitReleaseController::class, 'create'])->name('releases.create');
+Route::post('/releases/add', [SubmitReleaseController::class, 'store'])->name('releases.store');
 

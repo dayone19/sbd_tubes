@@ -95,8 +95,7 @@ a {text-decoration: none !important;}
                         <li><a class="dropdown-item" href="/search">Explore All</a></li>
                         <li><a class="dropdown-item" href="/search/advanced">Advanced Search</a></li>
                         <li><a class="dropdown-item" href="#">Most Collected</a></li>
-                        <li><a class="dropdown-item" href="#">Submit a Release</a></li>
-                        <li><a class="dropdown-item" href="#">Submission Guidelines</a></li>
+                        <li><a class="dropdown-item" href="{{ route('releases.create') }}">Submit a Release</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -105,7 +104,6 @@ a {text-decoration: none !important;}
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="">Shop My Wants</a></li>
-                        <li><a class="dropdown-item" href="#">New & Upcoming</a></li>
                         <li><a class="dropdown-item" href="/sell/list">Vinyl</a></li>
                         <li><a class="dropdown-item" href="#">CD</a></li>
                         <li><a class="dropdown-item" href="#">Cassette</a></li>
@@ -120,42 +118,11 @@ a {text-decoration: none !important;}
                         <li><a class="dropdown-item" href="#">List Item For Sale</a></li>
                         <li><a class="dropdown-item" href="/selling">Start Selling</a></li>
                         <li><a class="dropdown-item" href="/htg">How To Grade</a></li>
-                        <li><a class="dropdown-item" href="#">How To Price</a></li>
-                        <li><a class="dropdown-item" href="#">How To Pack & Ship</a></li>
                         <li><a class="dropdown-item" href="/resources">More Seller Resources</a></li>
                         <li><a class="dropdown-item" href="/updates">Seller News & Updates</a></li>
                     </ul>
                 </div>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Community
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Forum</a></li>
-                        <li><a class="dropdown-item" href="#">Groups</a></li>
-                        <li><a class="dropdown-item" href="#">List Explorer</a></li>
-                        <li><a class="dropdown-item" href="#">Discography Contributors</a></li>
-                        <li><a class="dropdown-item" href="#">Monthly Leaderboard</a></li>
-                        <li><a class="dropdown-item" href="#">Community Guidelines</a></li>
-                    </ul>
-                </div>
             </div>
-
-            <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Digs
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/showArtist">Essentials</a></li>
-                        <li><a class="dropdown-item" href="/showAlbum">Features</a></li>
-                        <li><a class="dropdown-item" href="/showRelease">Most Valuable</a></li>
-                        <li><a class="dropdown-item" href="#">Collecting</a></li>
-                        <li><a class="dropdown-item" href="#">Most Valuable</a></li>
-                        <li><a class="dropdown-item" href="/showLabel">Collecting</a></li>
-                        <li><a class="dropdown-item" href="#">Audio Gear</a></li>
-                    </ul>
-            </div>
-
         </div>
     </div>
 

@@ -364,8 +364,7 @@
         border-width: 7px 0 7px 12px;
         border-color: transparent transparent transparent #fff;
     }
-    .v-list {max-height: 120px;overflow-y: auto;flex: 1;min-height: 0; }
-    .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+    .v-list {max-height: 400px;overflow-y: auto;flex: 1; min-height: 200px;}    .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .v-item:hover { background: #f9f9f9; }
     .v-thumb { width: 100px; height: 60px; position: relative; flex-shrink: 0; }
     .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -375,13 +374,17 @@
     .v-list::-webkit-scrollbar {width: 6px;}
     .v-list::-webkit-scrollbar-thumb {background: #ccc;border-radius: 10px;}
     .v-list::-webkit-scrollbar-thumb:hover {background: #999;}
-    .l-section { border-top: none; padding-top: 0px; }
     .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-    .tracklist-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    .l-section { margin-top: 20px;font-size: 13px; margin bottom:10px}
+    .l-header {display: flex;align-items: center;margin-bottom: 8px;}
+    .l-header h2 {font-size: 14px;margin: 0;}
+    .l-list {display: flex; flex-direction: column;gap: 8px;}
+    .l-item {padding: 6px 0;border-bottom: 1px solid #eee;}
+    .l-item a {color: #2a5bd7;text-decoration: none;font-weight: 500;}
+    .l-item a:hover {text-decoration: underline;}
+    .l-meta {font-size: 12px;color: #777;}
+    .l-footer {margin-top: 8px;}
+    .tracklist-header {display: flex;justify-content: space-between;align-items: center;}
 /* Container bintang + share */
 .middle-row {
   display: flex;
@@ -420,6 +423,7 @@
   border-top: 1px solid #ccc;
   margin: 10px 0;
 }
+.album-wrapper {padding-bottom:80px}
 /* Button group */
 .btn-group {
   display: grid;
@@ -934,6 +938,9 @@
       font-weight: 600;
       text-decoration: none;
     }
+    .see {
+      text-align: right; font-size: 9px; padding: 6px 0px 0px 0px;
+    }
     .footer {
   padding: 6px 10px 10px;
   text-align: left;
@@ -949,24 +956,54 @@
 .track:hover {background-color: #efefef; cursor: pointer;}
 .track:hover .track-num { display: none;}
 .track:hover .play-icon-hover { display: inline-block; }
-    /* Responsive */
-    @media (max-width: 768px) {
-        .album-wrapper {
-            flex-direction: column;
-        }
-        .album-right {
-            width: 100%;
-        }
-        .credits-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .credits-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+.modal-save-btn{
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #fff !important;
+}
+.modal-save-btn:hover{
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
+.lists-title-wrap{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.lists-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+.add-list-link{
+    color:#2a5bd7;
+    text-decoration:none;
+    font-size:13px;
+}
+.add-list-link:hover{text-decoration:underline;}
+.lists-toggle-btn{
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.lists-toggle-btn i{
+    font-size:18px;
+    color:#2a5bd7;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .album-wrapper {flex-direction: column;}
+  .album-right {width: 100%;}
+  .credits-grid {grid-template-columns: 1fr 1fr;}
+}
+@media (max-width: 480px) {
+  .credits-grid {grid-template-columns: 1fr;}
+}
 </style>
 
 <div class="album-wrapper">
@@ -994,18 +1031,33 @@
                 <table class="album-info-table">
                     <tr>
                         <td>Label:</td>
-                        <td>
-                          @foreach($labels as $label)
-                              <a href="#">{{ $label }}</a> – {{ $release->barcode }}
-                              @if(!$loop->last), @endif
-                          @endforeach
-                        </td>
+                          <td>
+                            @foreach($labels as $label)
+                                {{-- Cek jika ada catalog_number --}}
+                                @if(!empty($release->catalog_number))
+                                    <a href="#">{{ $label }}</a> – {{ $release->catalog_number }}
+                                    {{-- Jika catalog_number ada DAN barcode juga ada, berikan koma pemisah di antaranya --}}
+                                    @if(!empty($release->barcode)), @endif
+                                @endif
+
+                                {{-- Cek jika ada barcode --}}
+                                @if(!empty($release->barcode))
+                                    <a href="#">{{ $label }}</a> – {{ $release->barcode }}
+                                @endif
+
+                                {{-- Koma pemisah antar iterasi label (hanya muncul jika ini bukan data terakhir) --}}
+                                @if(!$loop->last && (!empty($release->catalog_number) || !empty($release->barcode))), @endif
+                            @endforeach
+                          </td>
                     </tr>
                     <tr>
                         <td>Format:</td>
                         <td>
                           @foreach($formats as $format)
-                           <a href="#">{{ $format }}</a>@if(!$loop->last), @endif
+                           {{ $format->name }}
+                            @if($format->size), {{ $format->size }}@endif
+                            @if($format->speed), {{ $format->speed }}@endif
+                            @if(!$loop->last)<br>@endif
                            @endforeach
                         </td>
                     </tr>
@@ -1026,7 +1078,7 @@
                     <tr>
                         <td>Style:</td>
                         @foreach($styles as $style)
-                        <td><a href="#">{{ $style }}</a>@if(!$loop->last), @endif</td>
+                        <td><a href="#">{{ $style }} </a>@if(!$loop->last), @endif</td>
                         @endforeach
                     </tr>
                 </table>
@@ -1050,7 +1102,7 @@
           
           <span class="track-num">{{ $track->position }}</span>
           <span class="track-title">{{ $track->title }}</span>
-          <span class="track-dur">{{ $track->duration }}</span>
+          <span class="track-dur">{{ \Carbon\Carbon::parse($track->duration)->format('i:s') ? ltrim(\Carbon\Carbon::parse($track->duration)->format('i:s'), '0') : '0:00' }}</span>
           
         </div>
         <div class="track-credits" id="c0">
@@ -1120,7 +1172,7 @@
       <div class="col-label"><a href="#">{{ $version->labels }} ,</a></div>
       <div class="col-cat">{{ $version->catno }} ,<br></div>
       <div class="col-country">{{ $version->country }}</div>
-      <div class="col-year"> {{ \Carbon\Carbon::parse($version->release_date)->format('Y') }}</div>
+      <div class="col-year"> {{ \Carbon\Carbon::parse($release->release_date)->format('F d, Y') }}</div>
     </div>
     @endforeach
  
@@ -1191,19 +1243,6 @@
         <a href="#" class="review-username">{{ $review->username }}</a>
         <span class="review-date">{{ \Carbon\Carbon::parse($review->created_at)->format('M d, Y') }}</span>
       </div>
-
-      @if(!empty($review->rating) && $review->rating > 0)
-      <div class="stars" style="color: #e67e22; font-size: 16px; margin-bottom: 5px;">
-          @for ($i = 1; $i <= 5; $i++)
-              @if ($i <= $review->rating)
-                  <span>★</span> {{-- Bintang isi --}}
-              @else
-                  <span style="color: #ccc;">★</span> {{-- Bintang kosong/abu-abu --}}
-              @endif
-          @endfor
-          <span style="font-size: 12px; color: #666; margin-left: 5px;">({{ $review->rating }})</span>
-      </div>
-      @endif
 
       <div class="review-actions">
         <a href="#" class="action-link"><span class="action-icon">↩</span> Reply</a>
@@ -1306,7 +1345,7 @@
             <a href="#">Edit Release</a>
             <a href="{{route('album.versions', $release->master_id)}}">See all versions</a>
             <span style="color:black;">Recently Edited</span> 
-        <!-- </div> -->
+        </div>
 
         <!-- For Sale -->
         <div class="for-sale-header">
@@ -1317,14 +1356,14 @@
         <div class="release-card">
             <img src="{{ $release->image }}" alt="{{ $release->title }}" width="150" height="150">
             <div class="release-card-info">
-                <div class="label">{{ strtoupper($formats->first() ?? '-') }}</div>
+                <div class="label">{{ strtoupper($formats2->first() ?? '-') }}</div>
                 <div class="title">{{ $release->title }}</div>
                 <div class="price-range">From {{ $stats->lowest_price }} to {{ $stats->highest_price }}</div>
             </div>
         </div>
 
         <a href="{{ route('sell.list', ['release_id' => $release->release_id]) }}" class="btn-shop">
-    Shop {{ $productCount }} {{ strtoupper($formats->first()) }}
+    Shop {{ $productCount }} {{ strtoupper($formats2->first()) }}
         </a>
 
         <!-- Statistics -->
@@ -1427,18 +1466,18 @@
   </div>
  
   <div class="music-content">
-  <!-- Apple Music Bar -->
-  <div class="music-bar">
-    <div class="music-bar-left">
-      <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
-        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
-      </svg>
-      <span>Music</span>
+    <!-- Apple Music Bar -->
+    <div class="music-bar">
+      <div class="music-bar-left">
+        <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
+          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
+        </svg>
+        <span>Music</span>
+      </div>
+      <button class="btn-signin">Sign In</button>
     </div>
-    <button class="btn-signin">Sign In</button>
-  </div>
  
-  <!-- Album Info -->
+    <!-- Album Info -->
     <div class="album-info">
       <div class="album-art">
         <img src="{{ $release->image }}" alt="Album Art">
@@ -1458,25 +1497,21 @@
   </div>
 
   <!-- Hidden audio player -->
-<audio id="player" style="display:none;"></audio>
+  <audio id="player" style="display:none;"></audio>
  
   <!-- Track List -->
-<div class="track-list">
-  @foreach($tracks as $i => $track)
-  <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
-    
-    <span class="track-num">{{ $i+1 }}</span>
-    
-    <span class="play-icon-hover">▶</span>
-    
-    <span class="track-name">{{ $track->title }}</span>
+  <div class="track-list">
+    @foreach($tracks as $i => $track)
+    <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
+      
+      <span class="track-num">{{ $i+1 }}</span>
+      
+      <span class="play-icon-hover">▶</span>
+      
+      <span class="track-name">{{ $track->title }}</span>
+    </div>
+    @endforeach
   </div>
-  @endforeach
-</div>
-  <!-- Custom Play Button -->
-<button id="playBtn">Play</button>
-<button id="pauseBtn">Pause</button>
-
  
   <!-- Play Button -->
   <div class="play-wrap">
@@ -1487,34 +1522,41 @@
       <span>Play</span>
     </button>
   </div>
- 
-  View in App
+
   <div class="view-app">
     <a href="#">View in App ↗</a>
-    <span>See how your data is managed...</span>
+    <div class="see">
+      <span>See how your data is managed...</span>
+    </div>
+    
   </div>
 
 </div>
 </div>
 
         
-              <div id="video-sidebar-section">
+              <id="video-sidebar-section">
                 <div class="v-header">
-                    <h2>Videos ({{ $videos->count() }})</h2>
+                    {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
+                    <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
                     <a href="#" class="small">Edit</a>
                 </div>
 
                 @if($videos->count() > 0)
                 <div class="main-player" id="mainPlayer">
-                    <img src="{{ $videos[0]->thumbnail }}" id="currentThumb">
+                    {{-- Ambil thumbnail dari video pertama yang unik --}}
+                    <img src="{{ $videos->unique('youtube_url')->first()->thumbnail }}" id="currentThumb">
                     <div class="play-btn-overlay"></div>
                 </div>
                 @endif
-                <!-- </div> -->
 
                 <div class="v-list">
-                    @foreach($videos as $video)
-                    <div class="v-item" onclick="changevideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}') ">
+                    {{-- 
+                     Tambahkan ->unique('youtube_url') sebelum @foreach 
+                    Ini akan menyaring daftar video berdasarkan URL YouTube-nya di level Blade secara instan.
+                    --}}
+                    @foreach($videos->unique('youtube_url') as $video)
+                    <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
                         <div class="v-thumb">
                             <img src="{{ $video->thumbnail }}">
                             <span class="v-time"> {{ $video->duration }} </span>
@@ -1524,37 +1566,138 @@
                     @endforeach
                 </div>
 
-                <div class="l-section">
-      <div style="margin-bottom: 10px;">
-    <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
-      <span style="font-weight: bold; font-size: 13px;">Lists</span>
-      <span style="color: #0088cc; font-size: 12px; cursor: pointer;">Add to List</span>
-    </div>
-    <div style="font-size: 12px; line-height: 1.8;">
-      @foreach($lists as $list)
-      <div>{{ $list->username }} by <span style="color: #0088cc; cursor: pointer;">{{ $list->username }}</span></div>
-      @endforeach
-    </div>
-    <a href="/lists">
-    <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">View More Lists →</div>
-    </a>
-  </div>
-  </div>
-
-    <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
-    @foreach($contributors as $contributor)
-    <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
-      {{ $contributor->username }}
-  </div>
-  @endforeach
-
-  
-    <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">Report Suspicious Activity</div>
- </div>
+  <!-- LISTS SECTION -->
+  <div class="l-section">
+      
+      <!-- HEADER -->
+      <div class="l-header">
+          <div class="lists-title-wrap">
+              <h2>Lists</h2>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#addToListModal" class="add-list-link">
+                  Add to List
+              </a>
+              <button type="button" class="lists-toggle-btn" onclick="toggleLists()">
+                  <i id="listsArrow" class="ti ti-chevron-down"></i>
+              </button>
+          </div>
       </div>
-    </div>
 
-    
+      <!-- MODAL POPUP -->
+      <div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+              <div class="modal-content">
+
+                  <!-- MODAL HEADER -->
+                  <div class="modal-header border-0 pb-2">
+                      <h5 class="modal-title fw-bold">Add Release to List</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+
+                  <hr class="m-0">
+
+                  <!-- MODAL BODY -->
+                  <div class="modal-body p-3">
+                      <form action="{{ route('release.addToList', $release->release_id) }}" method="POST">
+                          @csrf
+
+                          <!-- RADIO OPTIONS -->
+                          <div class="mb-3 mt-1">
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="listOption" id="radioExisting" value="existing" checked>
+                                  <label class="form-check-label" for="radioExisting">Existing List</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="listOption" id="radioNew" value="new">
+                                  <label class="form-check-label" for="radioNew">New List</label>
+                              </div>
+                          </div>
+
+                          <!-- EXISTING LIST FIELDS -->
+                          <div id="existing-list-fields">
+                              <div class="mb-3">
+                                  <label class="form-label">List</label>
+                                  <select class="form-select" name="list_id">
+                                      <optgroup label="Recently Used">
+                                          @foreach($lists as $list)
+                                              <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                          @endforeach
+                                      </optgroup>
+                                      <optgroup label="All Lists">
+                                          @foreach($lists as $list)
+                                              <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                          @endforeach
+                                      </optgroup>
+                                  </select>
+                              </div>
+                          </div>
+
+                          <!-- NEW LIST FIELDS -->
+                          <div id="new-list-fields" class="d-none">
+                              <div class="mb-3">
+                                  <label class="form-label">Title</label>
+                                  <input type="text" class="form-control" name="name" placeholder="Enter list title">
+                              </div>
+                              <div class="mb-3">
+                                  <label class="form-label">Description <span class="text-muted"><i>optional</i></span></label>
+                                  <textarea class="form-control" rows="2" name="description"></textarea>
+                              </div>
+                          </div>
+
+                          <!-- COMMENTS -->
+                          <div class="mb-3">
+                              <label class="form-label">Comments on this item <span class="text-muted"><i>optional</i></span></label>
+                              <textarea class="form-control" rows="2" name="comments"></textarea>
+                          </div>
+
+                          <!-- ACTION BUTTONS -->
+                          <div class="d-flex gap-2 pt-2">
+                              <button type="submit" class="btn btn-success modal-save-btn">Save</button>
+                              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                      </form>
+                  </div>
+
+              </div>
+          </div>
+      </div> <!-- Akhir Modal -->
+
+      <!-- TOGGLEABLE DROPDOWN CONTENT -->
+      <div id="listsContent" style="display: block;">
+          <div class="l-list">
+              @forelse($lists as $list)
+                  <div class="l-item mb-2">
+                      <div>
+                          <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a>
+                      </div>
+                  </div>
+              @empty
+                  <div class="l-meta">No lists yet</div>
+              @endforelse
+          </div>
+
+          <div class="l-footer">
+              <a href="/lists" class="view-more-lists">View more lists →</a>
+          </div>
+      </div> <!-- Akhir Toggleable Content -->
+
+      <!-- CONTRIBUTORS SECTION -->
+      <div class="contributors-wrap" style="margin-top: 20px;">
+          <div style="border-bottom: 1px solid #ccc; padding-bottom: 8px; mb-2; font-weight: bold;">
+              Contributors
+          </div>
+          @foreach($contributors as $contributor)
+              <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
+                  {{ $contributor->username }}
+              </div>
+          @endforeach
+      </div>
+
+      <!-- REPORT ACTION -->
+      <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; margin-top: 15px; color: #0088cc; font-size: 13px; cursor: pointer;">
+          Report Suspicious Activity
+      </div>
+
+  </div> <!-- .l-section -->    
    
     <!-- end .album-right -->
      
@@ -1715,6 +1858,52 @@ function showEditForm(id) {
         document.getElementById('editForm' + id).style.display = 'none';
         document.getElementById('reviewText' + id).style.display = 'block';
     }
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
+
+function toggleLists() {
+
+    const content = document.getElementById('listsContent');
+    const arrow = document.getElementById('listsArrow');
+
+    if(content.style.display === 'none'){
+
+        content.style.display = 'block';
+        arrow.className = 'ti ti-chevron-down';
+
+    } else {
+
+        content.style.display = 'none';
+        arrow.className = 'ti ti-chevron-right';
+
+    }
+};
 </script>
 </div>
 @endsection

@@ -9,18 +9,6 @@
 <div class="subnav-wrapper">
     <div class="subnav-content">
 
-        <a href="#" class="{{ request()->is('dashboard') ? 'active' : '' }}">
-            Dashboard
-        </a>
-
-        <a href="/user/collection" class="{{ request()->is('user/collection') ? 'active' : '' }}">
-            Collection
-        </a>
-
-        <a href="/mywantlist" class="{{ request()->is('mywantlist') ? 'active' : '' }}">
-            Wantlist
-        </a>
-
         <a href="/user/lists" class="{{ request()->is('user/lists') ? 'active' : '' }}">
             Lists
         </a>
@@ -31,10 +19,6 @@
 
         <a href="/user/drafts" class="{{ request()->is('user/drafts') ? 'active' : '' }}">
             Drafts
-        </a>
-
-        <a href="#" class="{{ request()->is('export') ? 'active' : '' }}">
-            Export
         </a>
 
         <a href="#" class="right-link">Settings</a>

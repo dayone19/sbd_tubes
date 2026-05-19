@@ -4,37 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Release;
+use App\Models\ListModel;
 use Illuminate\Support\Facades\DB;
 
 class ShowReleaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(string $id)
     {
         // SQL
@@ -47,6 +22,7 @@ class ShowReleaseController extends Controller
         //        m.year,
         //        m.master_id,
         //        r.barcode,
+        //        r.catalog_number,
         // FROM release r
         // LEFT JOIN images i ON r.release_id = i.release_id AND i.type = 'primary'
         // LEFT JOIN master_album m ON r.release_id = m.release_id 
@@ -71,6 +47,7 @@ class ShowReleaseController extends Controller
                  'm.year',
                  'm.master_id',
                  'r.barcode',
+                 'r.catalog_number',
                  )
         ->first();
 
@@ -115,15 +92,32 @@ class ShowReleaseController extends Controller
             ->pluck('s.name');
 
         // SQL:
-        // SELECT f.name
+        // SELECT f.name,
+        //        f.size,
+        //        f.speed,
         // FROM format_release fr
         // JOIN formats f ON fr.format_id = f.format_id
         // WHERE fr.release_id = ?
         $formats = DB::table('format_release as fr')
             ->join('formats as f', 'fr.format_id', '=', 'f.format_id')
             ->where('fr.release_id', $release->release_id)
-            ->pluck('f.name');    
+            ->select('f.name',
+                     'f.size',
+                     'f.speed',
+                    )
+            ->get();
 
+        // SQL:
+        // SELECT f.name,
+        //        f.size,
+        //        f.speed,
+        // FROM format_release fr
+        // JOIN formats f ON fr.format_id = f.format_id
+        // WHERE fr.release_id = ?
+        $formats2 = DB::table('format_release as fr')
+            ->join('formats as f', 'fr.format_id', '=', 'f.format_id')
+            ->where('fr.release_id', $release->release_id)
+            ->pluck('f.name');
         // SQL:
         // SELECT track_id,
         //        title,
@@ -153,6 +147,7 @@ class ShowReleaseController extends Controller
             ->join('companies as c', 'cr.company_id', '=', 'c.company_id')
             ->where('cr.release_id', $release->release_id)
             ->select('c.name', 'cr.role')
+            ->distinct()
             ->get();
 
         // SQL:
@@ -312,10 +307,15 @@ class ShowReleaseController extends Controller
         ->get();
         
         // SELECT l.name AS list_name, 
-        //        u.username
+        //        u.username,
+        //        l.comments,
+        //        l.description,
+        //        l.created_at,
+        //        l.list_id,
         // FROM list_release lr
         // JOIN lists l ON lr.list_id = l.list_id
         // JOIN users u ON l.user_id = u.user_id
+        // ORDER BY l.created_at desc
         // WHERE lr.release_id = ?;
         $lists = DB::table('list_release AS lr')
         ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
@@ -323,7 +323,13 @@ class ShowReleaseController extends Controller
 
         ->where('lr.release_id', $release->release_id)
         ->select('l.name AS list_name',
-                     'u.username')
+                     'u.username',
+                     'l.comments',
+                     'l.description',
+                     'l.created_at',
+                     'l.list_id',
+                )
+        ->orderby('l.created_at', 'desc')                
         ->get();
 
         // SELECT u.username
@@ -364,6 +370,7 @@ class ShowReleaseController extends Controller
                  'idf.value',        
                 )
         ->where('idf.release_id', $release->release_id)
+        // ->distinct()
         ->get();
 
         // SQL:
@@ -462,58 +469,70 @@ class ShowReleaseController extends Controller
                     'productCount',
                     'labels',
                     'formats',
+                    'formats2',
         ));
     }
 
-   public function storeReview(Request $request, $id)
-{
-    // 1. Validasi input comment
-    $request->validate([
-        'comment' => 'required',
-        'rating'  => 'nullable|integer|between:1,5',
-    ]);
+    public function storeReview(Request $request, $id)
+    {
+        // 1. Validasi input comment
+        $request->validate([
+            'comment' => 'required',
+            'rating'  => 'nullable|integer|between:1,5',
+        ]);
 
-    // Cari product_id yang memiliki release_id sesuai dengan ID di URL
-    $product = DB::table('products')->where('release_id', $id)->first();
+        // Cari product_id yang memiliki release_id sesuai dengan ID di URL
+        $product = DB::table('products')->where('release_id', $id)->first();
 
-    if (!$product) {
-        return redirect()->back()->with('error', 'Produk tidak ditemukan!');
+        if (!$product) {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan!');
+        }
+
+        // 2. Simpan ke database
+        // Gunakan 'product_id' karena tabel 'reviews' tidak punya kolom 'release_id'
+        DB::table('reviews')->insert([
+            'product_id' => $product->product_id, // Ambil ID asli produk
+            'user_id'    => 1,                    // Sementara dummy
+            'comment'    => $request->comment ?? null,
+            'rating'     => $request->rating ?? null,
+            'created_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Review berhasil ditambah!');
     }
 
-    // 2. Simpan ke database
-    // Gunakan 'product_id' karena tabel 'reviews' tidak punya kolom 'release_id'
-    DB::table('reviews')->insert([
-        'product_id' => $product->product_id, // Ambil ID asli produk
-        'user_id'    => 1,                    // Sementara dummy
-        'comment'    => $request->comment,
-        'rating'     => $request->rating ?? null,
-        'created_at' => now(),
-    ]);
-
-    return redirect()->back()->with('success', 'Review berhasil ditambah!');
-}
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function addToList(Request $request, $id)
     {
-        //
-    }
+        $release = Release::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if ($request->listOption === 'new') {
+            // buat list baru
+            $list = ListModel::create([
+                'user_id' => 1,
+                // 'user_id' => auth()->id(),
+                'name'    => $request->name,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            DB::table('list_release')->insert([
+                'list_id'   => $list->list_id,
+                'release_id'=> $release->release_id,
+            ]);
+            
+        } else {
+            
+            $list = ListModel::findOrFail($request->list_id);
+
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $release->release_id,
+            ]);
+        }
+
+        // $comment = $request->comments;
+
+        return redirect('/release/'.$release->release_id)
+        ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
     }
 }

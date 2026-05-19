@@ -357,7 +357,7 @@ class SearchController extends Controller
         $q = request('q');
         $filterFormat = request('format');
         $filterCountry = request('country');
-        $filterYear = request('year');
+        $filterYear = is_array(request('year')) ? request('year')[0] : request('year');
 
         // SELECT 
         //     r.release_id, 
@@ -386,7 +386,7 @@ class SearchController extends Controller
             ->when($q, fn($query) => $query->where('ma.title', 'like', "%$q%"))
             ->when($filterFormat, fn($query) => $query->where('f.name', 'like', "%$filterFormat%"))
             ->when($filterCountry, fn($query) => $query->where('r.country', 'like', "%$filterCountry%"))
-            ->when($filterYear, fn($query) => $query->where('ma.year', $filterYear))
+            ->when($filterYear, fn($query) => $query->whereIn('ma.year', (array)$filterYear))
             ->groupBy('r.release_id', 'ma.title', 'ma.year', 'lr.catalog_number')
             ->orderBy('ma.year', 'asc')
             ->paginate($perPage);

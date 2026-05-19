@@ -50,16 +50,8 @@
         margin-top: 4px;
         text-decoration: none;
     }
-
-    .album-cover-wrap a:hover {
-        text-decoration: underline;
-    }
-
-    .album-meta {
-        flex: 1;
-        padding-top: 4px;
-    }
-
+    .album-cover-wrap a:hover {text-decoration: underline;}
+    .album-meta {flex: 1;padding-top: 4px;}
     .album-title {
         font-size: 22px;
         font-weight: bold;
@@ -179,7 +171,6 @@
         width: 280px;
         flex-shrink: 0;
     }
-
     /* Master Release box */
     .master-release-header {
         display: flex;
@@ -682,11 +673,7 @@
         align-items: center;
         gap: 5px;
     }
-
-    .add-wantlist-btn:hover {
-        background: #555;
-    }
-
+    .add-wantlist-btn:hover {background: #555;}
     .add-wantlist-btn .btn-arrow {
         font-size: 10px;
         border-left: 1px solid #666;
@@ -785,27 +772,20 @@
             font-style: italic;
             color: #c00;
         }
-
-
-
         .version-label {
             font-size: 13px;
         }
-
         .version-label a {
             color: #0000ff;
             text-decoration: none;
         }
-
         .version-label a:hover {
             text-decoration: underline;
         }
-
         .version-country {
             font-size: 13px;
             color: #333;
         }
-
         .version-year {
             font-size: 13px;
             color: #333;
@@ -931,13 +911,12 @@
         border-width: 7px 0 7px 12px;
         border-color: transparent transparent transparent #fff;
     }
-
     .v-list {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
-
     flex: 1;          /* penting */
-    min-height: 0;    /* SUPER penting buat scroll di flex */
+    min-height: 150px; 
+    margin-bottom:20px;   /* SUPER penting buat scroll di flex */
 }
     .v-item { display: flex; gap: 10px; padding: 5px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .v-item:hover { background: #f9f9f9; }
@@ -945,24 +924,26 @@
     .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .v-time { position: absolute; bottom: 2px; right: 2px; background: #000; color: #fff; font-size: 10px; padding: 0 3px; }
     .v-title { font-size: 13px; color: #2a5bd7; line-height: 1.2; }
-
-    /* Custom scrollbar untuk list video */
     .v-list::-webkit-scrollbar {
     width: 6px;
 }
-
 .v-list::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 10px;
 }
-
 .v-list::-webkit-scrollbar-thumb:hover {
     background: #999;
 }
-
-    .l-section { border-top: none; padding-top: 0px; }
-    .l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
-
+.l-section a { display: inline; font-size: 13px; margin-bottom: 3px; color: #2a5bd7; }
+.l-section { margin-top: 20px;font-size: 13px;}
+.l-header {display: flex;align-items: center;margin-bottom: 8px;}
+.l-header h2 {font-size: 14px;margin: 0;}
+.l-list {display: flex; flex-direction: column;gap: 8px;}
+.l-item {padding: 6px 0;border-bottom: 1px solid #eee;}
+.l-item a {color: #2a5bd7;text-decoration: none;font-weight: 500;}
+.l-item a:hover {text-decoration: underline;}
+.l-meta {font-size: 12px;color: #777;}
+.l-footer {margin-top: 8px;}
 /* Reviews Section */
 .reviews-title {
     font-size: 15px;
@@ -973,7 +954,6 @@
     border-bottom: 1px solid #ccc;
     margin-bottom: 16px;
 }
- 
    .add-review-btn {
     display: inline-block;
 
@@ -989,11 +969,7 @@
 
     margin-bottom: 20px;
 }
- 
-    .add-review-btn:hover {
-      background-color: #e8e8e8;
-    }
- 
+    .add-review-btn:hover {background-color: #e8e8e8;}
     .review-item {
     border-top: 1px solid #e0e0e0;
     padding: 10px 0;
@@ -1002,28 +978,22 @@
     gap: 10px;
     position: relative;
 }
- 
     .avatar {
     width: 48px;
     height: 48px;
-
     border-radius: 0;
-
     background-color: #c8c8c8;
     flex-shrink: 0;
     overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
 }
- 
     .avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
- 
     .avatar-icon {
       width: 100%;
       height: 100%;
@@ -1226,7 +1196,6 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     z-index: 999;
 }
-
 .menu-dropdown a {
     display: block;
     padding: 10px 12px;
@@ -1235,19 +1204,9 @@
     font-size: 14px;
     border-bottom: 1px solid #ddd;
 }
-
-.menu-dropdown a:last-child {
-    border-bottom: none;
-}
-
-.menu-dropdown a:hover {
-    background: #e8e8e8;
-}
-
-.delete-link {
-    color: #000;
-}
-
+.menu-dropdown a:last-child {border-bottom: none;}
+.menu-dropdown a:hover {background: #e8e8e8;}
+.delete-link {color: #000;}
 .widget {
         font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
         background: #fff;
@@ -1256,7 +1215,6 @@
         box-shadow: none; 
         overflow: hidden;
     }
- 
     /* Header */
     .header {
       padding: 5px 10px 2px;
@@ -1267,22 +1225,16 @@
       font-weight: 600;
       color: #000;
     }
-
-    .music-content {
-        background: #f9f9f9;
-        border-radius: 8px;
-    }
- 
+    .music-content {background: #f9f9f9;border-radius: 8px;}
     /* Apple Music Bar */
-.music-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 5px;
-  padding: 7px 10px;
-  background: #f9f9f9;
-}
-
+    .music-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 7px 10px;
+    background: #f9f9f9;
+    }
     .music-bar-left {
       display: flex;
       align-items: center;
@@ -1305,7 +1257,6 @@
       color: #333;
       cursor: pointer;
     }
- 
     /* Album Info */
     .album-info {
       display: flex;
@@ -1352,7 +1303,6 @@
       align-items: center;
       justify-content: center;
     }
- 
     /* Track List */
     .track {
       display: flex;
@@ -1368,20 +1318,11 @@
       margin-right: 12px;
       flex-shrink: 0;
     }
-    .track-name {
-      font-size: 12px;
-      color: #000;
-    }
+    .track-name {font-size: 12px;color: #000;}
     .track.dimmed .track-num,
-    .track.dimmed .track-name {
-      color: #ccc;
-    }
- 
+    .track.dimmed .track-name {color: #ccc;}
     /* Play Button */
-    .play-wrap {
-      padding: 10px;
-    }
-
+    .play-wrap {padding: 10px;}
     .btn-play {
       width: 100%;
       background: #FC3C44;
@@ -1400,7 +1341,6 @@
       font-weight: 600;
       letter-spacing: -0.2px;
     }
- 
     /* View in App */
     .view-app {
       text-align: center;
@@ -1417,29 +1357,71 @@
       padding: 6px 0px 0px 0px;
       font-size: 9px ;
     }
-
-    .footer {
+.footer {
   padding: 6px 10px 10px;
   text-align: right;
   background: #f9f9f9;
 }
-
 .footer span {
   font-size: 10px;
   color: #aaa;
 }
-
 .custom-btn{
     background:#e8e5dd !important;
     color:#000 !important;
     text-align:center;
     transition:0.2s;
 }
-
 .custom-btn:hover{
     background:#000 !important;
     color:#fff !important;
 }
+  /* Play Button */
+    .play-wrap {padding: 10px;}
+    .btn-play {
+      width: 100%;
+      background: #FC3C44;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-play span {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+    /* View in App */
+    .view-app {text-align: center;padding: 0px 10px 10px;}
+    .view-app a {
+      color: #FC3C44;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .see {
+      text-align: right; font-size: 9px; padding: 6px 0px 0px 0px;
+    }
+    .footer {
+  padding: 6px 10px 10px;
+  text-align: left;
+  background: #f9f9f9;
+}
+.footer span {font-size: 10px;color: #aaa;}
+.track .play-icon-hover {
+    display: none;
+    color: #FC3C44;
+    font-size: 10px;
+    width: 25px;
+    text-align: center;}
+.track:hover {background-color: #efefef; cursor: pointer;}
+.track:hover .track-num { display: none;}
+.track:hover .play-icon-hover { display: inline-block; }
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1452,12 +1434,35 @@
             grid-template-columns: 1fr 1fr;
         }
     }
-
     @media (max-width: 480px) {
         .credits-grid {
             grid-template-columns: 1fr;
         }
     }
+    .lists-toggle-btn{
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.lists-toggle-btn i{
+    font-size:18px;
+    color:#2a5bd7;}
+.lists-title-wrap{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+}
+.lists-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
 </style>
 
 <div class="album-wrapper">
@@ -1517,7 +1522,7 @@
                     <tr>
                         <td>{{ $track->title }}</td>
                         <td style="text-align:right; width:60px; color:#555;">
-                            4:14
+                           {{ \Carbon\Carbon::parse($track->duration)->format('i:s') ? ltrim(\Carbon\Carbon::parse($track->duration)->format('i:s'), '0') : '0:00' }}
                         </td>
                     </tr>
                 @endforeach
@@ -1635,140 +1640,57 @@
 
     <div class="version-list">
         <!-- Version Row 1 -->
-        @foreach($versions as $index => $v)
+@foreach($versions as $index => $v)
 
 <div class="version-row-wrapper">
 
-    <!-- ROW -->
     <div class="version-row">
-
-        <!-- TITLE -->
         <div class="version-title-col" style="display:flex; gap:12px; align-items:flex-start;">
-
-            <!-- GAMBAR -->
             <img src="{{ $album->image }}" alt="{{ $v->title }}" class="version-image" style="width:80px;height:80px;object-fit:cover;border:1px solid #ccc;display:none;">
-
             <div>
-                <div>
-                    <a href="#" class="version-title">
-                        {{ $v->title }}
-                    </a>
-                </div>
-
-                <div class="version-format">
-                    {{ $v->format }}
-                </div>
+                <div><a href="#" class="version-title">{{ $v->title }}</a></div>
+                <div class="version-format">{{ $v->format }}</div>
             </div>
-
         </div>
 
-        <!-- LABEL -->
-        <div class="version-label">
-            <a href="#">{{ $v->label }}</a>
-            – {{ $v->catalog_number }}
-        </div>
+        <div class="version-label"><a href="#">{{ $v->label }}</a> – {{ $v->catalog_number }}</div>
+        <div class="version-country">{{ $v->country }}</div>
+        <div class="version-year">{{ $v->year }}</div>
 
-        <!-- COUNTRY -->
-        <div class="version-country">
-            {{ $v->country }}
-        </div>
-
-        <!-- YEAR -->
-        <div class="version-year">
-            {{ $v->year }}
-        </div>
-
-        <!-- TOGGLE -->
-        <button class="version-expand"
-                onclick="toggleVersion({{ $index }})"
-                id="btn{{ $index }}">
-            ▾
-        </button>
-
-    </div>
-
-    <!-- DETAIL -->
-    <div class="version-detail"
-         id="detail{{ $index }}"
-         style="
-            display:none;
-            background:#f7f7f7;
-            border-top:1px solid #ddd;
-            padding:20px;
-         ">
-
-        <div style="display:grid;grid-template-columns: 1fr 1fr 250px;gap:20px;align-items:start;">
-            <!-- LEFT -->
+        <button class="version-expand" onclick="toggleVersion({{ $index }})" id="btn{{ $index }}">▾</button>
+    </div> <div class="version-detail" id="detail{{ $index }}" style="display:none; background:#f7f7f7; border-top:1px solid #ddd; padding:20px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr 250px; gap:20px; align-items:start;">
+            
             <div>
-                <div>
-                    <b>14 for sale</b> from €61.92
-                </div>
-                <button style="width:100%;background:#000;color:#fff;border:none;padding:14px;cursor:pointer;font-size:14px;border-radius: 8px;">
-                    Shop this version
-                </button>
-
+                <div><b>{{ $v->dropdown_stats->listing_count ?? 0 }} for sale</b> from €{{ number_format($v->dropdown_stats->lowest_price ?? 0, 2) }}</div>
+                <button style="width:100%; background:#000; color:#fff; border:none; padding:14px; cursor:pointer; font-size:14px; border-radius:8px; margin-top:10px;">Shop this version</button>
                 <div style="margin-top:20px; font-size:13px; color:#555;">
-                    <div>Last Sold May 5, 2026</div>
-
-                    <div style="display:flex;justify-content:space-between;margin-top:15px;">
-                        <div>
-                            <div>€43.00</div>
-                            <div>Lowest</div>
-                        </div>
-
-                        <div>
-                            <div>€61.92</div>
-                            <div>Median</div>
-                        </div>
-
-                        <div>
-                            <div>€85.00</div>
-                            <div>Highest</div>
-                        </div>
+                    <div>Last Sold: <b>{{ $v->dropdown_stats->last_sold }}</b></div>
+                    <div style="display:flex; justify-content:space-between; margin-top:15px;">
+                        <div><div>€{{ number_format($v->dropdown_stats->lowest_price ?? 0, 2) }}</div><div style="color:#888; font-size:11px;">Lowest</div></div>
+                        <div><div>€{{ number_format($v->dropdown_stats->median_price ?? 0, 2) }}</div><div style="color:#888; font-size:11px;">Median</div></div>
+                        <div><div>€{{ number_format($v->dropdown_stats->highest_price ?? 0, 2) }}</div><div style="color:#888; font-size:11px;">Highest</div></div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- CENTER -->
             <div style="font-size:14px;">
-
-                <div style="display:flex;justify-content:space-around;text-align:center;margin-bottom:20px;">
-                    <div>
-                        <div>Collected</div>
-                        <b>0</b>
-                    </div>
-
-                    <div>
-                        <div>Wanted</div>
-                        <b>8</b>
-                    </div>
+                <div style="display:flex; justify-content:space-around; text-align:center; margin-bottom:20px;">
+                    <div><div style="color:#666; margin-bottom:5px;">Collected</div><b>{{ $v->dropdown_stats->have ?? 0 }}</b></div>
+                    <div><div style="color:#666; margin-bottom:5px;">Wanted</div><b>{{ $v->dropdown_stats->want ?? 0 }}</b></div>
                 </div>
-
-                <div style="text-align:center;">
-                    Ratings <b>5 / 5</b> (1)
-                </div>
-
+                <div style="text-align:center; margin-top:25px;">Ratings <b>{{ $v->dropdown_stats->avg_rating ?? 0 }} / 5</b> ({{ $v->dropdown_stats->total_rating ?? 0 }})</div>
             </div>
 
-            <!-- RIGHT -->
             <div style="display:flex; flex-direction:column; gap:10px;">
                 <button class="add-wantlist-btn custom-btn">Add to Collection</button>
                 <button class="add-wantlist-btn custom-btn">Add to Wantlist</button>
                 <button class="add-wantlist-btn custom-btn">Add to List</button>
-                
-                <div style="margin-top: 20px;">Discogs ID: r843126 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Recently Edited</div> 
-
+                <div style="margin-top:20px; font-size:12px; color:#666;">Discogs ID: r{{ $v->release_id }} &nbsp; &nbsp;&nbsp; &nbsp; Recently Edited</div> 
             </div>
 
+        </div> </div> </div> @endforeach
         </div>
-
-    </div>
-
-</div>
-
-@endforeach
-    </div>
 
     <div class="reviews-title">Reviews</div>
     <form action="{{ route('album.review', $album->master_id) }}" method="POST">
@@ -1996,167 +1918,230 @@
 
         <div class="widget">
 
-  <!-- Header -->
+    <!-- Header -->
   <div class="header">
     <span>Audio</span>
   </div>
-
+ 
   <div class="music-content">
-
-    <!-- Apple Music Bar -->
-    <div class="music-bar">
-      <div class="music-bar-left">
-        <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000">
-          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
-        </svg>
-
-        <span>Music</span>
-      </div>
-
-      <button class="btn-signin">Sign In</button>
+  <!-- Apple Music Bar -->
+  <div class="music-bar">
+    <div class="music-bar-left">
+      <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
+        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
+      </svg>
+      <span>Music</span>
     </div>
-
-    <!-- Album Info -->
+    <button class="btn-signin">Sign In</button>
+  </div>
+ 
+  <!-- Album Info -->
     <div class="album-info">
-
-      <div class="album-info-left">
-
-        <div class="album-art">
-          <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Random_Access_Memories.jpg" alt="Album Art">
-        </div>
-
-        <div>
-          <div class="album-title">Random Access Memories</div>
-          <div class="album-artist">Daft Punk</div>
-        </div>
-
+      <div class="album-art">
+        <img src="{{ $album->image }}" alt="Album Art">
       </div>
-
-      <button class="btn-dots">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
-          <circle cx="12" cy="12" r="2" fill="#FF3B5C"/>
-          <circle cx="19" cy="12" r="2" fill="#FF3B5C"/>
-        </svg>
-      </button>
-
-    </div>
-
+      <div>
+        <div class="album-title">{{ $album->title }}</div>
+        <div class="album-artist">{{ $artist->name }}</div>
+      </div>
+    
+    <button class="btn-dots">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="5" cy="12" r="2" fill="#FF3B5C"/>
+        <circle cx="12" cy="12" r="2" fill="#FF3B5C"/>
+        <circle cx="19" cy="12" r="2" fill="#FF3B5C"/>
+      </svg>
+    </button>
+  </div>
+  
     <!-- Hidden audio player -->
-    <audio id="player" style="display:none;"></audio>
-
-    <!-- Track List -->
-    <div class="track-list">
-
-      <div class="track"
-           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-           onclick="playTrack(this)">
-
-        <span class="track-num">1</span>
-
-
-        <span class="track-name">Give Life Back to Music</span>
-      </div>
-
-      <div class="track"
-           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-           onclick="playTrack(this)">
-
-        <span class="track-num">2</span>
-
-        <span class="track-name">Get Lucky</span>
-      </div>
-
-      <div class="track"
-           data-audio="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-           onclick="playTrack(this)">
-
-        <span class="track-num">3</span>
-
-        <span class="track-name">Instant Crush</span>
-      </div>
-
+<audio id="player" style="display:none;"></audio>
+ 
+  <!-- Track List -->
+<div class="track-list">
+  @foreach($tracks as $i => $track)
+  <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
+    
+    <span class="track-num">{{ $i+1 }}</span>
+    
+    <span class="play-icon-hover">▶</span>
+    
+    <span class="track-name">{{ $track->title }}</span>
+  </div>
+  @endforeach
+</div>
+ 
+  <!-- Play Button -->
+  <div class="play-wrap">
+    <button class="btn-play">
+      <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
+        <polygon points="0,0 14,8 0,16"/>
+      </svg>
+      <span>Play</span>
+    </button>
+  </div>
+ 
+  <div class="view-app">
+    <a href="#">View in App ↗</a>
+    <div class="see">
+      <span>See how your data is managed...</span>
     </div>
-
-    <!-- Play Button -->
-    <div class="play-wrap">
-      <button class="btn-play" onclick="playFirstTrack()">
-
-        <svg width="14" height="16" viewBox="0 0 14 16" fill="white">
-          <polygon points="0,0 14,8 0,16"/>
-        </svg>
-
-        <span>Play</span>
-      </button>
-    </div>
-
-    <!-- Footer -->
-    <div class="view-app">
-      <a href="#">View in App ↗</a>
-
-      <div class="see">
-        <span>See how your data is managed...</span>
-      </div>
-    </div>
-
+  </div>
   </div>
 
         <!-- VIDEO -->
-                    <div id="video-sidebar-section">
-                <div class="v-header">
-                    <h2>Videos ({{ $videos->count() }})</h2>
-                    <a href="#" class="small">Edit</a>
-                </div>
+        <div id="video-sidebar-section" style="margin-bottom:10px">
+            <div class="v-header">
+                {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
+                <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
+                <a href="#" class="small">Edit</a>
+            </div>
 
-                @if($videos->count() > 0)
-                <div class="main-player" id="mainPlayer">
-                    <img src="{{ $videos[0]->thumbnail }}" id="currentThumb">
-                    <div class="play-btn-overlay"></div>
-                </div>
-                @endif
+            @if($videos->count() > 0)
+            <div class="main-player" id="mainPlayer">
+                {{-- Ambil thumbnail dari video pertama yang unik --}}
+                <img src="{{ $videos->unique('youtube_url')->first()->thumbnail }}" id="currentThumb">
+                <div class="play-btn-overlay"></div>
+            </div>
+            @endif
 
-                <div class="v-list">
-                    @foreach($videos as $video)
-                    <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
-                        <div class="v-thumb">
-                            <img src="{{ $video->thumbnail }}">
-                            <span class="v-time"> {{ $video->duration }} </span>
-                        </div>
-                        <div class="v-title"><b> {{ $video->title }} </b></div>
+            <div class="v-list">
+                {{-- 
+                Tambahkan ->unique('youtube_url') sebelum @foreach 
+                Ini akan menyaring daftar video berdasarkan URL YouTube-nya di level Blade secara instan.
+                --}}
+                @foreach($videos->unique('youtube_url') as $video)
+                <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
+                    <div class="v-thumb">
+                        <img src="{{ $video->thumbnail }}">
+                        <span class="v-time"> {{ $video->duration }} </span>
                     </div>
-                    @endforeach
+                    <div class="v-title"><b> {{ $video->title }} </b></div>
                 </div>
+                @endforeach
+            </div>
+        </div>
+  
 
-                <div class="l-section">
-
-    <!-- HEADER -->
-    <div class="d-flex align-items-center mb-2">
-        <h2 class="mb-0 me-2" style="font-size: 15px;">Lists</h2>
-        <a href="#" class="small text-decoration-none" style="position: relative; top: 4px;">
-            Add to List
-        </a>
-    </div>
-
-    <hr class="my-2">
-
-    <!-- LIST -->
-    <div>
-        @foreach($lists as $list)
-            <div><a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a></div>
-        @endforeach
-    </div>
-
-    <hr class="my-2">
-
-    <!-- FOOTER -->
-    <a href="/lists" class="view-more-lists">View More List </a>
-</div>
-
+    <!-- LISTS SECTION -->
+    <div class="l-section">
         
-    </div>
+        <!-- HEADER -->
+        <div class="l-header">
+            <div class="lists-title-wrap">
+                <h2>Lists</h2>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#addToListModal" class="add-list-link">
+                    Add to List
+                </a>
+                <button type="button" class="lists-toggle-btn" onclick="toggleLists()">
+                    <i id="listsArrow" class="ti ti-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MODAL POPUP -->
+        <div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+                <div class="modal-content">
+
+                    <!-- MODAL HEADER -->
+                    <div class="modal-header border-0 pb-2">
+                        <h5 class="modal-title fw-bold">Add Release to List</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <hr class="m-0">
+
+                    <!-- MODAL BODY -->
+                    <div class="modal-body p-3">
+                        <form action="{{ route('album.addToList', $album->master_id) }}" method="POST">
+                            @csrf
+
+                            <!-- RADIO OPTIONS -->
+                            <div class="mb-3 mt-1">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="listOption" id="radioExisting" value="existing" checked>
+                                    <label class="form-check-label" for="radioExisting">Existing List</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="listOption" id="radioNew" value="new">
+                                    <label class="form-check-label" for="radioNew">New List</label>
+                                </div>
+                            </div>
+
+                            <!-- EXISTING LIST FIELDS -->
+                            <div id="existing-list-fields">
+                                <div class="mb-3">
+                                    <label class="form-label">List</label>
+                                    <select class="form-select" name="list_id">
+                                        <optgroup label="Recently Used">
+                                            @foreach($lists as $list)
+                                                <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                        <optgroup label="All Lists">
+                                            @foreach($lists as $list)
+                                                <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- NEW LIST FIELDS -->
+                            <div id="new-list-fields">
+                                <div class="mb-3">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Enter list title">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description <span class="text-muted"><i>optional</i></span></label>
+                                    <textarea class="form-control" rows="2" name="description"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- COMMENTS -->
+                            <div class="mb-3">
+                                <label class="form-label">Comments on this item <span class="text-muted"><i>optional</i></span></label>
+                                <textarea class="form-control" rows="2" name="comments"></textarea>
+                            </div>
+
+                            <!-- ACTION BUTTONS -->
+                            <div class="d-flex gap-2 pt-2">
+                                <button type="submit" class="btn btn-success modal-save-btn">Save</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- Modal -->
+
+        <div id="listsContent" class="d-none">
+            <div class="l-list">
+                @forelse($lists as $list)
+                    <div class="l-item mb-2">
+                        <div>
+                            <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a>
+                        </div>
+                    </div>
+                @empty
+                    <div class="l-meta">No lists yet</div>
+                @endforelse
+            </div>
+
+            <div class="l-footer">
+                <a href="/lists" class="view-more-lists">View more lists →</a>
+            </div>
+        </div>
+
+    </div> <!-- .l-section -->
+
     <!-- end .album-right -->
 
 </div>
+
 
 <!-- UNTUK KLIK VIDEO -->
 <script>
@@ -2307,6 +2292,75 @@ function toggleVersion(index) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const radioExisting = document.getElementById('radioExisting');
+    const radioNew = document.getElementById('radioNew');
+
+    const existingFields = document.getElementById('existing-list-fields');
+    const newFields = document.getElementById('new-list-fields');
+
+    function toggleFields() {
+
+        if (radioNew.checked) {
+
+            newFields.classList.remove('d-none');
+            existingFields.classList.add('d-none');
+
+        } else {
+
+            newFields.classList.add('d-none');
+            existingFields.classList.remove('d-none');
+
+        }
+    }
+
+    radioExisting.addEventListener('change', toggleFields);
+    radioNew.addEventListener('change', toggleFields);
+
+    toggleFields();
+});
+function toggleLists() {
+    const content = document.getElementById('listsContent');
+    const arrow = document.getElementById('listsArrow');
+
+    content.classList.toggle('d-none');
+
+    if (content.classList.contains('d-none')) {
+        arrow.className = 'ti ti-chevron-right';
+    } else {
+        arrow.className = 'ti ti-chevron-down';
+    }
+}
 </script>
 
 @endsection
