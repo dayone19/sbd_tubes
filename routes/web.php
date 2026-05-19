@@ -65,14 +65,10 @@ Route::get('/signup', function () {
 });
 
 
-
 Route::get('/resources', function () {
     return view('resources');
 });
 
-Route::get('/mywantlist', function () {
-    return view('mywantlist');
-});
 
 Route::get('/mywants', function () {
     return view('mywants');
@@ -87,10 +83,6 @@ Route::get('/submissions', function () {
 });
 
 Route::prefix('user')->group(function () {
-
-    Route::get('/collection', function () {
-        return view('user.collection');
-    })->name('user.collection');
 
     // Route::get('/lists', function () {
     //     return view('user.lists');
