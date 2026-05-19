@@ -15,13 +15,13 @@ class CartController extends Controller
     // Buka halaman cart
     public function index()
     {
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // SQL: 
         // SELECT * FROM carts 
-        // WHERE user_id = 1 
+        // WHERE user_id = ;
         // LIMIT 1
-        $cart = Cart::where('user_id', $user_id)->first();
+        $cart = Cart::where('user_id', Auth::id())->first();
         $cartItemsBySeller = collect();
 
         if ($cart) {
@@ -65,13 +65,13 @@ class CartController extends Controller
     // Hapus semua item dari satu seller
     public function removeSeller($sellerId)
     {
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // SQL: 
         // SELECT * FROM carts 
-        // WHERE user_id = 1 
+        // WHERE user_id = ; 
         // LIMIT 1
-        $cart = Cart::where('user_id', $user_id)->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
 
         // SQL: 
         // DELETE FROM cart_items 
@@ -94,9 +94,9 @@ class CartController extends Controller
     {
         // SQL: 
         // SELECT * FROM carts 
-        // WHERE user_id = 1 
+        // WHERE user_id = ; 
         // LIMIT 1
-        $cart = Cart::where('user_id', 1)->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
         
         // SQL: 
         // INSERT INTO cart_items (cart_id, product_id, quantity, created_at, updated_at) 
@@ -115,13 +115,13 @@ class CartController extends Controller
     {
         $request->validate(['terms' => 'accepted']);
 
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // SQL: 
         // SELECT * FROM carts 
         // WHERE user_id = 1 
         // LIMIT 1
-        $cart = Cart::where('user_id', $user_id)->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
 
         // SQL: 
         // SELECT * FROM cart_items 
@@ -169,7 +169,7 @@ class CartController extends Controller
     // Tambah item dari Shop ke Cart
     public function addToCart(Request $request)
     {
-        $user_id = 90; // sama kayak method lain
+        $user_id = Auth::id(); // sama kayak method lain
 
         $product = Product::findOrFail($request->product_id);
 
