@@ -2066,74 +2066,116 @@
             <!-- BODY -->
             <div class="modal-body p-3">
 
-                <form action="{{ route('album.addToList', $album->release_id) }}" method="POST">
-                  @csrf
+                <form action="" method="POST">
+                    @csrf
 
-                  <!-- RADIO -->
-                  <div class="mb-3 mt-1">
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input"
-                                type="radio"
-                                name="listOption"
-                                id="radioExisting"
-                                value="existing"
-                                checked>
-                          <label class="form-check-label">Existing List</label>
-                      </div>
+                    <!-- RADIO -->
+                    <div class="mb-3 mt-1">
 
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input"
-                                type="radio"
-                                name="listOption"
-                                id="radioNew"
-                                value="new">
-                          <label class="form-check-label">New List</label>
-                      </div>
-                  </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="listOption"
+                                   id="radioExisting"
+                                   checked>
 
-                  <!-- EXISTING LIST -->
-                  <div id="existing-list-fields">
-                      <div class="mb-3">
-                          <label class="form-label">List</label>
-                          <select class="form-select" name="list_id">
-                               <optgroup label="Recently Used">
-                                    @foreach($lists as $list)
-                                        <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
-                                    @endforeach
+                            <label class="form-check-label">
+                                Existing List
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="listOption"
+                                   id="radioNew">
+
+                            <label class="form-check-label">
+                                New List
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- EXISTING LIST -->
+                    <div id="existing-list-fields">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                List
+                            </label>
+
+                            <select class="form-select">
+
+                                <optgroup label="Recently Used">
+                                    <option></option>
                                 </optgroup>
+
                                 <optgroup label="All Lists">
-                                    @foreach($lists as $list)
-                                        <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
-                                    @endforeach
+                                    <option></option>
+                                    <option></option>
+                                    <option></option>
                                 </optgroup>
-                          </select>
-                      </div>
-                  </div>
 
-                  <!-- NEW LIST -->
-                  <div id="new-list-fields" class="d-none">
-                      <div class="mb-3">
-                          <label class="form-label">Title</label>
-                          <input type="text" class="form-control" name="name" placeholder="Enter list title">
-                      </div>
-                      <div class="mb-3">
-                          <label class="form-label">Description <span class="text-muted"><i>optional</i></span></label>
-                          <textarea class="form-control" rows="2" name="description"></textarea>
-                      </div>
-                  </div>
+                            </select>
+                        </div>
 
-                  <!-- COMMENTS -->
-                  <div class="mb-3">
-                      <label class="form-label">Comments on this item <span class="text-muted"><i>optional</i></span></label>
-                      <textarea class="form-control" rows="2" name="comments"></textarea>
-                  </div>
+                    </div>
 
-                  <!-- BUTTON -->
-                  <div class="d-flex gap-2 pt-2">
-                      <button type="submit" class="btn btn-success modal-save-btn">Save</button>
-                      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                  </div>
-              </form>
+                    <!-- NEW LIST -->
+                    <div id="new-list-fields" class="d-none">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Title
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Enter list title">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description
+                                <span class="text-muted"><i>optional</i></span>
+                            </label>
+
+                            <textarea class="form-control"
+                                      rows="2"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- COMMENTS -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Comments on this item
+                            <span class="text-muted"><i>optional</i></span>
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="2"></textarea>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="d-flex gap-2 pt-2">
+
+                        <button type="submit"
+                                class="btn btn-success">
+                            Save
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
 
             </div>
         </div>
@@ -2142,11 +2184,13 @@
 
         <div class="l-list">
             @forelse($lists as $list)
-                <div class="l-meta">
+                <div class="l-item">
                     <div>
-                        <a href="#">{{ $list->list_name }} by </a> <a href="#">{{ $list->username }}</a>
+                        <a href="#">{{ $list->list_name }}</a>
                     </div>
-                   
+                    <div class="l-meta">
+                        by <a href="#">{{ $list->username }}</a>
+                    </div>
                 </div>
             @empty
                 <div class="l-meta">No lists yet</div>
