@@ -322,7 +322,7 @@ class SubmitReleaseController extends Controller
         }
     }
 
-    // ── Preview release yang baru disubmit ──
+    
 public function preview($id)
 {
     $release = DB::table('releases')->where('release_id', $id)->firstOrFail();
