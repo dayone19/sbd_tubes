@@ -39,6 +39,9 @@ class UserListController extends Controller
         return view('lists.no_list', compact('lists', 'total', 'perPage', 'page'));
     }
 
+    public function create() { /* kosong */ }
+    public function store(Request $request) { /* kosong */ }
+
     /**
      * Display the specified resource.
      */
@@ -117,7 +120,6 @@ class UserListController extends Controller
             ->leftJoin('list_release as lr', 'l.list_id', '=', 'lr.list_id')
             ->select('u.username','l.name','l.created_at','up.image','l.description','l.user_id','l.list_id')
             ->orderBy('l.created_at', 'desc')
-            // ->where('l.user_id', $user_id)
             ->where('l.user_id', 1) // nanti diganti $user_id
             ->distinct()
             ->limit($perPage)
