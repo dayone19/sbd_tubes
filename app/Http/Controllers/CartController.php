@@ -12,28 +12,25 @@ use App\Models\TransactionDetail;
 
 class CartController extends Controller
 {
-    // Buka halaman cart
     public function index()
     {
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // SQL: 
         // SELECT * FROM carts 
-        // WHERE user_id = 1 
+        // WHERE user_id = ;
         // LIMIT 1
-        $cart = Cart::where('user_id', $user_id)->first();
+        $cart = Cart::where('user_id', Auth::id())->first();
         $cartItemsBySeller = collect();
 
         if ($cart) {
             // SQL: 
             // SELECT * FROM cart_items 
             // WHERE cart_id = ?
-            // (Laravel otomatis menjalankan query tambahan untuk eager loading produk, seller, dan gambar rilis)
             $items = CartItem::where('cart_id', $cart->cart_id)
                 ->with(['product.seller', 'product.release.images'])
                 ->get();
 
-            // Pengelompokan dilakukan di memori (Collection), tidak menembak query SQL baru lagi
             $cartItemsBySeller = $items->groupBy(function ($item) {
                 return $item->product->seller->seller_id;
             });
@@ -42,7 +39,6 @@ class CartController extends Controller
         return view('sell.cart', compact('cart', 'cartItemsBySeller'));
     }
 
-    // Hapus satu item
     public function removeItem($cartItemId)
     {
         // SQL: 
@@ -62,16 +58,15 @@ class CartController extends Controller
             ->with('removed_product_id', $productId);
     }
 
-    // Hapus semua item dari satu seller
     public function removeSeller($sellerId)
     {
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // SQL: 
         // SELECT * FROM carts 
-        // WHERE user_id = 1 
+        // WHERE user_id = ; 
         // LIMIT 1
-        $cart = Cart::where('user_id', $user_id)->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
 
         // SQL: 
         // DELETE FROM cart_items 
@@ -89,14 +84,13 @@ class CartController extends Controller
         return redirect()->route('sell.cart')->with('success', 'Seller items removed.');
     }
 
-    // Menambahkan kembali item yang baru dihapus (Undo)
     public function addBack(Request $request)
     {
         // SQL: 
         // SELECT * FROM carts 
-        // WHERE user_id = 1 
+        // WHERE user_id = ; 
         // LIMIT 1
-        $cart = Cart::where('user_id', 1)->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
         
         // SQL: 
         // INSERT INTO cart_items (cart_id, product_id, quantity, created_at, updated_at) 
@@ -110,18 +104,17 @@ class CartController extends Controller
         return redirect()->route('sell.cart')->with('success', 'Item added back!');
     }
 
-    // Place order (Checkout)
     public function placeOrder(Request $request)
     {
         $request->validate(['terms' => 'accepted']);
 
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // SQL: 
         // SELECT * FROM carts 
         // WHERE user_id = 1 
         // LIMIT 1
-        $cart = Cart::where('user_id', $user_id)->firstOrFail();
+        $cart = Cart::where('user_id', Auth::id())->firstOrFail();
 
         // SQL: 
         // SELECT * FROM cart_items 
@@ -132,7 +125,6 @@ class CartController extends Controller
             return back()->with('error', 'Your cart is empty.');
         }
 
-        // Kalkulasi total harga dilakukan via Collection bawaan Laravel, bukan query SQL SUM()
         $totalPrice = $items->sum(fn($item) => $item->product->price * $item->quantity);
 
         // SQL: 
@@ -144,9 +136,8 @@ class CartController extends Controller
             'status'      => 'pending',
         ]);
 
-        // Perulangan untuk memasukkan item ke detail transaksi
         foreach ($items as $item) {
-            // SQL (Dijalankan berulang sebanyak jumlah item): 
+            // SQL : 
             // INSERT INTO transaction_details (transaction_id, product_id, quantity, price, created_at, updated_at) 
             // VALUES (?, ?, ?, ?, NOW(), NOW())
             TransactionDetail::create([
@@ -157,7 +148,6 @@ class CartController extends Controller
             ]);
         }
 
-        // Kosongkan cart setelah order berhasil dibuat
         // SQL: 
         // DELETE FROM cart_items 
         // WHERE cart_id = ?
@@ -166,10 +156,9 @@ class CartController extends Controller
         return redirect()->route('sell.cart')->with('success', 'Order placed! Transaction #' . $transaction->transaction_id);
     }
 
-    // Tambah item dari Shop ke Cart
     public function addToCart(Request $request)
     {
-        $user_id = 90; // sama kayak method lain
+        $user_id = Auth::id(); 
 
         $product = Product::findOrFail($request->product_id);
 

@@ -126,7 +126,6 @@ class SearchController extends Controller
         $filterDecade = request('decade', []);
         $sort = request('sort', 'relevance');
 
-        // -- Sub-Query Master Release
         // SELECT 
         //     ma.master_id, 
         //     NULL as release_id, 
@@ -168,7 +167,6 @@ class SearchController extends Controller
             })
             ->groupBy('ma.master_id', 'ma.title', 'ma.year');
 
-        // -- Sub-Query Releases dengan Format
         // SELECT 
         //     ma.master_id, 
         //     r.release_id, 
@@ -221,7 +219,6 @@ class SearchController extends Controller
             })
             ->groupBy('ma.master_id', 'r.release_id', 'ma.title', 'ma.year');
 
-        // Eksekusi gabungan subquery berdasarkan tipe request
         if ($type == 'master') {
             $albums = DB::table(DB::raw("({$masterRelease->toSql()}) as combined"))
                 ->mergeBindings($masterRelease)
