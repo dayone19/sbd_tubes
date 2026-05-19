@@ -967,6 +967,44 @@
     background-color: #157347 !important;
     border-color: #146c43 !important;
 }
+
+.lists-title-wrap{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.lists-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.add-list-link{
+    color:#2a5bd7;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.add-list-link:hover{
+    text-decoration:underline;
+}
+
+.lists-toggle-btn{
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.lists-toggle-btn i{
+    font-size:18px;
+    color:#2a5bd7;
+}
     /* Responsive */
     @media (max-width: 768px) {
         .album-wrapper {
@@ -1516,7 +1554,7 @@
 </div>
 
         
-              < id="video-sidebar-section">
+              <id="video-sidebar-section">
                 <div class="v-header">
                     {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
                     <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
@@ -1551,10 +1589,21 @@
   <!-- HEADER -->
     <div class="l-section">
         <div class="l-header">
+           <div class="lists-title-wrap">
             <h2>Lists</h2>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#addToListModal" style="color:#2a5bd7; text-decoration:none;">
-              Add to List
+             <a href="#"
+               data-bs-toggle="modal"
+               data-bs-target="#addToListModal"
+               class="add-list-link">
+               Add to List
             </a>
+            <button type="button"
+                    class="lists-toggle-btn"
+                    onclick="toggleLists()">
+
+                <i id="listsArrow" class="ti ti-chevron-down"></i>
+
+            </button>
         </div>
 
          <!-- MODAL POPUP -->
@@ -1655,7 +1704,7 @@
 </div>
 
         
-
+      <div id="listsContent">
         <div class="l-list">
             @forelse($lists as $list)
                 <div class="l-meta">
@@ -1668,11 +1717,12 @@
                 <div class="l-meta">No lists yet</div>
             @endforelse
         </div>
+        
 
         <div class="l-footer">
-            <a href="/lists" class="view-more-lists">View more lists</a>
+            <a href="/lists" class="view-more-lists">View more lists →</a>
         </div>
-        
+      </div>
 
         <div style="margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
             @foreach($contributors as $contributor)
@@ -1685,6 +1735,7 @@
 
               </div>
         </div>
+
   
 
     
@@ -1876,6 +1927,24 @@ function showEditForm(id) {
 
     toggleFields();
 });
+
+function toggleLists() {
+
+    const content = document.getElementById('listsContent');
+    const arrow = document.getElementById('listsArrow');
+
+    if(content.style.display === 'none'){
+
+        content.style.display = 'block';
+        arrow.className = 'ti ti-chevron-down';
+
+    } else {
+
+        content.style.display = 'none';
+        arrow.className = 'ti ti-chevron-right';
+
+    }
+};
 </script>
 </div>
 @endsection
