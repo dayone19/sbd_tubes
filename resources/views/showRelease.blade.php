@@ -956,41 +956,32 @@
 .track:hover {background-color: #efefef; cursor: pointer;}
 .track:hover .track-num { display: none;}
 .track:hover .play-icon-hover { display: inline-block; }
-
 .modal-save-btn{
     background-color: #198754 !important;
     border-color: #198754 !important;
     color: #fff !important;
 }
-
 .modal-save-btn:hover{
     background-color: #157347 !important;
     border-color: #146c43 !important;
 }
-
 .lists-title-wrap{
     width:100%;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
-
 .lists-actions{
     display:flex;
     align-items:center;
     gap:8px;
 }
-
 .add-list-link{
     color:#2a5bd7;
     text-decoration:none;
     font-size:13px;
 }
-
-.add-list-link:hover{
-    text-decoration:underline;
-}
-
+.add-list-link:hover{text-decoration:underline;}
 .lists-toggle-btn{
     border:none;
     background:none;
@@ -1000,29 +991,19 @@
     align-items:center;
     justify-content:center;
 }
-
 .lists-toggle-btn i{
     font-size:18px;
     color:#2a5bd7;
 }
-    /* Responsive */
-    @media (max-width: 768px) {
-        .album-wrapper {
-            flex-direction: column;
-        }
-        .album-right {
-            width: 100%;
-        }
-        .credits-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .credits-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+/* Responsive */
+@media (max-width: 768px) {
+  .album-wrapper {flex-direction: column;}
+  .album-right {width: 100%;}
+  .credits-grid {grid-template-columns: 1fr 1fr;}
+}
+@media (max-width: 480px) {
+  .credits-grid {grid-template-columns: 1fr;}
+}
 </style>
 
 <div class="album-wrapper">
@@ -1485,18 +1466,18 @@
   </div>
  
   <div class="music-content">
-  <!-- Apple Music Bar -->
-  <div class="music-bar">
-    <div class="music-bar-left">
-      <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
-        <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
-      </svg>
-      <span>Music</span>
+    <!-- Apple Music Bar -->
+    <div class="music-bar">
+      <div class="music-bar-left">
+        <svg width="16" height="16" viewBox="0 0 814 1000" fill="#000" xmlns="http://www.w3.org/2000/svg">
+          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.8 135.5-317.7 269.3-317.7 100.3 0 163.6 52.5 220.2 52.5 54 0 124.9-55.7 236.3-55.7 40.5 0 150.7 4.9 222.7 80.8zm-265.3-191.4c-43.3 17.8-121.4 81.6-121.4 177.7 0 95.7 60.4 153.8 99.1 153.8.5 0 1.2 0 1.9-.1.5-97.6 71.8-164.5 122-191.4 24.3-13.1 67.6-37.1 103.6-37.1.5-1.9.5-3.8.5-5.8-.1-86-63.5-168.8-205.7-97.1z"/>
+        </svg>
+        <span>Music</span>
+      </div>
+      <button class="btn-signin">Sign In</button>
     </div>
-    <button class="btn-signin">Sign In</button>
-  </div>
  
-  <!-- Album Info -->
+    <!-- Album Info -->
     <div class="album-info">
       <div class="album-art">
         <img src="{{ $release->image }}" alt="Album Art">
@@ -1516,21 +1497,21 @@
   </div>
 
   <!-- Hidden audio player -->
-<audio id="player" style="display:none;"></audio>
+  <audio id="player" style="display:none;"></audio>
  
   <!-- Track List -->
-<div class="track-list">
-  @foreach($tracks as $i => $track)
-  <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
-    
-    <span class="track-num">{{ $i+1 }}</span>
-    
-    <span class="play-icon-hover">▶</span>
-    
-    <span class="track-name">{{ $track->title }}</span>
+  <div class="track-list">
+    @foreach($tracks as $i => $track)
+    <div class="track" data-audio="{{ $track->audio_url }}" onclick="playTrack(this)">
+      
+      <span class="track-num">{{ $i+1 }}</span>
+      
+      <span class="play-icon-hover">▶</span>
+      
+      <span class="track-name">{{ $track->title }}</span>
+    </div>
+    @endforeach
   </div>
-  @endforeach
-</div>
  
   <!-- Play Button -->
   <div class="play-wrap">
@@ -1585,160 +1566,138 @@
                     @endforeach
                 </div>
 
-
-  <!-- HEADER -->
-    <div class="l-section">
-        <div class="l-header">
-           <div class="lists-title-wrap">
-            <h2>Lists</h2>
-             <a href="#"
-               data-bs-toggle="modal"
-               data-bs-target="#addToListModal"
-               class="add-list-link">
-               Add to List
-            </a>
-            <button type="button"
-                    class="lists-toggle-btn"
-                    onclick="toggleLists()">
-
-                <i id="listsArrow" class="ti ti-chevron-down"></i>
-
-            </button>
-        </div>
-
-         <!-- MODAL POPUP -->
-<div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
-        <div class="modal-content">
-
-            <!-- HEADER -->
-            <div class="modal-header border-0 pb-2">
-                <h5 class="modal-title fw-bold">
-                    Add Release to List
-                </h5>
-
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
-                </button>
-            </div>
-
-            <hr class="m-0">
-
-            <!-- BODY -->
-            <div class="modal-body p-3">
-
-            <!-- {{ route('release.addToList', $release->release_id) }} -->
-                  <form action="{{ route('release.addToList', $release->release_id) }}" method="POST">
-                  @csrf
-
-                  <!-- RADIO -->
-                  <div class="mb-3 mt-1">
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input"
-                                type="radio"
-                                name="listOption"
-                                id="radioExisting"
-                                value="existing"
-                                checked>
-                          <label class="form-check-label">Existing List</label>
-                      </div>
-
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input"
-                                type="radio"
-                                name="listOption"
-                                id="radioNew"
-                                value="new">
-                          <label class="form-check-label">New List</label>
-                      </div>
-                  </div>
-
-                  <!-- EXISTING LIST -->
-                  <div id="existing-list-fields">
-                      <div class="mb-3">
-                          <label class="form-label">List</label>
-                          <select class="form-select" name="list_id">
-                               <optgroup label="Recently Used">
-                                    @foreach($lists as $list)
-                                        <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
-                                    @endforeach
-                                </optgroup>
-                                <optgroup label="All Lists">
-                                    @foreach($lists as $list)
-                                        <option value="{{ $list->list_id }}">{{ $list->list_name}}</option>
-                                    @endforeach
-                                </optgroup>
-                          </select>
-                      </div>
-                  </div>
-
-                  <!-- NEW LIST -->
-                  <div id="new-list-fields" class="d-none">
-                      <div class="mb-3">
-                          <label class="form-label">Title</label>
-                          <input type="text" class="form-control" name="name" placeholder="Enter list title">
-                      </div>
-                      <div class="mb-3">
-                          <label class="form-label">Description <span class="text-muted"><i>optional</i></span></label>
-                          <textarea class="form-control" rows="2" name="description"></textarea>
-                      </div>
-                  </div>
-
-                  <!-- COMMENTS -->
-                  <div class="mb-3">
-                      <label class="form-label">Comments on this item <span class="text-muted"><i>optional</i></span></label>
-                      <textarea class="form-control" rows="2" name="comments"></textarea>
-                  </div>
-
-                  <!-- BUTTON -->
-                  <div class="d-flex gap-2 pt-2">
-                      <button type="submit" class="btn btn-success modal-save-btn">Save</button>
-                      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                  </div>
-              </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-        
-      <div id="listsContent">
-        <div class="l-list">
-            @forelse($lists as $list)
-                <div class="l-meta">
-                    <div>
-                        <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }} </a>
-                    </div>
-                   
-                </div>
-            @empty
-                <div class="l-meta">No lists yet</div>
-            @endforelse
-        </div>
-        
-
-        <div class="l-footer">
-            <a href="/lists" class="view-more-lists">View more lists →</a>
-        </div>
+  <!-- LISTS SECTION -->
+  <div class="l-section">
+      
+      <!-- HEADER -->
+      <div class="l-header">
+          <div class="lists-title-wrap">
+              <h2>Lists</h2>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#addToListModal" class="add-list-link">
+                  Add to List
+              </a>
+              <button type="button" class="lists-toggle-btn" onclick="toggleLists()">
+                  <i id="listsArrow" class="ti ti-chevron-down"></i>
+              </button>
+          </div>
       </div>
 
-        <div style="margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
-            @foreach($contributors as $contributor)
-                <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
-                    {{ $contributor->username }}
-                </div>
-            @endforeach
+      <!-- MODAL POPUP -->
+      <div class="modal fade" id="addToListModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+              <div class="modal-content">
 
-            <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; margin-top: 15px; color: #0088cc;">Report Suspicious Activity</div>
+                  <!-- MODAL HEADER -->
+                  <div class="modal-header border-0 pb-2">
+                      <h5 class="modal-title fw-bold">Add Release to List</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+
+                  <hr class="m-0">
+
+                  <!-- MODAL BODY -->
+                  <div class="modal-body p-3">
+                      <form action="{{ route('release.addToList', $release->release_id) }}" method="POST">
+                          @csrf
+
+                          <!-- RADIO OPTIONS -->
+                          <div class="mb-3 mt-1">
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="listOption" id="radioExisting" value="existing" checked>
+                                  <label class="form-check-label" for="radioExisting">Existing List</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="listOption" id="radioNew" value="new">
+                                  <label class="form-check-label" for="radioNew">New List</label>
+                              </div>
+                          </div>
+
+                          <!-- EXISTING LIST FIELDS -->
+                          <div id="existing-list-fields">
+                              <div class="mb-3">
+                                  <label class="form-label">List</label>
+                                  <select class="form-select" name="list_id">
+                                      <optgroup label="Recently Used">
+                                          @foreach($lists as $list)
+                                              <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                          @endforeach
+                                      </optgroup>
+                                      <optgroup label="All Lists">
+                                          @foreach($lists as $list)
+                                              <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                          @endforeach
+                                      </optgroup>
+                                  </select>
+                              </div>
+                          </div>
+
+                          <!-- NEW LIST FIELDS -->
+                          <div id="new-list-fields" class="d-none">
+                              <div class="mb-3">
+                                  <label class="form-label">Title</label>
+                                  <input type="text" class="form-control" name="name" placeholder="Enter list title">
+                              </div>
+                              <div class="mb-3">
+                                  <label class="form-label">Description <span class="text-muted"><i>optional</i></span></label>
+                                  <textarea class="form-control" rows="2" name="description"></textarea>
+                              </div>
+                          </div>
+
+                          <!-- COMMENTS -->
+                          <div class="mb-3">
+                              <label class="form-label">Comments on this item <span class="text-muted"><i>optional</i></span></label>
+                              <textarea class="form-control" rows="2" name="comments"></textarea>
+                          </div>
+
+                          <!-- ACTION BUTTONS -->
+                          <div class="d-flex gap-2 pt-2">
+                              <button type="submit" class="btn btn-success modal-save-btn">Save</button>
+                              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                          </div>
+                      </form>
+                  </div>
 
               </div>
-        </div>
+          </div>
+      </div> <!-- Akhir Modal -->
 
-  
+      <!-- TOGGLEABLE DROPDOWN CONTENT -->
+      <div id="listsContent" style="display: block;">
+          <div class="l-list">
+              @forelse($lists as $list)
+                  <div class="l-item mb-2">
+                      <div>
+                          <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a>
+                      </div>
+                  </div>
+              @empty
+                  <div class="l-meta">No lists yet</div>
+              @endforelse
+          </div>
 
-    
+          <div class="l-footer">
+              <a href="/lists" class="view-more-lists">View more lists →</a>
+          </div>
+      </div> <!-- Akhir Toggleable Content -->
+
+      <!-- CONTRIBUTORS SECTION -->
+      <div class="contributors-wrap" style="margin-top: 20px;">
+          <div style="border-bottom: 1px solid #ccc; padding-bottom: 8px; mb-2; font-weight: bold;">
+              Contributors
+          </div>
+          @foreach($contributors as $contributor)
+              <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
+                  {{ $contributor->username }}
+              </div>
+          @endforeach
+      </div>
+
+      <!-- REPORT ACTION -->
+      <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; margin-top: 15px; color: #0088cc; font-size: 13px; cursor: pointer;">
+          Report Suspicious Activity
+      </div>
+
+  </div> <!-- .l-section -->    
    
     <!-- end .album-right -->
      
