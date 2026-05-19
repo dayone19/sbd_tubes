@@ -169,9 +169,12 @@ Route::delete('/review/{id}/delete', [ShowAlbumController::class, 'destroyReview
 //route untuk SearchController.php
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-Route::get('/preview', function () {
-    return view('release.preview');
-});
+// Route::get('/preview', function () {
+//     return view('release.preview');
+// });
+
+Route::get('/releases/preview/{id}', [SubmitReleaseController::class, 'preview'])
+    ->name('releases.preview');
 
 //route untuk ArtistController.php
 Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');

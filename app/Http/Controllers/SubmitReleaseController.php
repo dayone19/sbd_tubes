@@ -305,12 +305,14 @@ class SubmitReleaseController extends Controller
 
             DB::commit();
 
-            return redirect()
-                ->route('releases.create')
-                ->with(
-                    'success',
-                    'Data Release berhasil masuk ke Database!'
-                );
+            // return redirect()
+            //     ->route('releases.create')
+            //     ->with(
+            //         'success',
+            //         'Data Release berhasil masuk ke Database!'
+            //     );
+
+            return redirect()->route('releases.preview', ['id' => $releaseId]);
 
         } catch (\Exception $e) {
 
@@ -319,4 +321,48 @@ class SubmitReleaseController extends Controller
             dd($e->getMessage());
         }
     }
+
+    // ── Preview release yang baru disubmit ──
+public function preview($id)
+{
+    $release = DB::table('releases')->where('release_id', $id)->firstOrFail();
+
+    $artists = DB::table('artist_release')
+        ->join('artists', 'artist_release.artist_id', '=', 'artists.artist_id')
+        ->where('artist_release.release_id', $id)
+        ->pluck('artists.name')
+        ->join(', ');
+
+    $labels = DB::table('label_release')
+        ->join('labels', 'label_release.label_id', '=', 'labels.label_id')
+        ->where('label_release.release_id', $id)
+        ->select('labels.name', 'label_release.catalog_number')
+        ->get();
+
+    $formats = DB::table('format_release')
+        ->join('formats', 'format_release.format_id', '=', 'formats.format_id')
+        ->where('format_release.release_id', $id)
+        ->pluck('formats.name')
+        ->join(', ');
+
+    $genres = DB::table('genre_release')
+        ->join('genres', 'genre_release.genre_id', '=', 'genres.genre_id')
+        ->where('genre_release.release_id', $id)
+        ->pluck('genres.name')
+        ->join(', ');
+
+    $tracks = DB::table('tracks')
+        ->where('release_id', $id)
+        ->orderBy('position')
+        ->get();
+
+    $image = DB::table('images')
+        ->where('release_id', $id)
+        ->first();
+
+    return view('release.preview', compact(
+        'release', 'artists', 'labels',
+        'formats', 'genres', 'tracks', 'image'
+    ));
+}
 }

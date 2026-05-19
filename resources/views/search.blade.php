@@ -460,7 +460,9 @@
         @if(request($field))
             <div class="chip" style="background: #f0f0f0; border: 1px solid #ddd; padding: 4px 10px; border-radius: 4px; font-size: 12px; display: flex; align-items: center; gap: 8px;">
                 <span style="color: #666;">{{ $label }}:</span>
-                <span style="font-weight: bold;">{{ request($field) }}</span>
+                <span style="font-weight: bold;">
+                    {{ is_array(request($field)) ? implode(', ', request($field)) : request($field) }}
+                </span>
                 <a href="{{ request()->fullUrlWithQuery([$field => null]) }}" style="text-decoration: none; color: #999; font-size: 16px; line-height: 1;">&times;</a>
             </div>
         @endif

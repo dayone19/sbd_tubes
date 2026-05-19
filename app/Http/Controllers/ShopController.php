@@ -119,9 +119,19 @@ class ShopController extends Controller
         }
 
         if ($filterMasterId) {
-            // SQL Langkah 1: SELECT release_id FROM releases WHERE master_id = ?
-            // SQL Langkah 2: WHERE products.release_id IN (?, ?, ...)
-            $releaseIds = \App\Models\Release::where('master_id', $filterMasterId)->pluck('release_id');
+            // SQL:
+            // SELECT release_id 
+            // FROM releases 
+            // WHERE master_id = ?
+            $releaseIds = \App\Models\Release::where('master_id', $filterMasterId)
+                            ->pluck('release_id');
+
+            // SQL:
+            // WHERE products.release_id IN (
+            //     SELECT release_id 
+            //     FROM releases 
+            //     WHERE master_id = ?
+            // )
             $query->whereIn('products.release_id', $releaseIds);
         }
 
