@@ -180,26 +180,37 @@ body{
 <div class="subtitle">Log in to Discogs to continue</div>
 
 <form method="POST" action="/login">
-@csrf
+    @csrf
 
-<input class="input" type="text" placeholder="Username or email address *">
+    <!-- Menampilkan Error jika Login Gagal -->
+    @if ($errors->any())
+        <div style="color: #ff4d4d; font-size: 14px; margin-bottom: 15px; text-align: left;">
+            {{ $errors->first() }}
+        </div>
+    @endif
 
-<div class="password-box">
-<input class="input" id="password" type="password" placeholder="Password *">
-<span class="eye" onclick="togglePassword()">👁</span>
-</div>
+    <!-- Field Username / Email (Ditambah name="login") -->
+    <input class="input" type="text" name="login" value="{{ old('login') }}" placeholder="Username or email address *" required>
 
-<div class="captcha">
-<input type="checkbox">
-<span>I'm not a robot</span>
-</div>
+    <!-- Field Password (Ditambah name="password") -->
+    <div class="password-box">
+        <input class="input" id="password" type="password" name="password" placeholder="Password *" required>
+        <span class="eye" onclick="togglePassword()">👁</span>
+    </div>
 
-<div class="forgot">
-<a href="#">Forgot password?</a>
-</div>
+    <div class="captcha">
+        <input type="checkbox" required>
+        <span>I'm not a robot</span>
+    </div>
 
-<button class="continue">Continue</button>
+    <div class="forgot">
+        <a href="#">Forgot password?</a>
+    </div>
+
+    <button type="submit" class="continue">Continue</button>
 </form>
+
+
 
 <div class="signup">
 Don't have an account? <a href="/signup">Sign up</a>

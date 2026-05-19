@@ -135,8 +135,11 @@ class AdvancedSearchController extends Controller
         // --- GABUNGKAN / FILTER BERDASARKAN TIPE ---
         if ($type == 'all') {
             $union = $masterQuery->unionAll($releaseQuery)->unionAll($artistQuery)->unionAll($labelQuery);
+            
+            // subquery untuk menggabungkan hasil query master, release, artist, dan label
             $albums = DB::table(DB::raw("({$union->toSql()}) as combined"))
                 ->mergeBindings($union)->paginate($perPage);
+
         } elseif ($type == 'master') {
             $albums = $masterQuery->paginate($perPage);
         } elseif ($type == 'artist') {

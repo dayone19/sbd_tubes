@@ -21,8 +21,8 @@
 /* tombol panah */
 .page-btn{width:36px;height:36px;border:1px solid #d0d0d0;background:#fafafa;font-size:18px;color:#999;cursor:pointer;}
 .footer-right{display:flex;align-items:center;gap:14px;font-size:15px;}
-.show-select{width:62px;height:36px;border:1px solid #cfcfcf;padding:0 10px;font-size:14px;background:#fff;
-}
+.show-select{width:62px;height:36px;border:1px solid #cfcfcf;padding:0 10px;font-size:14px;background:#fff;}
+.no-data {padding: 20px; text-align: center; color: #666; font-style: italic;}
 </style>
 
 <div class="list-page">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="list-title">
-        Lists by {{ $lists->first()->username }}
+        Lists by {{ auth()->user()->username }}
     </div>
 
     <table class="list-table">
@@ -45,12 +45,16 @@
         </thead>
 
         <tbody>
-    @foreach($lists as $list)
+        @forelse($lists as $list)
             <tr>
-            <td> <a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a></td>
+                <td><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a></td>
                 <td>{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
             </tr>
-    @endforeach
+        @empty
+            <tr>
+                <td colspan="2" class="no-data">You haven't created any lists yet.</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
     

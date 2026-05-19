@@ -940,8 +940,8 @@ border-radius: 4px;color: #333;padding: 5px 20px;}
 
         <ul class="lists-container">
            @foreach($lists as $list) 
-            <li><a href="#">{{ $list->name }}</a>
-                     by <a href="#">{{ $list->username }}</a>
+            <li><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a>
+                     by <a href="/user/{{ $list->user_id ?? '' }}/lists">{{ $list->username }}</a>
             </li>
            @endforeach 
         </ul>

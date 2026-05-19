@@ -33,17 +33,21 @@
 </style>
 
 <section class="profile-banner">
-    <a href="#" class="upload-btn">Upload Image</a>
-    <div class="avatar-box">
-        <svg viewBox="0 0 24 24" fill="white" width="120" height="120"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    <a href="{{ route('settings.user') }}" class="upload-btn">Upload Image</a>
+    <div class="avatar-box" style="background: #333;">
+        @if(auth()->check() && auth()->user()->userProfile && auth()->user()->userProfile->image)
+            <img src="{{ asset('uploads/avatars/' . auth()->user()->userProfile->image) }}" style="width: 100%; height: 100%; object-fit: cover;" alt="Profile">
+        @else
+            <svg viewBox="0 0 24 24" fill="white" width="120" height="120"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        @endif
     </div>
 </section>
 
 <div class="profile-info-bar">
-    <div class="username">Gweh</div>
-    <div  href="user/lists" class="stat-box">
+    <div class="username">{{ auth()->user()->username ?? 'Gweh' }}</div>
+    <div href="/user/lists" class="stat-box" style="cursor: pointer;" onclick="window.location.href='/user/lists'">
         Lists
-        <span>1</span>
+        <span>{{ auth()->check() ? auth()->user()->listModels()->count() : 0 }}</span>
     </div>
 </div>
 
@@ -51,7 +55,7 @@
     <a href="{{ route('settings.user') }}" class="settings-btn">⚙ Settings</a>
 
     <aside class="sidebar">
-        <p style="margin-top:0;">Joined on April 16, 2026</p>
+    <p style="margin-top:0;">Joined on {{ \Carbon\Carbon::parse(auth()->user()->created_at)->format('F d, Y') }} </p>
         
         <h3><b>Releases</b></h3>
         <p>No releases</p>

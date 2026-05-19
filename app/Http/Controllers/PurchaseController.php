@@ -11,7 +11,10 @@ class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
+
         $user_id = Auth::id();
+
+
 
         // 2. Query dasar untuk ambil transaksi pembelian user
         $query = Transaction::where('user_id', $user_id)

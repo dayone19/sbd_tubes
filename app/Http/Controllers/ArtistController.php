@@ -537,6 +537,7 @@ class ArtistController extends Controller
             ->select('l.list_id', 
                      'l.name',
                      'u.username',
+                     'u.user_id',
                      'l.comments',
                      'l.description',
                      'l.created_at'
@@ -611,42 +612,49 @@ class ArtistController extends Controller
                          ->with('success', 'Review submitted!');
     }
 
-    public function addToList(Request $request, $id)
-{
-    $artist = Artist::findOrFail($id);
 
-    // 1. PINDAHKAN QUERY INI KE PALING ATAS
-    $release = DB::table('artist_release')
-        ->where('artist_id', $id)
-        ->value('release_id');
+     public function addToList(Request $request, $id)
+    {
+        $artist = Artist::findOrFail($id);
 
-    if ($request->listOption === 'new') {
-        // buat list baru
-        $list = ListModel::create([
-            'user_id' => 1,
-            // 'user_id' => auth()->id(),
-            'name'    => $request->name,
-            'description'=> $request->description,
-            'comments'=> $request->comments,
-        ]);
+        $release = DB::table('artist_release')
+            ->where('artist_id', $id)
+            ->value('release_id');
 
-        DB::table('list_release')->insert([
-            'list_id'   => $list->list_id,
-            'release_id'=> $release,
-            'comments'  => $request->comments, // Tambahkan ini agar komentar tersimpan ke database
-        ]);
-        
-    } else {
-        $list = ListModel::findOrFail($request->list_id);
 
-        DB::table('list_release')->insert([
-            'list_id'    => $list->list_id,
-            'release_id' => $release, // HAPUS '->release_id' karena $release sudah berupa ID langsung
-        ]);
+        if (!$release) {
+            return redirect()->back()->with('error', 'Artis ini belum memiliki release untuk dimasukkan ke list.');
+        }
+
+        if ($request->listOption === 'new') {
+           
+            $list = ListModel::create([
+                'user_id'     => auth()->id(),
+                'name'        => $request->name,
+                'description' => $request->description,
+                'comments'    => $request->comments, 
+            ]);
+
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $release,
+            ]);
+            
+        } else {
+           
+            $list = ListModel::findOrFail($request->list_id);
+
+           
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $release,
+            ]);
+        }
+
+       
+        return redirect()->route('show.artist', $id)
+                        ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
     }
-
-    return redirect()->route('show.artist', $artist->artist_id)
-                    ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
-}
+    
 
 }

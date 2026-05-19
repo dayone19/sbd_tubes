@@ -17,7 +17,7 @@ body{font-family:Arial, Helvetica, sans-serif;background:#fff;color:#111;}
 .form-group{margin-bottom:22px;}
 .form-group label{display:block;font-size:14px;margin-bottom:8px;font-weight:bold;}
 .checkbox{display:flex;align-items:flex-start;gap:10px;margin-top:10px;font-size:14px;}
-.input-full{width:100%;max-width:470px;padding:4px;border:1px solid #999;font-size:15px;}
+.input-full{width:100%;max-width:470px;padding:8px;border:1px solid #999;font-size:15px;}
 textarea.input-full{height:140px;resize:vertical;}
 select{width:260px;padding:8px;border:1px solid #999;font-size:15px;background:white;}
 .btn-light{background:#f8f8f8;border:1px solid #ccc;padding:6px 13px;cursor:pointer;border-radius:2px;color:#333;font-size:14px;}
@@ -27,7 +27,7 @@ select{width:260px;padding:8px;border:1px solid #999;font-size:15px;background:w
 .btn-light:hover{background:#ececec;}
 .btn-save:hover{background:#23913d;}
 /* ===== PROFILE PHOTO ===== */
-.profile-photo{width:390px;height:390px;background:#d7d7d7;border:1px solid #cfcfcf;}
+.profile-photo{width:180px;height:180px;background:#d7d7d7;border:1px solid #cfcfcf;overflow:hidden;display:flex;justify-content:center;align-items:center;}
 /* ===== TEXT ===== */
 .help-text{ font-size:14px; margin:18px 0 28px; line-height:1.6;}
 .help-text a{color:#336699;text-decoration:none;}
@@ -37,7 +37,6 @@ select{width:260px;padding:8px;border:1px solid #999;font-size:15px;background:w
 .email-info {font-size: 14px;margin-bottom: 15px;}
 .email-info b {font-family: monospace;font-size: 15px;}
 .instruction-text {font-size: 14px;margin-bottom: 15px;line-height: 1.5;}
-/* Untuk teks tebal di status 2FA */
 .status-text {display: flex;align-items: center;gap: 8px;font-size: 16px;font-weight: bold;margin: 15px 0;}
 .link-blue {color: #336699;text-decoration: none;}
 .link-blue:hover {text-decoration: underline;}
@@ -58,205 +57,251 @@ select{width:260px;padding:8px;border:1px solid #999;font-size:15px;background:w
             change your email address, or update your password.
         </div>
 
-        <div class="settings-box">
-
-            <div class="section-header">
-                General settings
+        <!-- NOTIFIKASI SUKSES / ERROR -->
+        @if(session('success'))
+            <div style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+                <strong>Sukses!</strong> {{ session('success') }}
             </div>
+        @endif
 
-            <div class="section-content">
+        @if($errors->any())
+            <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+                <strong>Perhatian!</strong> Harap perbaiki kesalahan berikut:
+                <ul style="margin-bottom: 0; margin-top: 10px;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-                <div class="form-group">
-                    <label>Language</label>
+        <!-- FORM 1: GENERAL & PROFILE SETTINGS -->
+        <form action="{{ route('settings.user.profile') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-                    <select>
-                        <option>English</option>
-                        <option>Indonesia</option>
-                    </select>
+            <div class="settings-box">
+
+                <div class="section-header">
+                    General settings
                 </div>
 
-                <div class="form-group">
-                    <label>Time Zone</label>
+                <div class="section-content">
 
-                    <select>
-                        <option>(GMT-8) PST</option>
-                        <option>(GMT+7) WIB</option>
-                    </select>
-                </div>
-
-                <div class="checkbox">
-                    <input type="checkbox" checked>
-
-                    <span>
-                        <b>Auto-save submissions</b> after I comment or vote
-                    </span>
-                </div>
-
-            </div>
-
-            <!-- PROFILE -->
-
-            <div class="section-header">
-                Profile settings
-            </div>
-
-            <div class="section-content">
-
-                <h2 style="font-size:15px; margin-bottom:20px; font-weight:bold;">
-                    Profile Photo
-                </h2>
-
-                <div style="margin-bottom:18px;">
-                    <div class="profile-photo"></div>
-
-                    <div style="margin-top:15px; display:flex; gap:10px;">
-                        <button type="button" class="btn-light">
-                            Upload Photo
-                        </button>
-
-                        <button type="button" class="btn-blue">
-                            Use Gravatar
-                        </button>
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select name="language">
+                            <option>English</option>
+                            <option selected>Indonesia</option>
+                        </select>
                     </div>
-                </div>
 
-                <div class="help-text">
-                    Change your avatar at
-                    <a href="#">Gravatar.com</a>.
-                </div>
-
-                <div class="help-text" style="margin-top:-10px;">
-                    Tell the community a little about yourself.
-                    This information will be displayed on
-                    <a href="#" class="link-purple">your profile page</a>.
-                </div>
-
-                <!-- REAL NAME -->
-
-                <div class="form-group">
-                    <label>
-                        Real Name
-                        <span class="optional">optional</span>
-                    </label>
-
-                    <input type="text" class="input-full">
-                </div>
-
-                <!-- PROFILE -->
-
-                <div class="form-group">
-                    <label>
-                        Profile
-                        <span class="optional">optional</span>
-                    </label>
-
-                    <textarea class="input-full"></textarea>
-
-                    <div>
-                        <a href="#" style="font-size:14px;">
-                            View formatting options
-                        </a>
+                    <div class="form-group">
+                        <label>Time Zone</label>
+                        <select name="timezone">
+                            <option>(GMT-8) PST</option>
+                            <option selected>(GMT+7) WIB</option>
+                        </select>
                     </div>
-                </div>
 
-                <!-- LOCATION -->
-
-                <div class="form-group">
-                    <label>
-                        Geographic Location
-                        <span class="optional">optional</span>
-                    </label>
-
-                    <input type="text" class="input-full">
-                </div>
-
-                <!-- HOMEPAGE -->
-
-                <div class="form-group">
-                    <label>
-                        Home Page
-                        <span class="optional">optional</span>
-                    </label>
-
-                    <input type="text" class="input-full">
-
-                    <div class="small-note">
-                        Must be either completely empty or a full,
-                        valid URL including http://
+                    <div class="checkbox">
+                        <input type="checkbox" checked>
+                        <span>
+                            <b>Auto-save submissions</b> after I comment or vote
+                        </span>
                     </div>
+
                 </div>
 
-                <!-- SAVE -->
+                <div class="section-header">
+                    Profile settings
+                </div>
 
-                <button type="submit" class="btn-save">
-                    Save settings
-                </button>
+                <div class="section-content">
+
+                    <h2 style="font-size:15px; margin-bottom:20px; font-weight:bold;">
+                        Profile Photo
+                    </h2>
+
+                    <div style="margin-bottom:18px;">
+                        <div class="profile-photo">
+                            @if($profile->image)
+                                <img src="{{ asset('uploads/avatars/' . $profile->image) }}" style="width:100%; height:100%; object-fit:cover;" alt="Avatar">
+                            @else
+                                <svg viewBox="0 0 24 24" fill="white" width="120" height="120"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            @endif
+                        </div>
+
+                        <div style="margin-top:15px; display:flex; gap:10px; align-items:center;">
+                            <!-- Input File disembunyikan agar tampilan tombol tetap indah -->
+                            <input type="file" name="image" id="avatar-input" style="display:none;" onchange="handleFileSelect(event)">
+                            <button type="button" class="btn-light" onclick="document.getElementById('avatar-input').click()">
+                                Upload Photo
+                            </button>
+                            <button type="button" class="btn-blue">
+                                Use Gravatar
+                            </button>
+                        </div>
+
+                        <!-- Kotak 'File selected' persis seperti web Discogs -->
+                        <div id="file-selected-alert" style="display:none; margin-top:15px; background-color:#eef8ef; border-left:4px solid #008a00; padding:10px 15px; align-items:center; gap:10px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#008a00">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            <span style="color:#111; font-size:14px; margin-top: 1px;">File selected</span>
+                        </div>
+                    </div>
+
+                    <div class="help-text">
+                        Change your avatar at
+                        <a href="#">Gravatar.com</a>.
+                    </div>
+
+                    <div class="help-text" style="margin-top:-10px;">
+                        Tell the community a little about yourself.
+                        This information will be displayed on
+                        <a href="{{ route('user.profile') }}" class="link-blue">your profile page</a>.
+                    </div>
+
+                    <!-- REAL NAME -->
+                    <div class="form-group">
+                        <label>
+                            Real Name
+                            <span class="optional">optional</span>
+                        </label>
+                        <input type="text" name="real_name" class="input-full" value="{{ old('real_name', $profile->real_name) }}">
+                    </div>
+
+                    <!-- PROFILE BIO -->
+                    <div class="form-group">
+                        <label>
+                            Profile
+                            <span class="optional">optional</span>
+                        </label>
+                        <textarea name="profile" class="input-full">{{ old('profile', $profile->profile) }}</textarea>
+                        <div>
+                            <a href="#" style="font-size:14px; color: #336699; text-decoration: none;">
+                                View formatting options
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- LOCATION -->
+                    <div class="form-group">
+                        <label>
+                            Geographic Location
+                            <span class="optional">optional</span>
+                        </label>
+                        <input type="text" name="geographic_location" class="input-full" value="{{ old('geographic_location', $profile->geographic_location) }}">
+                    </div>
+
+                    <!-- HOMEPAGE -->
+                    <div class="form-group">
+                        <label>
+                            Home Page
+                            <span class="optional">optional</span>
+                        </label>
+                        <input type="text" name="home_page" class="input-full" value="{{ old('home_page', $profile->home_page) }}">
+                        <div class="small-note">
+                            Must be either completely empty or a full,
+                            valid URL including http://
+                        </div>
+                    </div>
+
+                    <!-- SAVE PROFILE BUTTON -->
+                    <button type="submit" class="btn-save">
+                        Save settings
+                    </button>
+
+                </div>
 
             </div>
+        </form>
 
-        </div>
-
+        <!-- FORM 2: CHANGE EMAIL ADDRESS -->
         <div class="settings-box">
             <div class="section-header">Email address</div>
             <div class="section-content">
-                <div class="email-info">
-                    Your current e-mail address is <b>gweh@gmail.com</b>
-                </div>
-                <div class="instruction-text">
-                    You will need to login again after changing your email address.
-                </div>
-                <button type="button" class="btn-blue">
-                    Change my email address
-                </button>
+                <form action="{{ route('settings.user.email') }}" method="POST">
+                    @csrf
+                    <div class="email-info">
+                        Your current e-mail address is <b>{{ $user->email }}</b>
+                    </div>
+                    <div class="instruction-text">
+                        You will need to login again after changing your email address.
+                    </div>
+
+                    <div class="form-group">
+                        <label>New email address</label>
+                        <input type="email" name="email" class="input-full" required value="{{ old('email') }}">
+                    </div>
+
+                    <button type="submit" class="btn-blue">
+                        Change my email address
+                    </button>
+                </form>
             </div>
         </div>
 
+        <!-- FORM 3: CHANGE PASSWORD -->
         <div class="settings-box">
             <div class="section-header">Change Password</div>
             <div class="section-content">
-                <div class="instruction-text">
-                    Changing your password is <i>not required</i><br>
-                    to change general or profile settings.
-                </div>
-                <div class="instruction-text">
-                    You will need to login again after changing your password.
-                </div>
+                <form action="{{ route('settings.user.password') }}" method="POST">
+                    @csrf
+                    <div class="instruction-text">
+                        Changing your password is <i>not required</i><br>
+                        to change general or profile settings.
+                    </div>
+                    <div class="instruction-text">
+                        You will need to login again after changing your password.
+                    </div>
 
-                <div class="form-group">
-                    <label>New password</label>
-                    <input type="password" class="input-full">
-                </div>
+                    <div class="form-group">
+                        <label>Current password</label>
+                        <input type="password" name="current_password" class="input-full" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Confirm new password</label>
-                    <input type="password" class="input-full">
-                </div>
+                    <div class="form-group">
+                        <label>New password</label>
+                        <input type="password" name="password" class="input-full" required>
+                    </div>
 
-                <button type="submit" class="btn-save">
-                    Change password
-                </button>
+                    <div class="form-group">
+                        <label>Confirm new password</label>
+                        <input type="password" name="password_confirmation" class="input-full" required>
+                    </div>
+
+                    <button type="submit" class="btn-save">
+                        Change password
+                    </button>
+                </form>
             </div>
         </div>
 
+        <!-- FORM 4: CHANGE USERNAME -->
         <div class="settings-box">
             <div class="section-header">Change Username</div>
             <div class="section-content">
-                <div class="instruction-text">
-                    Changing your username is not required to change general or profile settings. <br>
-                    Changing your username means that your old username is no longer available for use by you or by anyone. <br>
-                    You may change your username 3 more times. <br>
-                    You will need to login again after changing your username. <br>
-                </div>
-                <div class="form-group">
-                    <label>New username</label>
-                    <input type="text" class="input-full">
-                </div>
-                <button type="submit" class="btn-save">
-                    Change username
-                </button>
+                <form action="{{ route('settings.user.username') }}" method="POST">
+                    @csrf
+                    <div class="instruction-text">
+                        Changing your username is not required to change general or profile settings. <br>
+                        Changing your username means that your old username is no longer available for use by you or by anyone. <br>
+                        You may change your username 3 more times. <br>
+                        You will need to login again after changing your username. <br>
+                    </div>
+                    <div class="form-group">
+                        <label>New username</label>
+                        <input type="text" name="username" class="input-full" required value="{{ old('username') }}">
+                    </div>
+                    <button type="submit" class="btn-save">
+                        Change username
+                    </button>
+                </form>
             </div>
         </div>
 
+        <!-- 2FA SECTION (STATED ONLY) -->
         <div class="settings-box">
             <div class="section-header">Two-Factor Authentication</div>
             <div class="section-content">
@@ -285,5 +330,18 @@ select{width:260px;padding:8px;border:1px solid #999;font-size:15px;background:w
     </div>
 
 </div>
+
+<!-- Script untuk memunculkan kotak hijau saat file foto dipilih -->
+<script>
+function handleFileSelect(event) {
+    var input = event.target;
+    var alertBox = document.getElementById('file-selected-alert');
+    if (input.files && input.files[0]) {
+        alertBox.style.display = 'flex'; // Munculkan kotak hijau
+    } else {
+        alertBox.style.display = 'none'; // Sembunyikan jika batal
+    }
+}
+</script>
 
 @endsection

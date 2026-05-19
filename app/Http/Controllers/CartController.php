@@ -158,7 +158,9 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+
         $user_id = Auth::id(); 
+
 
         $product = Product::findOrFail($request->product_id);
 
