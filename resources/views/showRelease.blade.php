@@ -1559,7 +1559,7 @@
                     <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
                         <div class="v-thumb">
                             <img src="{{ $video->thumbnail }}">
-                            <span class="v-time"> {{ $video->duration }} </span>
+                            <span class="v-time"> {{ sprintf('%d:%02d', floor($video->duration / 60), $video->duration % 60) }}</span>
                         </div>
                         <div class="v-title"><b> {{ $video->title }} </b></div>
                     </div>

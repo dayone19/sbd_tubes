@@ -14,7 +14,7 @@
   .list-meta a:hover { text-decoration: underline; }
   .avatar {width: 28px;height: 28px;background: #ddd;border-radius: 3px;display: inline-block;}
   /* DESCRIPTION */
-  .desc-display {border: 1px;min-height: 80px;padding: 10px 36px 10px 12px;font-size: 14px;margin-bottom: 18px;position: relative;cursor: pointer;transition: border-color .15s, background .15s;line-height: 1.5;}
+  .desc-display {border: 1px transparent solid;min-height: 40px;padding: 10px 36px 10px 12px;font-size: 14px;margin-bottom: 18px;position: relative;cursor: pointer;transition: border-color .15s, background .15s;line-height: 1.5;}
   .desc-display:hover {border-color: #888;background: #fafafa;}
   .desc-display:hover .edit-icon { opacity: 1; }
   .edit-icon {position: absolute;right: 10px;top: 10px;opacity: 0;font-size: 15px;color: #555;transition: opacity .15s;pointer-events: none;}
@@ -52,7 +52,7 @@
     width: 28px;
     font-size: 14px;
     font-weight: 700;
-    padding-top: 96px;
+    padding-top: 45px;
     flex-shrink: 0;
     color: #444;}
   .item-cover {flex-shrink: 0;}
@@ -81,7 +81,7 @@
     transition: border-color .15s, background .15s;
     position: relative;
     display: inline-block;
-    min-width: 60px;}
+    min-width: 120px;}
   .item-comment:hover {border-color: #ccc;background: #fafafa;}
   .item-comment:hover::after { content: ' ✎';color: #888; font-size: 12px;}
   .comment-edit-area { display: none; margin-top: 10px; }
@@ -188,11 +188,8 @@
   }
 </style>
 
-
-<!-- MAIN -->
 <div class="list-wrapper">
 
-  <!-- LEFT -->
   <div class="list-main">
 
     <div class="list-title">{{ $list->name }}</div>
@@ -204,9 +201,8 @@
       <span>updated {{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</span>
     </div>
 
-    <!-- DESCRIPTION -->
     <div class="desc-display" id="descDisplay" title="Click to edit">
-      <span id="descText">{{ $list->description }}</span>
+      <span id="descText">{{ $list->description ?? 'No description provided.' }}</span>
       <span class="edit-icon">✎</span>
     </div>
 
@@ -217,12 +213,11 @@
         <textarea id="descTextarea" name="description">{{ $list->description }}</textarea>
         <div class="action-row">
           <button class="btn-save" id="saveDesc" type="submit">Save</button>
-          <button class="btn-cancel" id="cancelDesc">Cancel</button>
+          <button class="btn-cancel" id="cancelDesc" type="button">Cancel</button>
         </div>
       </div>
     </form>
 
-    <!-- TOOLBAR -->
     <div class="list-toolbar">
       <div class="toolbar-left">
         <span>Showing <b>1-{{ $items->count() }}</b> of {{ $items->count() }}</span>
@@ -239,38 +234,39 @@
       </div>
     </div>
 
-    <!-- ITEM -->
     @foreach($items as $i => $item)
     <div class="list-item">
       <div class="item-number">{{ $i+1 }}</div>
       <div class="item-cover">
-        <img src="{{ $item->image_url }}"
-          onerror="this.style.background='#ddd';this.removeAttribute('src')" alt="{{ $item->title }}">
+        <img src="{{ $item->image_url }}" onerror="this.style.background='#ddd';this.removeAttribute('src')" alt="{{ $item->title }}">
       </div>
       <div class="item-content">
         <a href="{{ route('show.release', $item->release_id) }}" class="item-title">{{ $item->title }}</a>
         <div class="item-artist">{{ $item->artist }}</div>
         
-        <!-- COMMENT -->
-        <div class="item-comment" id="commentDisplay" title="Click to edit comment">{{ $itemComments[$item->release_id] ?? '' }}</div>
-
-        <form action="{{ route('lists.updateComment', [$list->list_id, $item->release_id]) }}" method="POST">
-          @csrf
-          @method('PUT')
-        <div class="comment-edit-area" id="commentEditArea">
-          <textarea id="commentTextarea" name="comments">{{ $itemComments[$item->release_id] ?? '' }}</textarea>
-          <div class="action-row">
-            <button class="btn-save" id="saveComment" type="submit">Save</button>
-            <button class="btn-cancel" onclick="window.location.reload()" id="cancelComment">Cancel</button>
-          </form>
+        <div class="comment-container">
+          <div class="item-comment comment-display-trigger" title="Click to edit comment">
+            {{ $itemComments[$item->release_id] ?? 'Add a comment...' }}
           </div>
+
+          <form action="{{ route('lists.updateComment', [$list->list_id, $item->release_id]) }}" method="POST" class="comment-form-area" style="display:none; margin-top:10px;">
+            @csrf
+            @method('PUT')
+            <div class="comment-edit-area" style="display:block;">
+              <textarea name="comments" class="comment-textarea">{{ $itemComments[$item->release_id] ?? '' }}</textarea>
+              <div class="action-row">
+                <button class="btn-save" type="submit">Save</button>
+                <button class="btn-cancel comment-cancel-btn" type="button">Cancel</button>
+              </div>
+            </div>
+          </form>
         </div>
+
       </div>
       <div class="item-menu">•••</div>
     </div>
-@endforeach
+    @endforeach
 
-    <!-- BOTTOM TOOLBAR -->
     <div class="list-toolbar-bottom">
       <div class="toolbar-left">
         <span>Showing <b>1-{{ $items->count() }}</b> of {{ $items->count() }}</span>
@@ -281,7 +277,6 @@
 
   </div>
 
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-header" id="manageToggle">
       <span>Manage List</span>
@@ -318,11 +313,11 @@
 
         <button class="sidebar-btn">&#10010; Add List To Dashboard</button>
 
-      <form action="{{ route('lists.destroy', $list->list_id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus list ini?')">
+        <form action="{{ route('lists.destroy', $list->list_id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus list ini?')">
           @csrf
           @method('DELETE')
-        <button type="submit" class="sidebar-btn delete-btn">🗑 Delete This List</button>
-      </form>
+          <button type="submit" class="sidebar-btn delete-btn">🗑 Delete This List</button>
+        </form>
 
       </div>
     </div>
@@ -336,63 +331,61 @@
   const descEditArea  = document.getElementById('descEditArea');
   const descText      = document.getElementById('descText');
   const descTextarea  = document.getElementById('descTextarea');
-  const saveDesc      = document.getElementById('saveDesc');
   const cancelDesc    = document.getElementById('cancelDesc');
 
-  descDisplay.addEventListener('click', function () {
-    descTextarea.value = descText.textContent.trim();
-    descDisplay.style.display = 'none';
-    descEditArea.style.display = 'block';
-    descTextarea.focus();
+  if(descDisplay) {
+    descDisplay.addEventListener('click', function () {
+      descDisplay.style.display = 'none';
+      descEditArea.style.display = 'block';
+      descTextarea.focus();
+    });
+  }
+
+  if(cancelDesc) {
+    cancelDesc.addEventListener('click', function () {
+      descEditArea.style.display = 'none';
+      descDisplay.style.display = 'block';
+    });
+  }
+
+  // ---- MULTI-ITEM COMMENT INLINE EDIT (Berfungsi untuk semua row item) ----
+  document.querySelectorAll('.comment-display-trigger').forEach(trigger => {
+    trigger.addEventListener('click', function() {
+      const container = this.closest('.comment-container');
+      const formArea = container.querySelector('.comment-form-area');
+      const textarea = container.querySelector('.comment-textarea');
+      
+      this.style.display = 'none';
+      formArea.style.display = 'block';
+      textarea.focus();
+    });
   });
 
-  cancelDesc.addEventListener('click', function () {
-    descEditArea.style.display = 'none';
-    descDisplay.style.display = 'block';
-  });
-
-  saveDesc.addEventListener('click', function () {
-    descText.textContent = descTextarea.value || '';
-    cancelDesc.click();
-  });
-
-  // ---- COMMENT INLINE EDIT ----
-  const commentDisplay  = document.getElementById('commentDisplay');
-  const commentEditArea = document.getElementById('commentEditArea');
-  const commentTextarea = document.getElementById('commentTextarea');
-  const saveComment     = document.getElementById('saveComment');
-  const cancelComment   = document.getElementById('cancelComment');
-
-  commentDisplay.addEventListener('click', function () {
-    commentTextarea.value = commentDisplay.textContent.trim();
-    commentDisplay.style.display = 'none';
-    commentEditArea.style.display = 'block';
-    commentTextarea.focus();
-  });
-
-  cancelComment.addEventListener('click', function () {
-    commentEditArea.style.display = 'none';
-    commentDisplay.style.display = 'inline-block';
-  });
-
-  saveComment.addEventListener('click', function () {
-    commentDisplay.textContent = commentTextarea.value || '';
-    cancelComment.click();
+  document.querySelectorAll('.comment-cancel-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const container = this.closest('.comment-container');
+      const trigger = container.querySelector('.comment-display-trigger');
+      const formArea = container.querySelector('.comment-form-area');
+      
+      formArea.style.display = 'none';
+      trigger.style.display = 'inline-block';
+    });
   });
 
   // ---- MANAGE LIST TOGGLE ----
-  const manageToggle  = document.getElementById('manageToggle');
-  const sidebarBody   = document.getElementById('sidebarBody');
+  const manageToggle   = document.getElementById('manageToggle');
+  const sidebarBody    = document.getElementById('sidebarBody');
   const sidebarChevron = document.getElementById('sidebarChevron');
 
-  manageToggle.addEventListener('click', function () {
-    const isOpen = sidebarBody.classList.toggle('open');
-    sidebarChevron.classList.toggle('open', isOpen);
-  });
+  if(manageToggle) {
+    manageToggle.addEventListener('click', function () {
+      const isOpen = sidebarBody.classList.toggle('open');
+      sidebarChevron.classList.toggle('open', isOpen);
+    });
+  }
 
   // Open by default
   sidebarBody.classList.add('open');
   sidebarChevron.classList.add('open');
 </script>
-
 @endsection

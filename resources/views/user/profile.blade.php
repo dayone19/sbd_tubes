@@ -55,7 +55,7 @@
     <a href="{{ route('settings.user') }}" class="settings-btn">⚙ Settings</a>
 
     <aside class="sidebar">
-        <p style="margin-top:0;">Joined on April 16, 2026</p>
+    <p style="margin-top:0;">Joined on {{ \Carbon\Carbon::parse(auth()->user()->created_at)->format('F d, Y') }} </p>
         
         <h3><b>Releases</b></h3>
         <p>No releases</p>

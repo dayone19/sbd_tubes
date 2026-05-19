@@ -124,29 +124,19 @@ class UserListController extends Controller
 
     public function showList(Request $request, string $user_id)
     {
-        $perPage = $request->input('show', 25);
+        // Ambil ID murni dari user yang sedang login saat ini 
+        $user_id = auth()->id(); 
 
-        // SQL:
-        // SELECT u.username, l.name, l.created_at, up.image, l.description, l.user_id, l.list_id
-        // FROM lists AS l
-        // LEFT JOIN users AS u ON l.user_id = u.user_id
-        // LEFT JOIN user_profiles AS up ON u.user_id = up.user_id
-        // LEFT JOIN list_release AS lr ON l.list_id = lr.list_id
-        // WHERE l.user_id = 1
-        // ORDER BY l.created_at DESC
-        // LIMIT {perPage};
+        $perPage = $request->input('show', 25);
+        $page = $request->input('page', 1);
+
         $lists = DB::table('lists as l')
             ->leftJoin('users as u', 'l.user_id', '=', 'u.user_id')
             ->leftJoin('user_profiles as up', 'u.user_id', '=', 'up.user_id')
             ->leftJoin('list_release as lr', 'l.list_id', '=', 'lr.list_id')
             ->select('u.username','l.name','l.created_at','up.image','l.description','l.user_id','l.list_id')
+            ->where('l.user_id', $user_id) // Menyaring data milik user yang login
             ->orderBy('l.created_at', 'desc')
-
-            ->where('l.user_id', $user_id)
-
-            // ->where('l.user_id', $user_id)
-            ->where('l.user_id', 1) // nanti diganti $user_id
-
             ->distinct()
             ->limit($perPage)
             ->get();
@@ -155,7 +145,7 @@ class UserListController extends Controller
             ->where('user_id', $user_id)
             ->count();
 
-        return view('user.lists', compact('lists', 'user_id', 'total', 'perPage'));
+        return view('user.lists', compact('lists', 'user_id', 'total', 'perPage', 'page'));
     }
 
     public function edit(string $id)
