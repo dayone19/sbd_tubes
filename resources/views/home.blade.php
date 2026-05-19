@@ -139,10 +139,10 @@
 </div>
 
 <!-- 4th content -->
-<div class="section">
+<!-- <div class="section">
     <div class="section-header">
         <div class="title">This Week's Collected Vinyl Records & CDs</div>
-    </div>
+    </div> -->
 
     <!-- <div class="carousel-wrapper">
         <button class="carousel-btn prev" onclick="scrollCarousel('collected', -1)">&#8249;</button>
@@ -182,7 +182,7 @@
         </div>
         <button class="carousel-btn next" onclick="scrollCarousel('collected', 1)">&#8250;</button>
     </div> -->
-</div>
+<!-- </div> -->
 
 <script>
     function scrollCarousel(id, direction) {
