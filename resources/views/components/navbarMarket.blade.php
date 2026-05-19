@@ -101,7 +101,7 @@
                    Cart
                 </a>
 
-                <a href="#">Buyer Settings</a>
+                <a href="/settings/buyer">Buyer Settings</a>
 
             </div>
 
@@ -111,7 +111,7 @@
         <div class="market-search">
 
             @if(request()->routeIs('mywants'))
-                <a href="/mywantlist">
+                <a>
                     <button class="view-btn">View your Wantlist</button>
                 </a>
             @endif
