@@ -520,6 +520,7 @@ class ArtistController extends Controller
         //                 u.username,
         //                 l.comments,
         //                 l.description,
+        //                 l.created_at,
         // FROM lists l
         // LEFT JOIN list_release lr ON l.list_id = lr.list_id
         // LEFT JOIN releases r ON lr.release_id = r.release_id
@@ -610,63 +611,42 @@ class ArtistController extends Controller
                          ->with('success', 'Review submitted!');
     }
 
-     public function addToList(Request $request, $id)
-    {
-        $artist = Artist::findOrFail($id);
+    public function addToList(Request $request, $id)
+{
+    $artist = Artist::findOrFail($id);
 
-        if ($request->listOption === 'new') {
-            // buat list baru
-            $list = ListModel::create([
-                'user_id' => 1,
-                // 'user_id' => auth()->id(),
-                'name'    => $request->name,
-                'description'=> $request->description,
-                'comments'=> $request->comments,
-            ]);
+    // 1. PINDAHKAN QUERY INI KE PALING ATAS
+    $release = DB::table('artist_release')
+        ->where('artist_id', $id)
+        ->value('release_id');
 
-            $release = DB::table('artist_release')
-                ->where('artist_id', $id)
-                ->value('release_id');
+    if ($request->listOption === 'new') {
+        // buat list baru
+        $list = ListModel::create([
+            'user_id' => 1,
+            // 'user_id' => auth()->id(),
+            'name'    => $request->name,
+            'description'=> $request->description,
+            'comments'=> $request->comments,
+        ]);
 
-            DB::table('list_release')->insert([
-                'list_id'   => $list->list_id,
-                'release_id'=> $release,
-            ]);
-            
-        } else {
-            
-            $list = ListModel::findOrFail($request->list_id);
-        }
+        DB::table('list_release')->insert([
+            'list_id'   => $list->list_id,
+            'release_id'=> $release,
+            'comments'  => $request->comments, // Tambahkan ini agar komentar tersimpan ke database
+        ]);
+        
+    } else {
+        $list = ListModel::findOrFail($request->list_id);
 
-        // $comment = $request->comments;
-
-        return redirect()->route('show.artist', $artist->artist_id)
-                        ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
+        DB::table('list_release')->insert([
+            'list_id'    => $list->list_id,
+            'release_id' => $release, // HAPUS '->release_id' karena $release sudah berupa ID langsung
+        ]);
     }
 
+    return redirect()->route('show.artist', $artist->artist_id)
+                    ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
+}
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

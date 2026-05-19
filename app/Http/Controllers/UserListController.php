@@ -39,8 +39,6 @@ class UserListController extends Controller
         return view('lists.no_list', compact('lists', 'total', 'perPage', 'page')); 
     }
 
-    public function create() { /* kosong */ }
-    public function store(Request $request) { /* kosong */ }
 
     /**
      * Display the specified resource.
@@ -179,5 +177,15 @@ class UserListController extends Controller
         DB::table('lists')->where('list_id', $id)->delete();
 
         return redirect()->route('lists.index')->with('success', 'List deleted successfully!');
+    }
+
+    public function removeRelease(string $list_id, string $release_id)
+    {
+        DB::table('list_release')
+            ->where('list_id', $list_id)
+            ->where('release_id', $release_id)
+            ->delete();
+
+        return redirect()->route('lists.show', $list_id)->with('success', 'Item berhasil dihapus dari list!');
     }
 }

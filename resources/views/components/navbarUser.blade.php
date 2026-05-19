@@ -145,7 +145,7 @@ a {text-decoration: none !important;}
                         <li><a class="dropdown-item" href="/search">Explore All</a></li>
                         <li><a class="dropdown-item" href="/search/advanced">Advanced Search</a></li>
                         <li><a class="dropdown-item" href="#">Most Collected</a></li>
-                        <li><a class="dropdown-item" href="/release/add">Submit a Release</a></li>
+                        <li><a class="dropdown-item" href="{{ route('releases.create') }}">Submit a Release</a></li>
                         <li><a class="dropdown-item" href="#">Submission Guidelines</a></li>
                     </ul>
                 </div>

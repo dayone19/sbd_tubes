@@ -4,174 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\MasterAlbum;
 
 
 class ShowAlbumController extends Controller
 {
-    //SQL
-    // SELECT 
-    //     i.url AS image,
-    //     GROUP_CONCAT(DISTINCT ar.name) AS artist,
-    //     r.title,
-    //     GROUP_CONCAT(DISTINCT g.name) AS genre,
-    //     GROUP_CONCAT(DISTINCT s.name) AS style,
-    //     m.year AS year,
-    //     GROUP_CONCAT(DISTINCT t.title) AS tracks_name,
-    //     GROUP_CONCAT(DISTINCT arl.role) AS role,
-    //     GROUP_CONCAT(DISTINCT f.name) AS format,
-    //     MIN(p.price) AS lowest_price,
-    //     MAX(p.price) AS highest_price,
-    //     m.master_id AS master_code,
-
-    //     SUM(td.quantity) AS have,
-    //     SUM(ct.quantity) AS want,
-
-    //     AVG(rw.rating) AS avg_rating,
-    //     COUNT(rw.rating) AS total_rating,
-
-    //     l.name AS list_name,
-    //     GROUP_CONCAT(DISTINCT u.username) AS username
-
-    // FROM releases r
-
-    // LEFT JOIN images i 
-    //   ON r.release_id = i.release_id 
-    //  AND i.type = 'primary'
-
-    // JOIN artist_release arl ON r.release_id = arl.release_id
-    // JOIN artists ar ON arl.artist_id = ar.artist_id
-
-    // JOIN genre_release gr ON r.release_id = gr.release_id
-    // JOIN genres g ON gr.genre_id = g.genre_id
-
-    // JOIN release_style rs ON r.release_id = rs.release_id
-    // JOIN styles s ON rs.style_id = s.style_id
-
-    // LEFT JOIN master_albums m ON r.master_id = m.master_id
-
-    // LEFT JOIN tracks t ON r.release_id = t.release_id
-
-    // JOIN format_release fr ON r.release_id = fr.release_id
-    // JOIN formats f ON fr.format_id = f.format_id
-
-    // LEFT JOIN products p ON r.release_id = p.release_id
-
-    // LEFT JOIN transaction_details td ON p.product_id = td.product_id
-
-    // LEFT JOIN cart_items ct ON p.product_id = ct.product_id
-
-    // LEFT JOIN reviews rw ON p.product_id = rw.product_id
-    // LEFT JOIN users u ON rw.user_id = u.user_id
-
-    // JOIN list_release lr ON r.release_id = lr.release_id
-    // JOIN lists l ON lr.list_id = l.list_id
-
-    // GROUP BY 
-    //     r.release_id,
-    //     i.url,
-    //     r.title,
-    //     m.year,
-    //     m.master_id,
-    //     l.name;
-
-
-    public function index()
-    {
-
-        // $masters = DB::table('releases as r')
-
-        // ->leftJoin('images as i', function ($join) {
-        //     $join->on('r.release_id', '=', 'i.release_id')
-        //         ->where('i.type', '=', 'primary');
-        // })
-
-        // ->join('artist_release as arl', 'r.release_id', '=', 'arl.release_id')
-        // ->join('artists as ar', 'arl.artist_id', '=', 'ar.artist_id')
-
-        // ->join('genre_release as gr', 'r.release_id', '=', 'gr.release_id')
-        // ->join('genres as g', 'gr.genre_id', '=', 'g.genre_id')
-
-        // ->join('release_style as rs', 'r.release_id', '=', 'rs.release_id')
-        // ->join('styles as s', 'rs.style_id', '=', 's.style_id')
-
-        // ->leftJoin('master_albums as m', 'r.master_id', '=', 'm.master_id')
-
-        // ->leftJoin('tracks as t', 'r.release_id', '=', 't.release_id')
-
-        // ->join('format_release as fr', 'r.release_id', '=', 'fr.release_id')
-        // ->join('formats as f', 'fr.format_id', '=', 'f.format_id')
-
-        // ->leftJoin('products as p', 'r.release_id', '=', 'p.release_id')
-
-        // ->leftJoin('transaction_details as td', 'p.product_id', '=', 'td.product_id')
-
-        // ->leftJoin('cart_items as ct', 'p.product_id', '=', 'ct.product_id')
-
-        // ->leftJoin('reviews as rw', 'p.product_id', '=', 'rw.product_id')
-        // ->leftJoin('users as u', 'rw.user_id', '=', 'u.user_id')
-
-        // ->join('list_release as lr', 'r.release_id', '=', 'lr.release_id')
-        // ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
-
-        // ->select([
-        //     'i.url as image',
-        //     DB::raw("GROUP_CONCAT(DISTINCT ar.name) as artist"),
-        //     'r.title',
-        //     DB::raw("GROUP_CONCAT(DISTINCT g.name) as genre"),
-        //     DB::raw("GROUP_CONCAT(DISTINCT s.name) as style"),
-        //     'm.year as year',
-        //     DB::raw("GROUP_CONCAT(DISTINCT t.title) as tracks_name"),
-        //     DB::raw("GROUP_CONCAT(DISTINCT arl.role) as role"),
-        //     DB::raw("GROUP_CONCAT(DISTINCT f.name) as format"),
-
-        //     DB::raw("MIN(p.price) as lowest_price"),
-        //     DB::raw("MAX(p.price) as highest_price"),
-
-        //     'm.master_id as master_code',
-
-        //     DB::raw("SUM(td.quantity) as have"),
-        //     DB::raw("SUM(ct.quantity) as want"),
-
-        //     DB::raw("AVG(rw.rating) as avg_rating"),
-        //     DB::raw("COUNT(rw.rating) as total_rating"),
-
-        //     'l.name as list_name',
-        //     DB::raw("GROUP_CONCAT(DISTINCT u.username) as username")
-        // ])
-
-        // ->groupBy(
-        //     'r.release_id',
-        //     'i.url',
-        //     'r.title',
-        //     'm.year',
-        //     'm.master_id',
-        //     'l.name'
-        // )
-
-        // ->get();
-
-        // return view('showAlbum', compact('masters'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show($id)
     {
 
@@ -322,7 +160,11 @@ class ShowAlbumController extends Controller
             ->count();
 
             // SELECT l.name AS list_name, 
-            //        u.username
+            //        u.username,
+            //        l.comments,
+            //        l.description,
+            //        l.created_at,
+            //        l.list_id,
             // FROM list_release lr
             // JOIN lists l ON lr.list_id = l.list_id
             // JOIN users u ON l.user_id = u.user_id
@@ -332,8 +174,14 @@ class ShowAlbumController extends Controller
             ->join('users as u', 'l.user_id', '=', 'u.user_id')
 
             ->where('lr.release_id', $album->release_id)
-            ->select('l.name AS list_name',
-                     'u.username')
+             ->select('l.name AS list_name',
+                     'u.username',
+                     'l.comments',
+                     'l.description',
+                     'l.created_at',
+                     'l.list_id',
+                )
+            ->orderby('l.created_at', 'desc')
             ->get();
 
             // SELECT *
@@ -596,11 +444,29 @@ class ShowAlbumController extends Controller
 
         $videos = DB::table('videos')->where('release_id', $album->release_id)->get();
         
-        $lists = DB::table('list_release AS lr')
+        // SELECT l.name AS list_name, 
+            //        u.username,
+            //        l.comments,
+            //        l.description,
+            //        l.created_at,
+            //        l.list_id,
+            // FROM list_release lr
+            // JOIN lists l ON lr.list_id = l.list_id
+            // JOIN users u ON l.user_id = u.user_id
+            // WHERE lr.release_id = ?;
+            $lists = DB::table('list_release AS lr')
             ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
             ->join('users as u', 'l.user_id', '=', 'u.user_id')
+
             ->where('lr.release_id', $album->release_id)
-            ->select('l.name AS list_name', 'u.username')
+             ->select('l.name AS list_name',
+                     'u.username',
+                     'l.comments',
+                     'l.description',
+                     'l.created_at',
+                     'l.list_id',
+                )
+            ->orderby('l.created_at', 'desc')
             ->get();
 
         $reviews = DB::table('reviews as rw')
@@ -741,6 +607,45 @@ class ShowAlbumController extends Controller
             ->delete();
 
         return redirect()->back()->with('success', 'Review berhasil dihapus!');
+    }
+
+     public function addToList(Request $request, $id)
+    {
+        $releaseData = DB::table('releases')->where('master_id', $id)->first();
+
+        if (!$releaseData) {
+            return redirect()->back()->with('error', 'Release tidak ditemukan.');
+        }
+
+        if ($request->listOption === 'new') {
+            // Buat list baru
+            $list = ListModel::create([
+                'user_id' => 1,
+                // 'user_id' => auth()->id(),
+                'name'    => $request->name,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
+            ]);
+
+          
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $releaseData->release_id, 
+            ]);
+            
+        } else {
+          
+            $list = ListModel::findOrFail($request->list_id);
+
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $releaseData->release_id,
+            ]);
+        }
+
+        // Redirect menggunakan property artist_id dari object $releaseData yang dicari di atas
+        return redirect()->route('album.versions', $releaseData->artist_id)
+                        ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
     }
 
 }

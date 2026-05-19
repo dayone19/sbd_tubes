@@ -1326,7 +1326,7 @@
             <a href="#">Edit Release</a>
             <a href="{{route('album.versions', $release->master_id)}}">See all versions</a>
             <span style="color:black;">Recently Edited</span> 
-        <!-- </div> -->
+        </div>
 
         <!-- For Sale -->
         <div class="for-sale-header">
@@ -1516,7 +1516,7 @@
 </div>
 
         
-              <div id="video-sidebar-section">
+              < id="video-sidebar-section">
                 <div class="v-header">
                     {{--  paksa unique berdasarkan kolom youtube_url langsung saat menghitung --}}
                     <h2>Videos ({{ $videos->unique('youtube_url')->count() }})</h2>
@@ -1579,132 +1579,91 @@
             <!-- BODY -->
             <div class="modal-body p-3">
 
-                <form action="" method="POST">
-                    @csrf
+            <!-- {{ route('release.addToList', $release->release_id) }} -->
+                  <form action="{{ route('release.addToList', $release->release_id) }}" method="POST">
+                  @csrf
 
-                    <!-- RADIO -->
-                    <div class="mb-3 mt-1">
+                  <!-- RADIO -->
+                  <div class="mb-3 mt-1">
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input"
+                                type="radio"
+                                name="listOption"
+                                id="radioExisting"
+                                value="existing"
+                                checked>
+                          <label class="form-check-label">Existing List</label>
+                      </div>
 
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input"
-                                   type="radio"
-                                   name="listOption"
-                                   id="radioExisting"
-                                   checked>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input"
+                                type="radio"
+                                name="listOption"
+                                id="radioNew"
+                                value="new">
+                          <label class="form-check-label">New List</label>
+                      </div>
+                  </div>
 
-                            <label class="form-check-label">
-                                Existing List
-                            </label>
-                        </div>
+                  <!-- EXISTING LIST -->
+                  <div id="existing-list-fields">
+                      <div class="mb-3">
+                          <label class="form-label">List</label>
+                          <select class="form-select" name="list_id">
+                              <optgroup label="Recently Used">
+                                  
+                                      
+                                      <option>Nama Listnya</option>
+                                
+                              </optgroup>
+                              <optgroup label="All Lists">
+                                  @foreach($lists as $list)
+                                      <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                  @endforeach
+                              </optgroup>
+                          </select>
+                      </div>
+                  </div>
 
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input"
-                                   type="radio"
-                                   name="listOption"
-                                   id="radioNew">
+                  <!-- NEW LIST -->
+                  <div id="new-list-fields" class="d-none">
+                      <div class="mb-3">
+                          <label class="form-label">Title</label>
+                          <input type="text" class="form-control" name="name" placeholder="Enter list title">
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label">Description <span class="text-muted"><i>optional</i></span></label>
+                          <textarea class="form-control" rows="2" name="description"></textarea>
+                      </div>
+                  </div>
 
-                            <label class="form-check-label">
-                                New List
-                            </label>
-                        </div>
+                  <!-- COMMENTS -->
+                  <div class="mb-3">
+                      <label class="form-label">Comments on this item <span class="text-muted"><i>optional</i></span></label>
+                      <textarea class="form-control" rows="2" name="comments"></textarea>
+                  </div>
 
-                    </div>
-
-                    <!-- EXISTING LIST -->
-                    <div id="existing-list-fields">
-
-                        <div class="mb-3">
-                            <label class="form-label">
-                                List
-                            </label>
-
-                            <select class="form-select">
-
-                                <optgroup label="Recently Used">
-                                    <option></option>
-                                </optgroup>
-
-                                <optgroup label="All Lists">
-                                    <option></option>
-                                    <option></option>
-                                    <option></option>
-                                </optgroup>
-
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <!-- NEW LIST -->
-                    <div id="new-list-fields" class="d-none">
-
-                        <div class="mb-3">
-                            <label class="form-label">
-                                Title
-                            </label>
-
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Enter list title">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Description
-                                <span class="text-muted"><i>optional</i></span>
-                            </label>
-
-                            <textarea class="form-control"
-                                      rows="2"></textarea>
-                        </div>
-
-                    </div>
-
-                    <!-- COMMENTS -->
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Comments on this item
-                            <span class="text-muted"><i>optional</i></span>
-                        </label>
-
-                        <textarea class="form-control"
-                                  rows="2"></textarea>
-
-                    </div>
-
-                    <!-- BUTTON -->
-                    <div class="d-flex gap-2 pt-2">
-
-                        <button type="submit" class="btn btn-success modal-save-btn">
-                          Save
-                        </button>
-
-                        <button type="button"
-                                class="btn btn-light"
-                                data-bs-dismiss="modal">
-                            Cancel
-                        </button>
-
-                    </div>
-
-                </form>
-
+                  <!-- BUTTON -->
+                  <div class="d-flex gap-2 pt-2">
+                      <button type="submit" class="btn btn-success modal-save-btn">Save</button>
+                      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                  </div>
+              </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 
         
 
         <div class="l-list">
             @forelse($lists as $list)
-                <div class="l-item">
+                <div class="l-meta">
                     <div>
-                        <a href="#">{{ $list->list_name }}</a>
+                        <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }} </a>
                     </div>
-                    <div class="l-meta">
-                        by <a href="#">{{ $list->username }}</a>
-                    </div>
+                   
                 </div>
             @empty
                 <div class="l-meta">No lists yet</div>
@@ -1714,21 +1673,20 @@
         <div class="l-footer">
             <a href="/lists" class="view-more-lists">View more lists</a>
         </div>
+        
 
-    </div>
+        <div style="margin-top: 20px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
+            @foreach($contributors as $contributor)
+                <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
+                    {{ $contributor->username }}
+                </div>
+            @endforeach
 
-    <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 8px; font-weight: bold;">Contributors</div>
-    @foreach($contributors as $contributor)
-    <div style="font-size: 12px; line-height: 1.8; color: #0088cc;">
-      {{ $contributor->username }}
-  </div>
-  @endforeach
+            <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; margin-top: 15px; color: #0088cc;">Report Suspicious Activity</div>
 
+              </div>
+        </div>
   
-    <div style="width: 100%; border-top: 1px solid #ccc; padding-top: 8px; color: #0088cc;">Report Suspicious Activity</div>
- </div>
-      </div>
-    </div>
 
     
    

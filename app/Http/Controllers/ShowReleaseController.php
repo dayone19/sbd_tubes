@@ -4,37 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Release;
+use App\Models\ListModel;
 use Illuminate\Support\Facades\DB;
 
 class ShowReleaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(string $id)
     {
         // SQL
@@ -332,10 +307,15 @@ class ShowReleaseController extends Controller
         ->get();
         
         // SELECT l.name AS list_name, 
-        //        u.username
+        //        u.username,
+        //        l.comments,
+        //        l.description,
+        //        l.created_at,
+        //        l.list_id,
         // FROM list_release lr
         // JOIN lists l ON lr.list_id = l.list_id
         // JOIN users u ON l.user_id = u.user_id
+        // ORDER BY l.created_at desc
         // WHERE lr.release_id = ?;
         $lists = DB::table('list_release AS lr')
         ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
@@ -343,7 +323,13 @@ class ShowReleaseController extends Controller
 
         ->where('lr.release_id', $release->release_id)
         ->select('l.name AS list_name',
-                     'u.username')
+                     'u.username',
+                     'l.comments',
+                     'l.description',
+                     'l.created_at',
+                     'l.list_id',
+                )
+        ->orderby('l.created_at', 'desc')                
         ->get();
 
         // SELECT u.username
@@ -515,27 +501,38 @@ class ShowReleaseController extends Controller
         return redirect()->back()->with('success', 'Review berhasil ditambah!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function addToList(Request $request, $id)
     {
-        //
-    }
+        $release = Release::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if ($request->listOption === 'new') {
+            // buat list baru
+            $list = ListModel::create([
+                'user_id' => 1,
+                // 'user_id' => auth()->id(),
+                'name'    => $request->name,
+                'description'=> $request->description,
+                'comments'=> $request->comments,
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            DB::table('list_release')->insert([
+                'list_id'   => $list->list_id,
+                'release_id'=> $release->release_id,
+            ]);
+            
+        } else {
+            
+            $list = ListModel::findOrFail($request->list_id);
+
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $release->release_id,
+            ]);
+        }
+
+        // $comment = $request->comments;
+
+        return redirect('/release/'.$release->release_id)
+        ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
     }
 }

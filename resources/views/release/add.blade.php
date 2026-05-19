@@ -151,6 +151,15 @@ textarea{resize:vertical;}
 }
 .btn-remove:hover{color:#cc0000;}
 .btn-remove svg,.btn-remove-format svg{pointer-events:none;}
+
+.drop {
+    border: 2px dashed var(--border);
+    padding: 30px;
+    text-align: center;
+    background: #fafafa;
+    border-radius: 4px;
+}
+
 </style>
 
 <div class="release-wrap">
@@ -164,11 +173,13 @@ textarea{resize:vertical;}
             <a href="#">Submission Guidelines</a>
         </div>
 
+        <form action="{{ route('releases.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="top-box">
             <h2>Add Release</h2>
             <div>
-                <button class="btn">Save Draft</button>
-                <button class="btn-green">Preview / Submit</button>
+                <button type="button" class="btn">Save Draft</button>
+                <button type="submit" class="btn-green">Preview / Submit</button>
             </div>
         </div>
 
@@ -176,7 +187,7 @@ textarea{resize:vertical;}
         <div class="sec">
             <div class="sec-title">Images <span class="info">ⓘ</span></div>
             <div class="image-grid">
-                <div class="drop">
+                <div class="drop" id="dropZone" style="cursor: pointer;">
                     <p>
                         <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000">
                             <path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/>
@@ -184,7 +195,9 @@ textarea{resize:vertical;}
                     </p>
                     <p>Drag and drop image files here</p>
                     <p>or</p>
-                    <button class="btn btn-dark">Browse files</button>
+                    <button type="button" class="btn btn-dark" id="browseBtn">Browse files</button>
+                    <input type="file" name="release_image" id="fileInput" accept=".jpg,.jpeg,.gif,.png" style="display: none;">
+                    <div id="filePreview" style="margin-top: 10px; font-weight: bold; color: var(--green);"></div>
                     <small>
                         Accepted image formats are .jpg, .gif, .png.
                         Images must be larger than 150 px wide and less than 4 MB.
@@ -214,27 +227,27 @@ textarea{resize:vertical;}
             <div id="artistContainer">
                 <div class="row artist-row">
                     <div class="grid3" style="align-items:center;">
-                        <input type="text" class="input-medium" placeholder="Name">
+                        <input type="text" class="input-medium" placeholder="Name" name="artists[]">
                         <div style="display:flex;align-items:center;gap:8px;">
-                            <button class="btn-format btn-anv">Add ANV</button>
-                            <input type="text" class="input-format anv-input" placeholder="ANV" style="display:none;margin-left:0;">
+                            <button type="button" class="btn-format btn-anv">Add ANV</button>
+                            <input type="text" class="input-format anv-input" placeholder="ANV" style="display:none;margin-left:0;" name="anvs[]">
                         </div>
                         <div style="display:flex;align-items:center;gap:6px;">
-                            <input type="text" class="input-format" placeholder="Join phrase (e.g. &, feat.)">
-                            <button class="btn-remove btn-remove-artist" title="Remove artist">
+                            <input type="text" class="input-format" placeholder="Join phrase (e.g. &, feat.)" name="joins[]">
+                            <button type="button" class="btn-remove btn-remove-artist" title="Remove artist">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="btn-plus" id="addArtistBtn">+ Add artist</button>
+            <button type="button" class="btn-plus" id="addArtistBtn">+ Add artist</button>
         </div>
 
         <!-- Title -->
         <div class="sec">
             <div class="sec-title">Title <span class="req">*</span> <span class="info">ⓘ</span></div>
-            <input type="text" class="input-medium" placeholder="Title" style="margin-left:-2px">
+            <input type="text" class="input-medium" placeholder="Title" style="margin-left:-2px" name="title">
         </div>
 
         <!-- LABEL -->
@@ -243,75 +256,74 @@ textarea{resize:vertical;}
             <div id="labelContainer">
                 <div class="row label-row">
                     <div class="grid3" style="align-items:center;">
-                        <select>
+                        <select name="label_types[]">
                             <option value="">Label</option>
-                            <option>Label</option>
-                            <option>Series</option>
-                            <option>Record Company</option>
-                            <option>Licensed To</option>
-                            <option>Licensed From</option>
-                            <option>Marketed By</option>
-                            <option>Distributed By</option>
-                            <option>Manufactured By</option>
-                            <option>Recorded By</option>
-                            <option>Exported By</option>
-                            <option>Produced For</option>
-                            <option>Manufactured For</option>
-                            <option>Funded By</option>
-                            <option>Corporate Owner</option>
-                            <option>Trademark Owner</option>
-                            <option>Phonographic Copyright ℗</option>
-                            <option>Copyright ©</option>
-                            <option>Made By</option>
-                            <option>Pressed By</option>
-                            <option>Duplicated By</option>
-                            <option>Printed By</option>
-                            <option>Published By</option>
-                            <option>Designed At</option>
-                            <option>Filmed At</option>
-                            <option>Remastered At</option>
-                            <option>Edited At</option>
-                            <option>Exclusive Retailer</option>
+                            @foreach($labels as $label)
+                            <option value="{{ $label->label_id }}">{{ $label->name }}</option>
+                            @endforeach
                         </select>
-                        <input type="text" class="input-medium" placeholder="Name">
+                        <input type="text" class="input-medium" placeholder="Name" name="label_names[]">
                         <div style="display:flex;align-items:center;gap:6px;">
-                            <input type="text" class="input-medium" placeholder="Catalog Number" style="margin-left:0;">
-                            <button class="btn-remove btn-remove-label" title="Remove label">
+                            <input type="text" class="input-medium" placeholder="Catalog Number" style="margin-left:0;" name="catalog_nos[]">
+                            <button type="button" class="btn-remove btn-remove-label" title="Remove label">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="btn-plus" id="addLabelBtn">+ Add label</button>
+            <button type="button" class="btn-plus" id="addLabelBtn">+ Add label</button>
         </div>
 
         <!-- BARCODES -->
         <div class="sec">
             <div class="sec-title">Barcodes and Other Identifiers <span class="info">ⓘ</span></div>
-            <div id="barcodeContainer"></div>
-            <button class="btn-plus" id="addBarcodeBtn">+ Add barcode or other identifier</button>
+            <div id="barcodeContainer">
+                <div class="row barcode-row">
+                    <div class="grid3" style="align-items:center;">
+                        <input type="text" name="identifiers_type[]" class="input-medium" placeholder="Type (e.g. Barcode, Matrix)">
+                        
+                        <input type="text" name="identifiers_value[]" class="input-medium" placeholder="Value">
+                        
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <input type="text" name="identifiers_desc[]" class="input-medium" placeholder="Description (Optional)" style="margin-left:0;">
+                            
+                            <button type="button" class="btn-remove btn-remove-barcode" title="Remove barcode">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn-plus" id="addBarcodeBtn">+ Add barcode or other identifier</button>
         </div>
 
         <!-- FORMAT -->
         <div class="sec">
             <div class="sec-title">Format <span class="req">*</span> <span class="info">ⓘ</span></div>
-            <div id="formatContainer"></div>
-            <button class="btn-plus" id="addFormatBtn">+ Add Format</button>
+            <<div id="formatContainer"></div>
+
+            <button type="button" class="btn-plus" id="addFormatBtn">
+                + Add Format
+            </button>
         </div>
 
         <!-- Country -->
         <div class="sec">
             <div class="sec-title">Country <span class="info">ⓘ</span></div>
-            <select style="max-width:300px;">
-                <option> </option>
+            
+            <select name="country" style="max-width:300px;">
+                <option value=""></option>
+                @foreach($countries as $c)
+                    <option value="{{ $c->country }}">{{ $c->country }}</option>
+                @endforeach
             </select>
         </div>
 
         <!-- Released -->
         <div class="sec">
             <div class="sec-title">Released <span class="info">ⓘ</span></div>
-            <input type="text" class="input-medium" placeholder="Date" style="margin-left:-2px">
+            <input type="date" name="release_date" class="input-medium" placeholder="Date" style="margin-left:-2px">
         </div>
 
         <!-- Tracklist -->
@@ -341,13 +353,13 @@ textarea{resize:vertical;}
                     @for($i=0; $i<4; $i++)
                     <tr>
                         <td class="drag">↕</td>
-                        <td><input type="text" class="input-track small" placeholder="#"></td>
+                        <td><input type="text" class="input-track small" placeholder="#" name="track_positions[]" value="{{ $i + 1 }}"></td>
                         <td><a href="#" class="add-link"><span>+</span> Add</a></td>
                         <td>
-                            <input type="text" class="input-track" placeholder="Track Title">
+                            <input type="text" name="track_titles[]" class="input-track" placeholder="Track Title">
                             <div class="credits">Credits <a href="#" class="add-link"><span>+</span> Add</a></div>
                         </td>
-                        <td><input type="text" class="input-track small" placeholder="0:00"></td>
+                        <td><input type="text" name="track_durations[]" class="input-track small" placeholder="0:00"></td>
                         <td class="arrow">▼</td>
                     </tr>
                     @endfor
@@ -361,11 +373,11 @@ textarea{resize:vertical;}
                     <option>4</option>
                     <option>5</option>
                 </select>
-                <button id="addTracksBtn">Add Tracks</button>
+                <button type="button" id="addTracksBtn">Add Tracks</button>
                 <span class="separator">|</span>
-                <button>Auto-number Tracks</button>
-                <button>Add Artist Per Track</button>
-                <button>Add Credit Per Track</button>
+                <button type="button">Auto-number Tracks</button>
+                <button type="button">Add Artist Per Track</button>
+                <button type="button">Add Credit Per Track</button>
             </div>
         </div>
 
@@ -373,33 +385,25 @@ textarea{resize:vertical;}
         <div class="sec">
             <div class="sec-title">Genres <span class="req">*</span> <span class="info">ⓘ</span></div>
             <div class="genre-grid">
-                <label><input type="checkbox"> Electronic</label>
-                <label><input type="checkbox"> Rock</label>
-                <label><input type="checkbox"> Funk / Soul</label>
-                <label><input type="checkbox"> Pop</label>
-                <label><input type="checkbox"> Children's</label>
-                <label><input type="checkbox"> Hip Hop</label>
-                <label><input type="checkbox"> Reggae</label>
-                <label><input type="checkbox"> Blues</label>
-                <label><input type="checkbox"> Classical</label>
-                <label><input type="checkbox"> Folk, World & Country</label>
-                <label><input type="checkbox"> Jazz</label>
-                <label><input type="checkbox"> Latin</label>
-                <label><input type="checkbox"> Non-Music</label>
-                <label><input type="checkbox"> Brass & Military</label>
-                <label><input type="checkbox"> Stage & Screen</label>
+                
+                @foreach($genres as $g)
+                <label>
+                    <input type="checkbox" name="genres[]" value="{{ $g->name }}"> {{ $g->name }}
+                </label>
+                @endforeach
+
             </div>
         </div>
 
         <!-- Notes -->
         <div class="sec">
             <div class="sec-title">Notes <span class="info">ⓘ</span></div>
-            <textarea rows="5"></textarea>
+            <textarea name="notes" rows="5"></textarea>
         </div>
 
         <div class="sec">
             <div class="sec-title">Submission Notes <span class="req">*</span> <span class="info">ⓘ</span></div>
-            <textarea rows="5"></textarea>
+            <textarea name="submission_notes" rows="5" required></textarea>
         </div>
 
         <div class="sec">
@@ -409,20 +413,20 @@ textarea{resize:vertical;}
         <div class="sec">
             <div class="sec-title">Rating</div>
             <div class="rating">
-                <label><input type="radio" name="r"><br>No rating</label>
-                @for($i=1;$i<=5;$i++)
-                <label><input type="radio" name="r"><br>{{$i}}</label>
+                <label><input type="radio" name="rating" value="0" checked><br>No rating</label>
+                @for($i = 1; $i <= 5; $i++)
+                <label><input type="radio" name="rating" value="{{ $i }}"><br>{{ $i }}</label>
                 @endfor
             </div>
         </div>
 
         <div style="text-align:right;margin-top:22px;">
-            <button class="btn">Save Draft</button>
-            <button class="btn btn-green">Preview / Submit</button>
+            <button type="button" class="btn">Save Draft</button>
+            <button type="submit" class="btn btn-green">Preview / Submit</button>
         </div>
 
     </div><!-- /main-release -->
-
+</form>
     <!-- Sidebar -->
     <div class="side-guide">
         <div class="side-card">
@@ -456,7 +460,76 @@ textarea{resize:vertical;}
 
 </div><!-- /release-wrap -->
 
+
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const filePreview = document.getElementById('filePreview');
+
+    if (browseBtn && fileInput) {
+        // Klik tombol browse files memicu click pada input file asli
+        browseBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation(); // Mencegah double trigger klik dari dropZone
+            fileInput.click();
+        });
+
+        // Klik area kotak drop zone juga memicu click input file
+        dropZone.addEventListener('click', function () {
+            fileInput.click();
+        });
+
+        // Menampilkan nama file ketika user selesai memilih gambar
+        fileInput.addEventListener('change', function () {
+            if (fileInput.files.length > 0) {
+                filePreview.textContent = "Selected file: " + fileInput.files[0].name;
+            } else {
+                filePreview.textContent = "";
+            }
+        });
+
+        // Fitur Drag & Drop visual effect dasar
+        dropZone.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            dropZone.style.background = '#e3f2fd';
+        });
+
+        dropZone.addEventListener('dragleave', function () {
+            dropZone.style.background = '';
+        });
+
+        dropZone.addEventListener('drop', function (e) {
+            e.preventDefault();
+            dropZone.style.background = '';
+            if (e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                filePreview.textContent = "Dropped file: " + e.dataTransfer.files[0].name;
+            }
+        });
+    }
+});
+
+function makeArtistRow() {
+    const div = document.createElement('div');
+    div.className = 'row artist-row';
+    div.innerHTML = `
+        <div class="grid3" style="align-items:center;">
+            <input type="text" name="artists[]" class="input-medium" placeholder="Name">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button type="button" class="btn-format btn-anv">Add ANV</button>
+                <input type="text" name="anvs[]" class="input-format anv-input" placeholder="ANV" style="display:none;margin-left:0;">
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+                <input type="text" name="joins[]" class="input-format" placeholder="Join phrase (e.g. &, feat.)">
+                <button type="button" class="btn-remove btn-remove-artist" title="Remove artist">${removeIcon()}</button>
+            </div>
+        </div>`;
+    return div;
+}
+
 /* ═══════════════════════════════════════════════════
    HELPER — ikon X
 ═══════════════════════════════════════════════════ */
@@ -465,17 +538,6 @@ function removeIcon(size) {
     return `<svg xmlns="http://www.w3.org/2000/svg" height="${size}" viewBox="0 -960 960 960" width="${size}" fill="currentColor" style="pointer-events:none;">
         <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
     </svg>`;
-}
-
-/* ═══════════════════════════════════════════════════
-   HELPER — refresh visibilitas tombol remove
-═══════════════════════════════════════════════════ */
-function refreshRemove(containerId, btnClass) {
-    const rows = document.querySelectorAll(`#${containerId} .row`);
-    rows.forEach(row => {
-        const btn = row.querySelector(`.${btnClass}`);
-        if (btn) btn.style.visibility = rows.length > 1 ? 'visible' : 'hidden';
-    });
 }
 
 /* ═══════════════════════════════════════════════════
@@ -499,8 +561,41 @@ const CHAN_OPTS = ['Stereo','Mono','Quadraphonic','Ambisonic'];
 
 let formatCount = 0;
 
-function makeCheckboxes(arr) {
-    return arr.map(o => `<label><input type="checkbox"> ${o}</label>`).join('');
+/* ═══════════════════════════════════════════════════
+   HELPER — refresh visibilitas tombol remove
+═══════════════════════════════════════════════════ */
+function refreshRemove(containerId, btnClass) {
+    const rows = document.querySelectorAll(`#${containerId} .row`);
+    rows.forEach(row => {
+        const btn = row.querySelector(`.${btnClass}`);
+        if (btn) btn.style.visibility = rows.length > 1 ? 'visible' : 'hidden';
+    });
+}
+
+// /* ═══════════════════════════════════════════════════
+//    SECTION: FORMAT (LOGIKA SINKRONISASI DATABASE)
+// ═══════════════════════════════════════════════════ */
+// // 1. Ambil data mentah dari Controller Laravel kamu
+// const rawFormats = @json($dbFormats);
+
+// // 2. Ambil nilai unik langsung dari nama kolom tabel DB kamu agar tampilannya rapi
+// const SIZE_OPTS  = [...new Set(rawFormats.map(f => f.size).filter(Boolean))];
+// const SPEED_OPTS = [...new Set(rawFormats.map(f => f.speed).filter(Boolean))];
+// const DESC_OPTS  = [...new Set(rawFormats.map(f => f.description).filter(Boolean))];
+// const CHAN_OPTS  = [...new Set(rawFormats.map(f => f.channels).filter(Boolean))];
+
+// const FORMAT_TYPES = [
+//     'Vinyl','CD','Cassette','DVD','Blu-ray','SACD',
+//     'Lathe Cut','Flexi-disc','Shellac','Box Set','All Media'
+// ];
+// let formatCount = 0;
+
+// Generator checkbox menggunakan array dari database dan menyertakan atribut name
+function makeCheckboxes(arr, inputName) {
+    if (!arr || arr.length === 0) {
+        return '<span style="color:#999;font-size:12px;font-weight:normal;">No options available</span>';
+    }
+    return arr.map(o => `<label><input type="checkbox" name="${inputName}" value="${o}"> ${o}</label>`).join('');
 }
 
 function makeFormatEntry(defaultFormat) {
@@ -515,11 +610,11 @@ function makeFormatEntry(defaultFormat) {
     div.id = id;
     div.innerHTML = `
         <div class="format-header">
-            <select class="fmt-type-select">${typeOpts}</select>
+            <select class="fmt-type-select" name="formats[]">${typeOpts}</select>
             <div class="qty-wrap">
                 <span>Qty:</span>
                 <button type="button" class="qty-btn" data-dir="-1">−</button>
-                <input type="number" class="qty-input" value="1" min="1" max="99">
+                <input type="number" class="qty-input" name="qtys[]" value="1" min="1" max="99">
                 <button type="button" class="qty-btn" data-dir="1">+</button>
             </div>
             <button type="button" class="toggle-format-btn" data-target="${id}">
@@ -531,25 +626,25 @@ function makeFormatEntry(defaultFormat) {
             <div class="format-grid">
                 <div>
                     <b style="font-size:14px;">Size <span style="color:#cc0000">*</span></b><br>
-                    ${makeCheckboxes(SIZE_OPTS)}
+                    ${makeCheckboxes(SIZE_OPTS, 'format_sizes[]')}
                 </div>
                 <div>
                     <b style="font-size:14px;">Speed</b><br>
-                    ${makeCheckboxes(SPEED_OPTS)}
+                    ${makeCheckboxes(SPEED_OPTS, 'format_speeds[]')}
                     <br><b style="font-size:14px;">Shape</b><br>
-                    <label><input type="checkbox"> Shape</label>
+                    <label><input type="checkbox" name="format_shapes[]" value="Shape"> Shape</label>
                     <br><b style="font-size:14px;">Sides</b><br>
-                    <label><input type="checkbox"> Single Sided</label>
+                    <label><input type="checkbox" name="format_sides[]" value="Single Sided"> Single Sided</label>
                 </div>
                 <div>
                     <b style="font-size:14px;">Description</b><br>
-                    ${makeCheckboxes(DESC_OPTS)}
+                    ${makeCheckboxes(DESC_OPTS, 'format_descriptions[]')}
                 </div>
                 <div>
                     <b style="font-size:14px;">Channels</b><br>
-                    ${makeCheckboxes(CHAN_OPTS)}
+                    ${makeCheckboxes(CHAN_OPTS, 'format_channels[]')}
                     <br><b style="font-size:14px;">Free Text</b><br>
-                    <input type="text" class="format-free-input" placeholder="e.g. Green vinyl">
+                    <input type="text" class="format-free-input" name="format_free_texts[]" placeholder="e.g. Green vinyl">
                 </div>
             </div>
         </div>`;
@@ -584,7 +679,12 @@ document.getElementById('formatContainer').addEventListener('click', function (e
         const panel = document.getElementById('panel-' + id);
         const isOpen = panel.classList.toggle('open');
         toggleBtn.classList.toggle('open', isOpen);
-        toggleBtn.querySelector('.btn-label').textContent = isOpen ? 'Hide' : 'Options';
+        
+        // Pengecekan aman jika seandainya elemen teks .btn-label tidak ada di template HTML kamu
+        const btnLabel = toggleBtn.querySelector('.btn-label');
+        if (btnLabel) {
+            btnLabel.textContent = isOpen ? 'Hide' : 'Options';
+        }
         return;
     }
 
@@ -619,9 +719,9 @@ function makeArtistRow() {
     div.className = 'row artist-row';
     div.innerHTML = `
         <div class="grid3" style="align-items:center;">
-            <input type="text" class="input-medium" placeholder="Name">
+            <input type="text" class="input-medium" placeholder="Name" name="label_names[]">
             <div style="display:flex;align-items:center;gap:8px;">
-                <button class="btn-format btn-anv">Add ANV</button>
+                <button  class="btn-format btn-anv">Add ANV</button>
                 <input type="text" class="input-format anv-input" placeholder="ANV" style="display:none;margin-left:0;">
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
@@ -679,7 +779,7 @@ function makeLabelRow() {
             </select>
             <input type="text" class="input-medium" placeholder="Name">
             <div style="display:flex;align-items:center;gap:6px;">
-                <input type="text" class="input-medium" placeholder="Catalog Number" style="margin-left:0;">
+                <input type="text" class="input-medium" placeholder="Catalog Number" style="margin-left:0;" name="catalog_nos[]">
                 <button class="btn-remove btn-remove-label" title="Remove label">${removeIcon()}</button>
             </div>
         </div>`;
@@ -698,34 +798,67 @@ refreshRemove('labelContainer', 'btn-remove-label');
 ═══════════════════════════════════════════════════ */
 function makeBarcodeRow() {
     const div = document.createElement('div');
+
     div.className = 'row barcode-row';
+
     div.innerHTML = `
         <div class="grid3" style="align-items:center;">
-            <select>
+
+            <select name="identifiers_type[]">
                 <option value="">-- Type --</option>
-                <option>Barcode</option>
-                <option>Matrix / Runout</option>
-                <option>Label Code</option>
-                <option>Catalog Number</option>
-                <option>Price Code</option>
-                <option>Rights Society</option>
-                <option>SPARS Code</option>
-                <option>ASIN</option>
-                <option>Depósito Legal</option>
-                <option>ISRC</option>
-                <option>Mould SID Code</option>
-                <option>Mastering SID Code</option>
-                <option>Other</option>
+
+                <option value="Barcode">
+                    Barcode
+                </option>
+
+                <option value="Rights Society">
+                    Rights Society
+                </option>
+
+                <option value="Matrix / Runout">
+                    Matrix / Runout
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
             </select>
-            <input type="text" class="input-medium" placeholder=" ">
+
+            <input type="text"
+                   name="identifiers_value[]"
+                   class="input-medium"
+                   placeholder=" ">
+
             <div style="display:flex;align-items:center;gap:6px;">
+
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <button class="btn-format btn-anv">Add Description</button>
-                    <input type="text" class="input-format anv-input" placeholder="Description" style="display:none;margin-left:0;">
+
+                    <button type="button"
+                            class="btn-format btn-anv">
+                        Add Description
+                    </button>
+
+                    <input type="text"
+                           name="identifiers_desc[]"
+                           class="input-format anv-input"
+                           placeholder="Description"
+                           style="display:none;margin-left:0;">
+
                 </div>
-                <button class="btn-remove btn-remove-barcode" title="Remove identifier">${removeIcon()}</button>
+
+                <button type="button"
+                        class="btn-remove btn-remove-barcode"
+                        title="Remove identifier">
+
+                    ${removeIcon()}
+
+                </button>
+
             </div>
-        </div>`;
+
+        </div>
+    `;
+
     return div;
 }
 
@@ -739,23 +872,81 @@ document.getElementById('addBarcodeBtn').addEventListener('click', function () {
 ═══════════════════════════════════════════════════ */
 function makeTrackRow() {
     const tr = document.createElement('tr');
+
     tr.innerHTML = `
         <td class="drag">↕</td>
-        <td><input type="text" class="input-track small" placeholder="#"></td>
-        <td><a href="#" class="add-link"><span>+</span> Add</a></td>
+
         <td>
-            <input type="text" class="input-track" placeholder="Track Title">
-            <div class="credits">Credits <a href="#" class="add-link"><span>+</span> Add</a></div>
+            <input type="text"
+                   name="track_positions[]"
+                   class="input-track small"
+                   placeholder="#">
         </td>
-        <td><input type="text" class="input-track small" placeholder="0:00"></td>
-        <td class="arrow">▼</td>`;
+
+        <td>
+            <a href="#" class="add-link">
+                <span>+</span> Add
+            </a>
+        </td>
+
+        <td>
+            <input type="text"
+                   name="track_titles[]"
+                   class="input-track"
+                   placeholder="Track Title">
+
+            <div class="credits">
+                Credits
+                <a href="#" class="add-link">
+                    <span>+</span> Add
+                </a>
+            </div>
+        </td>
+
+        <td>
+            <input type="text"
+                   name="track_durations[]"
+                   class="input-track small"
+                   placeholder="0:00">
+        </td>
+
+        <td class="arrow">▼</td>
+    `;
+
     return tr;
 }
 
+/* ==========================================================================
+   TRACKLIST DYNAMIC GENERATION
+   ========================================================================== */
 document.getElementById('addTracksBtn').addEventListener('click', function () {
-    const qty   = parseInt(document.querySelector('.track-footer select').value) || 1;
+    const numInput = this.previousElementSibling;
+    const count = parseInt(numInput.value) || 1;
     const tbody = document.getElementById('trackBody');
-    for (let i = 0; i < qty; i++) tbody.appendChild(makeTrackRow());
+
+    for (let i = 0; i < count; i++) {
+        const rowCount = tbody.querySelectorAll('tr').length;
+        const nextPos = rowCount + 1;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="drag">↕</td>
+            
+            <td><input type="text" name="track_positions[]" class="input-track small" placeholder="#" value="${nextPos}"></td>
+            
+            <td><a href="#" class="add-link"><span>+</span> Add</a></td>
+            <td>
+                <input type="text" name="track_titles[]" class="input-track" placeholder="Track Title">
+                <div class="credits">Credits <a href="#" class="add-link"><span>+</span> Add</a></div>
+            </td>
+            
+            <td><input type="text" name="track_durations[]" class="input-track small" placeholder="0:00"></td>
+            
+            <td class="arrow">▼</td>
+        `;
+        tbody.appendChild(tr);
+    }
+    refreshRemove('trackBody', 'btn-remove-track');
 });
 
 /* ═══════════════════════════════════════════════════
@@ -799,6 +990,8 @@ document.addEventListener('click', function (e) {
         return;
     }
 });
+
+
 </script>
 
 @endsection
