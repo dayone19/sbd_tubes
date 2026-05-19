@@ -492,7 +492,7 @@ class ShowReleaseController extends Controller
         // Gunakan 'product_id' karena tabel 'reviews' tidak punya kolom 'release_id'
         DB::table('reviews')->insert([
             'product_id' => $product->product_id, // Ambil ID asli produk
-            'user_id'    => 1,                    // Sementara dummy
+            'user_id'    => auth()->id(),                   
             'comment'    => $request->comment ?? null,
             'rating'     => $request->rating ?? null,
             'created_at' => now(),
@@ -508,8 +508,8 @@ class ShowReleaseController extends Controller
         if ($request->listOption === 'new') {
             // buat list baru
             $list = ListModel::create([
-                'user_id' => 1,
-                // 'user_id' => auth()->id(),
+                // 'user_id' => 1,
+                'user_id' => auth()->id(),
                 'name'    => $request->name,
                 'description'=> $request->description,
                 'comments'=> $request->comments,

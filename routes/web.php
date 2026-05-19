@@ -197,7 +197,7 @@ Route::get('/releases/preview/{id}', [SubmitReleaseController::class, 'preview']
 Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('show.artist');
 Route::post('/artists/{id}/review', [ArtistController::class, 'storeReview'])->name('artist.review');
 Route::post('/artists/{id}/add-to-list', [ArtistController::class, 'addToList'])->name('artist.addToList');
-Route::post('/artist/{id}/review', [ShowReleaseController::class, 'storeReview'])->name('artist.review');
+
 
 
 //route untuk ListsController

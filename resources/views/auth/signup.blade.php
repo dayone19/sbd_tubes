@@ -178,7 +178,7 @@ body{
 
 <div class="subtitle">Sign up to Discogs to continue</div>
 
-<form method="POST" action="/signup">
+<form method="POST" action="{{ route('signup') }}">
 @csrf
 
 @if ($errors->any())

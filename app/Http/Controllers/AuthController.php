@@ -77,6 +77,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => $request->password,
+            'created_at' => 'datetime',
         ]);
 
         return redirect('/login')->with('success', 'Pendaftaran berhasil! Silakan masuk menggunakan akun baru Anda.');

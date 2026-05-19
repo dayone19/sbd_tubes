@@ -570,8 +570,8 @@ class ShowAlbumController extends Controller
         DB::table('reviews')->insert([
             'product_id' => $product->product_id,
 
-            // sementara hardcode dulu
-            'user_id' => 1,
+           
+            'user_id'    => auth()->id(),
 
             'comment' => $request->comment,
 
@@ -610,8 +610,9 @@ class ShowAlbumController extends Controller
         return redirect()->back()->with('success', 'Review berhasil dihapus!');
     }
 
-     public function addToList(Request $request, $id)
+    public function addToList(Request $request, $id)
     {
+        
         $releaseData = DB::table('releases')->where('master_id', $id)->first();
 
         if (!$releaseData) {
@@ -619,33 +620,36 @@ class ShowAlbumController extends Controller
         }
 
         if ($request->listOption === 'new') {
-            // Buat list baru
+           
             $list = ListModel::create([
-                'user_id' => 1,
-                // 'user_id' => auth()->id(),
-                'name'    => $request->name,
-                'description'=> $request->description,
-                'comments'=> $request->comments,
+                'user_id'     => auth()->id(),
+                'name'        => $request->name,
+                'description' => $request->description,
+                'comments'    => $request->comments,
             ]);
 
-          
+         
             DB::table('list_release')->insert([
                 'list_id'    => $list->list_id,
                 'release_id' => $releaseData->release_id, 
             ]);
             
         } else {
-          
+         
             $list = ListModel::findOrFail($request->list_id);
 
+            
             DB::table('list_release')->insert([
                 'list_id'    => $list->list_id,
                 'release_id' => $releaseData->release_id,
             ]);
         }
 
-        // Redirect menggunakan property artist_id dari object $releaseData yang dicari di atas
-        return redirect()->route('album.versions', $releaseData->artist_id)
+       
+        $targetId = $releaseData->artist_id ?? $id;
+
+    
+        return redirect()->route('album.versions', $targetId)
                         ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
     }
 
