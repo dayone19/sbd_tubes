@@ -2096,17 +2096,16 @@
                       <div class="mb-3">
                           <label class="form-label">List</label>
                           <select class="form-select" name="list_id">
-                              <optgroup label="Recently Used">
-                                  
-                                      
-                                      <option>Nama Listnya</option>
-                                
-                              </optgroup>
-                              <optgroup label="All Lists">
-                                  @foreach($lists as $list)
-                                      <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
-                                  @endforeach
-                              </optgroup>
+                               <optgroup label="Recently Used">
+                                    @foreach($lists as $list)
+                                        <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                    @endforeach
+                                </optgroup>
+                                <optgroup label="All Lists">
+                                    @foreach($lists as $list)
+                                        <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
+                                    @endforeach
+                                </optgroup>
                           </select>
                       </div>
                   </div>
