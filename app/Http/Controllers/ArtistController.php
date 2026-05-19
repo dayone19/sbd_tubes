@@ -536,6 +536,7 @@ class ArtistController extends Controller
             ->select('l.list_id', 
                      'l.name',
                      'u.username',
+                     'u.user_id',
                      'l.comments',
                      'l.description',
                      )
@@ -593,31 +594,39 @@ class ArtistController extends Controller
     {
         $artist = Artist::findOrFail($id);
 
+        // Cari release_id milik artis ini
+        $release = DB::table('artist_release')
+            ->where('artist_id', $id)
+            ->value('release_id');
+
         if ($request->listOption === 'new') {
-            // buat list baru
+            // buat list baru dengan user yang sedang login
             $list = ListModel::create([
-                'user_id' => 1,
-                // 'user_id' => auth()->id(),
+                'user_id' => auth()->id(),
                 'name'    => $request->name,
                 'description'=> $request->description,
                 'comments'=> $request->comments,
             ]);
 
-            $release = DB::table('artist_release')
-                ->where('artist_id', $id)
-                ->value('release_id');
-
-            DB::table('list_release')->insert([
-                'list_id'   => $list->list_id,
-                'release_id'=> $release,
-            ]);
+            // Masukkan release ke list jika ada
+            if ($release) {
+                DB::table('list_release')->insert([
+                    'list_id'   => $list->list_id,
+                    'release_id'=> $release,
+                ]);
+            }
             
         } else {
-            
+            // Menambahkan release ke list yang sudah ada
             $list = ListModel::findOrFail($request->list_id);
-        }
 
-        // $comment = $request->comments;
+            if ($release) {
+                DB::table('list_release')->insert([
+                    'list_id'   => $list->list_id,
+                    'release_id'=> $release,
+                ]);
+            }
+        }
 
         return redirect()->route('show.artist', $artist->artist_id)
                         ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
