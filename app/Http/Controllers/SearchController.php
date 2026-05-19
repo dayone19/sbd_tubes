@@ -190,7 +190,10 @@ class SearchController extends Controller
             ->join('releases as r', 'ma.master_id', '=', 'r.master_id')
             ->join('artist_release as art_rel', 'r.release_id', '=', 'art_rel.release_id')
             ->join('artists as ar', 'art_rel.artist_id', '=', 'ar.artist_id')
-            ->leftJoin('images as img', 'r.release_id', '=', 'img.release_id')
+            ->leftJoin('images as img', function ($join) {
+                $join->on('r.release_id', '=', 'img.release_id')
+                    ->where('img.type', '=', 'primary');
+            })
             ->leftJoin('format_release as fr', 'r.release_id', '=', 'fr.release_id')
             ->leftJoin('formats as f', 'fr.format_id', '=', 'f.format_id')
             ->when($filterGenre, function($q) use ($filterGenre) {
