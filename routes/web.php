@@ -91,9 +91,6 @@ Route::get('/submissions', function () {
 
 Route::prefix('user')->group(function () {
 
-    Route::get('/lists', function () {
-        return view('user.lists');
-    })->name('user.lists');
 
     Route::get('/drafts', function () {
         return view('user.drafts');
@@ -212,4 +209,3 @@ Route::middleware('auth')->group(function () {
     Route::get('/releases/add', [SubmitReleaseController::class, 'create'])->name('releases.create');
     Route::post('/releases/add', [SubmitReleaseController::class, 'store'])->name('releases.store');
 });
-

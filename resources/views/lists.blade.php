@@ -156,7 +156,7 @@
                     <p class="mb-0">Explore lists from the Discogs community. Lists can be about anything—notable album covers, prolific producers, your favorite holiday albums. The possibilities are endless! Lists can contain artists, releases, labels, or even other lists.</p>
                 </div>
                 <div class="col-md-4 text-md-end text-start mt-3 mt-md-0">
-                    <a href="{{ route('user.lists', ['user_id' => auth()->id()]) }}">
+                    <a href="{{ auth()->check() ? route('user.lists', ['user_id' => auth()->id()]) : '/login' }}">
                         <button class="btn btn-manage">Manage My Lists</button>
                     </a>
 

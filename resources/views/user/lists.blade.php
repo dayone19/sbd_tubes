@@ -233,7 +233,7 @@
             @foreach($lists as $list)
                     <tr>
                         <td>
-                            <a href="{{ route('user.lists', ['user_id' => $list->user_id]) }}" class="list-link">
+                            <a href="{{ route('lists.show', ['list_id' => $list->list_id]) }}" class="list-link">
                                 {{ $list->list_name }}
                             </a>
                         </td>

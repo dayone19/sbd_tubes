@@ -45,7 +45,7 @@
 
 <div class="profile-info-bar">
     <div class="username">{{ auth()->user()->username ?? 'Gweh' }}</div>
-    <div href="/user/lists" class="stat-box" style="cursor: pointer;" onclick="window.location.href='/user/lists'">
+    <div class="stat-box" style="cursor: pointer;" onclick="window.location.href='{{ auth()->check() ? route('user.lists', ['user_id' => auth()->id()]) : '/login' }}'">
         Lists
         <span>{{ auth()->check() ? auth()->user()->listModels()->count() : 0 }}</span>
     </div>

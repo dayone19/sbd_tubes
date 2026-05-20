@@ -182,7 +182,7 @@ a {text-decoration: none !important;}
         <!-- RIGHT -->
         <div class="sidebar-col">
             <h4>Account</h4>
-            <a href="/user/lists">Lists</a>
+            <a href="{{ auth()->check() ? route('user.lists', ['user_id' => auth()->id()]) : '/login' }}">Lists</a>
             <a href="/settings/user">Settings</a>
             <a href="{{ url('/logout') }}">Log Out</a>
         </div>
