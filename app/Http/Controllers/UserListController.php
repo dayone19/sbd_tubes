@@ -41,7 +41,12 @@ class UserListController extends Controller
     }
 
 
+
+
     public function create() { /* kosong */ }
+    public function store(Request $request) { /* kosong */ }
+
+
 
     public function store(Request $request)
     {
@@ -61,6 +66,7 @@ class UserListController extends Controller
 
         return redirect()->route('lists.show', $listId)->with('success', 'List berhasil dibuat!');
     }
+
 
 
 
@@ -157,6 +163,10 @@ class UserListController extends Controller
             ->select('u.username','l.name as list_name','l.created_at','up.image','l.description','l.user_id','l.list_id')
             ->where('l.user_id', $user_id) // Menyaring data milik user yang login
             ->orderBy('l.created_at', 'desc')
+
+            ->where('l.user_id', $user_id)
+
+
             ->distinct()
             ->limit($perPage)
             ->get();

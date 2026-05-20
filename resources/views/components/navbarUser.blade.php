@@ -204,7 +204,7 @@ a {text-decoration: none !important;}
             <a href="#">Messages</a>
             <a href="/user/collection">Collection</a>
             <a href="/mywantlist">Wantlist</a>
-            <a href="/user/lists">Lists</a>
+            <a href="{{ auth()->check() ? route('user.lists', ['user_id' => auth()->id()]) : '/login' }}">Lists</a>
             <a href="#">Friends</a>
             <a href="#">Settings</a>
             <a href="#">Help</a>

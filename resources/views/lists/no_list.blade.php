@@ -196,8 +196,12 @@
 
     <div class="list-meta">
       <span>By</span>
-      <span class="avatar"></span>
-      <a href="#">{{ $list->username }}</a>
+      <span class="avatar">
+          @if($list->image)
+              <img src="{{ asset('uploads/avatars/' . $list->image) }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 3px;" alt="Profile">
+          @endif
+      </span>
+      <a href="{{ route('user.lists', ['user_id' => $list->user_id]) }}">{{ $list->username }}</a>
       <span>updated {{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</span>
     </div>
 
@@ -226,10 +230,10 @@
       </div>
       <div class="toolbar-right">
         <span>Show</span>
-        <select class="show-select">
-          <option>25</option>
-          <option>50</option>
-          <option>100</option>
+        <select class="show-select" onchange="window.location.href='?show='+this.value">
+          <option value="25" {{ request('show') == 25 ? 'selected' : '' }}>25</option>
+          <option value="50" {{ request('show') == 50 ? 'selected' : '' }}>50</option>
+          <option value="100" {{ request('show') == 100 ? 'selected' : '' }}>100</option>
         </select>
       </div>
     </div>
@@ -244,6 +248,38 @@
         <a href="{{ route('show.release', $item->release_id) }}" class="item-title">{{ $item->title }}</a>
         <div class="item-artist">{{ $item->artist }}</div>
         
+
+        <!-- COMMENT -->
+        <div class="item-comment" id="commentDisplay-{{ $item->release_id }}" title="Click to edit comment" onclick="editComment({{ $item->release_id }})">{{ $itemComments[$item->release_id] ?? '' }}</div>
+
+        <form action="{{ route('lists.updateComment', [$list->list_id, $item->release_id]) }}" method="POST">
+          @csrf
+          @method('PUT')
+          <div class="comment-edit-area" id="commentEditArea-{{ $item->release_id }}" style="display: none;">
+            <textarea id="commentTextarea-{{ $item->release_id }}" name="comments">{{ $itemComments[$item->release_id] ?? '' }}</textarea>
+            <div class="action-row">
+              <button class="btn-save" type="submit">Save</button>
+              <button class="btn-cancel" type="button" onclick="cancelComment({{ $item->release_id }})">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="item-menu dropdown">
+        <div data-bs-toggle="dropdown" aria-expanded="false">•••</div>
+        <ul class="dropdown-menu dropdown-menu-end">
+          @if(auth()->check() && auth()->id() == $list->user_id)
+          <li>
+            <form action="{{ route('lists.removeRelease', [$list->list_id, $item->release_id]) }}" method="POST" onsubmit="return confirm('Yakin mau menghapus item ini?')">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="dropdown-item text-danger" style="background: none; border: none; width: 100%; text-align: left;">Remove</button>
+            </form>
+          </li>
+          @else
+          <li><span class="dropdown-item text-muted">No actions available</span></li>
+          @endif
+        </ul>
+
         <div class="comment-container">
           <div class="item-comment comment-display-trigger" title="Click to edit comment">
             {{ $itemComments[$item->release_id] ?? 'Add a comment...' }}
@@ -262,8 +298,8 @@
           </form>
         </div>
 
+
       </div>
-      <div class="item-menu">•••</div>
     </div>
     @endforeach
 
@@ -292,32 +328,24 @@
           <li>Use drag and drop to re-order the items in your list, or click "move to," type a new position, and press enter.</li>
         </ul>
 
-        <a href="#" class="sidebar-link">View all of my lists</a>
-        <a href="#" class="sidebar-link">View Submissions</a>
+        <a href="{{ auth()->check() ? route('user.lists', ['user_id' => auth()->id()]) : '/login' }}" class="sidebar-link">View all of my lists</a>
+        <a href="/submissions" class="sidebar-link">View Submissions</a>
 
-        <div class="toggle-row">
-          <label class="toggle-switch">
-            <input type="checkbox">
-            <div class="toggle-track"></div>
-          </label>
-          <span class="toggle-label">Notify me of new submissions related to this list.</span>
-        </div>
 
-        <div class="toggle-row">
-          <label class="toggle-switch">
-            <input type="checkbox">
-            <div class="toggle-track"></div>
-          </label>
-          <span class="toggle-label">Public</span>
-        </div>
-
-        <button class="sidebar-btn">&#10010; Add List To Dashboard</button>
+      @if(auth()->check() && auth()->id() == $list->user_id)
+      <form action="{{ route('lists.destroy', $list->list_id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus list ini?')">
+          @csrf
+          @method('DELETE')
+        <button type="submit" class="sidebar-btn delete-btn" style="margin-top: 15px;">🗑 Delete This List</button>
+      </form>
+      @endif
 
         <form action="{{ route('lists.destroy', $list->list_id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus list ini?')">
           @csrf
           @method('DELETE')
           <button type="submit" class="sidebar-btn delete-btn">🗑 Delete This List</button>
         </form>
+
 
       </div>
     </div>
@@ -333,6 +361,41 @@
   const descTextarea  = document.getElementById('descTextarea');
   const cancelDesc    = document.getElementById('cancelDesc');
 
+
+  descDisplay.addEventListener('click', function () {
+    descTextarea.value = descText.textContent.trim();
+    descDisplay.style.display = 'none';
+    descEditArea.style.display = 'block';
+    descTextarea.focus();
+  });
+
+  cancelDesc.addEventListener('click', function () {
+    descEditArea.style.display = 'none';
+    descDisplay.style.display = 'block';
+  });
+
+  saveDesc.addEventListener('click', function () {
+    descText.textContent = descTextarea.value || '';
+    cancelDesc.click();
+  });
+
+  // ---- COMMENT INLINE EDIT ----
+  function editComment(releaseId) {
+    const display = document.getElementById('commentDisplay-' + releaseId);
+    const editArea = document.getElementById('commentEditArea-' + releaseId);
+    const textarea = document.getElementById('commentTextarea-' + releaseId);
+
+    textarea.value = display.textContent.trim();
+    display.style.display = 'none';
+    editArea.style.display = 'block';
+    textarea.focus();
+  }
+
+  function cancelComment(releaseId) {
+    document.getElementById('commentEditArea-' + releaseId).style.display = 'none';
+    document.getElementById('commentDisplay-' + releaseId).style.display = 'inline-block';
+  }
+=======
   if(descDisplay) {
     descDisplay.addEventListener('click', function () {
       descDisplay.style.display = 'none';
@@ -371,6 +434,7 @@
       trigger.style.display = 'inline-block';
     });
   });
+
 
   // ---- MANAGE LIST TOGGLE ----
   const manageToggle   = document.getElementById('manageToggle');

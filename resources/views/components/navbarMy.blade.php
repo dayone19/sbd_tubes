@@ -9,7 +9,7 @@
 <div class="subnav-wrapper">
     <div class="subnav-content">
 
-        <a href="/user/lists" class="{{ request()->is('user/lists') ? 'active' : '' }}">
+        <a href="{{ auth()->check() ? route('user.lists', ['user_id' => auth()->id()]) : '/login' }}" class="{{ request()->routeIs('user.lists') ? 'active' : '' }}">
             Lists
         </a>
 

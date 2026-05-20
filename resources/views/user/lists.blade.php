@@ -33,7 +33,15 @@
     </div>
 
     <div class="list-title">
+
+        @if($lists->isNotEmpty())
+            Lists by {{ $lists->first()->username }}
+        @else
+            Lists (Belum ada list)
+        @endif
+
         Lists by {{ auth()->user()->username }}
+
     </div>
 
     <table class="list-table">
@@ -45,6 +53,23 @@
         </thead>
 
         <tbody>
+
+    @forelse($lists as $list)
+            <tr>
+                <td>
+                    <a href="{{ route('lists.show', $list->list_id) }}"><strong>{{ $list->name }}</strong></a> 
+                    @if(auth()->check() && auth()->id() == $list->user_id)
+                    <span style="color: #666; font-size: 13px; margin-left: 6px;">Private</span>
+                    @endif
+                </td>
+                <td>{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
+            </tr>
+    @empty
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 40px; color: #777;">Belum ada item list yang dibuat.</td>
+            </tr>
+    @endforelse
+
         @forelse($lists as $list)
             <tr>
                 <td><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->list_name }}</a></td>
@@ -55,6 +80,7 @@
                 <td colspan="2" class="no-data">You haven't created any lists yet.</td>
             </tr>
         @endforelse
+
         </tbody>
     </table>
     
