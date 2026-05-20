@@ -2120,7 +2120,7 @@
 
         <div id="listsContent" class="d-none">
             <div class="l-list">
-                @forelse($albumList as $list)
+                @forelse($albumLists as $list)
                     <div class="l-item mb-2">
                         <div>
                             <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a>
