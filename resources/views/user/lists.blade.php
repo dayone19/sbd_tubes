@@ -33,7 +33,11 @@
     </div>
 
     <div class="list-title">
-        Lists by {{ $lists->first()->username }}
+        @if($lists->isNotEmpty())
+            Lists by {{ $lists->first()->username }}
+        @else
+            Lists (Belum ada list)
+        @endif
     </div>
 
     <table class="list-table">
@@ -45,12 +49,21 @@
         </thead>
 
         <tbody>
-    @foreach($lists as $list)
+    @forelse($lists as $list)
             <tr>
-            <td> <a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a></td>
+                <td>
+                    <a href="{{ route('lists.show', $list->list_id) }}"><strong>{{ $list->name }}</strong></a> 
+                    @if(auth()->check() && auth()->id() == $list->user_id)
+                    <span style="color: #666; font-size: 13px; margin-left: 6px;">Private</span>
+                    @endif
+                </td>
                 <td>{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
             </tr>
-    @endforeach
+    @empty
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 40px; color: #777;">Belum ada item list yang dibuat.</td>
+            </tr>
+    @endforelse
         </tbody>
     </table>
     
