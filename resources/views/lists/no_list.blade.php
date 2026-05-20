@@ -281,9 +281,9 @@
         </ul>
 
         <div class="comment-container">
-          <div class="item-comment comment-display-trigger" title="Click to edit comment">
+          <!-- <div class="item-comment comment-display-trigger" title="Click to edit comment">
             {{ $itemComments[$item->release_id] ?? 'Add a comment...' }}
-          </div>
+          </div> -->
 
           <form action="{{ route('lists.updateComment', [$list->list_id, $item->release_id]) }}" method="POST" class="comment-form-area" style="display:none; margin-top:10px;">
             @csrf
