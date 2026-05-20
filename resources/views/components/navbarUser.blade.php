@@ -173,10 +173,6 @@ a {text-decoration: none !important;}
         <div class="sidebar-col">
             <h4>Shop Music</h4>
             <a href="/sell/purchases">Purchases</a>
-
-            <h4>Contribute</h4>
-            <a href="#">Submissions</a>
-            <a href="/user/drafts">Drafts</a>
         </div>
 
         <!-- RIGHT -->

@@ -686,9 +686,9 @@ class ArtistController extends Controller
                         ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
     }
        
-        return redirect()->route('show.artist', $id)
-                        ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
-    }
+    //     return redirect()->route('show.artist', $id)
+    //                     ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
+    // }
     
 
 }
