@@ -13,7 +13,7 @@ class PurchaseController extends Controller
     {
         // 1. Ambil user yang sedang login (sebagai pembeli)
         // Sementara di-hardcode ke ID 1 sesuai kodemu
-        $user_id = 90;
+        $user_id = Auth::id();
 
         // if (!$user) {
         //     return redirect()->route('login'); // Jaga-jaga kalau belum login

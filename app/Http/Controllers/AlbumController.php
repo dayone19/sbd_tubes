@@ -270,7 +270,7 @@ class AlbumController extends Controller
 
         if ($request->listOption === 'new') {
             $list = ListModel::create([
-                'user_id' => 1,
+                'user_id' => auth()->id(),
                 'name' => $request->name,
                 'description' => $request->description,
                 'comments' => $request->comments,

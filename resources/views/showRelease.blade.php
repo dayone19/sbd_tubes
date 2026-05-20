@@ -1559,7 +1559,7 @@
                     <div class="v-item" onclick="changeVideo('{{ $video->thumbnail }}', '{{ $video->youtube_url }}')">
                         <div class="v-thumb">
                             <img src="{{ $video->thumbnail }}">
-                            <span class="v-time"> {{ $video->duration }} </span>
+                            <span class="v-time"> {{ sprintf('%d:%02d', floor($video->duration / 60), $video->duration % 60) }}</span>
                         </div>
                         <div class="v-title"><b> {{ $video->title }} </b></div>
                     </div>
@@ -1618,12 +1618,12 @@
                                   <label class="form-label">List</label>
                                   <select class="form-select" name="list_id">
                                       <optgroup label="Recently Used">
-                                          @foreach($lists as $list)
+                                          @foreach($userLists as $list)
                                               <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
                                           @endforeach
                                       </optgroup>
                                       <optgroup label="All Lists">
-                                          @foreach($lists as $list)
+                                          @foreach($userLists as $list)
                                               <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
                                           @endforeach
                                       </optgroup>
@@ -1664,7 +1664,7 @@
       <!-- TOGGLEABLE DROPDOWN CONTENT -->
       <div id="listsContent" style="display: block;">
           <div class="l-list">
-              @forelse($lists as $list)
+              @forelse($releaseLists as $list)
                   <div class="l-item mb-2">
                       <div>
                           <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a>

@@ -21,8 +21,8 @@
 /* tombol panah */
 .page-btn{width:36px;height:36px;border:1px solid #d0d0d0;background:#fafafa;font-size:18px;color:#999;cursor:pointer;}
 .footer-right{display:flex;align-items:center;gap:14px;font-size:15px;}
-.show-select{width:62px;height:36px;border:1px solid #cfcfcf;padding:0 10px;font-size:14px;background:#fff;
-}
+.show-select{width:62px;height:36px;border:1px solid #cfcfcf;padding:0 10px;font-size:14px;background:#fff;}
+.no-data {padding: 20px; text-align: center; color: #666; font-style: italic;}
 </style>
 
 <div class="list-page">
@@ -33,11 +33,15 @@
     </div>
 
     <div class="list-title">
+
         @if($lists->isNotEmpty())
             Lists by {{ $lists->first()->username }}
         @else
             Lists (Belum ada list)
         @endif
+
+        Lists by {{ auth()->user()->username }}
+
     </div>
 
     <table class="list-table">
@@ -49,6 +53,7 @@
         </thead>
 
         <tbody>
+
     @forelse($lists as $list)
             <tr>
                 <td>
@@ -64,6 +69,18 @@
                 <td colspan="2" style="text-align: center; padding: 40px; color: #777;">Belum ada item list yang dibuat.</td>
             </tr>
     @endforelse
+
+        @forelse($lists as $list)
+            <tr>
+                <td><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->list_name }}</a></td>
+                <td>{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="2" class="no-data">You haven't created any lists yet.</td>
+            </tr>
+        @endforelse
+
         </tbody>
     </table>
     

@@ -145,7 +145,7 @@
                         @foreach($items as $item)
                             @php
                                 $release   = $item->product->release;
-                                $imgUrl    = $release->images->first()->url ?? 'https://via.placeholder.com/80x80?text=No+Image';
+                               $imgUrl = $release->images->where('type', 'primary')->first()->url ?? 'https://via.placeholder.com/80x80?text=No+Image';
                                 $itemTotal = $item->product->price * $item->quantity;
                             @endphp
 

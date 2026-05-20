@@ -514,37 +514,63 @@ class ArtistController extends Controller
             ->distinct('v.video_id')
             ->count('v.video_id');
 
-        //SQL
-        // SELECT DISTINCT l.list_id, 
-        //                 l.name,
+        // SQL:
+        // SELECT DISTINCT l.list_id,
+        //                 l.name AS list_name,
         //                 u.username,
+        //                 u.user_id,
         //                 l.comments,
         //                 l.description,
-        //                 l.created_at,
+        //                 l.created_at
         // FROM lists l
         // LEFT JOIN list_release lr ON l.list_id = lr.list_id
         // LEFT JOIN releases r ON lr.release_id = r.release_id
         // LEFT JOIN artist_release ar ON r.release_id = ar.release_id
-        // LEFT JOIN users ar u l.user_id = l.user_id_id
-        // ORDER BY l.created_at desc
+        // LEFT JOIN users u ON l.user_id = u.user_id
         // WHERE ar.artist_id = ?
+        // ORDER BY l.created_at DESC;
 
-        $lists = DB::table('lists as l')
+        // LIST YANG BERISI ARTIST INI
+        $artistLists = DB::table('lists as l')
             ->leftJoin('list_release as lr', 'l.list_id', '=', 'lr.list_id')
             ->leftJoin('releases as r', 'lr.release_id', '=', 'r.release_id')
             ->leftJoin('artist_release as ar', 'r.release_id', '=', 'ar.release_id')
             ->leftJoin('users as u', 'l.user_id', '=', 'u.user_id')
-            ->select('l.list_id', 
-                     'l.name',
-                     'u.username',
-                     'u.user_id',
-                     'l.comments',
-                     'l.description',
-                     'l.created_at'
-                     )
+
+            ->select(
+                'l.list_id',
+                'l.name as list_name',
+                'u.username',
+                'u.user_id',
+                'l.comments',
+                'l.description',
+                'l.created_at'
+            )
+
             ->where('ar.artist_id', $id)
+
             ->orderBy('l.created_at', 'desc')
             ->distinct()
+            ->get();
+
+
+        // SQL:
+        // SELECT list_id,
+        //        name AS list_name
+        // FROM lists
+        // WHERE user_id = ?
+        // ORDER BY created_at DESC;
+
+        // SEMUA LIST USER LOGIN (UNTUK MODAL POPUP)
+        $userLists = DB::table('lists')
+            ->where('user_id', auth()->id())
+
+            ->select(
+                'list_id',
+                'name as list_name'
+            )
+
+            ->orderBy('created_at', 'desc')
             ->get();
 
             $reviews = DB::table('reviews as re')
@@ -576,7 +602,8 @@ class ArtistController extends Controller
             'filter',
             'videos',
             'totalVideos',
-            'lists',
+            'artistLists',
+            'userLists',
             'reviews'
         ));
 
@@ -615,41 +642,53 @@ class ArtistController extends Controller
     public function addToList(Request $request, $id)
     {
         $artist = Artist::findOrFail($id);
+
         // Cari release_id milik artis ini
+
+
+
         $release = DB::table('artist_release')
             ->where('artist_id', $id)
             ->value('release_id');
 
+
+        if (!$release) {
+            return redirect()->back()->with('error', 'Artis ini belum memiliki release untuk dimasukkan ke list.');
+        }
+
         if ($request->listOption === 'new') {
-            // buat list baru dengan user yang sedang login
+           
             $list = ListModel::create([
-                'user_id' => auth()->id(),
-                'name'    => $request->name,
-                'description'=> $request->description,
-                'comments'=> $request->comments,
+                'user_id'     => auth()->id(),
+                'name'        => $request->name,
+                'description' => $request->description,
+                'comments'    => $request->comments, 
             ]);
 
-            // Masukkan release ke list jika ada
-            if ($release) {
-                DB::table('list_release')->insert([
-                    'list_id'   => $list->list_id,
-                    'release_id'=> $release,
-                ]);
-            }
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $release,
+            ]);
             
         } else {
-            // Menambahkan release ke list yang sudah ada
+           
             $list = ListModel::findOrFail($request->list_id);
 
-            if ($release) {
-                DB::table('list_release')->insert([
-                    'list_id'   => $list->list_id,
-                    'release_id'=> $release,
-                ]);
-            }
+           
+            DB::table('list_release')->insert([
+                'list_id'    => $list->list_id,
+                'release_id' => $release,
+            ]);
         }
+
 
         return redirect()->route('show.artist', $artist->artist_id)
                         ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
     }
+       
+        return redirect()->route('show.artist', $id)
+                        ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
+    }
+    
+
 }

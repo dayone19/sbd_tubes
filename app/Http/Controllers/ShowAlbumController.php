@@ -445,29 +445,56 @@ class ShowAlbumController extends Controller
 
         $videos = DB::table('videos')->where('release_id', $album->release_id)->get();
         
-        // SELECT l.name AS list_name, 
-            //        u.username,
-            //        l.comments,
-            //        l.description,
-            //        l.created_at,
-            //        l.list_id,
-            // FROM list_release lr
-            // JOIN lists l ON lr.list_id = l.list_id
-            // JOIN users u ON l.user_id = u.user_id
-            // WHERE lr.release_id = ?;
-            $lists = DB::table('list_release AS lr')
+        // SQL:
+        // SELECT l.name AS list_name,
+        //        u.username,
+        //        l.comments,
+        //        l.description,
+        //        l.created_at,
+        //        l.list_id
+        // FROM list_release lr
+        // JOIN lists l ON lr.list_id = l.list_id
+        // JOIN users u ON l.user_id = u.user_id
+        // WHERE lr.release_id = ?
+        // ORDER BY l.created_at DESC;
+
+        // LIST YANG BERISI ALBUM / RELEASE INI
+        $albumLists = DB::table('list_release AS lr')
             ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
             ->join('users as u', 'l.user_id', '=', 'u.user_id')
 
             ->where('lr.release_id', $album->release_id)
-             ->select('l.name AS list_name',
-                     'u.username',
-                     'l.comments',
-                     'l.description',
-                     'l.created_at',
-                     'l.list_id',
-                )
-            ->orderby('l.created_at', 'desc')
+
+            ->select(
+                'l.name AS list_name',
+                'u.username',
+                'l.comments',
+                'l.description',
+                'l.created_at',
+                'l.list_id',
+            )
+
+            ->orderBy('l.created_at', 'desc')
+            ->get();
+
+
+        // SQL:
+        // SELECT list_id,
+        //        name AS list_name
+        // FROM lists
+        // WHERE user_id = ?
+        // ORDER BY created_at DESC;
+
+        // SEMUA LIST USER LOGIN (UNTUK MODAL POPUP)
+        $userLists = DB::table('lists')
+            ->where('user_id', auth()->id())
+
+            ->select(
+                'list_id',
+                'name as list_name'
+            )
+
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $reviews = DB::table('reviews as rw')
@@ -536,7 +563,8 @@ class ShowAlbumController extends Controller
             'credits',
             'credits_count',
             'videos',
-            'lists',
+            'albumLists',
+            'userLists',
             'reviews',
             'listing_count',
             'styles',
@@ -570,8 +598,8 @@ class ShowAlbumController extends Controller
         DB::table('reviews')->insert([
             'product_id' => $product->product_id,
 
-            // sementara hardcode dulu
-            'user_id' => 1,
+           
+            'user_id'    => auth()->id(),
 
             'comment' => $request->comment,
 
@@ -610,8 +638,9 @@ class ShowAlbumController extends Controller
         return redirect()->back()->with('success', 'Review berhasil dihapus!');
     }
 
-     public function addToList(Request $request, $id)
+    public function addToList(Request $request, $id)
     {
+        
         $releaseData = DB::table('releases')->where('master_id', $id)->first();
 
         if (!$releaseData) {
@@ -619,33 +648,36 @@ class ShowAlbumController extends Controller
         }
 
         if ($request->listOption === 'new') {
-            // Buat list baru
+           
             $list = ListModel::create([
-                'user_id' => 1,
-                // 'user_id' => auth()->id(),
-                'name'    => $request->name,
-                'description'=> $request->description,
-                'comments'=> $request->comments,
+                'user_id'     => auth()->id(),
+                'name'        => $request->name,
+                'description' => $request->description,
+                'comments'    => $request->comments,
             ]);
 
-          
+         
             DB::table('list_release')->insert([
                 'list_id'    => $list->list_id,
                 'release_id' => $releaseData->release_id, 
             ]);
             
         } else {
-          
+         
             $list = ListModel::findOrFail($request->list_id);
 
+            
             DB::table('list_release')->insert([
                 'list_id'    => $list->list_id,
                 'release_id' => $releaseData->release_id,
             ]);
         }
 
-        // Redirect menggunakan property artist_id dari object $releaseData yang dicari di atas
-        return redirect()->route('album.versions', $releaseData->artist_id)
+       
+        $targetId = $releaseData->artist_id ?? $id;
+
+    
+        return redirect()->route('album.versions', $targetId)
                         ->with('success', 'Item berhasil ditambahkan ke list: ' . $list->name);
     }
 

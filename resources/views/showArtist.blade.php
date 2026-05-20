@@ -939,7 +939,7 @@ border-radius: 4px;color: #333;padding: 5px 20px;}
         </div>
 
         <ul class="lists-container">
-           @foreach($lists as $list) 
+           @foreach($artistLists as $list) 
             <li><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a>
                      by <a href="/user/{{ $list->user_id ?? '' }}/lists">{{ $list->username }}</a>
             </li>
@@ -996,12 +996,12 @@ border-radius: 4px;color: #333;padding: 5px 20px;}
               <label class="form-label">List</label>
               <select class="form-select" name="list_id">
                                 <optgroup label="Recently Used">
-                                    @foreach($lists as $list)
+                                    @foreach($userLists as $list)
                                         <option value="{{ $list->list_id }}">{{ $list->name }}</option>
                                     @endforeach
                                 </optgroup>
                                 <optgroup label="All Lists">
-                                    @foreach($lists as $list)
+                                    @foreach($userLists as $list)
                                         <option value="{{ $list->list_id }}">{{ $list->name}}</option>
                                     @endforeach
                                 </optgroup>
