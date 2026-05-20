@@ -39,9 +39,37 @@ class UserListController extends Controller
         return view('lists.no_list', compact('lists', 'total', 'perPage', 'page'));
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0678d6a92efb6babe72d2a4bace47963018883e0
     public function create() { /* kosong */ }
     public function store(Request $request) { /* kosong */ }
 
+<<<<<<< HEAD
+=======
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $userId = auth()->id();
+
+        // SQL: INSERT INTO lists (user_id, name, description, created_at) VALUES (...);
+        $listId = DB::table('lists')->insertGetId([
+            'user_id' => $userId,
+            'name' => $request->input('name'),
+            'description' => $request->input('description', ''),
+        ]);
+
+        return redirect()->route('lists.show', $listId)->with('success', 'List berhasil dibuat!');
+    }
+
+
+
+>>>>>>> 0678d6a92efb6babe72d2a4bace47963018883e0
     /**
      * Display the specified resource.
      */

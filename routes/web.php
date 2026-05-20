@@ -18,10 +18,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ShopController;
 
 use App\Http\Controllers\SubmitReleaseController;
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SettingsController;
-
 
 
 

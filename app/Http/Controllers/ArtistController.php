@@ -615,7 +615,6 @@ class ArtistController extends Controller
     public function addToList(Request $request, $id)
     {
         $artist = Artist::findOrFail($id);
-
         // Cari release_id milik artis ini
         $release = DB::table('artist_release')
             ->where('artist_id', $id)
@@ -653,5 +652,4 @@ class ArtistController extends Controller
         return redirect()->route('show.artist', $artist->artist_id)
                         ->with('success', 'Item berhasil ditambahkan ke list: '.$list->name);
     }
-
 }
