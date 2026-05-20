@@ -60,7 +60,7 @@ a {text-decoration: none !important;}
         <!-- RIGHT -->
         <div class="flex items-center gap-6">
             
-            <a href="{{ route('sell.cart') }}" class="{{ request()->routeIs('sell.cart') ? 'active' : '' }}">
+            <a href="{{ auth()->check() ? route('sell.cart') : url('/login') }}" class="{{ request()->routeIs('sell.cart') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                 </svg>
@@ -94,8 +94,9 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/search">Explore All</a></li>
                         <li><a class="dropdown-item" href="/search/advanced">Advanced Search</a></li>
-                        <li><a class="dropdown-item" href="#">Most Collected</a></li>
-                        <li><a class="dropdown-item" href="{{ route('releases.create') }}">Submit a Release</a></li>
+                        <li><a class="dropdown-item" href="{{ auth()->check() ? route('releases.create') : url('/login') }}">
+                            Submit a Release
+                        </a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -103,11 +104,10 @@ a {text-decoration: none !important;}
                         Shop Music
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="">Shop My Wants</a></li>
-                        <li><a class="dropdown-item" href="/sell/list">Vinyl</a></li>
-                        <li><a class="dropdown-item" href="#">CD</a></li>
-                        <li><a class="dropdown-item" href="#">Cassette</a></li>
-                        <li><a class="dropdown-item" href="#">All Formats</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list', ['format' => 'Vinyl']) }}">Vinyl</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list', ['format' => 'CD']) }}">CD</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list', ['format' => 'Cassette']) }}">Cassette</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list') }}">All Formats</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -115,7 +115,6 @@ a {text-decoration: none !important;}
                         Sell Music
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">List Item For Sale</a></li>
                         <li><a class="dropdown-item" href="/selling">Start Selling</a></li>
                         <li><a class="dropdown-item" href="/htg">How To Grade</a></li>
                         <li><a class="dropdown-item" href="/resources">More Seller Resources</a></li>

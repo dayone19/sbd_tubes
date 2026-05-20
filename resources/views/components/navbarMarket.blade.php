@@ -86,11 +86,6 @@
                    All Items
                 </a>
 
-                <a href="{{ route('mywants') }}"
-                class="{{ request()->routeIs('mywants') ? 'active' : '' }}">
-                Items I Want
-                </a>
-
                 <a href="{{ route('sell.purchases') }}"
                    class="{{ request()->routeIs('sell.purchases') ? 'active' : '' }}">
                    Purchases
@@ -109,13 +104,7 @@
 
         <!-- kanan -->
         <div class="market-search">
-
-            @if(request()->routeIs('mywants'))
-                <a>
-                    <button class="view-btn">View your Wantlist</button>
-                </a>
-            @endif
-
+            
             @if(request()->routeIs('sell.list'))
                 <input type="text" placeholder="Search Marketplace">
             @endif

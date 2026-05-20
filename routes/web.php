@@ -84,11 +84,6 @@ Route::get('/resources', function () {
     return view('resources');
 });
 
-
-Route::get('/mywants', function () {
-    return view('mywants');
-})->name('mywants');
-
 // Route::get('/lists', function () {
 //     return view('lists');
 // });
@@ -99,9 +94,9 @@ Route::get('/submissions', function () {
 
 Route::prefix('user')->group(function () {
 
-    // Route::get('/lists', function () {
-    //     return view('user.lists');
-    // })->name('user.lists');
+    Route::get('/lists', function () {
+        return view('user.lists');
+    })->name('user.lists');
 
     Route::get('/drafts', function () {
         return view('user.drafts');
@@ -117,7 +112,7 @@ Route::get('no_list', function () {
     return view('lists.no_list');
 });
 
-Route::prefix('sell')->group(function () {
+Route::middleware('auth')->prefix('sell')->group(function () {
 
     // Route::get('/list', function () {
     //     return view('sell.list');
@@ -216,6 +211,8 @@ Route::delete('/lists/{list_id}/remove-release/{release_id}', [UserListControlle
 Route::get('/api/search', [NavbarSearchController::class, 'search'])->name('api.search');
 
 //route untuk SubmitReleaseController
-Route::get('/releases/add', [SubmitReleaseController::class, 'create'])->name('releases.create');
-Route::post('/releases/add', [SubmitReleaseController::class, 'store'])->name('releases.store');
+Route::middleware('auth')->group(function () {
+    Route::get('/releases/add', [SubmitReleaseController::class, 'create'])->name('releases.create');
+    Route::post('/releases/add', [SubmitReleaseController::class, 'store'])->name('releases.store');
+});
 

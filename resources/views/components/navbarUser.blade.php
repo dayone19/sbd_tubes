@@ -98,14 +98,6 @@ a {text-decoration: none !important;}
                 </svg>
             </a>
 
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
-            </svg>
-
             <div onclick="openSidebar()" style="cursor: pointer; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #333;">
                 @if(auth()->check() && auth()->user()->userProfile && auth()->user()->userProfile->image)
                     <img src="{{ asset('uploads/avatars/' . auth()->user()->userProfile->image) }}" style="width: 100%; height: 100%; object-fit: cover;" alt="Profile">
@@ -129,7 +121,6 @@ a {text-decoration: none !important;}
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/search">Explore All</a></li>
                         <li><a class="dropdown-item" href="/search/advanced">Advanced Search</a></li>
-                        <li><a class="dropdown-item" >Most Collected</a></li>
                         <li><a class="dropdown-item" href="{{ route('releases.create') }}">Submit a Release</a></li>
                     </ul>
                 </div>
@@ -138,11 +129,10 @@ a {text-decoration: none !important;}
                         Shop Music
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/mywants">Shop My Wants</a></li>
-                        <li><a class="dropdown-item" href="#">Vinyl</a></li>
-                        <li><a class="dropdown-item" href="#">CD</a></li>
-                        <li><a class="dropdown-item" href="#">Cassette</a></li>
-                        <li><a class="dropdown-item" href="#">All Formats</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list', ['format' => 'Vinyl']) }}">Vinyl</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list', ['format' => 'CD']) }}">CD</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list', ['format' => 'Cassette']) }}">Cassette</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sell.list') }}">All Formats</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -150,7 +140,6 @@ a {text-decoration: none !important;}
                         Sell Music
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">List Item For Sale</a></li>
                         <li><a class="dropdown-item" href="/selling">Start Selling</a></li>
                         <li><a class="dropdown-item" href="/htg">How To Grade</a></li>
                         <li><a class="dropdown-item" href="/resources">More Seller Resources</a></li>
@@ -183,14 +172,7 @@ a {text-decoration: none !important;}
         <!-- LEFT -->
         <div class="sidebar-col">
             <h4>Shop Music</h4>
-            <a href="/mywants">Shop My Wants</a>
             <a href="/sell/purchases">Purchases</a>
-
-            <h4>Sell Music</h4>
-            <a href="#">My Storefront</a>
-            <a href="#">Inventory</a>
-            <a href="#">Orders</a>
-            <a href="#">List Item for Sale</a>
 
             <h4>Contribute</h4>
             <a href="#">Submissions</a>
@@ -200,14 +182,8 @@ a {text-decoration: none !important;}
         <!-- RIGHT -->
         <div class="sidebar-col">
             <h4>Account</h4>
-            <a href="#">Dashboard</a>
-            <a href="#">Messages</a>
-            <a href="/user/collection">Collection</a>
-            <a href="/mywantlist">Wantlist</a>
             <a href="/user/lists">Lists</a>
-            <a href="#">Friends</a>
-            <a href="#">Settings</a>
-            <a href="#">Help</a>
+            <a href="/settings/user">Settings</a>
             <a href="{{ url('/logout') }}">Log Out</a>
         </div>
 
