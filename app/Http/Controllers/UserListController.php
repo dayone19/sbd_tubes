@@ -44,7 +44,6 @@ class UserListController extends Controller
 
 
     public function create() { /* kosong */ }
-    public function store(Request $request) { /* kosong */ }
 
 
 
