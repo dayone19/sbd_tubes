@@ -212,26 +212,7 @@ body{
 Already have an account? <a href="/login">Log in</a>
 </div>
 
-<div class="divider">
-<hr>
-<span>OR</span>
-<hr>
-</div>
 
-<div class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-Continue with Google
-</div>
-
-<div class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/0/747.png">
-Continue with Apple
-</div>
-
-<div class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png">
-Continue with Facebook
-</div>
 
 </div>
 

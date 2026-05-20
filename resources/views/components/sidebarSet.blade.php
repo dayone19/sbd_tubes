@@ -34,15 +34,8 @@
         <li>
             <a href="/settings/user" class="{{ Request::is('settings/user') ? 'active' : '' }}">User</a>
         </li>
-        <li><a href="#">Notifications</a></li>
-        <li><a href="#">Privacy</a></li>
-        <li><a href="#">Collection</a></li>
-        <li><a href="#">Applications</a></li>
-        <li><a href="#">Developers</a></li>
         <li>
             <a href="/settings/buyer" class="{{ Request::is('settings/buyer') ? 'active' : '' }}">Buyer</a>
         </li>
-        <li><a href="#">Seller</a></li>
-        <li><a href="#">Labs</a></li>
     </ul>
 </div>

@@ -500,9 +500,6 @@
                         <option value="title_az" {{ request('sort')=='title_az' ? 'selected' : '' }}>Title, A-Z</option>
                         <option value="title_za" {{ request('sort')=='title_za' ? 'selected' : '' }}>Title, Z-A</option>
                         <option value="latest" {{ request('sort')=='latest' ? 'selected' : '' }}>Latest Additions</option>
-                        <option value="most_collected" {{ request('sort')=='most_collected' ? 'selected' : '' }}>Most Collected</option>
-                        <option value="most_wanted" {{ request('sort')=='most_wanted' ? 'selected' : '' }}>Most Wanted</option>
-                        <option value="trending" {{ request('sort')=='trending' ? 'selected' : '' }}>Trending</option>
                     </select>
 
                     <div class="btn-group ms-2">

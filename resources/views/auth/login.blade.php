@@ -23,7 +23,7 @@ body{
     background:white;
     padding:35px;
     border-radius:6px;
-    margin-top:80px;
+    margin-top:10px;
 }
 
 .logo{
@@ -203,10 +203,6 @@ body{
         <span>I'm not a robot</span>
     </div>
 
-    <div class="forgot">
-        <a href="#">Forgot password?</a>
-    </div>
-
     <button type="submit" class="continue">Continue</button>
 </form>
 
@@ -216,26 +212,6 @@ body{
 Don't have an account? <a href="/signup">Sign up</a>
 </div>
 
-<div class="divider">
-<hr>
-<span>OR</span>
-<hr>
-</div>
-
-<div class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-Continue with Google
-</div>
-
-<div class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/0/747.png">
-Continue with Apple
-</div>
-
-<div class="social">
-<img src="https://cdn-icons-png.flaticon.com/512/124/124010.png">
-Continue with Facebook
-</div>
 
 </div>
 
