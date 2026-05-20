@@ -306,31 +306,57 @@ class ShowReleaseController extends Controller
         ->distinct()
         ->get();
         
-        // SELECT l.name AS list_name, 
+        // SQL:
+        // SELECT l.name AS list_name,
         //        u.username,
         //        l.comments,
         //        l.description,
         //        l.created_at,
-        //        l.list_id,
+        //        l.list_id
         // FROM list_release lr
         // JOIN lists l ON lr.list_id = l.list_id
         // JOIN users u ON l.user_id = u.user_id
-        // ORDER BY l.created_at desc
-        // WHERE lr.release_id = ?;
-        $lists = DB::table('list_release AS lr')
-        ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
-        ->join('users as u', 'l.user_id', '=', 'u.user_id')
+        // WHERE lr.release_id = ?
+        // ORDER BY l.created_at DESC;
 
-        ->where('lr.release_id', $release->release_id)
-        ->select('l.name AS list_name',
-                     'u.username',
-                     'l.comments',
-                     'l.description',
-                     'l.created_at',
-                     'l.list_id',
-                )
-        ->orderby('l.created_at', 'desc')                
-        ->get();
+        // LIST YANG BERISI RELEASE INI
+        $releaseLists = DB::table('list_release AS lr')
+            ->join('lists as l', 'lr.list_id', '=', 'l.list_id')
+            ->join('users as u', 'l.user_id', '=', 'u.user_id')
+
+            ->where('lr.release_id', $release->release_id)
+
+            ->select(
+                'l.name AS list_name',
+                'u.username',
+                'l.comments',
+                'l.description',
+                'l.created_at',
+                'l.list_id',
+            )
+
+            ->orderBy('l.created_at', 'desc')
+            ->get();
+
+
+        // SQL:
+        // SELECT list_id,
+        //        name AS list_name
+        // FROM lists
+        // WHERE user_id = ?
+        // ORDER BY created_at DESC;
+
+        // SEMUA LIST MILIK USER LOGIN (UNTUK MODAL POPUP)
+        $userLists = DB::table('lists')
+            ->where('user_id', auth()->id())
+
+            ->select(
+                'list_id',
+                'name as list_name'
+            )
+
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         // SELECT u.username
         // FROM users u
@@ -460,7 +486,8 @@ class ShowReleaseController extends Controller
                     'reviews',
                     'stats',
                     'videos',
-                    'lists',
+                    'releaseLists',
+                    'userLists',
                     'contributors',
                     'credits',
                     'barcodes',

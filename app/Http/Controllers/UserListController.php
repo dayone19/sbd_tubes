@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException; // Ditambahkan untuk menangkap error dari Trigger
 
 class UserListController extends Controller
 {
@@ -69,7 +70,7 @@ class UserListController extends Controller
     public function show(string $id)
     {
         // SQL:
-        // SELECT l.list_id, l.name, l.description, l.comments, l.created_at, u.username, up.image, l.user_id
+        // SELECT l.list_id, l.name as list_name, l.description, l.comments, l.created_at, u.username, up.image, l.user_id
         // FROM lists AS l
         // LEFT JOIN users AS u ON l.user_id = u.user_id
         // LEFT JOIN user_profiles AS up ON u.user_id = up.user_id
@@ -77,7 +78,7 @@ class UserListController extends Controller
         $list = DB::table('lists as l')
             ->leftJoin('users as u', 'l.user_id', '=', 'u.user_id')
             ->leftJoin('user_profiles as up', 'u.user_id', '=', 'up.user_id')
-            ->select('l.list_id','l.name','l.description','l.comments','l.created_at','u.username','up.image','l.user_id')
+            ->select('l.list_id','l.name as list_name','l.description','l.comments','l.created_at','u.username','up.image','l.user_id')
             ->where('l.list_id', $id)
             ->first();
 
@@ -119,7 +120,17 @@ class UserListController extends Controller
             ->orderBy('lr.list_item_id')
             ->get();
 
-        return view('lists.no_list', compact('list','items','itemComments'));
+        // SQL:
+        // SELECT list_id, name AS list_name FROM lists WHERE user_id = {auth_id} ORDER BY created_at DESC;
+        // Query tambahan agar pilihan list tampil pada dropdown modal "Add Release to List"
+        $lists = DB::table('lists')
+            ->select('list_id', 'name as list_name')
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Menyertakan variabel 'lists' ke dalam compact agar bisa di-loop di view
+        return view('lists.no_list', compact('list','items','itemComments', 'lists'));
     }
 
     public function showList(Request $request, string $user_id)
@@ -130,17 +141,28 @@ class UserListController extends Controller
         $perPage = $request->input('show', 25);
         $page = $request->input('page', 1);
 
+        // SQL:
+        // SELECT u.username, l.name AS list_name, l.created_at, up.image, l.description, l.user_id, l.list_id
+        // FROM lists AS l
+        // LEFT JOIN users AS u ON l.user_id = u.user_id
+        // LEFT JOIN user_profiles AS up ON u.user_id = up.user_id
+        // LEFT JOIN list_release AS lr ON l.list_id = lr.list_id
+        // WHERE l.user_id = {user_id}
+        // ORDER BY l.created_at DESC LIMIT {perPage};
         $lists = DB::table('lists as l')
             ->leftJoin('users as u', 'l.user_id', '=', 'u.user_id')
             ->leftJoin('user_profiles as up', 'u.user_id', '=', 'up.user_id')
             ->leftJoin('list_release as lr', 'l.list_id', '=', 'lr.list_id')
-            ->select('u.username','l.name','l.created_at','up.image','l.description','l.user_id','l.list_id')
+            // Diperbaiki menggunakan alias 'l.name as list_name' agar sesuai dengan kode di HTML kamu
+            ->select('u.username','l.name as list_name','l.created_at','up.image','l.description','l.user_id','l.list_id')
             ->where('l.user_id', $user_id) // Menyaring data milik user yang login
             ->orderBy('l.created_at', 'desc')
             ->distinct()
             ->limit($perPage)
             ->get();
 
+        // SQL:
+        // SELECT COUNT(*) AS total FROM lists WHERE user_id = {user_id};
         $total = DB::table('lists')
             ->where('user_id', $user_id)
             ->count();
@@ -229,5 +251,40 @@ class UserListController extends Controller
         // sehingga 1 release tidak bisa masuk 2x ke list yang sama
 
         return redirect()->route('lists.show', $list_id)->with('success', 'Item berhasil dihapus dari list!');
+    }
+
+    /**
+     * Menambahkan item release baru ke dalam list (Dihubungkan dengan Trigger & SP)
+     */
+    public function addRelease(Request $request, string $list_id)
+    {
+        $request->validate([
+            'release_id' => 'required|integer',
+        ]);
+
+        $releaseId = $request->input('release_id');
+
+        try {
+            // SQL: INSERT INTO list_release (list_id, release_id) VALUES ({list_id}, {release_id});
+            // Query ini otomatis memicu trigger before_list_release_insert di database
+            DB::table('list_release')->insert([
+                'list_id' => $list_id,
+                'release_id' => $releaseId,
+            ]);
+
+            return redirect()->route('lists.show', $list_id)->with('success', 'Item berhasil ditambahkan ke list!');
+
+        } catch (QueryException $e) {
+            $errorInfo = $e->errorInfo;
+            
+            // Mengecek jika kode SQLSTATE menunjukkan error kustom dari Trigger (45000)
+            if (isset($errorInfo[0]) && $errorInfo[0] == '45000') {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', $errorInfo[2]); // Membawa pesan error dari Stored Procedure ke view
+            }
+
+            throw $e;
+        }
     }
 }

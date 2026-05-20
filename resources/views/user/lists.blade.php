@@ -47,7 +47,7 @@
         <tbody>
         @forelse($lists as $list)
             <tr>
-                <td><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->name }}</a></td>
+                <td><a href="{{ route('lists.show', $list->list_id) }}">{{ $list->list_name }}</a></td>
                 <td>{{ \Carbon\Carbon::parse($list->created_at)->diffForHumans() }}</td>
             </tr>
         @empty

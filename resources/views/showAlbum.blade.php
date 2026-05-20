@@ -2075,12 +2075,12 @@
                                     <label class="form-label">List</label>
                                     <select class="form-select" name="list_id">
                                         <optgroup label="Recently Used">
-                                            @foreach($lists as $list)
+                                            @foreach($userLists as $list)
                                                 <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
                                             @endforeach
                                         </optgroup>
                                         <optgroup label="All Lists">
-                                            @foreach($lists as $list)
+                                            @foreach($userLists as $list)
                                                 <option value="{{ $list->list_id }}">{{ $list->list_name }}</option>
                                             @endforeach
                                         </optgroup>
@@ -2120,7 +2120,7 @@
 
         <div id="listsContent" class="d-none">
             <div class="l-list">
-                @forelse($lists as $list)
+                @forelse($albumList as $list)
                     <div class="l-item mb-2">
                         <div>
                             <a href="#">{{ $list->list_name }}</a> by <a href="#">{{ $list->username }}</a>

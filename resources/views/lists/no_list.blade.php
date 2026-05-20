@@ -192,7 +192,7 @@
 
   <div class="list-main">
 
-    <div class="list-title">{{ $list->name }}</div>
+    <div class="list-title">{{ $list->list_name }}</div>
 
     <div class="list-meta">
       <span>By</span>
